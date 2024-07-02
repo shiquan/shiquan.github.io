@@ -1,0 +1,29 @@
+project:
+  type: website
+website:
+  navbar:
+    pinned: true
+    collapse: false
+    background: light
+    left:
+      - href: index.qmd
+        text: Home
+      - href: fastq.qmd
+        text: FASTQ+
+      - href: PISA.qmd
+        text: PISA
+      - href: Yano.qmd
+        text: Yano
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    css: styles.css
+    toc: true
+    code-overflow: wrap
+    code-block-background: true
+    code-block-border-left: true
+    page-layout: full
+engine: knitr
+editor: visual
