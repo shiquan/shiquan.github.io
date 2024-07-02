@@ -1,0 +1,16 @@
+This website outlines the key tools and software packages developed from my research:
+
+<!-- -->
+
+- **FASTQ+**: This format enhances the standard FASTQ file by integrating barcode information directly into the read name. This modification facilitates the harmonization of single-cell sequencing data across various platforms. FASTQ+ can be generated with PISA.
+- **PISA**: A suite of programs specifically designed for preprocessing data from single-cell sequencing and spatial transcriptomics. It efficiently processes FASTQ+, BAM, and BED files, streamlining the handling and generates various feature counts, facilitating the downstream analyses necessary for in-depth biological insights.
+- **Yano**: An R package that employs the spatial dissimilarity test method as its core algorithm. Yano is tailored for exploring various biological events in single-cell data, including alternative splicing, allele-specific gene expression, and more, providing comprehensive insights into cellular dynamics.
+
+<strong>Workflows</strong>
+
+(1) From raw reads to gene counts (PISA)
+(2) Alternative splicing analysis for scRNA-seq (PISA + Seurat + Yano)
+(3) Allele-specific gene expression analysis for scRNA-seq (PISA + Seurat + Yano)
+(4) Select and assembly short reads in complex genetic regions (PISA)
+(5) Prioritize non-exonic reads in scRNA-seq (PISA + Seurat + Yano)
+

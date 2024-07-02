@@ -1,0 +1,464 @@
+---
+title: PISA User's Guide
+---
+
+## Synopsis
+
+```{bash}
+PISA [tool] [options] [input-file]
+```
+
+## Install
+
+PISA source code can be downloaded at <https://github.com/shiquan/PISA/release>, or the development version from <https://github.com/shiquan/PISA/>. To compile PISA from sources run **make** in the source directory.
+
+```{bash}
+$ git clone https://github.com/shiquan/PISA
+$ cd PISA
+$ make
+```
+
+## Get Started
+
+The code snippet below demonstrates how to use the PISA tools to process test data and generate various feature counts. You can find the test data in the PISA/demo directory. This example provides a practical approach to familiarize yourself with the functionality of PISA and to validate its operations with provided sample data.
+
+```{bash}
+$ cd demo
+
+$ ls
+aln.sam.gz  barcodes.txt  demo_1.fq.gz  demo_2.fq.gz  demo.gtf.gz  peaks.bed  README.md  var.vcf.gz
+
+$ zcat demo_1.fq.gz|head -n 4
+@A00984:220:HNJ7KDRXX:1:1118:2510:4586
+AAGCATCCACACAGAGCACCCCGTTCTT
++
+FFFFFFFFFFFFFFFFFFFFFFFFFFFF
+
+$ zcat demo_2.fq.gz|head -n 4
+@A00984:220:HNJ7KDRXX:1:1118:2510:4586
+GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC
++
+FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF
+
+# Convert raw FASTQ to FASTQ+ format
+$ PISA parse -rule `CR,R1:1-16,barcodes.txt,CB,1;UR,R1:17-28;R1,R2' demo_1.fq.gz demo_2.fq.gz -1 demo.fq
+Number of Fragments,825
+Fragments pass QC,825
+Fragments with Exactly Matched Barcodes,805
+Fragments with Failed Barcodes,0
+[2022-04-22 12:21:35] Real time: 0.003 sec; CPU: 0.009 sec; Peak RSS: 0.010 GB.
+
+$ head -n 4 demo.fq
+@A00984:220:HNJ7KDRXX:1:1118:2510:4586|||CR:Z:AAGCATCCACACAGAG|||CB:Z:AAGCATCCACACAGAG|||UR:Z:CACCCCGTTCTT
+GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC
++
+FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF
+
+# Alignment results of FASTQ+ 
+$ samtools view aln.sam.gz|head -n 1
+A00984:220:HNJ7KDRXX:1:1118:2510:4586|||CR:Z:AAGCATCCACACAGAG|||CB:Z:AAGCATCCACACAGAG|||UR:Z:CACCCCGTTCTT   0   chr11   35139165    255 26S65M  *   0   0   GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF NH:i:1  HI:i:1  AS:i:61 nM:i:1
+
+# Convert format alignment records from SAM to BAM
+$ PISA sam2bam aln.sam.gz -o aln.bam
+Raw reads,825
+Mapped reads,820 (99.39%)
+Plus strand,820
+Minus strand,0
+Mitochondria ratio,0.00%
+[2022-04-22 12:26:31] Real time: 0.005 sec; CPU: 0.009 sec; Peak RSS: 0.010 GB.
+
+$ samtools view aln.bam|head -n 1
+A00984:220:HNJ7KDRXX:1:1118:2510:4586   0   chr11   35139165    255 26S65M  *   0   0   GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF NH:i:1  HI:i:1  AS:i:61 nM:i:1  CR:Z:AAGCATCCACACAGAG   CB:Z:AAGCATCCACACAGAG   UR:Z:CACCCCGTTCTT
+
+# Annotate gene names for BAM
+$ PISA anno -gtf ./demo.gtf.gz aln.bam -o anno_gtf.bam
+[2022-04-22 12:28:38] GTF loading..
+[2022-04-22 12:28:38] Load 2 genes.
+[2022-04-22 12:28:38] Load time : 0.003 sec
+Reads Mapped to Genome (Map Quality >= 0),99.4%
+Reads Mapped to Exonic Regions,99.3%
+Reads Mapped to Intronic Regions,0.0%
+Reads Mapped to both Exonic and Intronic Regions,0.7%
+Reads Mapped Antisense to Gene,0.0%
+Reads Mapped to Intergenic Regions,0.0%
+Reads Mapped to Gene but Failed to Interpret Type,0.0%
+[2022-04-22 12:28:38] Real time: 0.026 sec; CPU: 0.086 sec; Speed : 9528 records/sec; Peak RSS: 0.034 GB.
+
+# Correct UMIs amongst other UMIs from the same cell and mapped to the same gene, and create new tag UB for corrected UMIs
+$ PISA corr -tag UR -new-tag UB -tags-block CB,GN anno_gtf.bam -o corr.bam
+[2022-04-22 12:36:21] Building index ..
+[2022-04-22 12:36:21] Build time : 0.002 sec
+[2022-04-22 12:36:21] Real time: 0.077 sec; CPU: 0.085 sec
+
+$ samtools view corr.bam|head -n 1
+A00984:220:HNJ7KDRXX:1:1118:2510:4586   0   chr11   35139165    255 26S65M  *   0   0   GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF NH:i:1  HI:i:1  AS:i:61 nM:i:1  CR:Z:AAGCATCCACACAGAG   CB:Z:AAGCATCCACACAGAG   UR:Z:CACCCCGTTCTT   RE:A:E  GX:Z:ENSG00000026508.18 GN:Z:CD44   TX:Z:ENST00000263398.10,ENST00000428726.7,ENST00000526025.2 UB:Z:CACCCCGTTCTT
+
+# Count gene X cell features
+$ mkdir exp
+
+$ PISA count  -cb CB -anno-tag GN -outdir exp -umi UB corr.bam 
+[2022-04-22 12:38:44] Real time: 0.033 sec; CPU: 0.013 sec; Peak RSS: 0.010 GB.
+
+# Gene expression matrix generated in the Market Exchange format 
+$ ls exp/
+barcodes.tsv.gz  features.tsv.gz  matrix.mtx.gz
+
+# Not just gene features, we can also annotate variants and functional regions to reads
+$ PISA anno -bed peaks.bed -tag PK -vcf var.vcf.gz -vtag VR  corr.bam -o anno_vcf_bed.bam    
+Reads Mapped to Genome (Map Quality >= 0),99.4%
+Reads Mapped to BED regions / Peaks,0.0%
+[2022-04-22 12:43:01] Real time: 0.027 sec; CPU: 0.090 sec; Speed : 9085 records/sec; Peak RSS: 0.034 GB.
+
+$ samtools view anno_vcf_bed.bam|grep "VR:Z"|grep "PK:Z"|head -n 1
+A00984:220:HNJ7KDRXX:1:2266:27597:30843 0   chr11   35229688    255 91M *   0   0   CCCAGGGTTAATAGGGCCTGGTCCCTGGGAGGAAATTTGAATGGGTCCATTTTGCCCTTCCATAGCCTAATCCCGGGGCATTGTTTTCCAC
+FFFF,FFFFFFFFFF,FFFFFFF:,:FFFFFF,FF:FFFFFFFFFFF:,,:F:F:F,F:F:F,FFFF,F:FFFF,FF,FF:FFFFFFF:F: NH:i:1  HI:i:1  AS:i:85 nM:i:2  CR:Z:ATTGTTCCAAGTCCCG   CB:Z:ATTGTTCCAAGTCCCG   UR:Z:TCTTTAAGTCAG   RE:A:E  GX:Z:ENSG00000026508.18 GN:Z:CD44   TX:Z:ENST00000263398.10,ENST00000428726.7,ENST00000425428.6,ENST00000433892.6,ENST00000525469.1 UB:Z:TCTTTAAGTCAG   PK:Z:demo_peak_14a;demo_peak_14b    VR:Z:chr11:35229771C>T
+
+# Summarize the reads, UMIs, genes, peaks, and variants per cell
+$ PISA attrcnt -cb CB -tags UB,GN,PK,VR anno_vcf_bed.bam -dedup |head -n 5
+BARCODE Raw UB  GN  PK  VR
+AAGCATCCACACAGAG    503 132 1   15  1
+ATTGTTCCAAGTCCCG    533 124 1   13  1
+AAGCATCCACACNGAG    3   1   1   1   0
+AAGCNTCCACACAGAG    3   1   1   1   0
+
+# Deduplicate BAM file for each cell
+$ PISA rmdup -tags CB corr.bam -o rmdup.bam -nw 
+[2022-04-22 12:59:39] Deduplicating chr11
+[2022-04-22 12:59:39] All reads,820
+[2022-04-22 12:59:39] Duplicate reads,125
+[2022-04-22 12:59:39] Duplicate ratio,0.1524
+[2022-04-22 12:59:39] Real time: 0.008 sec; CPU: 0.015 sec; Peak RSS: 0.010 GB.
+
+# Deduplicate BAM file for each molecular
+$ PISA rmdup -tags CB,UR corr.bam -o rmdup1.bam -nw
+[2022-04-22 13:00:35] Deduplicating chr11
+[2022-04-22 13:00:35] All reads,820
+[2022-04-22 13:00:35] Duplicate reads,0
+[2022-04-22 13:00:35] Duplicate ratio,0.0000
+[2022-04-22 13:00:35] Real time: 0.009 sec; CPU: 0.015 sec; Peak RSS: 0.011 GB.
+
+# Select all reads annotated to gene CD44
+# Generate a gene candidate list
+$  echo "CD44" > gene.txt
+
+$ PISA pick -tags GN -list gene.txt anno_vcf_bed.bam  -o picked.bam
+[2022-04-22 13:03:01] Real time: 0.009 sec; CPU: 0.016 sec
+
+# Select reads with more features
+$ awk `{printf("%s\tCD44\n", $1)}' barcodes.txt > candidates.txt
+
+$ cat candidates.txt 
+AAGCATCCACACAGAG    CD44
+ATTGTTCCAAGTCCCG    CD44
+GCACATAGTCAGTTTG    CD44
+
+$ PISA pick -tags CB,GN -list candidates.txt anno_vcf_bed.bam -o picked.bam 
+[2022-04-22 13:09:28] Real time: 0.007 sec; CPU: 0.013 sec
+
+# Convert BAM to FASTQ+
+$ PISA bam2fq -tags CB,GN picked.bam -o pick.fq
+
+$ head -n 4 pick.fq 
+@A00984:220:HNJ7KDRXX:1:1118:2510:4586|||CB:Z:AAGCATCCACACAGAG|||GN:Z:CD44
+GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC
++
+FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF
+
+# Sort FASTQ+ reads by CB and GN
+$ PISA fsort -tags CB,GN pick.fq -o fsort.fq.gz
+[2022-04-22 13:22:50] Write 795 records to fsort.fq.gz.0000.bgz.
+[2022-04-22 13:22:50] Unlink fsort.fq.gz.0000.bgz
+[2022-04-22 13:22:50] Create fsort.fq.gz from 1 files.
+[2022-04-22 13:22:50] Real time: 0.021 sec; CPU: 0.020 sec
+
+$ zcat fsort.fq.gz|head -n 8
+@A00984:220:HNJ7KDRXX:1:1118:2510:4586|||CB:Z:AAGCATCCACACAGAG|||GN:Z:CD44
+GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC
++
+FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF
+@A00984:220:HNJ7KDRXX:1:2143:21640:21496|||CB:Z:AAGCATCCACACAGAG|||GN:Z:CD44
+CCTGCCCCGCGCCCAGAGATCCTCCAGCTCCTTTCGCCCGCGCCCTACGTTCGCTCCGGACACCATGGACAAGTATTGGTGGAACACAGCC
++
+,,FFFFFFFF,F,,:F,F,F:FFF,FFFFFF,F::F,FF,F:FF:,,FF:FFF,:FFFF:FFF,::FFFF,F:F,FFFF,,F,FFF,F,::
+
+# Assembly reads mapped to CD44 of the same cell into contigs
+# This step requires Trinity software and seqtk already installed in your environment
+$ PISA stream -tags CB,GN -script `Trinity --seqType fq --SS_lib_type F --single ${FQ} --max_memory 1G 2>/dev/null 1>/dev/null; seqtk rename trinity_out_dir.Trinity.fasta ${UBI}_ 2>/dev/null' -t 10 -fa  -nw ./fsort.fq.gz -o assem.fa
+[2022-04-22 13:24:21] Real time: 5.607 sec; CPU: 0.010 sec; Peak RSS: 0.010 GB.
+
+$ seqtk seq assem.fa -l 100 |head 
+>Z_AAGCATCCACACAGAG_Z_CD44_1|||CB:Z:AAGCATCCACACAGAG|||GN:Z:CD44 len=439 path=[0:0-438]
+GAAATTAGGGCCCAATTAATAATCAGCAAGAATTTGATCGTTCCAGTTCCCACTTGGAGGCCTTTCATCCCTCGGGTGTGCTATGGATGGCTTCTAACAA
+AAACTACACATATGTATTCCTGATCGCCAACCTTTCCCCCACCAGCTAAGGACATTTCCCAGGGTTAATAGGGCCTGGTCCCTGGGAGGAAATTTGAATG
+GGTCCATTTTGCCCTTCCATAGCCTAATCCCTGGGCATTGTTTTCCACTGAGGTTGGGGGTTGGGGTGTACTAGTTACACATCTTCAACAGACCCCCTCT
+AGAAATTTTTCAGATGCTTCTGGGAGACACCCAAAGGGTGAAGCTATTTATCTGTAGTAAACTATTTATCTGTGTTTTTGAAATATTAAACCCTGGATCA
+GTCCTTTGATCAGTATAATTTTTTAAAGTTACTTTGTCA
+>Z_AAGCATCCACACAGAG_Z_CD44_2|||CB:Z:AAGCATCCACACAGAG|||GN:Z:CD44 len=384 path=[0:0-383]
+CCTGGTAGAATTGGCTTTTCTAGCAGAACCTTTCCAAAAGTTTTATATTGAGATTCATAACAACACCAAGAATTGATTTTGTAGCCAACATTCATTCAAT
+ACTGTTATATCAGAGGAGTAGGAGAGAGGAAACATTTGACTTATCTGGAAAAGCAAAATGTACTTAAGAATAAGAATAACATGGTCCATTCACCTTTATG
+TTATAGATATGTCTTTGTGTAAATCATTTGTTTTGAGTTTTCAAAGAATAGCCCATTGTTCATTCTTGTGCTGTACAATGACCACTGTTATTGTTACTTT
+
+# Align assembled reads to reference and convert to BAM file
+# Here I use minimap2 for simplicity
+$ minimap2 -x splice -a ~/Documents/datasets/GRCh38/fasta/genome.fasta assem.fa 1> asm_aln.sam
+[M::mm_idx_gen::50.495*1.81] collected minimizers
+[M::mm_idx_gen::71.980*2.16] sorted minimizers
+[M::main::71.980*2.16] loaded/built the index for 194 target sequence(s)
+[M::mm_mapopt_update::75.057*2.11] mid_occ = 767
+[M::mm_idx_stat] kmer size: 15; skip: 5; is_hpc: 0; #seq: 194
+[M::mm_idx_stat::77.004*2.09] distinct minimizers: 167225302 (35.42% are singletons); average occurrences: 6.036; average spacing: 3.071; total length: 3099750718
+[M::worker_pipeline::77.010*2.09] mapped 13 sequences
+[M::main] Version: 2.21-r1071
+[M::main] CMD: minimap2 -x splice -a /home/shiquan/Documents/datasets/GRCh38/fasta/genome.fasta assem.fa
+[M::main] Real time: 77.358 sec; CPU: 161.000 sec; Peak RSS: 18.519 GB
+
+$ PISA sam2bam asm_aln.sam -o asm_aln.bam
+Raw reads,13
+Mapped reads,13 (100.00%)
+Plus strand,13
+Minus strand,0
+Mitochondria ratio,0.00%
+[2022-04-22 13:30:20] Real time: 0.001 sec; CPU: 0.006 sec; Peak RSS: 0.010 GB.
+
+$ samtools view asm_aln.bam|head -n 1
+Z_AAGCATCCACACAGAG_Z_CD44_1 0   chr11   35229531    60  439M    *   0   0   GAAATTAGGGCCCAATTAATAATCAGCAAGAATTTGATCGTTCCAGTTCCCACTTGGAGGCCTTTCATCCCTCGGGTGTGCTATGGATGGCTTCTAACAA
+AAACTACACATATGTATTCCTGATCGCCAACCTTTCCCCCACCAGCTAAGGACATTTCCCAGGGTTAATAGGGCCTGGTCCCTGGGAGGAAATTTGAATG
+GGTCCATTTTGCCCTTCCATAGCCTAATCCCTGGGCATTGTTTTCCACTGAGGTTGGGGGTTGGGGTGTACTAGTTACACATCTTCAACAGACCCCCTCT
+AGAAATTTTTCAGATGCTTCTGGGAGACACCCAAAGGGTGAAGCTATTTATCTGTAGTAAACTATTTATCTGTGTTTTTGAAATATTAAACCCTGGATCA
+GTCCTTTGATCAGTATAATTTTTTAAAGTTACTTTGTCA *   NM:i:1  ms:i:436    AS:i:436    nn:i:0  tp:A:P  cm:i:137    s1:i:430    s2:i:0  de:f:0.0023 rl:i:0  CB:Z:AAGCATCCACACAGAG   GN:Z:CD44
+```
+
+## List of commands
+
+| Tool     | Description                                                       |
+|:--------------|:--------------------------------------------------------|
+|| ***The following tools are used to process FASTQ/FASTQ+ files.*** |
+| parse    | Parse barcodes from FASTQ reads to FASTQ+.                        |
+| fsort    | Sort FASTQ+ records by barcodes.                                  |
+| stream   | Perform user-defined process for each read block.                 |
+| addtags  | Add tag string to FASTQ reads.                                    |
+|| ***The following tools are used to process BAM files.***          |
+| sam2bam  | Parse FASTQ+ read name and convert SAM to BAM.                    |
+| rmdup    | Remove PCR duplicates per molecular.                              |
+| pick     | Pick alignments with tags.                                        |
+| anno     | Annotate functional regions or gene names.                        |
+| corr     | Correct error prone UMIs. 1 mismatch considered.                  |
+| attrcnt  | Count raw reads and tag values per cell.                          |
+| extract  | Extract tag value from BAM.                                       |
+| count    | Count feature X cell matrix from BAMs.                            |
+| bam2fq   | Convert BAM to FASTQ+ file with selected tags.                    |
+| bam2frag | Generate fragment file.                                           |
+| depth    | Coverage depth/UMI for target regions.                            |
+| addtags  | Add tag string to BAM alignments.                                 |
+| callept  | Call expressed peak tags (EPTs) for RNA library.                  |
+|          | ***The following tool used to process fragment file.***           |
+| count2   | Count peak X cell matrix from fragment file.                      |
+|          | ***The following tools used to process BED files.***              |
+| mergebed | Merge BED files.                                                  |
+| annobed  | Annotate BED files with genes and functional elements.            |
+| flatten  | Flatten overlapped regions to nonoverlaps.                        |
+|          | ***The following tools used to process GTF files.***              |
+| gtffmt   | Format and reorder GTF file.                                      |
+| gtf2bed  | Convert GTF to BED.                                               |
+
+## Commands and options
+
+{{< include _commands.qmd >}}
+
+## Difference between PISA and CellRanger
+
+
+## Changelog
+
+<details>
+
+<summary>v1.1 2024/6/11</summary>
+
+-   -psi and -flatten added for `PISA anno`;
+-   Add new tools `gtf2bed` and `flatten`.
+
+</details>
+
+<details>
+
+<summary>v1.0 2023/12/2</summary>
+
+-   EPT calling method added.
+-   `mergebed` and `annobed` for BED file added.
+-   New parameters added to `anno`.
+
+</details>
+
+<details>
+
+<summary>v1.0a 2023/10/20</summary>
+
+-   Major update.
+-   New `callept` method introduced. Check EPT paper for details.
+-   New `mergebed` and `annobed` methods added.
+-   New `-vcf-ss` and `-alt-ref` now added to `PISA anno`
+-   `PISA count` can count bin and chromosome expression.
+
+</details>
+
+<details>
+
+<summary>v0.12 2022/06/18</summary>
+
+-   Fix the number of records in MEX file.
+
+</details>
+
+<details>
+
+<summary>v0.12b 2022/04/26</summary>
+
+-   Bugs fixed.
+-   Change compress level of BGZF from 6 to 2, speed up few tools.
+-   Now accept unorder GTFs
+-   New tool `gtfmt` introduced to format a GTF file.
+-   Add manual and FASTQ+ specification.
+
+</details>
+
+<details>
+
+<summary>v0.12a 2022/03/31</summary>
+
+-   Add `parse2`.
+
+</details>
+
+<details>
+
+<summary>v0.11a 2022/03/13</summary>
+
+-   Add `counts2`, count peaks X cells matrix from the fragment file.
+
+</details>
+
+<details>
+
+<summary>v0.10 2022/01/06</summary>
+
+-   Update `bam2frag`, export a fragment file compatible with 10X cellranger-ATAC.
+
+</details>
+
+<details>
+
+<summary>v0.10b 2021/12/09</summary>
+
+-   `PISA count` now has `-velo` option to export unspliced and spliced matrix together. For velocity analysis, remember to use `-intron` to annotate reads.
+-   `PISA parse` support multi-threads.
+
+</details>
+
+<details>
+
+<summary>v0.10a 2021/11/06</summary>
+
+-   `PISA count` support count spliced and unspliced reads.
+-   `PISA count` support count from multiple bam files.
+
+</details>
+
+<details>
+
+<summary>v0.9 2021/10/14</summary>
+
+-   Rewrite `rmdup`. Not support paired reads for now.
+
+</details>
+
+<details>
+
+<summary>v0.8 2021/07/20</summary>
+
+-   Reduce memory usage of `count`
+-   Fix region query bug of `anno -bed`
+-   Add `anno -vcf` method
+
+</details>
+
+<details>
+
+<summary>v0.7 2020/11/20</summary>
+
+-   Introduce the PCR deduplicate method `rmdup`.
+-   Mask read and qual field as \* instead of sequence for secondary alignments in the BAM file.
+
+</details>
+
+<details>
+
+<summary>v0.6 2020/10/29</summary>
+
+-   `PISA attrcnt`, Skip secondary alignments before counting reads
+-   `PISA anno` fix segments fault bugs when loading malformed GTF
+
+</details>
+
+<details>
+
+<summary>v0.5 2020/08/27</summary>
+
+-   Add `PISA bam2frag` function (experimental).
+-   `PISA anno` Skip secondary alignments when counting total reads.
+
+</details>
+
+<details>
+
+<summary>v0.4 2020/07/14</summary>
+
+-   `PISA sam2bam` add mapping quality adjustment method;
+-   Rewrite UMI correction index structure to reduce memory use;
+-   Fix bugs.
+
+</details>
+
+<details>
+
+<summary>v0.4alpha 2020/05/2</summary>
+
+-   `PISA anno` use UCSC bin scheme instead of linear search for reads query gene regions. Fix the bug of misannotated antisense reads.
+-   `PISA count` use MEX output instead of plain cell vs gene table.
+
+</details>
+
+<details>
+
+<summary>v0.3 2020/03/26</summary>
+
+Fix bugs and improve preformance.
+
+</details>
+
+<details>
+
+<summary>0.0.0.9999 2019/05/19</summary>
+
+Init version.
+
+</details>
+
+## TODO list
+
+-   Improve multi-threads performance.
+-   <s>Support Stereo-seq and Visium </s>
+-   <s>Speed up `PISA count` and `PISA corr`.</s>
+-   *Implement parse strategy for cell hash and CITEseq (frozen)*.
+-   <s>Assemble reads original from one molecule;</s>
+-   <s>Implement new designed and more user-friendly `parse`;</s>
+-   *Support loom output (frozen)*;
+-   <s>Export unspliced matrix for velocity;</s>
+-   <s>Upgrade `PISA parse` for faster process fastqs.</s>
+
+## Reporting Issues
+
+If you have any suggestion or report issues, please using Github issues page <https://github.com/shiquan/PISA/issues>.
+
+## Citation
+
+Shi Q, Liu S, Kristiansen K, Liu L. The FASTQ+ format and PISA. Bioinformatics. 2022 Sep 30;38(19):4639-4642. doi: 10.1093/bioinformatics/btac562. PMID: 35993907.
