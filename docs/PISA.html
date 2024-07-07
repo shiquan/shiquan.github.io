@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -39,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -110,7 +144,7 @@ window.Quarto = {
           <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
+<span class="menu-text">Overview</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./fastq.html"> 
@@ -126,6 +160,7 @@ window.Quarto = {
   </li>  
 </ul>
           <div class="quarto-navbar-tools">
+    <a href="https://github.com/shiquan" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -207,19 +242,19 @@ window.Quarto = {
 
 <section id="synopsis" class="level2">
 <h2 class="anchored" data-anchor-id="synopsis">Synopsis</h2>
-<pre class="{bash}"><code>PISA [tool] [options] [input-file]</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> <span class="pp">[</span><span class="ss">tool</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">options</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">input</span><span class="pp">-</span><span class="ss">file</span><span class="pp">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="install" class="level2">
 <h2 class="anchored" data-anchor-id="install">Install</h2>
-<p>PISA source code can be downloaded at <a href="https://github.com/shiquan/PISA/release" class="uri">https://github.com/shiquan/PISA/release</a>, or the development version from <a href="https://github.com/shiquan/PISA/" class="uri">https://github.com/shiquan/PISA/</a>. To compile PISA from sources run <strong>make</strong> in the source directory.</p>
-<pre class="{bash}"><code>$ git clone https://github.com/shiquan/PISA
-$ cd PISA
-$ make</code></pre>
+<p>PISA source code can be downloaded at <a href="https://github.com/shiquan/PISA/releases" class="uri">https://github.com/shiquan/PISA/releases</a>, or the development version from <a href="https://github.com/shiquan/PISA/" class="uri">https://github.com/shiquan/PISA/</a>. To compile PISA from sources run <strong>make</strong> in the source directory.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git clone https://github.com/shiquan/PISA</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd PISA</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> make</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="get-started" class="level2">
 <h2 class="anchored" data-anchor-id="get-started">Get Started</h2>
 <p>The code snippet below demonstrates how to use the PISA tools to process test data and generate various feature counts. You can find the test data in the PISA/demo directory. This example provides a practical approach to familiarize yourself with the functionality of PISA and to validate its operations with provided sample data.</p>
-<pre class="{bash}"><code>$ cd demo
+<pre><code>$ cd demo
 
 $ ls
 aln.sam.gz  barcodes.txt  demo_1.fq.gz  demo_2.fq.gz  demo.gtf.gz  peaks.bed  README.md  var.vcf.gz
@@ -237,7 +272,7 @@ GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCC
 FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF
 
 # Convert raw FASTQ to FASTQ+ format
-$ PISA parse -rule `CR,R1:1-16,barcodes.txt,CB,1;UR,R1:17-28;R1,R2' demo_1.fq.gz demo_2.fq.gz -1 demo.fq
+$ PISA parse -rule 'CR,R1:1-16,barcodes.txt,CB,1;UR,R1:17-28;R1,R2' demo_1.fq.gz demo_2.fq.gz -1 demo.fq
 Number of Fragments,825
 Fragments pass QC,825
 Fragments with Exactly Matched Barcodes,805
@@ -341,7 +376,7 @@ $ PISA pick -tags GN -list gene.txt anno_vcf_bed.bam  -o picked.bam
 [2022-04-22 13:03:01] Real time: 0.009 sec; CPU: 0.016 sec
 
 # Select reads with more features
-$ awk `{printf("%s\tCD44\n", $1)}' barcodes.txt &gt; candidates.txt
+$ awk '{printf("%s\tCD44\n", $1)}' barcodes.txt &gt; candidates.txt
 
 $ cat candidates.txt 
 AAGCATCCACACAGAG    CD44
@@ -379,7 +414,7 @@ CCTGCCCCGCGCCCAGAGATCCTCCAGCTCCTTTCGCCCGCGCCCTACGTTCGCTCCGGACACCATGGACAAGTATTGGT
 
 # Assembly reads mapped to CD44 of the same cell into contigs
 # This step requires Trinity software and seqtk already installed in your environment
-$ PISA stream -tags CB,GN -script `Trinity --seqType fq --SS_lib_type F --single ${FQ} --max_memory 1G 2&gt;/dev/null 1&gt;/dev/null; seqtk rename trinity_out_dir.Trinity.fasta ${UBI}_ 2&gt;/dev/null' -t 10 -fa  -nw ./fsort.fq.gz -o assem.fa
+$ PISA stream -tags CB,GN -script 'Trinity --seqType fq --SS_lib_type F --single ${FQ} --max_memory 1G 2&gt;/dev/null 1&gt;/dev/null; seqtk rename trinity_out_dir.Trinity.fasta ${UBI}_ 2&gt;/dev/null' -t 10 -fa  -nw ./fsort.fq.gz -o assem.fa
 [2022-04-22 13:24:21] Real time: 5.607 sec; CPU: 0.010 sec; Peak RSS: 0.010 GB.
 
 $ seqtk seq assem.fa -l 100 |head 
@@ -425,10 +460,10 @@ GTCCTTTGATCAGTATAATTTTTTAAAGTTACTTTGTCA *   NM:i:1  ms:i:436    AS:i:436    nn:i
 </section>
 <section id="list-of-commands" class="level2">
 <h2 class="anchored" data-anchor-id="list-of-commands">List of commands</h2>
-<table class="caption-top table">
+<table class="table-striped table-hover caption-top table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 79%">
+<col style="width: 23%">
+<col style="width: 76%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -638,8 +673,8 @@ $ PISA parse -rule 'CR,R1:1-10,bc1.txt,CB,1;CR,R1:11-20,bc2.txt,CB,1;R1,R2:1-100
 <div class="center">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 35%">
-<col style="width: 64%">
+<col style="width: 36%">
+<col style="width: 63%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -753,8 +788,8 @@ Note :
 <div class="center">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 75%">
+<col style="width: 26%">
+<col style="width: 73%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -855,8 +890,7 @@ $ PISA anno -ignore-strand -gtf genes.gtf -o anno.bam sorted.bam
 $ PISA anno -intron -gtf genes.gtf -o anno.bam sorted.bam
 
 # annotate expressed peaks and genetic variants (both reference allele and alternative allele) 
-$ PISA anno -bed peak.bed -vcf in.vcf.gz -vcf-ss -ref-alt -o anno.bam in.bam
-</code></pre>
+$ PISA anno -bed peak.bed -vcf in.vcf.gz -vcf-ss -ref-alt -o anno.bam in.bam</code></pre>
 <p>Besides these annotation methods, PISA anno also supports a -chr-species method. This method requires a binding list for chromosome and related label relationships. The software will check the chromosome and add the related tag for each chromosome. This method, combined with PISA attrcnt can help to summarize the mixed two cell lines from different species.</p>
 <pre><code># A binding list is tab-separated two columns txt file.
 $ cat binding_list.txt

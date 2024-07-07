@@ -5,26 +5,35 @@ website:
   navbar:
     pinned: true
     collapse: false
+    title: false
     background: light
     left:
       - href: index.qmd
-        text: Home
+        text: Overview
       - href: fastq.qmd
         text: FASTQ+
       - href: PISA.qmd
         text: PISA
       - href: Yano.qmd
         text: Yano
+        
+    tools: 
+      - icon: github
+        href: https://github.com/shiquan
+        text: GitHub
 format:
   html:
     theme:
-      light: flatly
-      dark: darkly
+      light: [theme.scss]
+      dark: [theme-dark.scss]
+    code-copy: true
     css: styles.css
     toc: true
     code-overflow: wrap
     code-block-background: true
     code-block-border-left: true
     page-layout: full
-engine: knitr
+    fontsize: 1em
+    highlight-style: github
+freeze: true
 editor: visual

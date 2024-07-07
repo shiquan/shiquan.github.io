@@ -1,0 +1,23 @@
+/*-- scss:defaults --*/
+$link-color: #00009E;
+$text-muted: #6a737b;
+
+$btn-code-copy-color: #181818;
+$btn-code-copy-color-active: #0000E0;
+
+$code-block-border-left: false;
+$code-block-bg: #F0F0F0;
+
+/*-- scss:rules --*/
+
+.layout-example {
+  background: $gray-500;
+  color: $white;
+  text-align: center;
+  margin-bottom: 1em;
+  font-family: $font-family-monospace;
+  font-size: .875em;
+  font-weight: 600;
+  padding-top: 1em;
+  border-radius: 3px;
+}

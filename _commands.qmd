@@ -75,7 +75,7 @@ Option -report can specify a quality control report in CSV format. Here is the e
 
 ::: center
 | **Terms**                               | **Description**                                                                     |
-|:------------------------|:---------------------------------------------|
+|:-------------------------|:---------------------------------------------|
 | Number of Fragments                     | The number of records in the FASTQ(s). For paired reads, each pair only count once. |
 | Fragments pass QC                       | Reads or paired reads pass QC.                                                      |
 | Fragments with Exactly Matched Barcodes | Barcodes exactly matched with any barcode in the candidate list.                    |
@@ -179,13 +179,13 @@ Note :
  -qual    [255]       Updated quality score.
 ```
 
-Option -t is to set the threads to parse the SAM records. The -\@ option is to set the threads to compress alignments in BGZF format. The default compress level of BGZF is 6 in the htslib, but here PISA has reset this value to 2 to decrease the CPU times. It's not a good design to have both -t and -\@, but will require a lot work to redesign the multithreads strategy, I have put this work in my todo list. 
+Option -t is to set the threads to parse the SAM records. The -\@ option is to set the threads to compress alignments in BGZF format. The default compress level of BGZF is 6 in the htslib, but here PISA has reset this value to 2 to decrease the CPU times. It's not a good design to have both -t and -\@, but will require a lot work to redesign the multithreads strategy, I have put this work in my todo list.
 
 Option -report can specify a quality control report in CSV format. Here is the explanation of each term in this file.
 
 ::: center
 | **Terms**          | **Description**                                                                                                                                                                            |
-|:-----------------|:-----------------------------------------------------|
+|:------------------|:----------------------------------------------------|
 | Raw reads          | Raw reads in the BAM files, secondary alignment will be skipped.                                                                                                                           |
 | Mapped reads       | Reads mapped to reference, and the ratio of raw reads.                                                                                                                                     |
 | Plus strand        | Reads mapped to forward strand of reference.                                                                                                                                               |
@@ -243,7 +243,7 @@ In this version, PISA rmdup only supports single-end reads. For paired-end reads
 
 The PISA pick tool is designed to select alignments with predefined tags and candidate values.
 
-``` 
+```         
 $ PISA pick -tags CB,GN -list cell_barcodes.txt in.bam
 
 Options :
@@ -254,7 +254,7 @@ Options :
  -@       [INT]        Threads to unpack BAM.
 ```
 
-Depending on the number of tags specified by the user, the candidate list for tags can consist of either a single column or multiple columns. If multiple tags are specified but only one column is present in the list, the program will primarily compare the value of the first tag in the alignments with the list. 
+Depending on the number of tags specified by the user, the candidate list for tags can consist of either a single column or multiple columns. If multiple tags are specified but only one column is present in the list, the program will primarily compare the value of the first tag in the alignments with the list.
 
 ### anno
 
@@ -264,7 +264,7 @@ Based on their alignment status, reads are then classified into one of nine dist
 
 ![Figure 1: Read types.](anno_type.png){#fig:fig01 width="\\textwidth"}
 
-```       
+```         
 
 # annotate strand-specific reads
 $ PISA anno -gtf genes.gtf -o anno.bam sorted.bam
@@ -277,7 +277,6 @@ $ PISA anno -intron -gtf genes.gtf -o anno.bam sorted.bam
 
 # annotate expressed peaks and genetic variants (both reference allele and alternative allele) 
 $ PISA anno -bed peak.bed -vcf in.vcf.gz -vcf-ss -ref-alt -o anno.bam in.bam
-
 ```
 
 Besides these annotation methods, PISA anno also supports a -chr-species method. This method requires a binding list for chromosome and related label relationships. The software will check the chromosome and add the related tag for each chromosome. This method, combined with PISA attrcnt can help to summarize the mixed two cell lines from different species.
@@ -351,155 +350,147 @@ Notice :
 ```
 
 ### corr
-The diversity of UMIs of each gene in one cell is used to evaluate the
-gene expression level, but the error of UMI comes from sequencing or PCR
-may introduce bias. PISA corr is designed to correct the UMI or barcode
-sequence based on Hamming distance. In default, two groups of UMI from
-the same gene of one cell with Hamming distance equal to 1, will be
-considered to originate from the same transcript. The group with high
-frequency will be selected as a real one, and another one will be
-corrected to the high one.
 
-Because PISA corr does not require a sorted BAM, this tool will first
-build a correction list by caching all the raw UMIs and barcodes and
-then correct them in memory. After these steps, this tool will reread
-the file and update these records by order. This design can avoid
-potential bias for the same gene from different chromosomes (i.e., the
-HLA genes in alternative locus). However, this design also required a
-lot of memory for a big BAM.
+The diversity of UMIs of each gene in one cell is used to evaluate the gene expression level, but the error of UMI comes from sequencing or PCR may introduce bias. PISA corr is designed to correct the UMI or barcode sequence based on Hamming distance. In default, two groups of UMI from the same gene of one cell with Hamming distance equal to 1, will be considered to originate from the same transcript. The group with high frequency will be selected as a real one, and another one will be corrected to the high one.
 
-CellRanger also introduces an algorithm to correct reads with the same UMI of one cell but mapping to more than one gene (<https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview>). PISA implements this method but does not enable it in default. The -cr
-option can be used by users to enable this function. The reason for not
-enable it by default is PISA corr not only is used to correct UMIs, but
-also can be used to correct any other types of barcodes. The following
-example shows how to use PISA corr to correct cell barcodes for reads in
-the same gene.
+Because PISA corr does not require a sorted BAM, this tool will first build a correction list by caching all the raw UMIs and barcodes and then correct them in memory. After these steps, this tool will reread the file and update these records by order. This design can avoid potential bias for the same gene from different chromosomes (i.e., the HLA genes in alternative locus). However, this design also required a lot of memory for a big BAM.
 
-    // Reads with same gene tag (GN) and UMI (UB) will be grouped and calculate the Hamming distance between each other. 
-    // Only if Hamming distance == 1 will be corrected.
-    PISA corr -tag CR -new-tag CB -tags-block GN,UB -o cell_barcode_corrected.bam in.bam
+CellRanger also introduces an algorithm to correct reads with the same UMI of one cell but mapping to more than one gene (<https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview>). PISA implements this method but does not enable it in default. The -cr option can be used by users to enable this function. The reason for not enable it by default is PISA corr not only is used to correct UMIs, but also can be used to correct any other types of barcodes. The following example shows how to use PISA corr to correct cell barcodes for reads in the same gene.
+
+```         
+// Reads with same gene tag (GN) and UMI (UB) will be grouped and calculate the Hamming distance between each other. 
+// Only if Hamming distance == 1 will be corrected.
+PISA corr -tag CR -new-tag CB -tags-block GN,UB -o cell_barcode_corrected.bam in.bam
+```
 
 Full options of PISA corr list below.
 
-    # Correct similar barcodes (hamming distance == 1).
+```         
+# Correct similar barcodes (hamming distance == 1).
 
-    $ PISA corr -tag UR -new-tag UB -tags-block CB,GN -@ 5 -o corr.bam in.bam
+$ PISA corr -tag UR -new-tag UB -tags-block CB,GN -@ 5 -o corr.bam in.bam
 
-    Options :
-     -o        [BAM]       Output bam.
-     -tag      [TAG]       Tag to correct.
-     -new-tag  [TAG]       Create a new tag for corrected barcodes.
-     -tags-block  [TAGS]   Tags to define read group. For example, if set to GN (gene), reads in the same gene will be grouped together.
-     -cr                   Enable CellRanger like UMI correction method. See `Examples` for details.
-     -e                    Maximal hamming distance to define similar barcode, default is 1.
-     -@        [INT]       Thread to compress BAM file.
+Options :
+ -o        [BAM]       Output bam.
+ -tag      [TAG]       Tag to correct.
+ -new-tag  [TAG]       Create a new tag for corrected barcodes.
+ -tags-block  [TAGS]   Tags to define read group. For example, if set to GN (gene), reads in the same gene will be grouped together.
+ -cr                   Enable CellRanger like UMI correction method. See `Examples` for details.
+ -e                    Maximal hamming distance to define similar barcode, default is 1.
+ -@        [INT]       Thread to compress BAM file.
 
 
-    Examples :
-     // Two groups of reads have same cell barcode (CB) and gene (GN) but their raw UMIs (UR) differ by only one base. The UMI of less 
-     // supported is corrected to the UMI with higher support. UB save the checked or corrected UMI.
-    $ PISA corr -tag UR -new-tag UB -tags-block CB,GN in.bam -o corr.bam 
+Examples :
+ // Two groups of reads have same cell barcode (CB) and gene (GN) but their raw UMIs (UR) differ by only one base. The UMI of less 
+ // supported is corrected to the UMI with higher support. UB save the checked or corrected UMI.
+$ PISA corr -tag UR -new-tag UB -tags-block CB,GN in.bam -o corr.bam 
 
-     // Same with above. Besides, if two or more groups of reads have same CB and UB but different GN, the GN with the most supporting reads
-     // is kept for UMI counting, and the other read groups are discarded. In case of a tie for maximal read support, all read groups are
-     // discarded, as the gene cannot be confidently assigned (Cell Ranger method).
-    $ PISA corr -cr -tag UR -new-tag UB -tags-block CB,GN in.bam -o corr.bam 
+ // Same with above. Besides, if two or more groups of reads have same CB and UB but different GN, the GN with the most supporting reads
+ // is kept for UMI counting, and the other read groups are discarded. In case of a tie for maximal read support, all read groups are
+ // discarded, as the gene cannot be confidently assigned (Cell Ranger method).
+$ PISA corr -cr -tag UR -new-tag UB -tags-block CB,GN in.bam -o corr.bam 
+```
 
 ### attrcnt
 
-PISA attrcnt is used to summarize the meta information of the library.
-We start introduce this tool with few examples.
+PISA attrcnt is used to summarize the meta information of the library. We start introduce this tool with few examples.
 
-    # Count reads per cell, -cb option is required to specify cell barcode tag
-    $ PISA attrcnt -cb CB in.bam
+```         
+# Count reads per cell, -cb option is required to specify cell barcode tag
+$ PISA attrcnt -cb CB in.bam
 
-    // the summary information output in tsv format
-    BARCODE Raw                           // the title
-    AGCTATGCTTCTAGTGTAAC-1  38            // cell barcode and raw reads per cell, separated by a tab
-    GCCGCTGATCGGCCTGCACA-1  12
-    GTCGCGATTCTGCTCAGAAG-1  13
-    GTCAGTACCATGCTCAGAAG-1  27
-    CAACTCGTCGGTTGTCTGAC-1  23
+// the summary information output in tsv format
+BARCODE Raw                           // the title
+AGCTATGCTTCTAGTGTAAC-1  38            // cell barcode and raw reads per cell, separated by a tab
+GCCGCTGATCGGCCTGCACA-1  12
+GTCGCGATTCTGCTCAGAAG-1  13
+GTCAGTACCATGCTCAGAAG-1  27
+CAACTCGTCGGTTGTCTGAC-1  23
 
-    # Count raw reads and reads in the peaks per cell
-    $ PISA attrcnt -cb CB -tags PK             // PK tag is annotated for reads in peak
-                 -o summary.tsv              // Summary file
-                 example/anno/demo_1.bam 
+# Count raw reads and reads in the peaks per cell
+$ PISA attrcnt -cb CB -tags PK             // PK tag is annotated for reads in peak
+             -o summary.tsv              // Summary file
+             example/anno/demo_1.bam 
 
-    $ head summary.tsv 
-    BARCODE Raw PK
-    GGCATTATCGGCTCGGTATG    2   2
-    TGAGTTGTGTATACTCCTAC    2   2
-    CCGCGGCACTACACACCAGA    1   1
-    ATTAGTGGTCTCCTGGTCGG    1   1
-    TTATTGGACCACGTTGAATA    1   1
-    GGAATGCCACAAGCGCCGTA    1   1
-    AGTCTATCGTGGCCTGCACA    5   5
-    AGGCACACCTCGCTGAATTC    3   3
-    GTCAGGATCGATAACATACG    2   2
+$ head summary.tsv 
+BARCODE Raw PK
+GGCATTATCGGCTCGGTATG    2   2
+TGAGTTGTGTATACTCCTAC    2   2
+CCGCGGCACTACACACCAGA    1   1
+ATTAGTGGTCTCCTGGTCGG    1   1
+TTATTGGACCACGTTGAATA    1   1
+GGAATGCCACAAGCGCCGTA    1   1
+AGTCTATCGTGGCCTGCACA    5   5
+AGGCACACCTCGCTGAATTC    3   3
+GTCAGGATCGATAACATACG    2   2
 
-    # Count UMIs per cell
-    $ PISA attrcnt -cb CB -tags UB      // UB is tag of corrected UMIs
-                 -dedup               // -dedup option used to remove duplication of tag values, if not set, this 
-                                      // command will export reads with UB tag but not the unique UMIs per cell
-                 -o summary.tsv anno.bam
+# Count UMIs per cell
+$ PISA attrcnt -cb CB -tags UB      // UB is tag of corrected UMIs
+             -dedup               // -dedup option used to remove duplication of tag values, if not set, this 
+                                  // command will export reads with UB tag but not the unique UMIs per cell
+             -o summary.tsv anno.bam
 
-    # Count UMIs and Genes per cell
-    $ PISA attrcnt -cb CB -tags UB,GN  // GN is tag for annotated gene; -tags can accept multiple tag names, and seperated by ","
-                 -dedup -o summary.tsv anno.bam
+# Count UMIs and Genes per cell
+$ PISA attrcnt -cb CB -tags UB,GN  // GN is tag for annotated gene; -tags can accept multiple tag names, and seperated by ","
+             -dedup -o summary.tsv anno.bam
 
-    $ head summary.tsv
-    BARCODE Raw UB  GN
-    AGCTATGCTTCTAGTGTAAC-1  38  35  0
-    GCCGCTGATCGGCCTGCACA-1  12  12  0
-    GTCGCGATTCTGCTCAGAAG-1  13  11  0
-    GTCAGTACCATGCTCAGAAG-1  27  26  0
-    CAACTCGTCGGTTGTCTGAC-1  23  21  0
-    GGTACACCACAGTAGTTACG-1  12  10  0
-    GCGCGCCGAGGGACACTCTT-1  1   1   0
-    CTCTAAGCATCGAGGTTAAC-1  162 138 50
-    TTCGTAGCACCGATACTAGC-1  51  48  46
+$ head summary.tsv
+BARCODE Raw UB  GN
+AGCTATGCTTCTAGTGTAAC-1  38  35  0
+GCCGCTGATCGGCCTGCACA-1  12  12  0
+GTCGCGATTCTGCTCAGAAG-1  13  11  0
+GTCAGTACCATGCTCAGAAG-1  27  26  0
+CAACTCGTCGGTTGTCTGAC-1  23  21  0
+GGTACACCACAGTAGTTACG-1  12  10  0
+GCGCGCCGAGGGACACTCTT-1  1   1   0
+CTCTAAGCATCGAGGTTAAC-1  162 138 50
+TTCGTAGCACCGATACTAGC-1  51  48  46
+```
 
 Full list of options list below.
 
-    # Count the frequency of tag values.
+```         
+# Count the frequency of tag values.
 
-    $ PISA attrcnt -cb CB -tags UR,GN -dedup -all-tags in.bam
+$ PISA attrcnt -cb CB -tags UR,GN -dedup -all-tags in.bam
 
-    Options :
-     -cb       [TAG]      Cell Barcode, or other tag used for grouping reads.
-     -list     [FILE]     Cell barcode white list.
-     -tags     [TAGS]     Tags to count.
-     -dedup               Deduplicate the atrributes in each tag.
-     -all-tags            Only records with all tags be count.
-     -group    [TAG]      Group tag, count all tags for each group seperately.
-     -o        [FILE]     Output count table.
-     -q        [INT]      Map Quality to filter bam.
-     -no-header           Ignore header in the output.
-     -@        [INT]      Thread to unpack bam.
-     -ttag     [TAG]      Region type tag. [RE]
-     -ttype               Region type used to count. Set `E,S` to count exon enclosed reads. Set `N,C` to count intron overlapped reads.
+Options :
+ -cb       [TAG]      Cell Barcode, or other tag used for grouping reads.
+ -list     [FILE]     Cell barcode white list.
+ -tags     [TAGS]     Tags to count.
+ -dedup               Deduplicate the atrributes in each tag.
+ -all-tags            Only records with all tags be count.
+ -group    [TAG]      Group tag, count all tags for each group seperately.
+ -o        [FILE]     Output count table.
+ -q        [INT]      Map Quality to filter bam.
+ -no-header           Ignore header in the output.
+ -@        [INT]      Thread to unpack bam.
+ -ttag     [TAG]      Region type tag. [RE]
+ -ttype               Region type used to count. Set `E,S` to count exon enclosed reads. Set `N,C` to count intron overlapped reads.
+```
 
 ### extract
 
 PISA extract is designed to extract the values of tags from BAM records and generate a tab-separated file.
 
-    # Extract tag values from alignments.
+```         
+# Extract tag values from alignments.
 
-    $ PISA extract -tags CB,UR,GN -o tags.tsv in.bam
+$ PISA extract -tags CB,UR,GN -o tags.tsv in.bam
 
-    Options :
-     -tags     [TAGS]     Tags to be extracted.
-     -o        [FILE]     Output file. tsv format
-     -n                   Print read name.
-     -q                   Map Quality Score threshold.
-     -all                 Only export if all tags have value.
+Options :
+ -tags     [TAGS]     Tags to be extracted.
+ -o        [FILE]     Output file. tsv format
+ -n                   Print read name.
+ -q                   Map Quality Score threshold.
+ -all                 Only export if all tags have value.
+```
 
 ### count
 
 The PISA count tool is designed to generate a counts matrix for various features or tags, traditionally outputting a gene-by-cell digit matrix. Starting with version 0.4, this tool now supports the MEX format output, which is highly recommended for use in downstream analyses due to its superior performance. It’s important to note that MEX format consists of three files, so you should use the -outdir option to specify the directory where the output files will be saved.
 
-```
+```         
 # Count reads or fragments matrix for single-cell datasets.
 
 $ PISA count -cb CB -anno-tag GN -umi UB -outdir exp aln.bam
@@ -535,12 +526,13 @@ Notice :
  * If you want count from more than one bam file, there are two ways to set the parameter. By seperating bam files with ',' or by
    setting -sample-list option.
  * If -velo set, spliced and unspliced folders will be created at outdir.
- ```
+```
 
 #### For Smartseq user
-PISA count also support counting gene expression from multiple bam files. 
 
-```
+PISA count also support counting gene expression from multiple bam files.
+
+```         
 $ PISA count -file-barcode             // use alias name for each bam file as cell barcode. If this flag is not set -cb must be specified.
 -tags CB                   // Cell barcode
 -sample-list bam_list.txt // bam file path and alias name
@@ -553,44 +545,46 @@ $ PISA count -file-barcode             // use alias name for each bam file as ce
 
 The Market Exchange (MEX) format (<https://math.nist.gov/MatrixMarket/formats.html>) is designed for representing the sparse matrix. The -outdir option specifies the output directory for one MEX fold. The MEX format consists of three files, one is cell barcodes, one is feature names (genes or peak names), and the third one defines the expression or signal values.
 
-    $ ls
-    barcodes.tsv.gz  features.tsv.gz  matrix.mtx.gz
+```         
+$ ls
+barcodes.tsv.gz  features.tsv.gz  matrix.mtx.gz
 
-    $ zcat barcodes.tsv.gz|head
-    AACCTGGTGAAGTTGTCGAA
-    AAGGAACTAAGCGCAGCACC
-    CGATAGAATACTTCTTCGTA
-    TACTATCCTCTAGCTGCTAC
-    TGACCATCCTACAGTCCACC
-    CAGATTCAACTACGAAGTGC
-    TTCGTAGCACTCTTCATCTC
-    GGCACCTTGCTTAACGTAGG
-    ACTTCGGATACGTATCGCCT
-    GACTCGCTAGTAGTCGGAAT
+$ zcat barcodes.tsv.gz|head
+AACCTGGTGAAGTTGTCGAA
+AAGGAACTAAGCGCAGCACC
+CGATAGAATACTTCTTCGTA
+TACTATCCTCTAGCTGCTAC
+TGACCATCCTACAGTCCACC
+CAGATTCAACTACGAAGTGC
+TTCGTAGCACTCTTCATCTC
+GGCACCTTGCTTAACGTAGG
+ACTTCGGATACGTATCGCCT
+GACTCGCTAGTAGTCGGAAT
 
-    $ zcat features.tsv.gz|head
-    RP11-34P13.7
-    RP11-34P13.8
-    RP11-34P13.9
-    FO538757.3
-    FO538757.2
-    AP006222.2
-    RP4-669L17.10
-    RP5-857K21.4
-    RP11-206L10.4
-    RP11-206L10.9
+$ zcat features.tsv.gz|head
+RP11-34P13.7
+RP11-34P13.8
+RP11-34P13.9
+FO538757.3
+FO538757.2
+AP006222.2
+RP4-669L17.10
+RP5-857K21.4
+RP11-206L10.4
+RP11-206L10.9
 
-    $ zcat matrix.mtx.gz|head
-    %%MatrixMarket matrix coordinate integer general
-    % Generated by PISA v0.4-alpha-72-g09c4ded
-    23900   782761  11533380
-    1   1   2
-    1   2   2
-    1   3   2
-    1   4   1
-    1   5   2
-    1   6   1
-    1   7   2
+$ zcat matrix.mtx.gz|head
+%%MatrixMarket matrix coordinate integer general
+% Generated by PISA v0.4-alpha-72-g09c4ded
+23900   782761  11533380
+1   1   2
+1   2   2
+1   3   2
+1   4   1
+1   5   2
+1   6   1
+1   7   2
+```
 
 The MEX file can be read by R package Yano::ReadPISA.
 
@@ -598,15 +592,17 @@ The MEX file can be read by R package Yano::ReadPISA.
 
 PISA bam2fq is designed to convert alignment records to FATSQ+ records. Option -tags specify which tags will be kept in the FASTQ+. Full options list below.
 
-    # Convert BAM into fastq.
-    $ PISA bam2fq -tags CB,UB,GN -o out.fq aln.bam
+```         
+# Convert BAM into fastq.
+$ PISA bam2fq -tags CB,UB,GN -o out.fq aln.bam
 
-    Options :
-     -tags     [TAGS]     Export tags in read name.
-     -f                   Filter records if specified tags not all exist.
-     -fa                  Output fasta instead of fastq.
-     -o        [fastq]    Output file.
-     -@        [INT]      Threads to unpack BAM.
+Options :
+ -tags     [TAGS]     Export tags in read name.
+ -f                   Filter records if specified tags not all exist.
+ -fa                  Output fasta instead of fastq.
+ -o        [fastq]    Output file.
+ -@        [INT]      Threads to unpack BAM.
+```
 
 ### bam2frag
 
@@ -614,52 +610,57 @@ The fragment file is a five columns tab-separated flat file which is designed fo
 
 PISA bam2frag requires the input BAM file to be sorted by coordinate. This tool will check the cell barcode and the fragment position for each paired reads, duplicates in one cell will only keep one record, and the numeber of copies for this fragment will be updated in column four.
 
-    # Convert sam record to fragment file.
+```         
+# Convert sam record to fragment file.
 
-    $ PISA bam2frag -cb CB -list cell_barcodes.txt -o out.tsv.gz in.bam
+$ PISA bam2frag -cb CB -list cell_barcodes.txt -o out.tsv.gz in.bam
 
-    Options:
-     -o       [FILE]    Output file. This file will be bgzipped and indexed.
-     -cb      [TAG]     Cell barcode tag.
-     -list    [FILE]    Cell barcode white list.
-     -q       [20]      Mapping quality score to filter reads.
-     -isize   [2000]    Skip if insert size greater than this. [2KB]
-     -bed     [BED]     Only convert fragments overlapped with target regions.
-     -black-region [BED] Skip convert fragments overlapped with black regions.
-     -stat    [FILE]    Transposition events per cell.
-     -@       [4]       Thread to unpack and pack files.[4]
-     -disable-offset    Disable Tn5 offset for each fragment.
+Options:
+ -o       [FILE]    Output file. This file will be bgzipped and indexed.
+ -cb      [TAG]     Cell barcode tag.
+ -list    [FILE]    Cell barcode white list.
+ -q       [20]      Mapping quality score to filter reads.
+ -isize   [2000]    Skip if insert size greater than this. [2KB]
+ -bed     [BED]     Only convert fragments overlapped with target regions.
+ -black-region [BED] Skip convert fragments overlapped with black regions.
+ -stat    [FILE]    Transposition events per cell.
+ -@       [4]       Thread to unpack and pack files.[4]
+ -disable-offset    Disable Tn5 offset for each fragment.
+```
 
 ### depth
 
 PISA depth generates coverage information for each position of the predefined region(s). The significant difference between PISA depth and samtools depth (<http://www.htslib.org/doc/samtools-depth.html>) is that PISA depth use UMI rather than reads. Besides, PISA depth is strand sensitive, and can produce results for target cells.
 
-    # Count coverage depth or unique UMIs for genome locations.
+```         
+# Count coverage depth or unique UMIs for genome locations.
 
-    Usage : PISA depth [options] sorted.bam [region]
+Usage : PISA depth [options] sorted.bam [region]
 
-    $ PISA depth -cb CB -umi UB -tags GN -region in.bed -o depth.tsv sorted.bam
-    $ PISA depth -cb CB -umi UB sorted.bam chr1:1-2:+
+$ PISA depth -cb CB -umi UB -tags GN -region in.bed -o depth.tsv sorted.bam
+$ PISA depth -cb CB -umi UB sorted.bam chr1:1-2:+
 
-    Options : 
-     -tag      [TAG]      Tag used for grouping reads.
-     -list     [FILE]     Candidate list for -tag.
-     -umi      [TAG]      UMI tag. If set, only count unique UMIs for each location.
-     -bed      [BED]      Target BED region file. If the strand in column six set, only count reads with the same strand.
-     -o        [FILE]     Output depth file. [stdout].
-     -q        [INT]      Minimal map quality to filter. [20]
-     -@        [INT]      Threads to unpack bam. [4]
+Options : 
+ -tag      [TAG]      Tag used for grouping reads.
+ -list     [FILE]     Candidate list for -tag.
+ -umi      [TAG]      UMI tag. If set, only count unique UMIs for each location.
+ -bed      [BED]      Target BED region file. If the strand in column six set, only count reads with the same strand.
+ -o        [FILE]     Output depth file. [stdout].
+ -q        [INT]      Minimal map quality to filter. [20]
+ -@        [INT]      Threads to unpack bam. [4]
 
-    Notice :
-     * Require sorted and indexed BAM as input.
-     * Compare with `samtools depth', PISA depth considers UMIs and strand of reads.
+Notice :
+ * Require sorted and indexed BAM as input.
+ * Compare with `samtools depth', PISA depth considers UMIs and strand of reads.
+```
 
 ### callept
+
 The term ‘EPT’ stands for Expressed Peak Tag. EPTs can be identified by PISA within aligned reads from RNA libraries. Once identified, the relationship between each EPT and its corresponding gene can be annotated and analyzed using the Yano package. This analysis helps in understanding the functional implications of EPTs in gene expression regulation.
 
-The callept tool is designed to call expressed peak tags (EPTs) for indexed BAM files. The peaks are defined with UMI depth >= cutoff. 
+The callept tool is designed to call expressed peak tags (EPTs) for indexed BAM files. The peaks are defined with UMI depth \>= cutoff.
 
-```
+```         
 $ PISA cellept -o epts.bed sorted.bam
 $ PISA cellept -tag CB -list cells.txt -umi UB -o epts.bed sorted.bam
 
@@ -680,24 +681,28 @@ Notice :
  * Compares with `MACS2` and other peak callers, PISA callept considers UMIs and strand of reads.
  * For paired reads, strand of read 2 will be reversed to revert fragment strand.
 ```
+
 ### count2
 
 PISA count generates the MEX format matrix for fragments per peak.
 
-    # Count fragments per peak per cell matrix.
+```         
+# Count fragments per peak per cell matrix.
 
-    $ PISA count2 -bed peaks.bed -t 10 -list barcodes.txt -outdir exp fragments.tsv.gz
+$ PISA count2 -bed peaks.bed -t 10 -list barcodes.txt -outdir exp fragments.tsv.gz
 
-    Options :
-     -list     [FILE]     Barcode white list, used as column names at matrix. If not set, all barcodes will be count.
-     -outdir   [DIR]      Output matrix in MEX format into this fold.
-     -prefix   [STR]      Prefix of output files.
-     -t        [INT]      Threads.
+Options :
+ -list     [FILE]     Barcode white list, used as column names at matrix. If not set, all barcodes will be count.
+ -outdir   [DIR]      Output matrix in MEX format into this fold.
+ -prefix   [STR]      Prefix of output files.
+ -t        [INT]      Threads.
+```
 
 ### mergebed
+
 Merge overlapped regions by strand and name.
 
-```
+```         
 $ PISA mergebed -o merged.bed sample1.bed sample2.bed
 $ PISA mergebed -up 500 -down 500 -o flank.bed peaks.bed
 
@@ -713,10 +718,12 @@ Notice :
  * By default, merging is done with respect to strandness unless -s is set.
  * -up/-down is set respect to strandness, so upstream of plus strand is downstream of minus strand.
 ```
+
 ### annobed
+
 Annotate the type of region and output in a BED like file. The region type can be defined into.
 
-```
+```         
 $ PISA annobed -gtf genes.gtf -o anno.bed in.bed
 
 Options:
@@ -735,11 +742,13 @@ chromosome,start(0based),end(1based),name,score,strand,number of covered genes, 
 Notice :
  * This tool accepts 3 columns or 6 columns bed file(s), strand (+/-) is set in column 6.
  * By default, annotation is done with respect to strandness unless -s is set.
- ```
+```
+
 ### flatten
+
 Convert overlapped into flatten records. If strand exist, the flatten records will be strand sensitive.
 
-```
+```         
 $ PISA flatten -o flatten.bed overlapped.bed
 
 Options:
@@ -753,11 +762,12 @@ reg1 ======
 reg2       =====
 reg3            ======
 ```
+
 ### gtffmt
 
 Format and reorder GTF records.
 
-```
+```         
 $ PISA gtffmt in.gtf
 
 Options:
@@ -766,10 +776,12 @@ Options:
  -key    [all]     Export selected keys in optional fields.
  -report [stderr]  Summary report file.
 ```
+
 ### gtf2bed
 
 Convert GTF file to BED format.
-```
+
+```         
 $ PISA gtf2bed -o merged.bed in.gtf.gz
 
 Options:
@@ -777,6 +789,7 @@ Options:
   -type [gene|transcript|exon]          Covert to bed.
   -name [none|gene|transcript|exon]     Set name for bed.
 ```
+
 ## Deprecated commands
 
 ### parse0

@@ -4,15 +4,15 @@ title: PISA User's Guide
 
 ## Synopsis
 
-```{bash}
+```bash
 PISA [tool] [options] [input-file]
 ```
 
 ## Install
 
-PISA source code can be downloaded at <https://github.com/shiquan/PISA/release>, or the development version from <https://github.com/shiquan/PISA/>. To compile PISA from sources run **make** in the source directory.
+PISA source code can be downloaded at <https://github.com/shiquan/PISA/releases>, or the development version from <https://github.com/shiquan/PISA/>. To compile PISA from sources run **make** in the source directory.
 
-```{bash}
+```bash
 $ git clone https://github.com/shiquan/PISA
 $ cd PISA
 $ make
@@ -22,7 +22,7 @@ $ make
 
 The code snippet below demonstrates how to use the PISA tools to process test data and generate various feature counts. You can find the test data in the PISA/demo directory. This example provides a practical approach to familiarize yourself with the functionality of PISA and to validate its operations with provided sample data.
 
-```{bash}
+```
 $ cd demo
 
 $ ls
@@ -41,7 +41,7 @@ GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCC
 FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF
 
 # Convert raw FASTQ to FASTQ+ format
-$ PISA parse -rule `CR,R1:1-16,barcodes.txt,CB,1;UR,R1:17-28;R1,R2' demo_1.fq.gz demo_2.fq.gz -1 demo.fq
+$ PISA parse -rule 'CR,R1:1-16,barcodes.txt,CB,1;UR,R1:17-28;R1,R2' demo_1.fq.gz demo_2.fq.gz -1 demo.fq
 Number of Fragments,825
 Fragments pass QC,825
 Fragments with Exactly Matched Barcodes,805
@@ -145,7 +145,7 @@ $ PISA pick -tags GN -list gene.txt anno_vcf_bed.bam  -o picked.bam
 [2022-04-22 13:03:01] Real time: 0.009 sec; CPU: 0.016 sec
 
 # Select reads with more features
-$ awk `{printf("%s\tCD44\n", $1)}' barcodes.txt > candidates.txt
+$ awk '{printf("%s\tCD44\n", $1)}' barcodes.txt > candidates.txt
 
 $ cat candidates.txt 
 AAGCATCCACACAGAG    CD44
@@ -183,7 +183,7 @@ CCTGCCCCGCGCCCAGAGATCCTCCAGCTCCTTTCGCCCGCGCCCTACGTTCGCTCCGGACACCATGGACAAGTATTGGT
 
 # Assembly reads mapped to CD44 of the same cell into contigs
 # This step requires Trinity software and seqtk already installed in your environment
-$ PISA stream -tags CB,GN -script `Trinity --seqType fq --SS_lib_type F --single ${FQ} --max_memory 1G 2>/dev/null 1>/dev/null; seqtk rename trinity_out_dir.Trinity.fasta ${UBI}_ 2>/dev/null' -t 10 -fa  -nw ./fsort.fq.gz -o assem.fa
+$ PISA stream -tags CB,GN -script 'Trinity --seqType fq --SS_lib_type F --single ${FQ} --max_memory 1G 2>/dev/null 1>/dev/null; seqtk rename trinity_out_dir.Trinity.fasta ${UBI}_ 2>/dev/null' -t 10 -fa  -nw ./fsort.fq.gz -o assem.fa
 [2022-04-22 13:24:21] Real time: 5.607 sec; CPU: 0.010 sec; Peak RSS: 0.010 GB.
 
 $ seqtk seq assem.fa -l 100 |head 
@@ -231,13 +231,13 @@ GTCCTTTGATCAGTATAATTTTTTAAAGTTACTTTGTCA *   NM:i:1  ms:i:436    AS:i:436    nn:i
 ## List of commands
 
 | Tool     | Description                                                       |
-|:--------------|:--------------------------------------------------------|
-|| ***The following tools are used to process FASTQ/FASTQ+ files.*** |
+|:----------------|:------------------------------------------------------|
+|          | ***The following tools are used to process FASTQ/FASTQ+ files.*** |
 | parse    | Parse barcodes from FASTQ reads to FASTQ+.                        |
 | fsort    | Sort FASTQ+ records by barcodes.                                  |
 | stream   | Perform user-defined process for each read block.                 |
 | addtags  | Add tag string to FASTQ reads.                                    |
-|| ***The following tools are used to process BAM files.***          |
+|          | ***The following tools are used to process BAM files.***          |
 | sam2bam  | Parse FASTQ+ read name and convert SAM to BAM.                    |
 | rmdup    | Remove PCR duplicates per molecular.                              |
 | pick     | Pick alignments with tags.                                        |
@@ -260,13 +260,13 @@ GTCCTTTGATCAGTATAATTTTTTAAAGTTACTTTGTCA *   NM:i:1  ms:i:436    AS:i:436    nn:i
 |          | ***The following tools used to process GTF files.***              |
 | gtffmt   | Format and reorder GTF file.                                      |
 | gtf2bed  | Convert GTF to BED.                                               |
+: {.striped .hover}
 
 ## Commands and options
 
 {{< include _commands.qmd >}}
 
 ## Difference between PISA and CellRanger
-
 
 ## Changelog
 

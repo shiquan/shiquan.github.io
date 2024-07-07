@@ -1,0 +1,28 @@
+/*-- scss:defaults --*/
+
+// Base document colors
+$body-bg: #D3D3D3;
+$body-color: #181818;
+$link-color: #0000E0;
+$light: #181818;
+
+// Code blocks
+$btn-code-copy-color: #EEEEEE;
+$btn-code-copy-color-active: #0000E0;
+$code-block-border-left: false;
+//$code-annotation-higlight-bg: #0000E0;
+$code-block-bg: #111111;
+$code-bg: #EEEEEE;
+$code-color: #000000;
+$pre-color: #000000;
+$input-bg: #EEEEEE;
+
+/*-- scss:rules --*/
+
+// Variables
+
+$web-font-path: "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" !default;
+@if $web-font-path {
+  @import url($web-font-path);
+}
+
