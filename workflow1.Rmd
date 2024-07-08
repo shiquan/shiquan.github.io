@@ -33,7 +33,8 @@ PISA parse -rule 'CB,R1:1-16;UR,R1:17-28;R1,R2' pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_
 ```{bash}
 # Check the fastq+ records
 head reads.fq
-
+```
+```{bash}
 # Check the report
 cat fastq_qc.csv
 ```
