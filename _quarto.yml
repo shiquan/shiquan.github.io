@@ -16,7 +16,6 @@ website:
         text: PISA
       - href: Yano.qmd
         text: Yano
-        
     tools: 
       - icon: github
         href: https://github.com/shiquan
@@ -35,5 +34,5 @@ format:
     page-layout: full
     fontsize: 1em
     highlight-style: github
-freeze: true
+engine: knitr
 editor: visual

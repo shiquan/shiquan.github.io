@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2024-07-08">
 
-<title>Yano User’s Guide</title>
+<title>From fastq to feature counts with PISA</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -126,7 +127,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">PISA</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./Yano.html" aria-current="page"> 
+    <a class="nav-link" href="./Yano.html"> 
 <span class="menu-text">Yano</span></a>
   </li>  
 </ul>
@@ -147,15 +148,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#install" id="toc-install" class="nav-link" data-scroll-target="#install">Install</a></li>
-  <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">Get started</a></li>
-  <li><a href="#manhatten-plot" id="toc-manhatten-plot" class="nav-link" data-scroll-target="#manhatten-plot">Manhatten plot</a></li>
-  <li><a href="#track-plot" id="toc-track-plot" class="nav-link" data-scroll-target="#track-plot">Track plot</a></li>
-  <li><a href="#changelog" id="toc-changelog" class="nav-link" data-scroll-target="#changelog">Changelog</a></li>
-  <li><a href="#todo-list" id="toc-todo-list" class="nav-link" data-scroll-target="#todo-list">TODO list</a></li>
-  <li><a href="#reporting-issues" id="toc-reporting-issues" class="nav-link" data-scroll-target="#reporting-issues">Reporting Issues</a></li>
-  <li><a href="#citation" id="toc-citation" class="nav-link" data-scroll-target="#citation">Citation</a></li>
+  <li><a href="#prepare-the-raw-data-and-reference" id="toc-prepare-the-raw-data-and-reference" class="nav-link active" data-scroll-target="#prepare-the-raw-data-and-reference">Prepare the raw data and reference</a></li>
+  <li><a href="#the-third-party-programs-we-will-use" id="toc-the-third-party-programs-we-will-use" class="nav-link" data-scroll-target="#the-third-party-programs-we-will-use">The third-party programs we will use</a></li>
+  <li><a href="#step-by-step-tutorial" id="toc-step-by-step-tutorial" class="nav-link" data-scroll-target="#step-by-step-tutorial">Step by step tutorial</a>
+  <ul class="collapse">
+  <li><a href="#parse-cell-barcode-and-umi" id="toc-parse-cell-barcode-and-umi" class="nav-link" data-scroll-target="#parse-cell-barcode-and-umi">1. Parse cell barcode and UMI</a></li>
+  <li><a href="#align-reads-with-minimap2" id="toc-align-reads-with-minimap2" class="nav-link" data-scroll-target="#align-reads-with-minimap2">2. Align reads with minimap2</a></li>
+  <li><a href="#convert-sam-to-bam" id="toc-convert-sam-to-bam" class="nav-link" data-scroll-target="#convert-sam-to-bam">3. Convert SAM to BAM</a></li>
+  <li><a href="#gene-annotations" id="toc-gene-annotations" class="nav-link" data-scroll-target="#gene-annotations">4. Gene annotations</a></li>
+  <li><a href="#sort-bam-by-genomics-coordinate-optional" id="toc-sort-bam-by-genomics-coordinate-optional" class="nav-link" data-scroll-target="#sort-bam-by-genomics-coordinate-optional">5. Sort BAM by genomics coordinate (Optional)</a></li>
+  <li><a href="#umis-correction-for-one-cell-in-one-gene" id="toc-umis-correction-for-one-cell-in-one-gene" class="nav-link" data-scroll-target="#umis-correction-for-one-cell-in-one-gene">6. UMIs correction for one cell in one gene</a></li>
+  <li><a href="#generate-cell-x-gene-expression-matrix" id="toc-generate-cell-x-gene-expression-matrix" class="nav-link" data-scroll-target="#generate-cell-x-gene-expression-matrix">7. Generate Cell X Gene expression matrix</a></li>
+  <li><a href="#cell-selection-with-dropletutils" id="toc-cell-selection-with-dropletutils" class="nav-link" data-scroll-target="#cell-selection-with-dropletutils">8. Cell selection with DropletUtils</a></li>
+  </ul></li>
+  <li><a href="#useful-resorces" id="toc-useful-resorces" class="nav-link" data-scroll-target="#useful-resorces">Useful resorces</a></li>
   </ul>
 </nav>
     </div>
@@ -164,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Yano User’s Guide</h1>
+<h1 class="title">From fastq to feature counts with PISA</h1>
 </div>
 
 
@@ -172,6 +178,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta column-page-left">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 8, 2024</p>
+    </div>
+  </div>
   
     
   </div>
@@ -181,47 +193,170 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Yano represents an R/C toolkit designed for conducting spatial dissimilarity analysis on single-cell RNA sequencing data. This method revolves around the core concept of examining the distinct expression patterns of a given feature (e.g.&nbsp;exon, snp allele) in relation to its associated binding feature (typically a gene or another allele at the same genomic locus) within the context of cell lineage (1D), spatial position (2D), or the multi-dimensional PCA space. The discernible differences in feature expression patterns and their binding features provide insights into a range of biological phenomena, including alternative splicing, cis-antisense RNA regulation, allele-specific gene expression, and more.</p>
-<p>Yano is seamlessly integrated with Seurat, building upon the Seurat object’s framework. Users can perform conventional cell clustering analyses using the state-of-the-art Seurat pipeline and then incorporate exon, SNP counts as new “assays” within the Seurat objects. Subsequently, Yano facilitates the assessment of spatial dissimilarity between these two assays. For more details about the method, please refer to our manuscript.</p>
-<p>For those seeking quick guidance, please refer directly to the user cases.</p>
+<p>The following vignette demonstrates how to parse raw FASTQ files to FASTQ+ format and perform alignment, feature annotation, and counting using PISA. For simplification, we use minimap2 to align reads in this example, but other tools such as STAR can also be used.</p>
+<section id="prepare-the-raw-data-and-reference" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-the-raw-data-and-reference">Prepare the raw data and reference</h2>
+<ul>
+<li>Download raw data: <a href="http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v3/pbmc_1k_v3_fastqs.tar" class="uri">http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v3/pbmc_1k_v3_fastqs.tar</a> (5.2G)</li>
+<li>Download the human reference databases and gene annotation files:
+<ul>
+<li><a href="https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/GRCh38.p13.genome.fa.gz" class="uri">https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/GRCh38.p13.genome.fa.gz</a></li>
+<li><a href="https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.annotation.gtf.gz" class="uri">https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.annotation.gtf.gz</a></li>
+</ul></li>
+</ul>
 </section>
-<section id="install" class="level2">
-<h2 class="anchored" data-anchor-id="install">Install</h2>
-<p>This package has been tested on Linux and macOS platforms.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prerequisite packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("BiocManager", "Seurat", "R.utils", "viridis", "devtools"))</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># BiocManager::install(c("Rhtslib"))</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># install Yano </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"shiquan/Yano"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong><em>Notice:</em></strong></p>
-<p>
-<small> Multithread mode is disabled for macOS due to the lack of OpenMP support by default. For experts, to enable multithread, you can try installing GCC to compile this package.</small>
-</p>
+<section id="the-third-party-programs-we-will-use" class="level2">
+<h2 class="anchored" data-anchor-id="the-third-party-programs-we-will-use">The third-party programs we will use</h2>
+<ul>
+<li>minimap2 (<a href="https://github.com/lh3/minimap2" class="uri">https://github.com/lh3/minimap2</a>)</li>
+<li>samtools (<a href="https://github.com/samtools/samtools" class="uri">https://github.com/samtools/samtools</a>)</li>
+</ul>
 </section>
-<section id="get-started" class="level2">
-<h2 class="anchored" data-anchor-id="get-started">Get started</h2>
+<section id="step-by-step-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="step-by-step-tutorial">Step by step tutorial</h2>
+<section id="parse-cell-barcode-and-umi" class="level3">
+<h3 class="anchored" data-anchor-id="parse-cell-barcode-and-umi">1. Parse cell barcode and UMI</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unpack the raw fastq</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xvf pbmc_1k_v3_fastqs.tar </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gzip</span> <span class="at">-d</span> GRCh38.p13.genome.fa.gz</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert raw fastq to fastq+</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> parse <span class="at">-rule</span> <span class="st">'CB,R1:1-16;UR,R1:17-28;R1,R2'</span> pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L001_R1_001.fastq.gz,pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L002_R1_001.fastq.gz pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L001_R2_001.fastq.gz,pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L002_R2_001.fastq.gz <span class="at">-nw</span> <span class="at">-report</span> fastq_qc.csv <span class="at">-1</span> reads.fq </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the fastq+ records</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> reads.fq</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the report</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> fastq_qc.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>@A00228:279:HFWFVDMXX:1:1101:8486:1000|||CB:Z:NGTGATTAGCTGTACT|||UR:Z:CGTATGTAAGGT
+NACAAAGTCCCCCCCATAATACAGGGGGAGCCACTTGGGCAGGAGGCAGGGAGGGGTCCATTCCCCCTGGTGGGGCTGGTGGGGAGCTGTA
++
+#FFFFFFFFFFFFFFF:FFFFFFF:FFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFFFFFFFF
+@A00228:279:HFWFVDMXX:1:1101:10782:1000|||CB:Z:NTCATGAAGTTTGGCT|||UR:Z:AGTTATGTTCAT
+NTTGCAGCTGAACTGGTAAACTTGTCCCTAAAGAGACATAAGAATGGTCAACTGGAATGTGGATTCATCTGTAACATTACTCAGTGGGCCT
++
+#FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+@A00228:279:HFWFVDMXX:1:1101:12626:1000|||CB:Z:NACCAAAAGGACATCG|||UR:Z:CGGTAGAGGCTT
+GCTCCGTAGCCCTGACTGCCTTGGTGACTGTATCCTCAGAAGAATTTGAAGACAAGTGGTTCAGAAAGATCAAAGACCATTTCTGTCCATT
+Number of Fragments,66601887
+Fragments pass QC,66601887
+Fragments with Exactly Matched Barcodes,0
+Fragments with Failed Barcodes,0</code></pre>
+</div>
+</div>
 </section>
-<section id="manhatten-plot" class="level2">
-<h2 class="anchored" data-anchor-id="manhatten-plot">Manhatten plot</h2>
+<section id="align-reads-with-minimap2" class="level3">
+<h3 class="anchored" data-anchor-id="align-reads-with-minimap2">2. Align reads with minimap2</h3>
+<p>To get identical results with 10X’s Cell Ranger, you need use 10X’s gtf to index genome and annotate BAM as they modified it from original ENSEMBL gtf.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">minimap2</span> <span class="at">-t</span> 8 <span class="at">-ax</span> splice GRCh38.p13.genome.fa reads.fq <span class="op">&gt;</span> aln.sam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice : Please do NOT use samtools view to convert the SAM to BAM. Because the barcode information still store in the read name. Using PISA sam2bam instead.</p>
+<p>FASTQ+ aligned SAM records can be look like this.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view aln.sam<span class="kw">|</span><span class="fu">head</span> <span class="at">-n</span> 1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A00228:279:HFWFVDMXX:1:1101:8486:1000|||CB:Z:NGTGATTAGCTGTACT|||UR:Z:CGTATGTAAGGT   0   chr19   12748180    60  1S90M   *   0   0   NACAAAGTCCCCCCCATAATACAGGGGGAGCCACTTGGGCAGGAGGCAGGGAGGGGTCCATTCCCCCTGGTGGGGCTGGTGGGGAGCTGTA #FFFFFFFFFFFFFFF:FFFFFFF:FFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFFFFFFFF NM:i:0  ms:i:90 AS:i:90 nn:i:0  tp:A:P  cm:i:25 s1:i:85 s2:i:0  de:f:0  rl:i:0</code></pre>
+</div>
+</div>
 </section>
-<section id="track-plot" class="level2">
-<h2 class="anchored" data-anchor-id="track-plot">Track plot</h2>
+<section id="convert-sam-to-bam" class="level3">
+<h3 class="anchored" data-anchor-id="convert-sam-to-bam">3. Convert SAM to BAM</h3>
+<p>This step will convert the SAM to BAM, while generating the summary of alignments and parse the tags from the read id to SAM optional field. If <code>-adjust-mapq</code> and <code>-gtf</code> parameters set, mapping quality of multi-reads (reads mapped to one gene region and more than one integenic region) will be adjusted.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> sam2bam <span class="at">-report</span> alignment_report.csv <span class="at">-@</span> 5 <span class="at">-adjust-mapq</span> <span class="at">-gtf</span> gencode.v32.annotation.gtf.gz <span class="at">-o</span> aln.bam aln.sam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Converted records can be look like this.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view aln.bam<span class="kw">|</span><span class="fu">head</span> <span class="at">-n</span> 1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A00228:279:HFWFVDMXX:1:1101:8486:1000   0   chr19   12748180    60  1S90M   *   0   0   NACAAAGTCCCCCCCATAATACAGGGGGAGCCACTTGGGCAGGAGGCAGGGAGGGGTCCATTCCCCCTGGTGGGGCTGGTGGGGAGCTGTA #FFFFFFFFFFFFFFF:FFFFFFF:FFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFFFFFFFF NM:i:0  ms:i:90 AS:i:90 nn:i:0  tp:A:P  cm:i:25 s1:i:85 s2:i:0  de:f:0  rl:i:0  CB:Z:NGTGATTAGCTGTACT   UR:Z:CGTATGTAAGGT</code></pre>
+</div>
+</div>
+<p>And the summary.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> alignment_report.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Raw reads,66601887
+Mapped reads,52582556 (78.95%)
+Plus strand,29549905
+Minus strand,23032651
+Mitochondria ratio,7.66%
+Mapping quality corrected reads,427081</code></pre>
+</div>
+</div>
 </section>
-<section id="changelog" class="level2">
-<h2 class="anchored" data-anchor-id="changelog">Changelog</h2>
+<section id="gene-annotations" class="level3">
+<h3 class="anchored" data-anchor-id="gene-annotations">4. Gene annotations</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-gtf</span> gencode.v32.annotation.gtf.gz <span class="at">-o</span> anno.bam aln.bam <span class="at">-t</span> 5 <span class="at">-report</span> anno.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> anno.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reads Mapped to Genome (Map Quality &gt;= 0),79.0%
+Reads Mapped to Exonic Regions,62.4%
+Reads Mapped to Intronic Regions,24.5%
+Reads Mapped to both Exonic and Intronic Regions,1.8%
+Reads Mapped Antisense to Exon,0.8%
+Reads Mapped Antisense to Intron,6.7%
+Reads Mapped to Intergenic Regions,3.7%
+Reads Mapped to Gene but Failed to Interpret Type,0.1%
+Reads Mapped to Overlapped genes,1.5%</code></pre>
+</div>
+</div>
 </section>
-<section id="todo-list" class="level2">
-<h2 class="anchored" data-anchor-id="todo-list">TODO list</h2>
+<section id="sort-bam-by-genomics-coordinate-optional" class="level3">
+<h3 class="anchored" data-anchor-id="sort-bam-by-genomics-coordinate-optional">5. Sort BAM by genomics coordinate (Optional)</h3>
+<p>Sorted and indexed bam can be further used to do a lot of secondary analysis, but it’s not mandatory if you just want the gene expression count matrix. Because annotation and expression count step do not require a sorted bam. However, the <code>corr</code> step will generate non-robust results if records are not sorted.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">## sambamba can also be used to sort bam for better performance. For simplication, we use samtools here.</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> sort <span class="at">-@</span> 5 <span class="at">-o</span> sorted.bam anno.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="reporting-issues" class="level2">
-<h2 class="anchored" data-anchor-id="reporting-issues">Reporting Issues</h2>
+<section id="umis-correction-for-one-cell-in-one-gene" class="level3">
+<h3 class="anchored" data-anchor-id="umis-correction-for-one-cell-in-one-gene">6. UMIs correction for one cell in one gene</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> corr <span class="at">-tag</span> UR <span class="at">-new-tag</span> UB <span class="at">-tags-block</span> CB,GN <span class="at">-cr</span> <span class="at">-o</span> final.bam <span class="at">-@</span> 5 sorted.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="citation" class="level2">
-<h2 class="anchored" data-anchor-id="citation">Citation</h2>
+<section id="generate-cell-x-gene-expression-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="generate-cell-x-gene-expression-matrix">7. Generate Cell X Gene expression matrix</h3>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> raw_gene_expression</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> GN <span class="at">-umi</span> UB <span class="at">-outdir</span> raw_gene_expression <span class="at">-@</span> 5 final.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>PISA count</code> will write the feature counts in MEX format.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> raw_gene_expression</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>barcodes.tsv.gz
+features.tsv.gz
+matrix.mtx.gz</code></pre>
+</div>
+</div>
+</section>
+<section id="cell-selection-with-dropletutils" class="level3">
+<h3 class="anchored" data-anchor-id="cell-selection-with-dropletutils">8. Cell selection with DropletUtils</h3>
+<p>In the last step, we generate a raw gene expression matrix. By using R package <a href="https://bioconductor.org/packages/release/bioc/vignettes/DropletUtils/inst/doc/DropletUtils.html">DropletUtils</a>, we select “valid’ cell barcodes from this raw matrix and generate a filtered gene expression matrix in the end.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load required packages</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(DropletUtils)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Yano)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Read raw MEX file into a sparse matrix</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"raw_gene_expression/"</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Read sparse matrix as a SingleCellExperiment object</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">SingleCellExperiment</span>(<span class="fu">list</span>(<span class="st">'counts'</span> <span class="ot">=</span> counts))</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Run barcodeRanks function from DropletUtils, see ref for details</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>br.out <span class="ot">&lt;-</span> <span class="fu">barcodeRanks</span>(sce)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all barcodes above the inflection point</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>filter_bcs <span class="ot">&lt;-</span> <span class="fu">rownames</span>(br.out)[br.out<span class="sc">$</span>total <span class="sc">&gt;</span><span class="fu">metadata</span>(br.out)<span class="sc">$</span>inflection]</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co"># the filer matrix</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>filter_counts <span class="ot">&lt;-</span> counts[,filter_bcs]</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="co"># write file to new folder in 10X format for further use</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="fu">write10xCounts</span>(<span class="st">"filtered_gene_expression"</span>, filter_counts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="useful-resorces" class="level2">
+<h2 class="anchored" data-anchor-id="useful-resorces">Useful resorces</h2>
+<ul>
+<li>https://bioconductor.org/packages/release/bioc/vignettes/DropletUtils/inst/doc/DropletUtils.html</li>
+<li>https://support.10xgenomics.com/single-cell-gene-expression/datasets/3.0.0/pbmc_1k_v3</li>
+</ul>
 
 
 </section>

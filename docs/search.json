@@ -1,5 +1,82 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "",
+    "section": "",
+    "text": "This website outlines the key tools and software packages developed from my research:\n\n\nFASTQ+: This format enhances the standard FASTQ file by integrating barcode information directly into the read name. This modification facilitates the harmonization of single-cell sequencing data across various platforms. FASTQ+ can be generated with PISA.\nPISA: A suite of programs specifically designed for preprocessing data from single-cell sequencing and spatial transcriptomics. It efficiently processes FASTQ+, BAM, and BED files, streamlining the handling and generates various feature counts, facilitating the downstream analyses necessary for in-depth biological insights.\nYano: An R package that employs the spatial dissimilarity test method as its core algorithm. Yano is tailored for exploring various biological events in single-cell data, including alternative splicing, allele-specific gene expression, and more, providing comprehensive insights into cellular dynamics.\n\nWorkflows\n\nFrom raw reads to gene counts (PISA)\nAlternative splicing analysis for scRNA-seq (PISA + Seurat + Yano)\nAllele-specific gene expression analysis for scRNA-seq (PISA + Seurat + Yano)\nAnnotate and visualise genetic varaints for scRNA-seq (Yano)\nPrioritize non-exonic reads in scRNA-seq (PISA + Seurat + Yano)"
+  },
+  {
+    "objectID": "Yano.html",
+    "href": "Yano.html",
+    "title": "Yano User’s Guide",
+    "section": "",
+    "text": "Yano represents an R/C toolkit designed for conducting spatial dissimilarity analysis on single-cell RNA sequencing data. This method revolves around the core concept of examining the distinct expression patterns of a given feature (e.g. exon, snp allele) in relation to its associated binding feature (typically a gene or another allele at the same genomic locus) within the context of cell lineage (1D), spatial position (2D), or the multi-dimensional PCA space. The discernible differences in feature expression patterns and their binding features provide insights into a range of biological phenomena, including alternative splicing, cis-antisense RNA regulation, allele-specific gene expression, and more.\nYano is seamlessly integrated with Seurat, building upon the Seurat object’s framework. Users can perform conventional cell clustering analyses using the state-of-the-art Seurat pipeline and then incorporate exon, SNP counts as new “assays” within the Seurat objects. Subsequently, Yano facilitates the assessment of spatial dissimilarity between these two assays. For more details about the method, please refer to our manuscript.\nFor those seeking quick guidance, please refer directly to the user cases."
+  },
+  {
+    "objectID": "Yano.html#introduction",
+    "href": "Yano.html#introduction",
+    "title": "Yano User’s Guide",
+    "section": "",
+    "text": "Yano represents an R/C toolkit designed for conducting spatial dissimilarity analysis on single-cell RNA sequencing data. This method revolves around the core concept of examining the distinct expression patterns of a given feature (e.g. exon, snp allele) in relation to its associated binding feature (typically a gene or another allele at the same genomic locus) within the context of cell lineage (1D), spatial position (2D), or the multi-dimensional PCA space. The discernible differences in feature expression patterns and their binding features provide insights into a range of biological phenomena, including alternative splicing, cis-antisense RNA regulation, allele-specific gene expression, and more.\nYano is seamlessly integrated with Seurat, building upon the Seurat object’s framework. Users can perform conventional cell clustering analyses using the state-of-the-art Seurat pipeline and then incorporate exon, SNP counts as new “assays” within the Seurat objects. Subsequently, Yano facilitates the assessment of spatial dissimilarity between these two assays. For more details about the method, please refer to our manuscript.\nFor those seeking quick guidance, please refer directly to the user cases."
+  },
+  {
+    "objectID": "Yano.html#install",
+    "href": "Yano.html#install",
+    "title": "Yano User’s Guide",
+    "section": "Install",
+    "text": "Install\nThis package has been tested on Linux and macOS platforms.\n# Prerequisite packages\n# install.packages(c(\"BiocManager\", \"Seurat\", \"R.utils\", \"viridis\", \"devtools\"))\n\n# BiocManager::install(c(\"Rhtslib\"))\n\n# install Yano \ndevtools::install_github(\"shiquan/Yano\")\nNotice:\n\n Multithread mode is disabled for macOS due to the lack of OpenMP support by default. For experts, to enable multithread, you can try installing GCC to compile this package."
+  },
+  {
+    "objectID": "Yano.html#get-started",
+    "href": "Yano.html#get-started",
+    "title": "Yano User’s Guide",
+    "section": "Get started",
+    "text": "Get started"
+  },
+  {
+    "objectID": "Yano.html#manhatten-plot",
+    "href": "Yano.html#manhatten-plot",
+    "title": "Yano User’s Guide",
+    "section": "Manhatten plot",
+    "text": "Manhatten plot"
+  },
+  {
+    "objectID": "Yano.html#track-plot",
+    "href": "Yano.html#track-plot",
+    "title": "Yano User’s Guide",
+    "section": "Track plot",
+    "text": "Track plot"
+  },
+  {
+    "objectID": "Yano.html#changelog",
+    "href": "Yano.html#changelog",
+    "title": "Yano User’s Guide",
+    "section": "Changelog",
+    "text": "Changelog"
+  },
+  {
+    "objectID": "Yano.html#todo-list",
+    "href": "Yano.html#todo-list",
+    "title": "Yano User’s Guide",
+    "section": "TODO list",
+    "text": "TODO list"
+  },
+  {
+    "objectID": "Yano.html#reporting-issues",
+    "href": "Yano.html#reporting-issues",
+    "title": "Yano User’s Guide",
+    "section": "Reporting Issues",
+    "text": "Reporting Issues"
+  },
+  {
+    "objectID": "Yano.html#citation",
+    "href": "Yano.html#citation",
+    "title": "Yano User’s Guide",
+    "section": "Citation",
+    "text": "Citation"
+  },
+  {
     "objectID": "fastq.html",
     "href": "fastq.html",
     "title": "The FASTQ+ Format Specification",
@@ -126,80 +203,38 @@
     "text": "Citation\nShi Q, Liu S, Kristiansen K, Liu L. The FASTQ+ format and PISA. Bioinformatics. 2022 Sep 30;38(19):4639-4642. doi: 10.1093/bioinformatics/btac562. PMID: 35993907."
   },
   {
-    "objectID": "Yano.html",
-    "href": "Yano.html",
-    "title": "Yano User’s Guide",
+    "objectID": "workflow1.html",
+    "href": "workflow1.html",
+    "title": "From fastq to feature counts with PISA",
     "section": "",
-    "text": "Yano represents an R/C toolkit designed for conducting spatial dissimilarity analysis on single-cell RNA sequencing data. This method revolves around the core concept of examining the distinct expression patterns of a given feature (e.g. exon, snp allele) in relation to its associated binding feature (typically a gene or another allele at the same genomic locus) within the context of cell lineage (1D), spatial position (2D), or the multi-dimensional PCA space. The discernible differences in feature expression patterns and their binding features provide insights into a range of biological phenomena, including alternative splicing, cis-antisense RNA regulation, allele-specific gene expression, and more.\nYano is seamlessly integrated with Seurat, building upon the Seurat object’s framework. Users can perform conventional cell clustering analyses using the state-of-the-art Seurat pipeline and then incorporate exon, SNP counts as new “assays” within the Seurat objects. Subsequently, Yano facilitates the assessment of spatial dissimilarity between these two assays. For more details about the method, please refer to our manuscript.\nFor those seeking quick guidance, please refer directly to the user cases."
+    "text": "The following vignette demonstrates how to parse raw FASTQ files to FASTQ+ format and perform alignment, feature annotation, and counting using PISA. For simplification, we use minimap2 to align reads in this example, but other tools such as STAR can also be used."
   },
   {
-    "objectID": "Yano.html#introduction",
-    "href": "Yano.html#introduction",
-    "title": "Yano User’s Guide",
-    "section": "",
-    "text": "Yano represents an R/C toolkit designed for conducting spatial dissimilarity analysis on single-cell RNA sequencing data. This method revolves around the core concept of examining the distinct expression patterns of a given feature (e.g. exon, snp allele) in relation to its associated binding feature (typically a gene or another allele at the same genomic locus) within the context of cell lineage (1D), spatial position (2D), or the multi-dimensional PCA space. The discernible differences in feature expression patterns and their binding features provide insights into a range of biological phenomena, including alternative splicing, cis-antisense RNA regulation, allele-specific gene expression, and more.\nYano is seamlessly integrated with Seurat, building upon the Seurat object’s framework. Users can perform conventional cell clustering analyses using the state-of-the-art Seurat pipeline and then incorporate exon, SNP counts as new “assays” within the Seurat objects. Subsequently, Yano facilitates the assessment of spatial dissimilarity between these two assays. For more details about the method, please refer to our manuscript.\nFor those seeking quick guidance, please refer directly to the user cases."
+    "objectID": "workflow1.html#prepare-the-raw-data-and-reference",
+    "href": "workflow1.html#prepare-the-raw-data-and-reference",
+    "title": "From fastq to feature counts with PISA",
+    "section": "Prepare the raw data and reference",
+    "text": "Prepare the raw data and reference\n\nDownload raw data: http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v3/pbmc_1k_v3_fastqs.tar (5.2G)\nDownload the human reference databases and gene annotation files:\n\nhttps://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/GRCh38.p13.genome.fa.gz\nhttps://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.annotation.gtf.gz"
   },
   {
-    "objectID": "Yano.html#install",
-    "href": "Yano.html#install",
-    "title": "Yano User’s Guide",
-    "section": "Install",
-    "text": "Install\nThis package has been tested on Linux and macOS platforms.\ninstall.packages(c(\"BiocManager\", \"Seurat\", \"R.utils\", \"viridis\", \"devtools\"), repos = \"https://cloud.r-project.org\")\n\nBiocManager::install(c(\"Rhtslib\"))\n\n# install Yano \ndevtools::install_github(\"shiquan/Yano\")\nNotice: \n\n Multithread mode is disabled for macOS due to the lack of OpenMP support by default. For experts, to enable multithread, you can try installing GCC to compile this package."
+    "objectID": "workflow1.html#the-third-party-programs-we-will-use",
+    "href": "workflow1.html#the-third-party-programs-we-will-use",
+    "title": "From fastq to feature counts with PISA",
+    "section": "The third-party programs we will use",
+    "text": "The third-party programs we will use\n\nminimap2 (https://github.com/lh3/minimap2)\nsamtools (https://github.com/samtools/samtools)"
   },
   {
-    "objectID": "Yano.html#get-started",
-    "href": "Yano.html#get-started",
-    "title": "Yano User’s Guide",
-    "section": "Get started",
-    "text": "Get started"
+    "objectID": "workflow1.html#step-by-step-tutorial",
+    "href": "workflow1.html#step-by-step-tutorial",
+    "title": "From fastq to feature counts with PISA",
+    "section": "Step by step tutorial",
+    "text": "Step by step tutorial\n\n1. Parse cell barcode and UMI\n# Unpack the raw fastq\ntar xvf pbmc_1k_v3_fastqs.tar \ngzip -d GRCh38.p13.genome.fa.gz\n\n# Convert raw fastq to fastq+\nPISA parse -rule 'CB,R1:1-16;UR,R1:17-28;R1,R2' pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L001_R1_001.fastq.gz,pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L002_R1_001.fastq.gz pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L001_R2_001.fastq.gz,pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L002_R2_001.fastq.gz -nw -report fastq_qc.csv -1 reads.fq \n\n# Check the fastq+ records\nhead reads.fq\n\n# Check the report\ncat fastq_qc.csv\n\n@A00228:279:HFWFVDMXX:1:1101:8486:1000|||CB:Z:NGTGATTAGCTGTACT|||UR:Z:CGTATGTAAGGT\nNACAAAGTCCCCCCCATAATACAGGGGGAGCCACTTGGGCAGGAGGCAGGGAGGGGTCCATTCCCCCTGGTGGGGCTGGTGGGGAGCTGTA\n+\n#FFFFFFFFFFFFFFF:FFFFFFF:FFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFFFFFFFF\n@A00228:279:HFWFVDMXX:1:1101:10782:1000|||CB:Z:NTCATGAAGTTTGGCT|||UR:Z:AGTTATGTTCAT\nNTTGCAGCTGAACTGGTAAACTTGTCCCTAAAGAGACATAAGAATGGTCAACTGGAATGTGGATTCATCTGTAACATTACTCAGTGGGCCT\n+\n#FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF\n@A00228:279:HFWFVDMXX:1:1101:12626:1000|||CB:Z:NACCAAAAGGACATCG|||UR:Z:CGGTAGAGGCTT\nGCTCCGTAGCCCTGACTGCCTTGGTGACTGTATCCTCAGAAGAATTTGAAGACAAGTGGTTCAGAAAGATCAAAGACCATTTCTGTCCATT\nNumber of Fragments,66601887\nFragments pass QC,66601887\nFragments with Exactly Matched Barcodes,0\nFragments with Failed Barcodes,0\n\n\n\n\n2. Align reads with minimap2\nTo get identical results with 10X’s Cell Ranger, you need use 10X’s gtf to index genome and annotate BAM as they modified it from original ENSEMBL gtf.\nminimap2 -t 8 -ax splice GRCh38.p13.genome.fa reads.fq &gt; aln.sam\nNotice : Please do NOT use samtools view to convert the SAM to BAM. Because the barcode information still store in the read name. Using PISA sam2bam instead.\nFASTQ+ aligned SAM records can be look like this.\n\nsamtools view aln.sam|head -n 1\n\nA00228:279:HFWFVDMXX:1:1101:8486:1000|||CB:Z:NGTGATTAGCTGTACT|||UR:Z:CGTATGTAAGGT   0   chr19   12748180    60  1S90M   *   0   0   NACAAAGTCCCCCCCATAATACAGGGGGAGCCACTTGGGCAGGAGGCAGGGAGGGGTCCATTCCCCCTGGTGGGGCTGGTGGGGAGCTGTA #FFFFFFFFFFFFFFF:FFFFFFF:FFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFFFFFFFF NM:i:0  ms:i:90 AS:i:90 nn:i:0  tp:A:P  cm:i:25 s1:i:85 s2:i:0  de:f:0  rl:i:0\n\n\n\n\n3. Convert SAM to BAM\nThis step will convert the SAM to BAM, while generating the summary of alignments and parse the tags from the read id to SAM optional field. If -adjust-mapq and -gtf parameters set, mapping quality of multi-reads (reads mapped to one gene region and more than one integenic region) will be adjusted.\nPISA sam2bam -report alignment_report.csv -@ 5 -adjust-mapq -gtf gencode.v32.annotation.gtf.gz -o aln.bam aln.sam\nConverted records can be look like this.\n\nsamtools view aln.bam|head -n 1\n\nA00228:279:HFWFVDMXX:1:1101:8486:1000   0   chr19   12748180    60  1S90M   *   0   0   NACAAAGTCCCCCCCATAATACAGGGGGAGCCACTTGGGCAGGAGGCAGGGAGGGGTCCATTCCCCCTGGTGGGGCTGGTGGGGAGCTGTA #FFFFFFFFFFFFFFF:FFFFFFF:FFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFFFFFFFF NM:i:0  ms:i:90 AS:i:90 nn:i:0  tp:A:P  cm:i:25 s1:i:85 s2:i:0  de:f:0  rl:i:0  CB:Z:NGTGATTAGCTGTACT   UR:Z:CGTATGTAAGGT\n\n\nAnd the summary.\n\ncat alignment_report.csv\n\nRaw reads,66601887\nMapped reads,52582556 (78.95%)\nPlus strand,29549905\nMinus strand,23032651\nMitochondria ratio,7.66%\nMapping quality corrected reads,427081\n\n\n\n\n4. Gene annotations\nPISA anno -gtf gencode.v32.annotation.gtf.gz -o anno.bam aln.bam -t 5 -report anno.csv\n\ncat anno.csv\n\nReads Mapped to Genome (Map Quality &gt;= 0),79.0%\nReads Mapped to Exonic Regions,62.4%\nReads Mapped to Intronic Regions,24.5%\nReads Mapped to both Exonic and Intronic Regions,1.8%\nReads Mapped Antisense to Exon,0.8%\nReads Mapped Antisense to Intron,6.7%\nReads Mapped to Intergenic Regions,3.7%\nReads Mapped to Gene but Failed to Interpret Type,0.1%\nReads Mapped to Overlapped genes,1.5%\n\n\n\n\n5. Sort BAM by genomics coordinate (Optional)\nSorted and indexed bam can be further used to do a lot of secondary analysis, but it’s not mandatory if you just want the gene expression count matrix. Because annotation and expression count step do not require a sorted bam. However, the corr step will generate non-robust results if records are not sorted.\n## sambamba can also be used to sort bam for better performance. For simplication, we use samtools here.\nsamtools sort -@ 5 -o sorted.bam anno.bam\n\n\n6. UMIs correction for one cell in one gene\nPISA corr -tag UR -new-tag UB -tags-block CB,GN -cr -o final.bam -@ 5 sorted.bam\n\n\n7. Generate Cell X Gene expression matrix\nmkdir raw_gene_expression\nPISA count -tags CB -anno-tag GN -umi UB -outdir raw_gene_expression -@ 5 final.bam\nPISA count will write the feature counts in MEX format.\n\nls raw_gene_expression\n\nbarcodes.tsv.gz\nfeatures.tsv.gz\nmatrix.mtx.gz\n\n\n\n\n8. Cell selection with DropletUtils\nIn the last step, we generate a raw gene expression matrix. By using R package DropletUtils, we select “valid’ cell barcodes from this raw matrix and generate a filtered gene expression matrix in the end.\n# load required packages\nrequire(DropletUtils)\nrequire(Yano)\n\n# Read raw MEX file into a sparse matrix\ncounts &lt;- ReadPISA(\"raw_gene_expression/\")\n\n# Read sparse matrix as a SingleCellExperiment object\nsce &lt;- SingleCellExperiment(list('counts' = counts))\n\n# Run barcodeRanks function from DropletUtils, see ref for details\nbr.out &lt;- barcodeRanks(sce)\n\n# Get all barcodes above the inflection point\nfilter_bcs &lt;- rownames(br.out)[br.out$total &gt;metadata(br.out)$inflection]\n\n# the filer matrix\nfilter_counts &lt;- counts[,filter_bcs]\n\n# write file to new folder in 10X format for further use\nwrite10xCounts(\"filtered_gene_expression\", filter_counts)"
   },
   {
-    "objectID": "Yano.html#manhatten-plot",
-    "href": "Yano.html#manhatten-plot",
-    "title": "Yano User’s Guide",
-    "section": "Manhatten plot",
-    "text": "Manhatten plot"
-  },
-  {
-    "objectID": "Yano.html#track-plot",
-    "href": "Yano.html#track-plot",
-    "title": "Yano User’s Guide",
-    "section": "Track plot",
-    "text": "Track plot"
-  },
-  {
-    "objectID": "Yano.html#changelog",
-    "href": "Yano.html#changelog",
-    "title": "Yano User’s Guide",
-    "section": "Changelog",
-    "text": "Changelog"
-  },
-  {
-    "objectID": "Yano.html#todo-list",
-    "href": "Yano.html#todo-list",
-    "title": "Yano User’s Guide",
-    "section": "TODO list",
-    "text": "TODO list"
-  },
-  {
-    "objectID": "Yano.html#reporting-issues",
-    "href": "Yano.html#reporting-issues",
-    "title": "Yano User’s Guide",
-    "section": "Reporting Issues",
-    "text": "Reporting Issues"
-  },
-  {
-    "objectID": "Yano.html#citation",
-    "href": "Yano.html#citation",
-    "title": "Yano User’s Guide",
-    "section": "Citation",
-    "text": "Citation"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "",
-    "section": "",
-    "text": "This website outlines the key tools and software packages developed from my research:\n\n\nFASTQ+: This format enhances the standard FASTQ file by integrating barcode information directly into the read name. This modification facilitates the harmonization of single-cell sequencing data across various platforms. FASTQ+ can be generated with PISA.\nPISA: A suite of programs specifically designed for preprocessing data from single-cell sequencing and spatial transcriptomics. It efficiently processes FASTQ+, BAM, and BED files, streamlining the handling and generates various feature counts, facilitating the downstream analyses necessary for in-depth biological insights.\nYano: An R package that employs the spatial dissimilarity test method as its core algorithm. Yano is tailored for exploring various biological events in single-cell data, including alternative splicing, allele-specific gene expression, and more, providing comprehensive insights into cellular dynamics.\n\nWorkflows\n\nFrom raw reads to gene counts (PISA)\nAlternative splicing analysis for scRNA-seq (PISA + Seurat + Yano)\nAllele-specific gene expression analysis for scRNA-seq (PISA + Seurat + Yano)\nSelect and assembly short reads in complex genetic regions (PISA)\nPrioritize non-exonic reads in scRNA-seq (PISA + Seurat + Yano)"
+    "objectID": "workflow1.html#useful-resorces",
+    "href": "workflow1.html#useful-resorces",
+    "title": "From fastq to feature counts with PISA",
+    "section": "Useful resorces",
+    "text": "Useful resorces\n\nhttps://bioconductor.org/packages/release/bioc/vignettes/DropletUtils/inst/doc/DropletUtils.html\nhttps://support.10xgenomics.com/single-cell-gene-expression/datasets/3.0.0/pbmc_1k_v3"
   }
 ]
