@@ -1,7 +1,9 @@
 ---
 title: Yano User's Guide
 ---
+
 ## Introduction
+
 Yano represents an R/C toolkit designed for conducting spatial dissimilarity analysis on single-cell RNA sequencing data. This method revolves around the core concept of examining the distinct expression patterns of a given feature (e.g. exon, snp allele) in relation to its associated binding feature (typically a gene or another allele at the same genomic locus) within the context of cell lineage (1D), spatial position (2D), or the multi-dimensional PCA space. The discernible differences in feature expression patterns and their binding features provide insights into a range of biological phenomena, including alternative splicing, cis-antisense RNA regulation, allele-specific gene expression, and more.
 
 Yano is seamlessly integrated with Seurat, building upon the Seurat object's framework. Users can perform conventional cell clustering analyses using the state-of-the-art Seurat pipeline and then incorporate exon, SNP counts as new "assays" within the Seurat objects. Subsequently, Yano facilitates the assessment of spatial dissimilarity between these two assays. For more details about the method, please refer to our manuscript.
@@ -12,16 +14,17 @@ For those seeking quick guidance, please refer directly to the user cases.
 
 This package has been tested on Linux and macOS platforms.
 
-```r
-install.packages(c("BiocManager", "Seurat", "R.utils", "viridis", "devtools"), repos = "https://cloud.r-project.org")
+``` r
+# Prerequisite packages
+# install.packages(c("BiocManager", "Seurat", "R.utils", "viridis", "devtools"))
 
-BiocManager::install(c("Rhtslib"))
+# BiocManager::install(c("Rhtslib"))
 
 # install Yano 
 devtools::install_github("shiquan/Yano")
 ```
 
-***Notice: ***
+***Notice:***
 
 <p><small> Multithread mode is disabled for macOS due to the lack of OpenMP support by default. For experts, to enable multithread, you can try installing GCC to compile this package.</small></p>
 
