@@ -8,9 +8,10 @@ format:
 This vignette uses gene and single nucleotide variant (SNV) expression files generated from the [Annotate Various Features for Alignment](anno.Rmd).
 
 
+## 0. Perform cell clustering with Seurat
+
 We begin by performing cell clustering based on gene expression, which is identical to the first step outlined in the [Alternative splicing analysis for scRNA-seq](Yano_AS.Rmd). If you're continuing from the previous vignette, you are free to skip this section.
 
-## 0. Perform cell clustering with Seurat
 ```{r warning=FALSE}
 require(Yano)
 
@@ -112,7 +113,7 @@ In the selected SNVs, we found some reference alleles are highlighted, such as c
 bcftools view clinvar.vcf.gz 15:92992967-92992967
 ```
 
-You can easily observe that the pathogenic allele is T, where the change from C to T leads to a nonsense mutation. However, if we examine the header, we see that the 'Number' field of CLNSIG is labeled as '.', which indicates that this term is not allele-specific—an inappropriate type for this record. In fact, this issue extends beyond just CLNSIG; all terms in the ClinVar database are labeled as '.'.
+You can easily observe that the pathogenic allele is G, where the change from C to G leads to a nonsense mutation. However, if we examine the header, we see that the 'Number' field of CLNSIG is labeled as '.', which indicates that this term is not allele-specific—an inappropriate type for this record. In fact, this issue extends beyond just CLNSIG; all terms in the ClinVar database are labeled as '.'.
 
 To correct this, we need to manually change the type from '.' to 'A' (allele-specific) for allele-specific tags in the VCF file. For more information, please refer to the [VCF specification](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
 
@@ -120,7 +121,13 @@ Unfortunately, many databases distributed in VCF format may contain non-uniforml
 
 In addition, the RS tag is annotated, and we can refer to the NCBI SNP database for more information. For example, the mutation chr13:50945445G>A/+ at RS 75184679 can be found at the following link: [https://www.ncbi.nlm.nih.gov/snp/rs75184679](https://www.ncbi.nlm.nih.gov/snp/rs75184679). This mutation is associated with conditions such as "Abnormality of the nervous system" and other diseases.
 
-
+```{r message=FALSE, fig.width=12, fig.height=5}
+FeaturePlot(obj, features = c("chr13:50945445G>A/+", "chr13:50945445G=/+", "RNASEH2B"), order = TRUE, ncol=3)
+```
+Note that not all reads from this gene cover the SNV, which results in the SNV expression being sparser compared to the overall gene expression. Here, we highlight the genetic variant location. Unfortunately, the track plot does not yet support the visualization of sequence variants.
+```{r message=FALSE, fig.width=12, fig.height=8}
+TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", chr = "chr13", start=50935000, end=50949000, cell.group = Idents(obj), junc = TRUE, highlights = c(50945445,50945445), gtf=gtf )
+```
 
 
 If you have any questions regarding this vignette, please feel free to report them through the [discussion forum](https://github.com/shiquan/Yano/discussions). When submitting your query, please ensure you attach the commands you used for better clarity and support.

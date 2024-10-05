@@ -183,9 +183,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>This vignette uses gene and single nucleotide variant (SNV) expression files generated from the <a href="./anno.html">Annotate Various Features for Alignment</a>.</p>
-<p>We begin by performing cell clustering based on gene expression, which is identical to the first step outlined in the <a href="./Yano_AS.html">Alternative splicing analysis for scRNA-seq</a>. If you’re continuing from the previous vignette, you are free to skip this section.</p>
 <section id="perform-cell-clustering-with-seurat" class="level2">
 <h2 class="anchored" data-anchor-id="perform-cell-clustering-with-seurat">0. Perform cell clustering with Seurat</h2>
+<p>We begin by performing cell clustering based on gene expression, which is identical to the first step outlined in the <a href="./Yano_AS.html">Alternative splicing analysis for scRNA-seq</a>. If you’re continuing from the previous vignette, you are free to skip this section.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Yano)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -235,9 +235,9 @@ Centering and scaling data matrix</code></pre>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># you can skip to read GTF again if you already load it</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-10-05 20:21:29] [32mGTF loading..[0m
-[2024-10-05 20:22:04] [32mLoad 62700 genes.[0m
-[2024-10-05 20:22:04] [32mLoad time : 34.849 sec[0m</code></pre>
+<pre><code>[2024-10-05 22:34:20] [32mGTF loading..[0m
+[2024-10-05 22:34:51] [32mLoad 62700 genes.[0m
+[2024-10-05 22:34:51] [32mLoad time : 30.458 sec[0m</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At this moment the meta infomation for genetic variant assay is still empty</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -371,7 +371,7 @@ Centering and scaling data matrix</code></pre>
 <pre><code>Run autocorrelation test for 41427 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 4.183441 secs</code></pre>
+<pre><code>Runtime : 4.043182 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -406,7 +406,7 @@ Centering and scaling data matrix</code></pre>
 <pre><code>Use predefined weight matrix "WeightMatrix".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 39.08616 secs.</code></pre>
+<pre><code>Runtime : 37.17955 secs.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -917,19 +917,17 @@ chr1:1000814A&gt;G/+        NA         NA         NA         NA         NA    1
 chr1:1000830C&gt;A/+        NA         NA         NA         NA         NA    1
 chr1:1014228G=/+  0.8088379  0.9999328  0.1586437 0.02517116          1    1
                     RS CLNSIG
-chr1:633192G=/+              
-chr1:1000079A&gt;G/-            
-chr1:1000731C=/+             
-chr1:1000814A&gt;G/+            
-chr1:1000830C&gt;A/+            
+chr1:633192G=/+   &lt;NA&gt;   &lt;NA&gt;
+chr1:1000079A&gt;G/- &lt;NA&gt;   &lt;NA&gt;
+chr1:1000731C=/+  &lt;NA&gt;   &lt;NA&gt;
+chr1:1000814A&gt;G/+ &lt;NA&gt;   &lt;NA&gt;
+chr1:1000830C&gt;A/+ &lt;NA&gt;   &lt;NA&gt;
 chr1:1014228G=/+  1921 Benign</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We note that there are several pathogenic variants detected</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df[[<span class="st">'CLNSIG'</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-                                                         
-                                                   39553 
                                              association 
                                                        8 
                                                   Benign 
@@ -1070,19 +1068,44 @@ chr15:92992967C=/+                    Pathogenic</code></pre>
 ##contig=&lt;ID=NT_187693.1&gt;
 ##contig=&lt;ID=NW_009646201.1&gt;
 ##bcftools_viewVersion=1.13+htslib-1.13
-##bcftools_viewCommand=view clinvar.vcf.gz 15:92992967-92992967; Date=Sat Oct  5 20:22:56 2024
+##bcftools_viewCommand=view clinvar.vcf.gz 15:92992967-92992967; Date=Sat Oct  5 22:35:41 2024
 #CHROM  POS ID  REF ALT QUAL    FILTER  INFO
 15  92992967    633515  C   G   .   .   ALLELEID=621980;CLNDISDB=MedGen:CN517202;CLNDN=not_provided;CLNHGVS=NC_000015.10:g.92992967C&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Pathogenic;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=CHD2:1106;MC=SO:0001587|nonsense;ORIGIN=1;RS=2272457
 15  92992967    257709  C   T   .   .   AF_ESP=0.2485;AF_EXAC=0.22658;AF_TGP=0.19349;ALLELEID=255446;CLNDISDB=MeSH:D030342,MedGen:C0950123|MONDO:MONDO:0014150,MedGen:C3809278,OMIM:615369,Orphanet:1942,Orphanet:2382|MedGen:CN169374|MedGen:C3661900;CLNDN=Inborn_genetic_diseases|Developmental_and_epileptic_encephalopathy_94|not_specified|not_provided;CLNHGVS=NC_000015.10:g.92992967C&gt;T;CLNREVSTAT=criteria_provided,_multiple_submitters,_no_conflicts;CLNSIG=Benign;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA7748248;GENEINFO=CHD2:1106;MC=SO:0001819|synonymous_variant;ORIGIN=1;RS=2272457</code></pre>
 </div>
 </div>
-<p>You can easily observe that the pathogenic allele is T, where the change from C to T leads to a nonsense mutation. However, if we examine the header, we see that the ‘Number’ field of CLNSIG is labeled as ‘.’, which indicates that this term is not allele-specific—an inappropriate type for this record. In fact, this issue extends beyond just CLNSIG; all terms in the ClinVar database are labeled as ‘.’.</p>
+<p>You can easily observe that the pathogenic allele is G, where the change from C to G leads to a nonsense mutation. However, if we examine the header, we see that the ‘Number’ field of CLNSIG is labeled as ‘.’, which indicates that this term is not allele-specific—an inappropriate type for this record. In fact, this issue extends beyond just CLNSIG; all terms in the ClinVar database are labeled as ‘.’.</p>
 <p>To correct this, we need to manually change the type from ‘.’ to ‘A’ (allele-specific) for allele-specific tags in the VCF file. For more information, please refer to the <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf">VCF specification</a>.</p>
 <p>Unfortunately, many databases distributed in VCF format may contain non-uniformly formatted tags. Apart from manually updating these databases or filter reference allele afterward, there is no straightforward solution to this issue.</p>
 <p>In addition, the RS tag is annotated, and we can refer to the NCBI SNP database for more information. For example, the mutation chr13:50945445G&gt;A/+ at RS 75184679 can be found at the following link: <a href="https://www.ncbi.nlm.nih.gov/snp/rs75184679">https://www.ncbi.nlm.nih.gov/snp/rs75184679</a>. This mutation is associated with conditions such as “Abnormality of the nervous system” and other diseases.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr13:50945445G&gt;A/+"</span>, <span class="st">"chr13:50945445G=/+"</span>, <span class="st">"RNASEH2B"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Could not find RNASEH2B in the default search locations, found in
+'RNA' assay instead</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Yano_ASE_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that not all reads from this gene cover the SNV, which results in the SNV expression being sparser compared to the overall gene expression. Here, we highlight the genetic variant location. Unfortunately, the track plot does not yet support the visualization of sequence variants.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">chr =</span> <span class="st">"chr13"</span>, <span class="at">start=</span><span class="dv">50935000</span>, <span class="at">end=</span><span class="dv">50949000</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">50945445</span>,<span class="dv">50945445</span>), <span class="at">gtf=</span>gtf )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Yano_ASE_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>If you have any questions regarding this vignette, please feel free to report them through the <a href="https://github.com/shiquan/Yano/discussions">discussion forum</a>. When submitting your query, please ensure you attach the commands you used for better clarity and support.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "NormalizeData.RNA"        "FindVariableFeatures.RNA"
  [3] "ScaleData.RNA"            "RunPCA.RNA"              

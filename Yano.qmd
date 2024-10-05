@@ -23,7 +23,7 @@ This package has been tested on Linux and macOS platforms.
 devtools::install_github("shiquan/Yano")
 ```
 
-***Notice:*** Multithread mode is disabled on macOS by default due to the lack of OpenMP support. However, data.table provides a useful tutorial on how to enable OpenMP on macOS. For more information, please refer to this guide: [https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos](https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos).
+***Notice:*** Multithread mode is disabled on macOS by default due to the lack of OpenMP support. However, `data.table` provides a useful tutorial on how to enable OpenMP on macOS. For more information, please refer to this guide: [https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos](https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos).
 
 ## Get started
 
