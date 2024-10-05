@@ -123,14 +123,17 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>PISA</strong>: A suite of programs specifically designed for preprocessing data from single-cell sequencing and spatial transcriptomics. It efficiently processes FASTQ+, BAM, and BED files, streamlining the handling and generates various feature counts, facilitating the downstream analyses necessary for in-depth biological insights.</li>
 <li><strong>Yano</strong>: An R package that employs the spatial dissimilarity test method as its core algorithm. Yano is tailored for exploring various biological events in single-cell data, including alternative splicing, allele-specific gene expression, and more, providing comprehensive insights into cellular dynamics.</li>
 </ul>
-<p><strong>Workflows</strong></p>
-<ol type="1">
+<p><strong>Workflows and Short Cases for scRNA-seq and Spatial Transcriptome</strong></p>
+<ul>
 <li><a href="./workflow1.html">From raw reads to gene counts</a> (PISA)</li>
-<li>Alternative splicing analysis for scRNA-seq (PISA + Seurat + Yano)</li>
-<li>Allele-specific gene expression analysis for scRNA-seq (PISA + Seurat + Yano)</li>
-<li>Annotate and visualise genetic varaints for scRNA-seq (Yano)</li>
-<li>Prioritize non-exonic reads in scRNA-seq (PISA + Seurat + Yano)</li>
-</ol>
+<li><a href="./anno.html">Annotate various features for alignment</a> (PISA)</li>
+<li><a href="./Yano_AS.html">Alternative splicing analysis for scRNA-seq</a> (Yano)</li>
+<li><a href="./Yano_ASE.html">Allele-specific gene expression analysis for scRNA-seq</a> (Yano) <!--
+- [Annotate and visualise genetic varaints for scRNA-seq](Yano_anno.Rmd) (Yano)
+- [Alternative splicing analysis for Adult Mouse Brain Coronal Section](Yano_Visium.Rmd) (Yano, Visium)
+- [Run PISA and Yano with Smartseq2 data](Smartseq2.Rmd) (Smartseq2)
+--></li>
+</ul>
 
 
 

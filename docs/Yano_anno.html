@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2024-07-08">
 
-<title>Yano User’s Guide</title>
+<title>Alelle specific gene expression analysis for scRNA-seq</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -126,7 +93,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">PISA</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./Yano.html" aria-current="page"> 
+    <a class="nav-link" href="./Yano.html"> 
 <span class="menu-text">Yano</span></a>
   </li>  
 </ul>
@@ -142,36 +109,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#install" id="toc-install" class="nav-link" data-scroll-target="#install">Install</a></li>
-  <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">Get started</a></li>
-  <li><a href="#manhatten-plot" id="toc-manhatten-plot" class="nav-link" data-scroll-target="#manhatten-plot">Manhatten plot</a></li>
-  <li><a href="#track-plot" id="toc-track-plot" class="nav-link" data-scroll-target="#track-plot">Track plot</a></li>
-  <li><a href="#changelog" id="toc-changelog" class="nav-link" data-scroll-target="#changelog">Changelog</a></li>
-  <li><a href="#todo-list" id="toc-todo-list" class="nav-link" data-scroll-target="#todo-list">TODO list</a></li>
-  <li><a href="#reporting-issues" id="toc-reporting-issues" class="nav-link" data-scroll-target="#reporting-issues">Reporting Issues</a></li>
-  <li><a href="#citation" id="toc-citation" class="nav-link" data-scroll-target="#citation">Citation</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Yano User’s Guide</h1>
+<h1 class="title">Alelle specific gene expression analysis for scRNA-seq</h1>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta column-page">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 8, 2024</p>
+    </div>
+  </div>
   
     
   </div>
@@ -181,46 +140,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Yano represents an R/C toolkit designed for conducting spatial dissimilarity analysis on single-cell RNA sequencing data. This method revolves around the core concept of examining the distinct expression patterns of a given feature (e.g.&nbsp;exon, snp allele) in relation to its associated binding feature (typically a gene or another allele at the same genomic locus) within the context of cell lineage (1D), spatial position (2D), or the multi-dimensional PCA space. The discernible differences in feature expression patterns and their binding features provide insights into a range of biological phenomena, including alternative splicing, cis-antisense RNA regulation, allele-specific gene expression, and more.</p>
-<p>Yano is seamlessly integrated with Seurat, building upon the Seurat object’s framework. Users can perform conventional cell clustering analyses using the state-of-the-art Seurat pipeline and then incorporate exon, SNP counts as new “assays” within the Seurat objects. Subsequently, Yano facilitates the assessment of spatial dissimilarity between these two assays. For more details about the method, please refer to our manuscript.</p>
-<p>For those seeking quick guidance, please refer directly to the user cases.</p>
-</section>
-<section id="install" class="level2">
-<h2 class="anchored" data-anchor-id="install">Install</h2>
-<p>This package has been tested on Linux and macOS platforms.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prerequisite packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("Seurat", "R.utils", "viridis", "devtools"))</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># install Yano </span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"shiquan/Yano"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong><em>Notice:</em></strong> Multithread mode is disabled on macOS by default due to the lack of OpenMP support. However, data.table provides a useful tutorial on how to enable OpenMP on macOS. For more information, please refer to this guide: <a href="https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos">https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos</a>.</p>
-</section>
-<section id="get-started" class="level2">
-<h2 class="anchored" data-anchor-id="get-started">Get started</h2>
-</section>
-<section id="manhatten-plot" class="level2">
-<h2 class="anchored" data-anchor-id="manhatten-plot">Manhatten plot</h2>
-</section>
-<section id="track-plot" class="level2">
-<h2 class="anchored" data-anchor-id="track-plot">Track plot</h2>
-</section>
-<section id="changelog" class="level2">
-<h2 class="anchored" data-anchor-id="changelog">Changelog</h2>
-</section>
-<section id="todo-list" class="level2">
-<h2 class="anchored" data-anchor-id="todo-list">TODO list</h2>
-</section>
-<section id="reporting-issues" class="level2">
-<h2 class="anchored" data-anchor-id="reporting-issues">Reporting Issues</h2>
-</section>
-<section id="citation" class="level2">
-<h2 class="anchored" data-anchor-id="citation">Citation</h2>
+<p>This vignette uses gene and snv expression files generated from the <a href="./anno.html">Annotate Various Features for Alignment</a>.</p>
+<p>We begin by performing cell clustering based on gene expression, which is identical to the first step outlined in the <a href="./Yano_AS.html">Alternative splicing analysis for scRNA-seq</a>. If you’re continuing from the previous vignette, you are free to skip this section.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

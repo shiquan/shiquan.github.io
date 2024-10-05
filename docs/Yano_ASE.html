@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.53">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2024-07-08">
+
+<title>Alelle specific gene expression analysis for scRNA-seq</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+          <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./fastq.html"> 
+<span class="menu-text">FASTQ+</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./PISA.html"> 
+<span class="menu-text">PISA</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Yano.html"> 
+<span class="menu-text">Yano</span></a>
+  </li>  
+</ul>
+          <div class="quarto-navbar-tools">
+    <a href="https://github.com/shiquan" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#perform-cell-clustering-with-seurat" id="toc-perform-cell-clustering-with-seurat" class="nav-link active" data-scroll-target="#perform-cell-clustering-with-seurat">0. Perform cell clustering with Seurat</a></li>
+  <li><a href="#perform-allele-specific-gene-expression-analysis-by-using-snv-anchors" id="toc-perform-allele-specific-gene-expression-analysis-by-using-snv-anchors" class="nav-link" data-scroll-target="#perform-allele-specific-gene-expression-analysis-by-using-snv-anchors">1. Perform allele-specific gene expression analysis by using SNV anchors</a></li>
+  <li><a href="#annotate-genetic-variants" id="toc-annotate-genetic-variants" class="nav-link" data-scroll-target="#annotate-genetic-variants">2. Annotate genetic variants</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Alelle specific gene expression analysis for scRNA-seq</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 8, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This vignette uses gene and single nucleotide variant (SNV) expression files generated from the <a href="./anno.html">Annotate Various Features for Alignment</a>.</p>
+<p>We begin by performing cell clustering based on gene expression, which is identical to the first step outlined in the <a href="./Yano_AS.html">Alternative splicing analysis for scRNA-seq</a>. If you’re continuing from the previous vignette, you are free to skip this section.</p>
+<section id="perform-cell-clustering-with-seurat" class="level2">
+<h2 class="anchored" data-anchor-id="perform-cell-clustering-with-seurat">0. Perform cell clustering with Seurat</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Yano)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Yano</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ────────────────────────────────────────────── Yano 1.0 ──
+✔ dplyr   1.1.4     ✔ Seurat  5.1.0
+✔ ggplot2 3.5.1     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>exp <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./exp/"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">CreateSeuratObject</span>(exp, <span class="at">min.features =</span> <span class="dv">1000</span>, <span class="at">min.cells =</span> <span class="dv">10</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">"percent.mt"</span>]] <span class="ot">&lt;-</span> <span class="fu">PercentageFeatureSet</span>(obj, <span class="at">pattern =</span> <span class="st">"^MT-"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">subset</span>(obj, nFeature_RNA <span class="sc">&lt;</span> <span class="dv">9000</span> <span class="sc">&amp;</span> percent.mt <span class="sc">&lt;</span> <span class="dv">20</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsampling to 2000 cells for fast testing</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> obj[, <span class="fu">sample</span>(<span class="fu">colnames</span>(obj),<span class="dv">2000</span>)]</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Clustering analysis</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj) <span class="sc">%&gt;%</span> <span class="fu">FindVariableFeatures</span>() <span class="sc">%&gt;%</span> <span class="fu">ScaleData</span>() <span class="sc">%&gt;%</span>  <span class="fu">RunPCA</span>(<span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">FindNeighbors</span>(<span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">FindClusters</span>(<span class="at">resolution =</span> <span class="fl">0.1</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">RunUMAP</span>(<span class="at">dims=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Normalizing layer: counts
+Finding variable features for layer counts
+Centering and scaling data matrix</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(obj, <span class="at">label=</span><span class="cn">TRUE</span>, <span class="at">label.size =</span> <span class="dv">5</span>, <span class="at">label.box =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Yano_ASE_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="perform-allele-specific-gene-expression-analysis-by-using-snv-anchors" class="level2">
+<h2 class="anchored" data-anchor-id="perform-allele-specific-gene-expression-analysis-by-using-snv-anchors">1. Perform allele-specific gene expression analysis by using SNV anchors</h2>
+<p>In this vignette, when a genetic variant is detected, all possible alleles at that location, including both alternative alleles and the reference allele, are annotated and counted. Therefore, genetic variants refer to both alternative alleles and the reference allele in this context.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./var"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(var[,<span class="fu">colnames</span>(obj)], <span class="at">min.cells =</span> <span class="dv">10</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"var"</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># you can skip to read GTF again if you already load it</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[2024-10-05 20:21:29] [32mGTF loading..[0m
+[2024-10-05 20:22:04] [32mLoad 62700 genes.[0m
+[2024-10-05 20:22:04] [32mLoad time : 34.849 sec[0m</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At this moment the meta infomation for genetic variant assay is still empty</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>data frame with 0 columns and 6 rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">annoVAR</span>(obj, <span class="at">gtf =</span> gtf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Parse names ..</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000225.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000205.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000218.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270737.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270713.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270733.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># After annotation, the locations are parsed from the feature name, and overlapped gene are also annotated.</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 6%">
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 18%">
+<col style="width: 12%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">chr</th>
+<th style="text-align: right;">start</th>
+<th style="text-align: left;">ref</th>
+<th style="text-align: left;">alt</th>
+<th style="text-align: left;">strand</th>
+<th style="text-align: left;">locus</th>
+<th style="text-align: left;">gene_name</th>
+<th style="text-align: left;">type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">chr1:633192G=/+</td>
+<td style="text-align: left;">chr1</td>
+<td style="text-align: right;">633192</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr1:633192/+</td>
+<td style="text-align: left;">MTCO2P12</td>
+<td style="text-align: left;">exon</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr1:1000079A&gt;G/-</td>
+<td style="text-align: left;">chr1</td>
+<td style="text-align: right;">1000079</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">chr1:1000079/-</td>
+<td style="text-align: left;">HES4</td>
+<td style="text-align: left;">utr5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chr1:1000731C=/+</td>
+<td style="text-align: left;">chr1</td>
+<td style="text-align: right;">1000731</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr1:1000731/+</td>
+<td style="text-align: left;">ISG15</td>
+<td style="text-align: left;">upstream</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr1:1000814A&gt;G/+</td>
+<td style="text-align: left;">chr1</td>
+<td style="text-align: right;">1000814</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr1:1000814/+</td>
+<td style="text-align: left;">ISG15</td>
+<td style="text-align: left;">upstream</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chr1:1000830C&gt;A/+</td>
+<td style="text-align: left;">chr1</td>
+<td style="text-align: right;">1000830</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr1:1000830/+</td>
+<td style="text-align: left;">ISG15</td>
+<td style="text-align: left;">upstream</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr1:1014228G=/+</td>
+<td style="text-align: left;">chr1</td>
+<td style="text-align: right;">1014228</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr1:1014228/+</td>
+<td style="text-align: left;">ISG15</td>
+<td style="text-align: left;">utr5</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select autocorrlated genetic variants </span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using RNA_snn to construct cell weight matrix.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Working on assay : var</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Run autocorrelation test for 41427 features.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Runtime : 4.183441 secs</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>12348 autocorrelated features.</code></pre>
+</div>
+</div>
+<p>In the alternative splicing analysis, we use mode 1 (the default mode). However, for allele-specific gene expression, we switch to mode 2 to compare the expression of an SNV with other SNVs at the same location. Since no binding assay is specified, the records at the same locus are first aggregated, and then the test feature is subtracted from the aggregated data (mode 2).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(<span class="at">object =</span> obj, <span class="at">bind.name =</span> <span class="st">"locus"</span>, <span class="at">mode =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Working on assay var.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Processing 12348 features.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Processing 10617 blocks.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>No bind.assay specified, update min.features.per.block to 2.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Aggregate counts.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using 15 threads.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using method "D" with mode 2.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Use predefined weight matrix "WeightMatrix".</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Runtime : 39.08616 secs.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Yano_ASE_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We could also zoom in specific region</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Interesting, we can found the peak at chromosome 6 is located at 3' of gene HLA-J</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">chr=</span><span class="st">"chr6"</span>, <span class="at">start =</span> <span class="dv">30000000</span>, <span class="at">end =</span> <span class="dv">30020000</span>, <span class="at">gtf =</span> gtf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Zoom in chr6 : 29999000-30021000</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Yano_ASE_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's random pick a pair of features at the same locus</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(locus.padj <span class="sc">&lt;</span> <span class="fl">1e-6</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 3%">
+<col style="width: 5%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 3%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">chr</th>
+<th style="text-align: right;">start</th>
+<th style="text-align: left;">ref</th>
+<th style="text-align: left;">alt</th>
+<th style="text-align: left;">strand</th>
+<th style="text-align: left;">locus</th>
+<th style="text-align: left;">gene_name</th>
+<th style="text-align: left;">type</th>
+<th style="text-align: right;">moransi.pval</th>
+<th style="text-align: right;">moransi</th>
+<th style="text-align: left;">autocorr.variable</th>
+<th style="text-align: right;">locus.D</th>
+<th style="text-align: right;">locus.r</th>
+<th style="text-align: right;">locus.pval</th>
+<th style="text-align: right;">locus.mean</th>
+<th style="text-align: right;">locus.var</th>
+<th style="text-align: right;">locus.padj</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">chr1:87328836C&gt;G/+</td>
+<td style="text-align: left;">chr1</td>
+<td style="text-align: right;">87328836</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr1:87328836/+</td>
+<td style="text-align: left;">LMO4</td>
+<td style="text-align: left;">upstream</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.2802997</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3555893</td>
+<td style="text-align: right;">0.3373420</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1577667</td>
+<td style="text-align: right;">0.0211897</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr1:117624577A&gt;G/+</td>
+<td style="text-align: left;">chr1</td>
+<td style="text-align: right;">117624577</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr1:117624577/+</td>
+<td style="text-align: left;">TENT5C</td>
+<td style="text-align: left;">utr5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0636366</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3126892</td>
+<td style="text-align: right;">-0.0262195</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1578993</td>
+<td style="text-align: right;">0.0195224</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chr10:3136689C&gt;T/+</td>
+<td style="text-align: left;">chr10</td>
+<td style="text-align: right;">3136689</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">T</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr10:3136689/+</td>
+<td style="text-align: left;">PFKP</td>
+<td style="text-align: left;">utr3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0757416</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3165396</td>
+<td style="text-align: right;">-0.0503207</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1565664</td>
+<td style="text-align: right;">0.0203407</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr10:12250345A&gt;G/+</td>
+<td style="text-align: left;">chr10</td>
+<td style="text-align: right;">12250345</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr10:12250345/+</td>
+<td style="text-align: left;">CDC123</td>
+<td style="text-align: left;">utr3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0518112</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3395777</td>
+<td style="text-align: right;">-0.2598141</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1565067</td>
+<td style="text-align: right;">0.0208110</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chr10:12250345A=/+</td>
+<td style="text-align: left;">chr10</td>
+<td style="text-align: right;">12250345</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr10:12250345/+</td>
+<td style="text-align: left;">CDC123</td>
+<td style="text-align: left;">utr3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0290656</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.2914041</td>
+<td style="text-align: right;">-0.2598141</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1588927</td>
+<td style="text-align: right;">0.0206309</td>
+<td style="text-align: right;">8e-07</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr10:17237326C&gt;T/+</td>
+<td style="text-align: left;">chr10</td>
+<td style="text-align: right;">17237326</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">T</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr10:17237326/+</td>
+<td style="text-align: left;">VIM</td>
+<td style="text-align: left;">utr3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.6866636</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.8829444</td>
+<td style="text-align: right;">-0.0668926</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1583202</td>
+<td style="text-align: right;">0.0242056</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chr10:17237326C=/+</td>
+<td style="text-align: left;">chr10</td>
+<td style="text-align: right;">17237326</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr10:17237326/+</td>
+<td style="text-align: left;">VIM</td>
+<td style="text-align: left;">utr3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.5997790</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.8266802</td>
+<td style="text-align: right;">-0.0668926</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1569722</td>
+<td style="text-align: right;">0.0255492</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr10:62069780C=/+</td>
+<td style="text-align: left;">chr10</td>
+<td style="text-align: right;">62069780</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr10:62069780/+</td>
+<td style="text-align: left;">ARID5B</td>
+<td style="text-align: left;">utr3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0987751</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3885443</td>
+<td style="text-align: right;">-0.1479482</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1586323</td>
+<td style="text-align: right;">0.0266890</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chr10:62069780C&gt;T/+</td>
+<td style="text-align: left;">chr10</td>
+<td style="text-align: right;">62069780</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">T</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr10:62069780/+</td>
+<td style="text-align: left;">ARID5B</td>
+<td style="text-align: left;">utr3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1201711</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4162634</td>
+<td style="text-align: right;">-0.1479482</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1566492</td>
+<td style="text-align: right;">0.0243429</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr10:71816550C=/-</td>
+<td style="text-align: left;">chr10</td>
+<td style="text-align: right;">71816550</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">chr10:71816550/-</td>
+<td style="text-align: left;">PSAP</td>
+<td style="text-align: left;">utr3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.3109023</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4603911</td>
+<td style="text-align: right;">0.1904855</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1571954</td>
+<td style="text-align: right;">0.0227224</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chr2:74969604A&gt;G/+</td>
+<td style="text-align: left;">chr2</td>
+<td style="text-align: right;">74969604</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr2:74969604/+</td>
+<td style="text-align: left;">POLE4</td>
+<td style="text-align: left;">utr3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1016725</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4171892</td>
+<td style="text-align: right;">-0.2276741</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1588110</td>
+<td style="text-align: right;">0.0237931</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr20:63521948T&gt;G/+</td>
+<td style="text-align: left;">chr20</td>
+<td style="text-align: right;">63521948</td>
+<td style="text-align: left;">T</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr20:63521948/+</td>
+<td style="text-align: left;">PPDPF</td>
+<td style="text-align: left;">utr3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1169098</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.2978099</td>
+<td style="text-align: right;">0.1806863</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1587285</td>
+<td style="text-align: right;">0.0195803</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chr20:63521953A&gt;C/+</td>
+<td style="text-align: left;">chr20</td>
+<td style="text-align: right;">63521953</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr20:63521953/+</td>
+<td style="text-align: left;">PPDPF</td>
+<td style="text-align: left;">utr3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0993010</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3382953</td>
+<td style="text-align: right;">0.0056697</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1593799</td>
+<td style="text-align: right;">0.0189334</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr6:30009773G&gt;T/+</td>
+<td style="text-align: left;">chr6</td>
+<td style="text-align: right;">30009773</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">T</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr6:30009773/+</td>
+<td style="text-align: left;">ENSG00000290574</td>
+<td style="text-align: left;">exon</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0479333</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.2926214</td>
+<td style="text-align: right;">-0.1225112</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1567805</td>
+<td style="text-align: right;">0.0210834</td>
+<td style="text-align: right;">7e-07</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chr6:31268945C&gt;T/-</td>
+<td style="text-align: left;">chr6</td>
+<td style="text-align: right;">31268945</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">T</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">chr6:31268945/-</td>
+<td style="text-align: left;">HLA-C</td>
+<td style="text-align: left;">utr3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.3016653</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3795497</td>
+<td style="text-align: right;">0.3149198</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1585366</td>
+<td style="text-align: right;">0.0201290</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chrM:1438A&gt;G/+</td>
+<td style="text-align: left;">chrM</td>
+<td style="text-align: right;">1438</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chrM:1438/+</td>
+<td style="text-align: left;">MT-RNR1</td>
+<td style="text-align: left;">exon</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1543176</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3486994</td>
+<td style="text-align: right;">0.1226452</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1570452</td>
+<td style="text-align: right;">0.0188571</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chrM:8860A&gt;G/+</td>
+<td style="text-align: left;">chrM</td>
+<td style="text-align: right;">8860</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chrM:8860/+</td>
+<td style="text-align: left;">MT-ATP6</td>
+<td style="text-align: left;">exon</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1569264</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3332857</td>
+<td style="text-align: right;">0.1737393</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1565404</td>
+<td style="text-align: right;">0.0199464</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr10:17237326C&gt;T/+"</span>, <span class="st">"chr10:17237326C=/+"</span>, <span class="st">"VIM"</span> ), <span class="at">order=</span><span class="cn">TRUE</span>, <span class="at">pt.size =</span> <span class="dv">1</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Could not find VIM in the default search locations, found in 'RNA'
+assay instead</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Yano_ASE_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It appears that the T allele of the gene VIM is expressed in most cell groups, while the C allele seems to be primarily expressed in groups 1 and 4.</p>
+<p>Using our spatial dissimilarity analysis method, we have identified many cases of allele-specific gene expression. This phenomenon can be influenced by several known and unknown mechanisms, including gene imprinting, genetic recombination, and somatic variants during cell or disease development. While we won’t explore these mechanisms in detail here, you can refer to our manuscript, which includes several case studies dedicated to this topic.</p>
+</section>
+<section id="annotate-genetic-variants" class="level2">
+<h2 class="anchored" data-anchor-id="annotate-genetic-variants">2. Annotate genetic variants</h2>
+<p>One key advancement in genetic variant studies is the ability to perform functional interpretation and annotation using genotype-phenotype and allele frequency databases. For demonstration purposes, we use the <a href="https://www.ncbi.nlm.nih.gov/clinvar/">ClinVar</a> database for annotation in this vignette.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the database in VCF format</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-c</span>  https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># remeber to index this database, otherwise annoVAR will report error.</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> index clinvar.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s take a look at the format of the ClinVar database. As noted, the chromosome names are in the NCBI style, meaning they do not include the “chr” prefix. Therefore, we need to generate a new column with chromosome names formatted for annotation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view clinvar.vcf.gz<span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span><span class="kw">|</span> <span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1   69134   2205837 A   G   .   .   ALLELEID=2193183;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69134A&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Likely_benign;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69314   3205580 T   G   .   .   ALLELEID=3374047;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69314T&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69423   3205581 G   A   .   .   ALLELEID=3374048;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69423G&gt;A;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69581   2252161 C   G   .   .   ALLELEID=2238986;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69581C&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69682   2396347 G   A   .   .   ALLELEID=2386655;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69682G&gt;A;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69731   3205582 T   C   .   .   ALLELEID=3374049;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69731T&gt;C;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69769   2288999 T   C   .   .   ALLELEID=2278803;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69769T&gt;C;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69995   2351346 G   C   .   .   ALLELEID=2333177;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69995G&gt;C;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   925946  1924157 C   G   .   .   ALLELEID=1983057;CLNDISDB=MedGen:C3661900;CLNDN=not_provided;CLNHGVS=NC_000001.11:g.925946C&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=SAMD11:148398;MC=SO:0001583|missense_variant;ORIGIN=1
+1   925952  1019397 G   A   .   .   ALLELEID=1003021;CLNDISDB=MedGen:C3661900;CLNDN=not_provided;CLNHGVS=NC_000001.11:g.925952G&gt;A;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=SAMD11:148398;MC=SO:0001583|missense_variant;ORIGIN=1;RS=1640863258</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[<span class="st">'chr0'</span>]] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"chr(.*)"</span>,<span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, obj[[<span class="st">'var'</span>]][[]]<span class="sc">$</span>chr)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   chr   start ref alt strand          locus gene_name     type
+chr1:633192G=/+   chr1  633192   G   G      +  chr1:633192/+  MTCO2P12     exon
+chr1:1000079A&gt;G/- chr1 1000079   A   G      - chr1:1000079/-      HES4     utr5
+chr1:1000731C=/+  chr1 1000731   C   C      + chr1:1000731/+     ISG15 upstream
+chr1:1000814A&gt;G/+ chr1 1000814   A   G      + chr1:1000814/+     ISG15 upstream
+chr1:1000830C&gt;A/+ chr1 1000830   C   A      + chr1:1000830/+     ISG15 upstream
+chr1:1014228G=/+  chr1 1014228   G   G      + chr1:1014228/+     ISG15     utr5
+                  moransi.pval     moransi autocorr.variable    locus.D
+chr1:633192G=/+   1.622811e-01 0.004103776             FALSE         NA
+chr1:1000079A&gt;G/- 2.309031e-01 0.003030692             FALSE         NA
+chr1:1000731C=/+  1.689656e-02 0.009659960             FALSE         NA
+chr1:1000814A&gt;G/+ 1.369152e-04 0.017238588              TRUE         NA
+chr1:1000830C&gt;A/+ 1.936681e-04 0.016801769              TRUE         NA
+chr1:1014228G=/+  8.866674e-62 0.081322662              TRUE 0.05861605
+                    locus.r locus.pval locus.mean  locus.var locus.padj chr0
+chr1:633192G=/+          NA         NA         NA         NA         NA    1
+chr1:1000079A&gt;G/-        NA         NA         NA         NA         NA    1
+chr1:1000731C=/+         NA         NA         NA         NA         NA    1
+chr1:1000814A&gt;G/+        NA         NA         NA         NA         NA    1
+chr1:1000830C&gt;A/+        NA         NA         NA         NA         NA    1
+chr1:1014228G=/+  0.8088379  0.9999328  0.1586437 0.02517116          1    1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># here we annotate RS id and clinical signification for variants, to check the VCF header for all possible tags</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">annoVAR</span>(obj, <span class="at">vcf =</span> <span class="st">"clinvar.vcf.gz"</span>, <span class="at">chr =</span> <span class="st">"chr0"</span>, <span class="at">tags =</span> <span class="fu">c</span>(<span class="st">"RS"</span>, <span class="st">"CLNSIG"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Parse names ..</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The RS id and CLNSIG tag now created</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="ot">-&gt;</span> df</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   chr   start ref alt strand          locus gene_name     type
+chr1:633192G=/+   chr1  633192   G   G      +  chr1:633192/+  MTCO2P12     exon
+chr1:1000079A&gt;G/- chr1 1000079   A   G      - chr1:1000079/-      HES4     utr5
+chr1:1000731C=/+  chr1 1000731   C   C      + chr1:1000731/+     ISG15 upstream
+chr1:1000814A&gt;G/+ chr1 1000814   A   G      + chr1:1000814/+     ISG15 upstream
+chr1:1000830C&gt;A/+ chr1 1000830   C   A      + chr1:1000830/+     ISG15 upstream
+chr1:1014228G=/+  chr1 1014228   G   G      + chr1:1014228/+     ISG15     utr5
+                  moransi.pval     moransi autocorr.variable    locus.D
+chr1:633192G=/+   1.622811e-01 0.004103776             FALSE         NA
+chr1:1000079A&gt;G/- 2.309031e-01 0.003030692             FALSE         NA
+chr1:1000731C=/+  1.689656e-02 0.009659960             FALSE         NA
+chr1:1000814A&gt;G/+ 1.369152e-04 0.017238588              TRUE         NA
+chr1:1000830C&gt;A/+ 1.936681e-04 0.016801769              TRUE         NA
+chr1:1014228G=/+  8.866674e-62 0.081322662              TRUE 0.05861605
+                    locus.r locus.pval locus.mean  locus.var locus.padj chr0
+chr1:633192G=/+          NA         NA         NA         NA         NA    1
+chr1:1000079A&gt;G/-        NA         NA         NA         NA         NA    1
+chr1:1000731C=/+         NA         NA         NA         NA         NA    1
+chr1:1000814A&gt;G/+        NA         NA         NA         NA         NA    1
+chr1:1000830C&gt;A/+        NA         NA         NA         NA         NA    1
+chr1:1014228G=/+  0.8088379  0.9999328  0.1586437 0.02517116          1    1
+                    RS CLNSIG
+chr1:633192G=/+              
+chr1:1000079A&gt;G/-            
+chr1:1000731C=/+             
+chr1:1000814A&gt;G/+            
+chr1:1000830C&gt;A/+            
+chr1:1014228G=/+  1921 Benign</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We note that there are several pathogenic variants detected</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df[[<span class="st">'CLNSIG'</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+                                                         
+                                                   39553 
+                                             association 
+                                                       8 
+                                                  Benign 
+                                                    1701 
+                                    Benign/Likely_benign 
+                                                      45 
+            Conflicting_classifications_of_pathogenicity 
+                                                       8 
+Conflicting_classifications_of_pathogenicity|risk_factor 
+                                                       2 
+                                           Likely_benign 
+                                                      56 
+                no_classification_for_the_single_variant 
+                                                       8 
+                                            not_provided 
+                                                       1 
+                                                   other 
+                                                      11 
+                                              Pathogenic 
+                                                       1 
+                            Pathogenic/Likely_pathogenic 
+                                                       3 
+                                  Pathogenic|risk_factor 
+                                                       1 
+                                             risk_factor 
+                                                       5 
+                                  Uncertain_significance 
+                                                      24 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(CLNSIG <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'Pathogenic'</span>, <span class="st">'Pathogenic/Likely_pathogenic'</span>, <span class="st">'Pathogenic|risk_factor'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                      chr     start ref alt strand            locus
+chr1:97450058C=/-    chr1  97450058   C   C      -  chr1:97450058/-
+chr1:196690107C=/+   chr1 196690107   C   C      + chr1:196690107/+
+chr13:50945445G=/+  chr13  50945445   G   G      + chr13:50945445/+
+chr13:50945445G&gt;A/+ chr13  50945445   G   A      + chr13:50945445/+
+chr15:92992967C=/+  chr15  92992967   C   C      + chr15:92992967/+
+                              gene_name       type moransi.pval      moransi
+chr1:97450058C=/-                  DPYD     intron 2.621800e-01  0.002480368
+chr1:196690107C=/+  CFH,ENSG00000289697 multigenes 5.283433e-83  0.089275322
+chr13:50945445G=/+             RNASEH2B       utr3 2.722809e-04  0.016432209
+chr13:50945445G&gt;A/+            RNASEH2B       utr3 3.981596e-04  0.015945644
+chr15:92992967C=/+                 CHD2       utr3 5.813803e-01 -0.001464787
+                    autocorr.variable    locus.D   locus.r locus.pval
+chr1:97450058C=/-               FALSE         NA        NA         NA
+chr1:196690107C=/+               TRUE 0.02683154 0.9217352  0.9999973
+chr13:50945445G=/+               TRUE 0.12962747 0.3288761  0.8862608
+chr13:50945445G&gt;A/+              TRUE 0.13874946 0.3288761  0.8084392
+chr15:92992967C=/+              FALSE         NA        NA         NA
+                    locus.mean  locus.var locus.padj chr0       RS
+chr1:97450058C=/-           NA         NA         NA    1  3918290
+chr1:196690107C=/+   0.1574583 0.02716039          1    1  1061170
+chr13:50945445G=/+   0.1577039 0.02311935          1   13 75184679
+chr13:50945445G&gt;A/+  0.1571050 0.02095258          1   13 75184679
+chr15:92992967C=/+          NA         NA         NA   15  2272457
+                                          CLNSIG
+chr1:97450058C=/-   Pathogenic/Likely_pathogenic
+chr1:196690107C=/+        Pathogenic|risk_factor
+chr13:50945445G=/+  Pathogenic/Likely_pathogenic
+chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic
+chr15:92992967C=/+                    Pathogenic</code></pre>
+</div>
+</div>
+<p>In the selected SNVs, we found some reference alleles are highlighted, such as chr15:92992967C=/+. These reference alelles are more like to be benign allele. Let’s query the orignal record in the clinvar database to check what exactly stituation it should be.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view clinvar.vcf.gz 15:92992967-92992967</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##fileformat=VCFv4.1
+##FILTER=&lt;ID=PASS,Description="All filters passed"&gt;
+##fileDate=2024-10-01
+##source=ClinVar
+##reference=GRCh38
+##ID=&lt;Description="ClinVar Variation ID"&gt;
+##INFO=&lt;ID=AF_ESP,Number=1,Type=Float,Description="allele frequencies from GO-ESP"&gt;
+##INFO=&lt;ID=AF_EXAC,Number=1,Type=Float,Description="allele frequencies from ExAC"&gt;
+##INFO=&lt;ID=AF_TGP,Number=1,Type=Float,Description="allele frequencies from TGP"&gt;
+##INFO=&lt;ID=ALLELEID,Number=1,Type=Integer,Description="the ClinVar Allele ID"&gt;
+##INFO=&lt;ID=CLNDN,Number=.,Type=String,Description="ClinVar's preferred disease name for the concept specified by disease identifiers in CLNDISDB"&gt;
+##INFO=&lt;ID=CLNDNINCL,Number=.,Type=String,Description="For included Variant : ClinVar's preferred disease name for the concept specified by disease identifiers in CLNDISDB"&gt;
+##INFO=&lt;ID=CLNDISDB,Number=.,Type=String,Description="Tag-value pairs of disease database name and identifier submitted for germline classifications, e.g. OMIM:NNNNNN"&gt;
+##INFO=&lt;ID=CLNDISDBINCL,Number=.,Type=String,Description="For included Variant: Tag-value pairs of disease database name and identifier for germline classifications, e.g. OMIM:NNNNNN"&gt;
+##INFO=&lt;ID=CLNHGVS,Number=.,Type=String,Description="Top-level (primary assembly, alt, or patch) HGVS expression."&gt;
+##INFO=&lt;ID=CLNREVSTAT,Number=.,Type=String,Description="ClinVar review status of germline classification for the Variation ID"&gt;
+##INFO=&lt;ID=CLNSIG,Number=.,Type=String,Description="Aggregate germline classification for this single variant; multiple values are separated by a vertical bar"&gt;
+##INFO=&lt;ID=CLNSIGCONF,Number=.,Type=String,Description="Conflicting germline classification for this single variant; multiple values are separated by a vertical bar"&gt;
+##INFO=&lt;ID=CLNSIGINCL,Number=.,Type=String,Description="Germline classification for a haplotype or genotype that includes this variant. Reported as pairs of VariationID:classification; multiple values are separated by a vertical bar"&gt;
+##INFO=&lt;ID=CLNVC,Number=1,Type=String,Description="Variant type"&gt;
+##INFO=&lt;ID=CLNVCSO,Number=1,Type=String,Description="Sequence Ontology id for variant type"&gt;
+##INFO=&lt;ID=CLNVI,Number=.,Type=String,Description="the variant's clinical sources reported as tag-value pairs of database and variant identifier"&gt;
+##INFO=&lt;ID=DBVARID,Number=.,Type=String,Description="nsv accessions from dbVar for the variant"&gt;
+##INFO=&lt;ID=GENEINFO,Number=1,Type=String,Description="Gene(s) for the variant reported as gene symbol:gene id. The gene symbol and id are delimited by a colon (:) and each pair is delimited by a vertical bar (|)"&gt;
+##INFO=&lt;ID=MC,Number=.,Type=String,Description="comma separated list of molecular consequence in the form of Sequence Ontology ID|molecular_consequence"&gt;
+##INFO=&lt;ID=ONCDN,Number=.,Type=String,Description="ClinVar's preferred disease name for the concept specified by disease identifiers in ONCDISDB"&gt;
+##INFO=&lt;ID=ONCDNINCL,Number=.,Type=String,Description="For included variant: ClinVar's preferred disease name for the concept specified by disease identifiers in ONCDISDBINCL"&gt;
+##INFO=&lt;ID=ONCDISDB,Number=.,Type=String,Description="Tag-value pairs of disease database name and identifier submitted for oncogenicity classifications, e.g. MedGen:NNNNNN"&gt;
+##INFO=&lt;ID=ONCDISDBINCL,Number=.,Type=String,Description="For included variant: Tag-value pairs of disease database name and identifier for oncogenicity classifications, e.g. OMIM:NNNNNN"&gt;
+##INFO=&lt;ID=ONC,Number=.,Type=String,Description="Aggregate oncogenicity classification for this single variant; multiple values are separated by a vertical bar"&gt;
+##INFO=&lt;ID=ONCINCL,Number=.,Type=String,Description="Oncogenicity classification for a haplotype or genotype that includes this variant. Reported as pairs of VariationID:classification; multiple values are separated by a vertical bar"&gt;
+##INFO=&lt;ID=ONCREVSTAT,Number=.,Type=String,Description="ClinVar review status of oncogenicity classification for the Variation ID"&gt;
+##INFO=&lt;ID=ONCCONF,Number=.,Type=String,Description="Conflicting oncogenicity classification for this single variant; multiple values are separated by a vertical bar"&gt;
+##INFO=&lt;ID=ORIGIN,Number=.,Type=String,Description="Allele origin. One or more of the following values may be added: 0 - unknown; 1 - germline; 2 - somatic; 4 - inherited; 8 - paternal; 16 - maternal; 32 - de-novo; 64 - biparental; 128 - uniparental; 256 - not-tested; 512 - tested-inconclusive; 1073741824 - other"&gt;
+##INFO=&lt;ID=RS,Number=.,Type=String,Description="dbSNP ID (i.e. rs number)"&gt;
+##INFO=&lt;ID=SCIDN,Number=.,Type=String,Description="ClinVar's preferred disease name for the concept specified by disease identifiers in SCIDISDB"&gt;
+##INFO=&lt;ID=SCIDNINCL,Number=.,Type=String,Description="For included variant: ClinVar's preferred disease name for the concept specified by disease identifiers in SCIDISDBINCL"&gt;
+##INFO=&lt;ID=SCIDISDB,Number=.,Type=String,Description="Tag-value pairs of disease database name and identifier submitted for somatic clinial impact classifications, e.g. MedGen:NNNNNN"&gt;
+##INFO=&lt;ID=SCIDISDBINCL,Number=.,Type=String,Description="For included variant: Tag-value pairs of disease database name and identifier for somatic clinical impact classifications, e.g. OMIM:NNNNNN"&gt;
+##INFO=&lt;ID=SCIREVSTAT,Number=.,Type=String,Description="ClinVar review status of somatic clinical impact for the Variation ID"&gt;
+##INFO=&lt;ID=SCI,Number=.,Type=String,Description="Aggregate somatic clinical impact for this single variant; multiple values are separated by a vertical bar"&gt;
+##INFO=&lt;ID=SCIINCL,Number=.,Type=String,Description="Somatic clinical impact classification for a haplotype or genotype that includes this variant. Reported as pairs of VariationID:classification; multiple values are separated by a vertical bar"&gt;
+##contig=&lt;ID=1&gt;
+##contig=&lt;ID=2&gt;
+##contig=&lt;ID=3&gt;
+##contig=&lt;ID=4&gt;
+##contig=&lt;ID=5&gt;
+##contig=&lt;ID=6&gt;
+##contig=&lt;ID=7&gt;
+##contig=&lt;ID=8&gt;
+##contig=&lt;ID=9&gt;
+##contig=&lt;ID=10&gt;
+##contig=&lt;ID=11&gt;
+##contig=&lt;ID=12&gt;
+##contig=&lt;ID=13&gt;
+##contig=&lt;ID=14&gt;
+##contig=&lt;ID=15&gt;
+##contig=&lt;ID=16&gt;
+##contig=&lt;ID=17&gt;
+##contig=&lt;ID=18&gt;
+##contig=&lt;ID=19&gt;
+##contig=&lt;ID=20&gt;
+##contig=&lt;ID=21&gt;
+##contig=&lt;ID=22&gt;
+##contig=&lt;ID=X&gt;
+##contig=&lt;ID=Y&gt;
+##contig=&lt;ID=MT&gt;
+##contig=&lt;ID=NT_113889.1&gt;
+##contig=&lt;ID=NT_187633.1&gt;
+##contig=&lt;ID=NT_187661.1&gt;
+##contig=&lt;ID=NT_187693.1&gt;
+##contig=&lt;ID=NW_009646201.1&gt;
+##bcftools_viewVersion=1.13+htslib-1.13
+##bcftools_viewCommand=view clinvar.vcf.gz 15:92992967-92992967; Date=Sat Oct  5 20:22:56 2024
+#CHROM  POS ID  REF ALT QUAL    FILTER  INFO
+15  92992967    633515  C   G   .   .   ALLELEID=621980;CLNDISDB=MedGen:CN517202;CLNDN=not_provided;CLNHGVS=NC_000015.10:g.92992967C&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Pathogenic;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=CHD2:1106;MC=SO:0001587|nonsense;ORIGIN=1;RS=2272457
+15  92992967    257709  C   T   .   .   AF_ESP=0.2485;AF_EXAC=0.22658;AF_TGP=0.19349;ALLELEID=255446;CLNDISDB=MeSH:D030342,MedGen:C0950123|MONDO:MONDO:0014150,MedGen:C3809278,OMIM:615369,Orphanet:1942,Orphanet:2382|MedGen:CN169374|MedGen:C3661900;CLNDN=Inborn_genetic_diseases|Developmental_and_epileptic_encephalopathy_94|not_specified|not_provided;CLNHGVS=NC_000015.10:g.92992967C&gt;T;CLNREVSTAT=criteria_provided,_multiple_submitters,_no_conflicts;CLNSIG=Benign;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA7748248;GENEINFO=CHD2:1106;MC=SO:0001819|synonymous_variant;ORIGIN=1;RS=2272457</code></pre>
+</div>
+</div>
+<p>You can easily observe that the pathogenic allele is T, where the change from C to T leads to a nonsense mutation. However, if we examine the header, we see that the ‘Number’ field of CLNSIG is labeled as ‘.’, which indicates that this term is not allele-specific—an inappropriate type for this record. In fact, this issue extends beyond just CLNSIG; all terms in the ClinVar database are labeled as ‘.’.</p>
+<p>To correct this, we need to manually change the type from ‘.’ to ‘A’ (allele-specific) for allele-specific tags in the VCF file. For more information, please refer to the <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf">VCF specification</a>.</p>
+<p>Unfortunately, many databases distributed in VCF format may contain non-uniformly formatted tags. Apart from manually updating these databases or filter reference allele afterward, there is no straightforward solution to this issue.</p>
+<p>In addition, the RS tag is annotated, and we can refer to the NCBI SNP database for more information. For example, the mutation chr13:50945445G&gt;A/+ at RS 75184679 can be found at the following link: <a href="https://www.ncbi.nlm.nih.gov/snp/rs75184679">https://www.ncbi.nlm.nih.gov/snp/rs75184679</a>. This mutation is associated with conditions such as “Abnormality of the nervous system” and other diseases.</p>
+<p>If you have any questions regarding this vignette, please feel free to report them through the <a href="https://github.com/shiquan/Yano/discussions">discussion forum</a>. When submitting your query, please ensure you attach the commands you used for better clarity and support.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "NormalizeData.RNA"        "FindVariableFeatures.RNA"
+ [3] "ScaleData.RNA"            "RunPCA.RNA"              
+ [5] "FindNeighbors.RNA.pca"    "FindClusters"            
+ [7] "RunUMAP.RNA.pca"          "NormalizeData.var"       
+ [9] "RunAutoCorr.var"          "SetAutoCorrFeatures.var" 
+[11] "RunBlockCorr.var.pca"     "ParseVarName.var"        
+[13] "annoVAR.var"             </code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

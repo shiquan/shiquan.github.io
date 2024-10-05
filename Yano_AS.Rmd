@@ -1,0 +1,197 @@
+---
+title: Alternative splicing analysis for scRNA-seq
+date: 2024-07-08
+format:
+  html:
+    code-overflow: wrap
+---
+This vignette uses gene, exon, and junction expression files generated from the [Annotate Various Features for Alignment](anno.Rmd). While current state-of-the-art scRNA-seq methods tend to be biased towards the 3' or 5' ends of transcripts, it is still possible to obtain coverage information for a subset of exons. Despite the sparsity of gene and exon expression in single cells, our spatial dissimilarity test leverages the spatial distribution properties of features. This means that even features with low overall expression but strong spatial expression patterns across cells can still be highlighted. By performing a spatial dissimilarity test between exon/junction and gene expression, we can predict potential alternative splicing events.
+
+## 0. Prerequisite
+- Make sure you have installed the R environment and `Yano` package before proceeding with the testing.
+
+## 1. Perform cell clustering with Seurat
+Load Yano will automatically load Seurat.
+```{r warning=FALSE}
+require(Yano)
+```
+
+```{r warning=FALSE}
+# Read raw gene expression matrix
+exp <- ReadPISA("./exp/")
+dim(exp)
+```
+In this section, we will perform the standard Seurat analysis pipeline. Since our spatial dissimilarity test does not require predefined cell groups, we only need to calculate the shared nearest neighbors (SNN) using the `FindNeighbors` function. However, cell clustering and UMAP plots will still be generated to help interpret the results. Note that changing the resolution or other parameters for `FindClusters` and `RunUMAP` will not impact the outcome of the spatial dissimilarity test.
+```{r warning=FALSE}
+# Create Seurat object and filter droplets with fewer than 1000 genes
+obj <- CreateSeuratObject(exp, min.features = 1000, min.cells = 10)
+
+# Filter low quality droplets
+obj[["percent.mt"]] <- PercentageFeatureSet(obj, pattern = "^MT-")
+obj <- subset(obj, nFeature_RNA < 9000 & percent.mt < 20)
+
+# Downsampling to 2000 cells for fast testing
+obj <- obj[, sample(colnames(obj),2000)]
+
+# Clustering analysis
+obj <- NormalizeData(obj) %>% FindVariableFeatures() %>% ScaleData() %>%  RunPCA(verbose=FALSE) %>% FindNeighbors(dims = 1:10, verbose=FALSE) %>% FindClusters(resolution = 0.5, verbose=FALSE) %>% RunUMAP(dims=1:10, verbose=FALSE)
+
+DimPlot(obj, label=TRUE, label.size = 5, label.box = TRUE)
+```
+
+## 2. Perform alternative splicing with exon assay
+In this section, we will compare exon expression patterns with the expression patterns of their corresponding genes in a spatial context. Here, the term "spatial" refers to the organization of cells in space. In this vignette, we will use the shared nearest neighbor (SNN) space for the analysis, but the approach can also be applied to lineage trajectories or spatial coordinates. The spatial dissimilarity test is divided into several steps. First, we will load exon data as a new assay in the Seurat object. In the second step, we will perform a spatial autocorrelation test for all exons and select the ones that show significant autocorrelation for further analysis. Next, we will define the binding relationship between exons and their corresponding genes and run the spatial dissimilarity test. After testing, p-values and adjusted p-values for each exon will be provided.
+
+```{r warning=FALSE, fig.width=14, fig.height=6}
+# Read exon count matrix file
+exon <- ReadPISA("./exon/")
+
+# Load the exon expression to Seurat object as a new assay, make sure the exon matrix has the same cells.
+obj[['exon']] <- CreateAssayObject(exon[, colnames(obj)], min.cells=20)
+
+DefaultAssay(obj) <- "exon"
+# Empty info for exon features
+head(obj[['exon']][[]]) %>% knitr::kable()
+
+obj <- ParseExonName(obj)
+# Gene name and location are parsed from exon name
+head(obj[['exon']][[]]) %>% knitr::kable()
+
+# Normalize the data for spatial autocorrelation test
+obj <- NormalizeData(obj)
+obj <- RunAutoCorr(obj)
+
+# Select autocorrleated features for downstream test.
+obj <- SetAutoCorrFeatures(obj)
+
+# IMPORTANT
+# The permutation process is computationally expensive. In the example below, I set `perm=20` to only perform 20 permutations. However, the default setting performs 100 permutations for better evaluation. It's possible to increase the number of permutations even further, but it may not be necessary.
+obj <- RunBlockCorr(obj, bind.name = "gene_name", bind.assay = "RNA", perm=20)
+
+# Now p values and adjusted p values have been generated
+head(obj[['exon']][[]]) %>% knitr::kable()
+
+# Plot feature binding test plot
+FbtPlot(obj, val = "gene_name.padj")
+
+# The chromosome names are too long and tend to overlap in the visualization. To resolve this, you can either resize the labels or remove the 'chr' prefix from the chromosome names. Additionally, since the Y chromosome and mitochondrial are not of particular interest to us in this analysis, they can be excluded from the visualization.
+sel.chrs <- c(1:21, "X")
+FbtPlot(obj, val = "gene_name.padj", remove.chr = TRUE, sel.chrs = sel.chrs)
+
+# Let's see how many exons are expressed in different spatial pattern with their genes
+obj[['exon']][[]] %>% filter(gene_name.padj < 0.001) %>% knitr::kable() 
+
+# Random select a gene and its exons and visulize with FeaturePlot.
+FeaturePlot(obj, features = c("chr15:43801711-43804427/+/SERF2", "SERF2"), ncol=2)
+
+# The default color and parameters perhaps not easily to tell the difference between exon and its binding gene expression. Let's change the scaled colors and enlarge point size and order by expression.
+require(RColorBrewer)
+FeaturePlot(obj, features = c("chr15:43801711-43804427/+/SERF2", "SERF2"), ncol=2, order = TRUE, pt.size=1) & scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
+```
+
+In our package, retrieving gene locations requires loading a GTF file instead of relying on current Bioconductor databases, such as `org.Hs.eg.db`. This is due to the varying versions of gene annotations provided by different institutes, which can introduce inconsistencies. To avoid potential bias during preprocessing and postprocessing, we strongly recommend using the same GTF file consistently throughout your project. The Yano package includes the `gtf2db` function, which enables you to load a GTF file into memory for further analysis.
+```{r}
+gtf <- gtf2db("./gencode.v44.annotation.gtf.gz")
+```
+
+A track plot is used to study the read coverage per cell group. In the track plot shown below, the cell group is specified by the `cell.group` parameter. Unlike IGV, where read depth is used, we use UMI depth in this plot. The cell barcode tag and UMI tag are predefined as "CB" and "UB" with parameter `cell.tag` and `umi.tag`. For each cell group, the UMI depth has been normalized by the number of cells in that group. This means that the depth at each location can be interpreted as the mean UMI depth per cell for the group. As a result, the tracks are directly comparable across different cell groups. If `cell.group` is not set, the track plot will generate the raw UMI depth per location.
+
+```{r message=FALSE, fig.width=12, fig.height=8}
+TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "SERF2", cell.group = Idents(obj), highlights = c(43801711,43804427) )
+```
+In the track plot, we can easily observe that an exon around position 33,794,000 dominates the expression of the SERF2 gene and is highly expressed in many cell groups. However, the exon 'chr15:43801711-43804427/+/SERF2' (highlighted) shows low expression and is not visible in the track plot. To visualize low-expressed exons, we can set the `max.depth` parameter to 2, which caps the UMI depth at 2. And many genes in the region, we set display.genes to SERF2 only. This adjustment allows the low-expressed exons and their related transcipts to be more clearly represented in the plot. In this case, we can found the the highlighed exon shows different expressed pattern with the gene SERF2.
+
+```{r message=FALSE, fig.width=12, fig.height=8}
+TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "SERF2", cell.group = Idents(obj), highlights = c(43801711,43804427), max.depth = 2, display.genes = "SERF2")
+```
+
+
+## 3. Load junction assay
+In addition to exon expression, junction expression can provide insights into different expression patterns across transcripts, offering a complementary perspective. Junction expression refers to the UMI counts of reads that span more than one exon. It's important to note that junctions are named similarly to exons, but the start and end positions are different. The start of the junction corresponds to the end of the previous exon, while the end of the junction represents the start of the next exon.
+```{r warning=FALSE, fig.width=14, fig.height=6}
+junction <- ReadPISA("./junction/")
+obj[['junction']] <- CreateAssayObject(junction[, colnames(obj)], min.cells=20)
+
+DefaultAssay(obj) <- "junction"
+obj <- NormalizeData(obj)
+
+# select spatial autocorrelated junctions
+obj <- RunAutoCorr(obj)
+obj <- SetAutoCorrFeatures(obj)
+
+# Parse the gene name and coordinates from junction names
+obj <- ParseExonName(obj)
+
+# perform dissimilarity test between junctions and their binding genes
+obj <- RunBlockCorr(obj, bind.name = "gene_name", bind.assay = "RNA", perm=20)
+
+FbtPlot(obj, val="gene_name.padj", remove.chr=TRUE, sel.chrs = sel.chrs)
+
+# Because both exon and junction are compared with gene, so it's reasonable to combine these two assays in one plot
+FbtPlot(obj, val="gene_name.padj", assay = c("exon", "junction"), col.by = "assay", shape.by = "assay", pt.size = 2, remove.chr = TRUE, sel.chrs = sel.chrs, cols = c("red", "blue"))
+
+# We can find there is an exon and a junction at chromosome 12 with very low p value (<1e-8), let's see which gene they are located
+obj[['exon']][[]] %>% filter(chr == "chr12" & gene_name.pval < 1e-8) %>% knitr::kable()
+obj[['junction']][[]] %>% filter(chr == "chr12" & gene_name.pval < 1e-8) %>% knitr::kable()
+
+FeaturePlot(obj, features = c("chr12:56161387-56161465/+/MYL6","chr12:56160320-56161387/+/MYL6", "MYL6"), order = TRUE, pt.size = 2, ncol=3) & scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
+```
+
+We then visualize the track plot for this gene, including junction reads by setting `junc=TRUE`. The height of the splice paths in the plot represents the expression level of each junction within the specified cell group.
+```{r message=FALSE, fig.width=12, fig.height=8}
+TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "MYL6", cell.group = Idents(obj), junc = TRUE, highlights = list(c(56160320,56161387),c(56161387,56161465)))
+```
+You might be wondering why the exon chr12:56161387-56161465/+/MYL6 appears highly expressed in cell group 2 in the track plot, where the overlapping peak is clearly higher than in other groups, but its expression level in the feature plot is not as high as expected.
+
+This discrepancy arises because the exon is overlapping with other exons. We only count reads that are fully contained within the exon as part of the exon’s expression. Therefore, reads that partially overlap with this exon are not included in the count. 
+
+In contrast, the overlapping exon chr12:56161387-56161575/+/MYL6 shows higher expression in group 2 compared to other groups. It's important to note that if a read is fully contained within two or more overlapping exons, PISA will count it for all relevant exons. Check PISA's manual for details.
+
+```{r fig.width=10, fig.height=5}
+p1 <- DimPlot(obj, label=TRUE, label.size = 5, label.box = TRUE)
+p2 <- FeaturePlot(obj, features = c("chr12:56161387-56161575/+/MYL6"), order = TRUE, pt.size = 2) & scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
+p1 + p2
+```
+
+## 4. Heatmap analysis for highlight group specific alternative splicing
+The spatial dissimilarity test method prioritizes alternatively spliced exons and junctions across all cells but does not identify which specific cell groups exhibit these splicing events. To address this, let's manually extract the scaled expression data for the selected alternatively spliced exons and their corresponding genes, then perform a co-clustering analysis. A comprehensive heatmap will be generated using the [ComplexHeatmap](https://jokergoo.github.io/ComplexHeatmap-reference/book/index.html) package, providing a visual representation of the exon and gene distribution across cell groups.
+
+```{r message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+obj[['exon']][[]] %>% filter(gene_name.padj<0.001) %>% rownames -> exons
+obj[['exon']][[]] %>% filter(gene_name.padj<0.001) %>% pull(gene_name) -> bind.genes
+DefaultAssay(obj) <- "RNA"
+obj <- ScaleData(obj, features = unique(bind.genes))
+DefaultAssay(obj) <- "exon"
+obj <- ScaleData(obj, features = exons)
+
+dat1 <- GetAssayData(obj, assay = 'exon', layer = 'scale.data')
+dat2 <- GetAssayData(obj, assay = 'RNA', layer = 'scale.data')
+idents <- sort(Idents(obj))
+order.cells <- names(idents)
+
+dat2 <- dat2[bind.genes,]
+rownames(dat2) <- exons
+
+require(ComplexHeatmap)
+d <- dist(dat1)
+hc <- hclust(d)
+idx <- hc$labels[hc$order]
+
+ha <- HeatmapAnnotation(group=idents, border = TRUE)
+ht1 <- Heatmap(dat1[idx, order.cells], cluster_rows = FALSE, cluster_columns = FALSE, show_column_names = FALSE, border = TRUE,  top_annotation = ha, name = "exon", column_title = "exon")
+ht2 <- Heatmap(dat2[idx, order.cells], cluster_rows = FALSE, cluster_columns = FALSE, show_column_names = FALSE, border = TRUE,  top_annotation = ha, name = "gene", column_title = "gene", row_names_max_width = max_text_width(rownames(dat2), gp = gpar(fontsize = 12)))
+
+ht <- ht1 + ht2
+draw(ht, heatmap_legend_side = "left",  annotation_legend_side = "left")
+```
+
+```{r}
+saveRDS(obj, file = "glioblastoma5k.rds")
+```
+
+If you have any questions regarding this vignette, please feel free to report them through the [discussion forum](https://github.com/shiquan/Yano/discussions). When submitting your query, please ensure you attach the commands you used for better clarity and support.
+
+```{r}
+Command(obj)
+```
+

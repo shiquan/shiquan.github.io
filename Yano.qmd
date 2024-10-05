@@ -16,17 +16,14 @@ This package has been tested on Linux and macOS platforms.
 
 ``` r
 # Prerequisite packages
-# install.packages(c("BiocManager", "Seurat", "R.utils", "viridis", "devtools"))
+# install.packages(c("Seurat", "R.utils", "viridis", "devtools"))
 
-# BiocManager::install(c("Rhtslib"))
 
 # install Yano 
 devtools::install_github("shiquan/Yano")
 ```
 
-***Notice:***
-
-<p><small> Multithread mode is disabled for macOS due to the lack of OpenMP support by default. For experts, to enable multithread, you can try installing GCC to compile this package.</small></p>
+***Notice:*** Multithread mode is disabled on macOS by default due to the lack of OpenMP support. However, data.table provides a useful tutorial on how to enable OpenMP on macOS. For more information, please refer to this guide: [https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos](https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos).
 
 ## Get started
 

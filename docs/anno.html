@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Yano User’s Guide</title>
+<title>Count gene, exon, junction and SNV expression from a BAM file</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -101,6 +101,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<style>
+ .cell-output-stdout code {
+  word-break: break-wor !important;
+  white-space: pre-wrap !important;
+  }
+</style>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -126,7 +132,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">PISA</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./Yano.html" aria-current="page"> 
+    <a class="nav-link" href="./Yano.html"> 
 <span class="menu-text">Yano</span></a>
   </li>  
 </ul>
@@ -147,15 +153,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#install" id="toc-install" class="nav-link" data-scroll-target="#install">Install</a></li>
-  <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">Get started</a></li>
-  <li><a href="#manhatten-plot" id="toc-manhatten-plot" class="nav-link" data-scroll-target="#manhatten-plot">Manhatten plot</a></li>
-  <li><a href="#track-plot" id="toc-track-plot" class="nav-link" data-scroll-target="#track-plot">Track plot</a></li>
-  <li><a href="#changelog" id="toc-changelog" class="nav-link" data-scroll-target="#changelog">Changelog</a></li>
-  <li><a href="#todo-list" id="toc-todo-list" class="nav-link" data-scroll-target="#todo-list">TODO list</a></li>
-  <li><a href="#reporting-issues" id="toc-reporting-issues" class="nav-link" data-scroll-target="#reporting-issues">Reporting Issues</a></li>
-  <li><a href="#citation" id="toc-citation" class="nav-link" data-scroll-target="#citation">Citation</a></li>
+  <li><a href="#prepare-the-raw-data-and-reference" id="toc-prepare-the-raw-data-and-reference" class="nav-link active" data-scroll-target="#prepare-the-raw-data-and-reference">Prepare the raw data and reference</a></li>
+  <li><a href="#the-third-party-programs-we-will-use" id="toc-the-third-party-programs-we-will-use" class="nav-link" data-scroll-target="#the-third-party-programs-we-will-use">The third-party programs we will use</a></li>
+  <li><a href="#step-by-step-tutorial" id="toc-step-by-step-tutorial" class="nav-link" data-scroll-target="#step-by-step-tutorial">Step by step tutorial</a>
+  <ul class="collapse">
+  <li><a href="#genetic-variants-calling" id="toc-genetic-variants-calling" class="nav-link" data-scroll-target="#genetic-variants-calling">1. Genetic variants calling</a></li>
+  <li><a href="#annotate-various-features" id="toc-annotate-various-features" class="nav-link" data-scroll-target="#annotate-various-features">2. Annotate various features</a></li>
+  <li><a href="#generate-cell-x-feature-expression-matrix" id="toc-generate-cell-x-feature-expression-matrix" class="nav-link" data-scroll-target="#generate-cell-x-feature-expression-matrix">3. Generate Cell X feature expression matrix</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -164,7 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Yano User’s Guide</h1>
+<h1 class="title">Count gene, exon, junction and SNV expression from a BAM file</h1>
 </div>
 
 
@@ -181,45 +186,93 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Yano represents an R/C toolkit designed for conducting spatial dissimilarity analysis on single-cell RNA sequencing data. This method revolves around the core concept of examining the distinct expression patterns of a given feature (e.g.&nbsp;exon, snp allele) in relation to its associated binding feature (typically a gene or another allele at the same genomic locus) within the context of cell lineage (1D), spatial position (2D), or the multi-dimensional PCA space. The discernible differences in feature expression patterns and their binding features provide insights into a range of biological phenomena, including alternative splicing, cis-antisense RNA regulation, allele-specific gene expression, and more.</p>
-<p>Yano is seamlessly integrated with Seurat, building upon the Seurat object’s framework. Users can perform conventional cell clustering analyses using the state-of-the-art Seurat pipeline and then incorporate exon, SNP counts as new “assays” within the Seurat objects. Subsequently, Yano facilitates the assessment of spatial dissimilarity between these two assays. For more details about the method, please refer to our manuscript.</p>
-<p>For those seeking quick guidance, please refer directly to the user cases.</p>
+<p>The following vignette demonstrates how to generate various feature counts from an alignment BAM file. Here we use a 10X demo data of human glioblastoma cells. The description of data can be found at <a href="https://www.10xgenomics.com/datasets/human-glioblastoma-multiforme-3-v-3-whole-transcriptome-analysis-3-standard-4-0-0" class="uri">https://www.10xgenomics.com/datasets/human-glioblastoma-multiforme-3-v-3-whole-transcriptome-analysis-3-standard-4-0-0</a>.</p>
+<section id="prepare-the-raw-data-and-reference" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-the-raw-data-and-reference">Prepare the raw data and reference</h2>
+<ul>
+<li>Download <a href="https://cf.10xgenomics.com/samples/cell-exp/4.0.0/Parent_SC3v3_Human_Glioblastoma/Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam">alignment data (BAM)</a>. (~14G).</li>
+</ul>
+<section id="the-following-file-is-used-for-variant-calling-and-allele-specific-gene-expression.-it-can-be-skipped-for-alternative-splicing-analysis." class="level4">
+<h4 class="anchored" data-anchor-id="the-following-file-is-used-for-variant-calling-and-allele-specific-gene-expression.-it-can-be-skipped-for-alternative-splicing-analysis.">The following file is used for variant calling and allele specific gene expression. It can be skipped for alternative splicing analysis.</h4>
+<ul>
+<li>BAM Index File (for variant calling): <a href="https://cf.10xgenomics.com/samples/cell-exp/4.0.0/Parent_SC3v3_Human_Glioblastoma/Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam.bai">Download BAM index</a></li>
+<li>Human Reference Databases and Gene Annotation Files:
+<ul>
+<li><a href="https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/GRCh38.p13.genome.fa.gz">GRCh38.p13 genome</a></li>
+<li><a href="https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.annotation.gtf.gz">Gencode v44 annotation</a></li>
+</ul></li>
+</ul>
 </section>
-<section id="install" class="level2">
-<h2 class="anchored" data-anchor-id="install">Install</h2>
-<p>This package has been tested on Linux and macOS platforms.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prerequisite packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("Seurat", "R.utils", "viridis", "devtools"))</span></span>
+</section>
+<section id="the-third-party-programs-we-will-use" class="level2">
+<h2 class="anchored" data-anchor-id="the-third-party-programs-we-will-use">The third-party programs we will use</h2>
+<ul>
+<li>bcftools (<a href="https://github.com/samtools/bcftools" class="uri">https://github.com/samtools/bcftools</a>)</li>
+<li>samtools (<a href="https://github.com/samtools/samtools" class="uri">https://github.com/samtools/samtools</a>)</li>
+</ul>
+</section>
+<section id="step-by-step-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="step-by-step-tutorial">Step by step tutorial</h2>
+<section id="genetic-variants-calling" class="level3">
+<h3 class="anchored" data-anchor-id="genetic-variants-calling">1. Genetic variants calling</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unpack the FASTA file</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gzip</span> <span class="at">-d</span> GRCh38.p13.genome.fa.gz</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># install Yano </span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"shiquan/Yano"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong><em>Notice:</em></strong> Multithread mode is disabled on macOS by default due to the lack of OpenMP support. However, data.table provides a useful tutorial on how to enable OpenMP on macOS. For more information, please refer to this guide: <a href="https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos">https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos</a>.</p>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the FASTA index</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> faidx GRCh38.p13.genome.fa</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform variant calling</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> mpileup <span class="at">-Ou</span> <span class="at">-f</span> GRCh38.p13.genome.fa ./Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam  <span class="kw">|</span> <span class="ex">bcftools</span> call <span class="at">-vmO</span> z <span class="at">-o</span> var.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>While several new methods for genetic variant calling have been developed, the basic principle remains the same: identifying differences between sequence reads and the reference genome. For simplicity, we are using the ‘traditional’ bcftools approach.</p>
 </section>
-<section id="get-started" class="level2">
-<h2 class="anchored" data-anchor-id="get-started">Get started</h2>
+<section id="annotate-various-features" class="level3">
+<h3 class="anchored" data-anchor-id="annotate-various-features">2. Annotate various features</h3>
+<p>The following command generates gene, transcript, exon, junction and genetic variant for each alignment:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-gtf</span> gencode.v44.annotation.gtf.gz <span class="at">-exon</span> <span class="at">-vcf</span> var.vcf.gz <span class="at">-vcf-ss</span> <span class="at">-ref-alt</span> <span class="at">-o</span> anno.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>-exon</code>: Generates exon and junction names.</li>
+<li><code>-vcf-ss</code>: Specifies strand information for each genetic variant, necessary because 10X scRNA-seq uses a strand-specific library.</li>
+</ul>
+<p>Comparing raw and annotated records.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-overflow-wrap code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A original record</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam  <span class="kw">|</span><span class="fu">head</span> <span class="at">-n</span> 3000<span class="kw">|</span><span class="fu">grep</span> <span class="st">'A00836:286:HMTMVDMXX:2:2354:8422:1391'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A00836:286:HMTMVDMXX:2:2354:8422:1391   16  chr1    89995   255 56M236N35M  *   0   0   TTGGTCTCTCTTGCTGCCCTGGAGACCAGCTGCCCCACGAAGGAACCAGAGCCAACCTGCTGCTTCCTGGAGGAAGACAGTCCCTCTGTCC FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFF NH:i:6  HI:i:3  AS:i:89 nM:i:1  RG:Z:Parent_SC3v3_Human_Glioblastoma:0:1:HMTMVDMXX:2    TX:Z:ENST00000495576,+784,91M   GX:Z:ENSG00000239945    GN:Z:AL627309.3 fx:Z:ENSG00000239945    RE:A:E  MM:i:1  xf:i:25 CR:Z:AGATGAATCTACGCGG   CY:Z:FFFFFFFFFF,FFFFF   CB:Z:AGATGAATCTACGCGG-1 UR:Z:TTTCATGCCTCA   UY:Z:FFFFFFFFFFFF   UB:Z:TTTCATGCCTCA</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the same record after annotation</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view anno.bam <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 3000<span class="kw">|</span><span class="fu">grep</span> <span class="st">'A00836:286:HMTMVDMXX:2:2354:8422:1391'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A00836:286:HMTMVDMXX:2:2354:8422:1391   16  chr1    89995   255 56M236N35M  *   0   0   TTGGTCTCTCTTGCTGCCCTGGAGACCAGCTGCCCCACGAAGGAACCAGAGCCAACCTGCTGCTTCCTGGAGGAAGACAGTCCCTCTGTCC FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFF NH:i:6  HI:i:3  AS:i:89 nM:i:1  RG:Z:Parent_SC3v3_Human_Glioblastoma:0:1:HMTMVDMXX:2    fx:Z:ENSG00000239945    MM:i:1  xf:i:25 CR:Z:AGATGAATCTACGCGG   CY:Z:FFFFFFFFFF,FFFFF   CB:Z:AGATGAATCTACGCGG-1 UR:Z:TTTCATGCCTCA   UY:Z:FFFFFFFFFFFF   UB:Z:TTTCATGCCTCA   RE:A:S  GX:Z:ENSG00000239945.1  GN:Z:ENSG00000239945    TX:Z:ENST00000495576.1  EX:Z:chr1:89551-90050/-/ENSG00000239945,chr1:90287-91105/-/ENSG00000239945  JC:Z:chr1:90050-90287/-/ENSG00000239945 VR:Z:chr1:90040A&gt;C/-</code></pre>
+</div>
+</div>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>PISA anno generates <code>GN</code>, <code>TX</code>, <code>RE</code>, and <code>GX</code> tags when the <code>-gtf</code> option is set. Original tag values are replaced, and PISA uses a slightly different annotation strategy than CellRanger. In the example above, the <code>RE</code> tag has been changed from <code>E</code> (exon) to <code>S</code> (spliced).</li>
+<li>When the <code>-exon</code> option is used, <code>EX</code> and <code>JC</code> tags are annotated only if the read has a <code>GN</code> tag.</li>
+</ul>
 </section>
-<section id="manhatten-plot" class="level2">
-<h2 class="anchored" data-anchor-id="manhatten-plot">Manhatten plot</h2>
-</section>
-<section id="track-plot" class="level2">
-<h2 class="anchored" data-anchor-id="track-plot">Track plot</h2>
-</section>
-<section id="changelog" class="level2">
-<h2 class="anchored" data-anchor-id="changelog">Changelog</h2>
-</section>
-<section id="todo-list" class="level2">
-<h2 class="anchored" data-anchor-id="todo-list">TODO list</h2>
-</section>
-<section id="reporting-issues" class="level2">
-<h2 class="anchored" data-anchor-id="reporting-issues">Reporting Issues</h2>
-</section>
-<section id="citation" class="level2">
-<h2 class="anchored" data-anchor-id="citation">Citation</h2>
+<section id="generate-cell-x-feature-expression-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="generate-cell-x-feature-expression-matrix">3. Generate Cell X feature expression matrix</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> gene</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> exon</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> junction</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> var</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> GN <span class="at">-umi</span> UB <span class="at">-outdir</span> gene anno.bam</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> EX <span class="at">-umi</span> UB <span class="at">-outdir</span> exon anno.bam</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> JC <span class="at">-umi</span> UB <span class="at">-outdir</span> junction anno.bam</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> VF <span class="at">-umi</span> UB <span class="at">-outdir</span> var anno.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>There is no need to filter raw genetic variants by sequencing depth or strand bias tests. Since this is strand-specific RNA sequencing data, strand bias is expected in many cases. Instead, the feature expression matrix can be filtered by cells during downstream analysis.</li>
+</ul>
+<p>If you have any questions regarding this workflows, please feel free to report them through the <a href="https://github.com/shiquan/PISA/issues">github issues</a>.</p>
+<p>If you have any ideas or suggestions regarding PISA annotation, please refer to the <a href="https://github.com/shiquan/Yano/discussions">Yano discussion forum</a>. Since PISA is commonly used alongside Yano, it may not be necessary to host separate forums for each.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

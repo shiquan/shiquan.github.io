@@ -13,10 +13,16 @@ This website outlines the key tools and software packages developed from my rese
 -   **PISA**: A suite of programs specifically designed for preprocessing data from single-cell sequencing and spatial transcriptomics. It efficiently processes FASTQ+, BAM, and BED files, streamlining the handling and generates various feature counts, facilitating the downstream analyses necessary for in-depth biological insights.
 -   **Yano**: An R package that employs the spatial dissimilarity test method as its core algorithm. Yano is tailored for exploring various biological events in single-cell data, including alternative splicing, allele-specific gene expression, and more, providing comprehensive insights into cellular dynamics.
 
-<strong>Workflows</strong>
+<strong>Workflows and Short Cases for scRNA-seq and Spatial Transcriptome</strong>
 
-(1) [From raw reads to gene counts](workflow1.Rmd) (PISA)
-(2) Alternative splicing analysis for scRNA-seq (PISA + Seurat + Yano)
-(3) Allele-specific gene expression analysis for scRNA-seq (PISA + Seurat + Yano)
-(4) Annotate and visualise genetic varaints for scRNA-seq (Yano)
-(5) Prioritize non-exonic reads in scRNA-seq (PISA + Seurat + Yano)
+- [From raw reads to gene counts](workflow1.Rmd) (PISA)
+- [Annotate various features for alignment](anno.Rmd) (PISA)
+- [Alternative splicing analysis for scRNA-seq](Yano_AS.Rmd) (Yano)
+- [Allele-specific gene expression analysis for scRNA-seq](Yano_ASE.Rmd) (Yano)
+<!--
+- [Annotate and visualise genetic varaints for scRNA-seq](Yano_anno.Rmd) (Yano)
+- [Alternative splicing analysis for Adult Mouse Brain Coronal Section](Yano_Visium.Rmd) (Yano, Visium)
+- [Run PISA and Yano with Smartseq2 data](Smartseq2.Rmd) (Smartseq2)
+-->
+
+  

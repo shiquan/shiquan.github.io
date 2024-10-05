@@ -1,0 +1,99 @@
+---
+title: Count gene, exon, junction and SNV expression from a BAM file
+version: 2024-07-08
+format:
+  html:
+    code-overflow: wrap
+    include-in-header:
+      - text: |
+          <style>
+           .cell-output-stdout code {
+            word-break: break-wor !important;
+            white-space: pre-wrap !important;
+            }
+          </style>
+---
+
+The following vignette demonstrates how to generate various feature counts from an alignment BAM file. Here we use a 10X demo data of human glioblastoma cells. The description of data can be found at <https://www.10xgenomics.com/datasets/human-glioblastoma-multiforme-3-v-3-whole-transcriptome-analysis-3-standard-4-0-0>.
+
+## Prepare the raw data and reference
+
+-   Download [alignment data (BAM)](https://cf.10xgenomics.com/samples/cell-exp/4.0.0/Parent_SC3v3_Human_Glioblastoma/Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam). (~14G).
+
+#### The following file is used for variant calling and allele specific gene expression. It can be skipped for alternative splicing analysis.
+- BAM Index File (for variant calling):
+[Download BAM index](https://cf.10xgenomics.com/samples/cell-exp/4.0.0/Parent_SC3v3_Human_Glioblastoma/Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam.bai)
+- Human Reference Databases and Gene Annotation Files:
+    - [GRCh38.p13 genome](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/GRCh38.p13.genome.fa.gz)
+    - [Gencode v44 annotation](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.annotation.gtf.gz)
+
+
+## The third-party programs we will use
+
+-   bcftools (<https://github.com/samtools/bcftools>)
+-   samtools (<https://github.com/samtools/samtools>)
+
+## Step by step tutorial
+
+### 1. Genetic variants calling
+
+``` bash
+# Unpack the FASTA file
+gzip -d GRCh38.p13.genome.fa.gz
+
+# Build the FASTA index
+samtools faidx GRCh38.p13.genome.fa
+
+# Perform variant calling
+bcftools mpileup -Ou -f GRCh38.p13.genome.fa ./Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam  | bcftools call -vmO z -o var.vcf.gz
+```
+While several new methods for genetic variant calling have been developed, the basic principle remains the same: identifying differences between sequence reads and the reference genome. For simplicity, we are using the 'traditional' bcftools approach.
+
+### 2. Annotate various features
+
+The following command generates gene, transcript, exon, junction and genetic variant for each alignment:
+``` bash
+PISA anno -gtf gencode.v44.annotation.gtf.gz -exon -vcf var.vcf.gz -vcf-ss -ref-alt -o anno.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam 
+```
+* `-exon`: Generates exon and junction names.
+* `-vcf-ss`: Specifies strand information for each genetic variant, necessary because 10X scRNA-seq uses a strand-specific library.
+
+Comparing raw and annotated records.
+```{bash}
+#| echo: true
+#| code-overflow: wrap
+# A original record
+samtools view Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam  |head -n 3000|grep 'A00836:286:HMTMVDMXX:2:2354:8422:1391'
+```
+```{bash}
+# the same record after annotation
+samtools view anno.bam | head -n 3000|grep 'A00836:286:HMTMVDMXX:2:2354:8422:1391'
+```
+
+**Notes:**
+
+  - PISA anno generates `GN`, `TX`, `RE`, and `GX` tags when the `-gtf` option is set. Original tag values are replaced, and PISA uses a slightly different annotation strategy than CellRanger. In the example above, the `RE` tag has been changed from `E` (exon) to `S` (spliced).
+  - When the `-exon` option is used, `EX` and `JC` tags are annotated only if the read has a `GN` tag.
+
+### 3. Generate Cell X feature expression matrix
+
+``` bash
+mkdir gene
+mkdir exon
+mkdir junction
+mkdir var
+PISA count -tags CB -anno-tag GN -umi UB -outdir gene anno.bam
+PISA count -tags CB -anno-tag EX -umi UB -outdir exon anno.bam
+PISA count -tags CB -anno-tag JC -umi UB -outdir junction anno.bam
+PISA count -tags CB -anno-tag VF -umi UB -outdir var anno.bam
+```
+
+**Notes:**
+
+- There is no need to filter raw genetic variants by sequencing depth or strand bias tests. Since this is strand-specific RNA sequencing data, strand bias is expected in many cases. Instead, the feature expression matrix can be filtered by cells during downstream analysis.
+
+
+If you have any questions regarding this workflows, please feel free to report them through the [github issues](https://github.com/shiquan/PISA/issues).
+
+If you have any ideas or suggestions regarding PISA annotation, please refer to the [Yano discussion forum](https://github.com/shiquan/Yano/discussions). Since PISA is commonly used alongside Yano, it may not be necessary to host separate forums for each.
+
