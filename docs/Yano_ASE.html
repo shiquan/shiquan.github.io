@@ -234,9 +234,9 @@ Centering and scaling data matrix</code></pre>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># you can skip to read GTF again if you already load it</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-10-06 11:09:31] [32mGTF loading..[0m
-[2024-10-06 11:10:04] [32mLoad 62700 genes.[0m
-[2024-10-06 11:10:04] [32mLoad time : 32.705 sec[0m</code></pre>
+<pre><code>[2024-10-06 14:18:52] [32mGTF loading..[0m
+[2024-10-06 14:19:22] [32mLoad 62700 genes.[0m
+[2024-10-06 14:19:22] [32mLoad time : 30.848 sec[0m</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At this moment the meta infomation for genetic variant assay is still empty</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -370,7 +370,7 @@ Centering and scaling data matrix</code></pre>
 <pre><code>Run autocorrelation test for 41427 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 3.920989 secs</code></pre>
+<pre><code>Runtime : 3.802037 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -405,7 +405,7 @@ Centering and scaling data matrix</code></pre>
 <pre><code>Use predefined weight matrix "WeightMatrix".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 37.54196 secs.</code></pre>
+<pre><code>Runtime : 36.35379 secs.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -835,7 +835,20 @@ assay instead</code></pre>
 <p>It appears that the T allele of the gene VIM is expressed in most cell groups, while the C allele seems to be primarily expressed in groups 1 and 4.</p>
 <p>Using our spatial dissimilarity analysis method, we have identified many cases of allele-specific gene expression. This phenomenon can be influenced by several known and unknown mechanisms, including gene imprinting, genetic recombination, and somatic variants during cell or disease development. While we won’t explore these mechanisms in detail here, you can refer to our manuscript, which includes several case studies dedicated to this topic.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(obj, <span class="at">file =</span> <span class="st">"glioblastoma5k.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the Seurat object for further use</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(obj, <span class="at">file =</span> <span class="st">"glioblastoma5k.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "NormalizeData.RNA"        "FindVariableFeatures.RNA"
+ [3] "ScaleData.RNA"            "RunPCA.RNA"              
+ [5] "FindNeighbors.RNA.pca"    "FindClusters"            
+ [7] "RunUMAP.RNA.pca"          "NormalizeData.var"       
+ [9] "ParseVarName.var"         "annoVAR.var"             
+[11] "RunAutoCorr.var"          "SetAutoCorrFeatures.var" 
+[13] "RunBlockCorr.var.pca"    </code></pre>
+</div>
 </div>
 
 

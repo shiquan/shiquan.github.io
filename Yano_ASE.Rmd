@@ -75,6 +75,12 @@ It appears that the T allele of the gene VIM is expressed in most cell groups, w
 Using our spatial dissimilarity analysis method, we have identified many cases of allele-specific gene expression. This phenomenon can be influenced by several known and unknown mechanisms, including gene imprinting, genetic recombination, and somatic variants during cell or disease development. While we won't explore these mechanisms in detail here, you can refer to our manuscript, which includes several case studies dedicated to this topic.
 
 
+
 ```{r}
+# Save the Seurat object for further use
 saveRDS(obj, file = "glioblastoma5k.rds")
+```
+
+```{r}
+Command(obj)
 ```
