@@ -1,5 +1,5 @@
 ---
-title: Alternative splicing analysis for scRNA-seq
+title: Alternative splicing analysis for single cell RNA sequencing
 date: 2024-07-08
 format:
   html:

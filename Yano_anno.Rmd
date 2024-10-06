@@ -1,5 +1,5 @@
 ---
-title: Annotating and prioritizing genetic variants for scRNA-seq
+title: Annotating and prioritizing genetic variants for single cell RNA sequencing
 date: 2024-07-08
 format:
   html:
