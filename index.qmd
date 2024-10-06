@@ -19,8 +19,8 @@ This website outlines the key tools and software packages developed from my rese
 - [Annotate various features for alignment](anno.Rmd) (PISA)
 - [Alternative splicing analysis for scRNA-seq](Yano_AS.Rmd) (Yano)
 - [Allele-specific gene expression analysis for scRNA-seq](Yano_ASE.Rmd) (Yano)
+- [Annotating and prioritizing genetic variants for scRNA-seq](Yano_anno.Rmd) (Yano)
 <!--
-- [Annotate and visualise genetic varaints for scRNA-seq](Yano_anno.Rmd) (Yano)
 - [Alternative splicing analysis for Adult Mouse Brain Coronal Section](Yano_Visium.Rmd) (Yano, Visium)
 - [Run PISA and Yano with Smartseq2 data](Smartseq2.Rmd) (Smartseq2)
 -->
