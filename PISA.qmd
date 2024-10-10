@@ -22,7 +22,7 @@ $ make
 
 The code snippet below demonstrates how to use the PISA tools to process test data and generate various feature counts. You can find the test data in the PISA/demo directory. This example provides a practical approach to familiarize yourself with the functionality of PISA and to validate its operations with provided sample data.
 
-```
+```bash
 $ cd demo
 
 $ ls
@@ -269,6 +269,21 @@ GTCCTTTGATCAGTATAATTTTTTAAAGTTACTTTGTCA *   NM:i:1  ms:i:436    AS:i:436    nn:i
 ## Difference between PISA and CellRanger
 
 ## Changelog
+<details>
+
+<summary>v1.3 2024/10/10</summary>
+
+-   Remove `-vcf-ss` option for `PISA anno`. Enable strand sensitive mode in default for genetic variant annotation.
+
+</details>
+
+<details>
+
+<summary>v1.2 2024/9/7</summary>
+
+-   Fix a bug of `PISA corr`. This bug was caused by the recent update to `dict.c`. The` PISA cor`r function was not updated accordingly. This issue will not influence the result.
+
+</details>
 
 <details>
 

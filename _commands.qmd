@@ -32,7 +32,7 @@
 
 The parse tool is specifically designed to convert FASTQ files into the extended FASTQ+ format. It utilizes the -rule option to define the library structure, accommodating various sequencing setups. For ease of use, this tool has included predefined common library structures in the release; these can be applied using the -x option. This tool is optimized for speed and supports the correction of barcodes that have up to one mismatch.
 
-```         
+```bash 
 # Parse cell barcode and UMI string from raw FASTQ.
 
 $ PISA parse -rule CB,R1:1-10,whitelist.txt,CB,1;R1,R1:11-60;R2,R2 -report fastq.csv lane1_1.fq.gz,lane02_1.fq.gz lane1_2.fq.gz,lane2_2.fq.gz
@@ -86,7 +86,7 @@ Option -report can specify a quality control report in CSV format. Here is the e
 
 The fsort tool is engineered to order FASTQ+ records based on specified tags, which can be defined using the -tags option. This tool efficiently handles file sorting: for files smaller than 1 gigabyte, it performs the sort directly. However, for larger FASTQ files, where caching the entire file in memory is impractical, fsort employs a different strategy. It splits the large file into smaller segments, sorts each segment individually, and then merges the sorted segments. This method ensures efficient handling of large datasets while maintaining the integrity and order of the FASTQ+ records.
 
-```         
+```bash
 # Sort reads by tags.
 
 $ PISA fsort -tags CB,UR -list cell_barcodes_top10K.txt -@ 5 -o sorted.fq.gz in.fq
@@ -104,7 +104,7 @@ Options:
 
 The stream tool is designed as a framework to process FASTQ+ files, where each FASTQ+ block—defined by having identical tags and grouped together in the file—is handled individually. The -script option allows users to specify a custom bash script that processes each block. This user-defined script reads a ‘small’ FASTQ+ file, generating FASTQ or FASTA output that is then sent to stdout. The stream tool captures this output via a pipe and updates the tags to ensure that each block of reads retains its original tags. Finally, it consolidates all outputs into a single file. In essence, this tool efficiently divides and processes each FASTQ+ block through a user-defined method, then seamlessly merges the results.
 
-```         
+```bash
 # Perform user-defined script for each FASTQ+ block.
 
 $ PISA stream -script run.sh reads.fq.gz
@@ -128,7 +128,7 @@ The PISA stream tool generates a temporary file named \_block.fq for each block 
 The following example script demonstrates how to convert FASTQ+ to FASTA and rename the sequence ID. It is crucial for users to ensure that the script’s final output (either FASTQ+ or FASTA) is directed to stdout. All other script steps should avoid producing output to stdout or stderr, except for the last step. This precaution is necessary because PISA captures the script’s output through a pipe, and any unintended characters could disrupt the data format. Scripts can be written in a bash file or specified inline within the command.
 
 ::: framed
-```         
+```bash
 $ cat run.sh
 seqtk rename ${FQ} > test.fa; seqtk rename test.fa ${UBI}
 ```
@@ -138,7 +138,7 @@ seqtk rename ${FQ} > test.fa; seqtk rename test.fa ${UBI}
 
 The addtags tool is designed to put the new tags or update tags for FASTQ+ or BAM files.
 
-```         
+```bash
 # Just add tags to reads.
 
 $ PISA addtags -str CB:Z:CELL1,LB:Z:PoII2 -o out.bam in.bam
@@ -155,7 +155,7 @@ Options:
 
 After alignment, the sequence ID from the FASTQ+ records is retained in the RNAME field of the SAM file. Given that the RNAME field is limited to 254 characters, we also restrict the sequence ID and any optional tag fields in FASTQ+ to this length to ensure compatibility. The sam2bam tool processes these details by parsing the tags from the RNAME and appending them to the end of the SAM optional fields.
 
-```         
+```bash
 # Parse FASTQ+ read name and convert SAM to BAM.
 
 $ PISA sam2bam -report alignment.csv -@ 5 -adjust-mapq -gtf genes.gtf -o aln.bam in.sam[.gz]
@@ -197,7 +197,7 @@ Option -report can specify a quality control report in CSV format. Here is the e
 
 For RNA libraries, if a read from cDNA maps to an exonic locus but also maps to one or more non-exonic regions, the exonic locus can be prioritized as primary alignments, and mapping quality adjusts to 255. In the below records below, read DP8400008965TLL1C001R0102043364 mapped to three loci, and the aligner random pick one as the primary alignment and others as secondary. Each of these alignments has low mapping quality (MAPQ == 2, is usually filtered at downstream analysis). Our adjustment method will check if only one of these alignments overlaps with exonic regions. In our example, the last alignment overlapped with gene EEF1A1, and the other two hit intergenic regions. After adjustment, the last record has been flagged as a primary hit, and the mapping quality adjusted to 255, and other alignments of the same read are updated as secondary, MAPQ adjust to 0. MM:i:1 tag also is added to the primary record after adjustment. Option -adjust-mapq is reimplemented to mirror the 10X CellRanger's MAPQ adjustment method (<https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview#alignment>).
 
-```         
+```bash
  #  Output by aligner:
  
 DP8400008965TLL1C001R0102043364 0   9   133020979   2   100M    *   0   0   GTTAATGATAACAATGCATCGTAAAACCTTCAGAAGGAAAGGAGAATGTTTTGTGGACCACTTTGGTTTTCTTGTTTGCGTGTGGCAGTTTTAAGTTTTT    ...
@@ -213,7 +213,7 @@ DP8400008965TLL1C001R0102043364 16  6   73517606    255 100M    *   0   0   AAAA
 
 An example list here to show how to enable mapq adjuestment.
 
-```         
+```bash
 PISA sam2bam -report alignment.csv -o out.bam -adjust-mapq -gtf hg38.gtf in.sam
 ```
 
@@ -223,7 +223,7 @@ To effectively manage PCR duplication in single-cell experiments, it is essentia
 
 The rmdup tool is specifically designed to remove duplicate reads that share identical barcodes, such as UMIs and cell barcodes. This selective deduplication approach ensures that only truly redundant data is removed, thus preserving the integrity and completeness of the dataset for comprehensive downstream analyses.
 
-```         
+```bash
 # Deduplicate PCR reads with same barcodes.
 
 $ PISA rmdup -tags CB,UR -o rmdup.bam in.bam
@@ -243,7 +243,7 @@ In this version, PISA rmdup only supports single-end reads. For paired-end reads
 
 The PISA pick tool is designed to select alignments with predefined tags and candidate values.
 
-```         
+```bash
 $ PISA pick -tags CB,GN -list cell_barcodes.txt in.bam
 
 Options :
@@ -264,13 +264,13 @@ Based on their alignment status, reads are then classified into one of nine dist
 
 ![Figure 1: Read types.](anno_type.png){#fig:fig01 width="\\textwidth"}
 
-```         
+```bash
 
 # annotate strand-specific reads
 $ PISA anno -gtf genes.gtf -o anno.bam sorted.bam
 
 # annotate non-strand-specific reads, for Smartseq or bulk RNAseq
-$ PISA anno -ignore-strand -gtf genes.gtf -o anno.bam sorted.bam
+$ PISA anno -is -gtf genes.gtf -o anno.bam sorted.bam
 
 # also label gene name for intronic reads, i.e. RNA velocity analysis
 $ PISA anno -intron -gtf genes.gtf -o anno.bam sorted.bam
@@ -281,7 +281,7 @@ $ PISA anno -bed peak.bed -vcf in.vcf.gz -vcf-ss -ref-alt -o anno.bam in.bam
 
 Besides these annotation methods, PISA anno also supports a -chr-species method. This method requires a binding list for chromosome and related label relationships. The software will check the chromosome and add the related tag for each chromosome. This method, combined with PISA attrcnt can help to summarize the mixed two cell lines from different species.
 
-```         
+```bash
 # A binding list is tab-separated two columns txt file.
 $ cat binding_list.txt
 GRCh38_chr1    Human
@@ -293,7 +293,14 @@ $ PISA anno -chr-species binding.txt -btag SP -o anno_species.bam sorted.bam
 
 The full options and descriptions list below.
 
-```         
+```bash
+# Annotate SAM/BAM records with overlapped function regions. Such as gene, transcript etc.
+
+$ PISA anno -bed peak.bed -tag PK -vcf in.vcf.gz -vtag VF -vcf-ss -ref-alt -o anno.bam in.bam
+$ PISA anno -gtf genes.gtf -o anno.bam in.bam
+$ PISA anno -gtf genes.gtf -o anno.bam -sam in.sam
+
+Options :
  -o        [BAM]       Output bam file.
  -report   [csv]       Summary report.
  -@        [INT]       Threads to compress bam file.
@@ -303,6 +310,7 @@ The full options and descriptions list below.
  -anno-only            Export annotated reads only.
  -sam                  Input is SAM file, parse tags from read name.
  -rev                  Annotation in reverse strand; Some probe ligation library for FFPE samples create reverse fragments.
+ -is                   Disable strand sensitive annotation of gene, genomic region and genetic variants.
 
 Options for BED file :
  -bed      [BED]       Function regions. Three or four columns bed file. Col 4 could be empty or names of this region.
@@ -315,10 +323,9 @@ Options for mixed samples.
 Options for GTF file :
  -gtf      [GTF]       GTF annotation file. gene_id,transcript_id is required for each record.
  -tags     [TAGs]      Attribute names, more details see `Notice` below. [TX,GN,GX,RE,EX,JC]
- -is                   Ignore strand of transcript in GTF. Reads mapped to antisense transcripts will also be annotated.
  -splice               Reads covered exon-intron edge (ExonIntron type) will also be annotated with all tags.
  -intron/-velo         Reads covered intron regions will also be annotated with all tags.
- -exon                 Generate exon level and junction annotation. Put exon name (chr:start-end/[[+-]/Gene) in EX tag.\
+ -exon                 Generate exon level and junction annotation. Put exon name (chr:start-end/[[+-]/Gene) in EX tag.\ 
                        Also generate junction name (chr:exon1_end-exon2_start/[+-]/Gene) in JC tag.
  -flatten              Split overlapped exons into nonoverlapped bins.
  -psi                  Annotate exclude reads tag (ER) for each exon.
@@ -330,7 +337,6 @@ Options for VCF file :
  -vcf      [VCF/BCF]   Varaints file in vcf or bcf format. In default, only annotate alternative alleles.
  -vtag     [TAG]       Tag name for variants. Set with -vcf. Default is VR.
  -ref-alt              Annotate ref allele.
- -vcf-ss               Annotate variants in strand sensitive way.
 
 Notice :
  * If input is SAM format, will try to parse the tags in the read name.
@@ -347,6 +353,7 @@ Notice :
  * The following tags set with -psi.
    ER : Excluded exons.
  * PSI = EX/(EX+ER); EX is the exon tag, which indicate include reads in exon.
+
 ```
 
 ### corr
@@ -357,7 +364,7 @@ Because PISA corr does not require a sorted BAM, this tool will first build a co
 
 CellRanger also introduces an algorithm to correct reads with the same UMI of one cell but mapping to more than one gene (<https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview>). PISA implements this method but does not enable it in default. The -cr option can be used by users to enable this function. The reason for not enable it by default is PISA corr not only is used to correct UMIs, but also can be used to correct any other types of barcodes. The following example shows how to use PISA corr to correct cell barcodes for reads in the same gene.
 
-```         
+```bash
 // Reads with same gene tag (GN) and UMI (UB) will be grouped and calculate the Hamming distance between each other. 
 // Only if Hamming distance == 1 will be corrected.
 PISA corr -tag CR -new-tag CB -tags-block GN,UB -o cell_barcode_corrected.bam in.bam
@@ -365,7 +372,7 @@ PISA corr -tag CR -new-tag CB -tags-block GN,UB -o cell_barcode_corrected.bam in
 
 Full options of PISA corr list below.
 
-```         
+```bash
 # Correct similar barcodes (hamming distance == 1).
 
 $ PISA corr -tag UR -new-tag UB -tags-block CB,GN -@ 5 -o corr.bam in.bam
@@ -395,7 +402,7 @@ $ PISA corr -cr -tag UR -new-tag UB -tags-block CB,GN in.bam -o corr.bam
 
 PISA attrcnt is used to summarize the meta information of the library. We start introduce this tool with few examples.
 
-```         
+```bash
 # Count reads per cell, -cb option is required to specify cell barcode tag
 $ PISA attrcnt -cb CB in.bam
 
@@ -449,7 +456,7 @@ TTCGTAGCACCGATACTAGC-1  51  48  46
 
 Full list of options list below.
 
-```         
+```bash
 # Count the frequency of tag values.
 
 $ PISA attrcnt -cb CB -tags UR,GN -dedup -all-tags in.bam
@@ -473,7 +480,7 @@ Options :
 
 PISA extract is designed to extract the values of tags from BAM records and generate a tab-separated file.
 
-```         
+```bash
 # Extract tag values from alignments.
 
 $ PISA extract -tags CB,UR,GN -o tags.tsv in.bam
@@ -490,7 +497,7 @@ Options :
 
 The PISA count tool is designed to generate a counts matrix for various features or tags, traditionally outputting a gene-by-cell digit matrix. Starting with version 0.4, this tool now supports the MEX format output, which is highly recommended for use in downstream analyses due to its superior performance. It’s important to note that MEX format consists of three files, so you should use the -outdir option to specify the directory where the output files will be saved.
 
-```         
+```bash
 # Count reads or fragments matrix for single-cell datasets.
 
 $ PISA count -cb CB -anno-tag GN -umi UB -outdir exp aln.bam
@@ -532,7 +539,7 @@ Notice :
 
 PISA count also support counting gene expression from multiple bam files.
 
-```         
+```bash
 $ PISA count -file-barcode             // use alias name for each bam file as cell barcode. If this flag is not set -cb must be specified.
 -tags CB                   // Cell barcode
 -sample-list bam_list.txt // bam file path and alias name
@@ -545,7 +552,7 @@ $ PISA count -file-barcode             // use alias name for each bam file as ce
 
 The Market Exchange (MEX) format (<https://math.nist.gov/MatrixMarket/formats.html>) is designed for representing the sparse matrix. The -outdir option specifies the output directory for one MEX fold. The MEX format consists of three files, one is cell barcodes, one is feature names (genes or peak names), and the third one defines the expression or signal values.
 
-```         
+```bash
 $ ls
 barcodes.tsv.gz  features.tsv.gz  matrix.mtx.gz
 
@@ -592,7 +599,7 @@ The MEX file can be read by R package Yano::ReadPISA.
 
 PISA bam2fq is designed to convert alignment records to FATSQ+ records. Option -tags specify which tags will be kept in the FASTQ+. Full options list below.
 
-```         
+```bash
 # Convert BAM into fastq.
 $ PISA bam2fq -tags CB,UB,GN -o out.fq aln.bam
 
@@ -610,7 +617,7 @@ The fragment file is a five columns tab-separated flat file which is designed fo
 
 PISA bam2frag requires the input BAM file to be sorted by coordinate. This tool will check the cell barcode and the fragment position for each paired reads, duplicates in one cell will only keep one record, and the numeber of copies for this fragment will be updated in column four.
 
-```         
+```bash
 # Convert sam record to fragment file.
 
 $ PISA bam2frag -cb CB -list cell_barcodes.txt -o out.tsv.gz in.bam
@@ -632,7 +639,7 @@ Options:
 
 PISA depth generates coverage information for each position of the predefined region(s). The significant difference between PISA depth and samtools depth (<http://www.htslib.org/doc/samtools-depth.html>) is that PISA depth use UMI rather than reads. Besides, PISA depth is strand sensitive, and can produce results for target cells.
 
-```         
+```bash
 # Count coverage depth or unique UMIs for genome locations.
 
 Usage : PISA depth [options] sorted.bam [region]
@@ -660,7 +667,7 @@ The term ‘EPT’ stands for Expressed Peak Tag. EPTs can be identified by PISA
 
 The callept tool is designed to call expressed peak tags (EPTs) for indexed BAM files. The peaks are defined with UMI depth \>= cutoff.
 
-```         
+```bash
 $ PISA cellept -o epts.bed sorted.bam
 $ PISA cellept -tag CB -list cells.txt -umi UB -o epts.bed sorted.bam
 
@@ -686,7 +693,7 @@ Notice :
 
 PISA count generates the MEX format matrix for fragments per peak.
 
-```         
+```bash
 # Count fragments per peak per cell matrix.
 
 $ PISA count2 -bed peaks.bed -t 10 -list barcodes.txt -outdir exp fragments.tsv.gz
@@ -702,7 +709,7 @@ Options :
 
 Merge overlapped regions by strand and name.
 
-```         
+```bash
 $ PISA mergebed -o merged.bed sample1.bed sample2.bed
 $ PISA mergebed -up 500 -down 500 -o flank.bed peaks.bed
 
@@ -723,7 +730,7 @@ Notice :
 
 Annotate the type of region and output in a BED like file. The region type can be defined into.
 
-```         
+```bash
 $ PISA annobed -gtf genes.gtf -o anno.bed in.bed
 
 Options:
@@ -748,7 +755,7 @@ Notice :
 
 Convert overlapped into flatten records. If strand exist, the flatten records will be strand sensitive.
 
-```         
+```bash
 $ PISA flatten -o flatten.bed overlapped.bed
 
 Options:
@@ -767,7 +774,7 @@ reg3            ======
 
 Format and reorder GTF records.
 
-```         
+```bash
 $ PISA gtffmt in.gtf
 
 Options:
@@ -781,7 +788,7 @@ Options:
 
 Convert GTF file to BED format.
 
-```         
+```bash
 $ PISA gtf2bed -o merged.bed in.gtf.gz
 
 Options:
@@ -796,7 +803,7 @@ Options:
 
 Since v1.0, the old parse tool has been replaced by parse2, and renamed to parse0 for backup purposes. Due to its lower performance compared to parse, parse0 will be deleted from v2 onwards. The parse0 tool requires a configuration file to describe the library structure, including cell barcode locations, UMI locations, and tag names. Additionally, it generates various quality control reports and outputs cell barcode distributions to stdout. Below is the complete options list and a general workflow for filtering and counting reads.
 
-```         
+```bash
 $ PISA parse -config read_struct.json -report fastq.csv -cbdis cell_dist.tsv \
           -1 out.fq lane1_1.fq.gz,lane02_1.fq.gz  lane1_2.fq.gz,lane2_2.fq.gz
 
@@ -816,7 +823,7 @@ Options :
 -config requires a JSON file to tell software the locations of cell barcodes and/or UMIs. An example configured file can be found at demo/demo.json.
 
 ::: framed
-```         
+```bash
 {
     "cell barcode tag":"CB",  
     "cell barcode":[
@@ -854,6 +861,6 @@ Option -report can specify a quality control report in CSV format. Here is the e
 
 Here is an example to parse barcodes and reads with a predefined configure JSON file, the test files can be found at demo directory.
 
-```         
+```bash
 $ PISA parse0 -config demo/demo.json -report demo/parse.csv demo/demo_1.fq.gz demo/demo_2.fq.gz > demo/demo.fq
 ```
