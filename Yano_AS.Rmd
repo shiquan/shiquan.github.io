@@ -1,6 +1,5 @@
 ---
 title: Alternative splicing analysis for single cell RNA sequencing
-date: 2024-07-08
 format:
   html:
     code-overflow: wrap
@@ -149,7 +148,7 @@ In contrast, the overlapping exon chr12:56161387-56161575/+/MYL6 shows higher ex
 
 ```{r fig.width=10, fig.height=5}
 p1 <- DimPlot(obj, label=TRUE, label.size = 5, label.box = TRUE)
-p2 <- FeaturePlot(obj, features = c("chr12:56161387-56161575/+/MYL6"), order = TRUE, pt.size = 2) & scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
+p2 <- FeaturePlot(obj, features = c("chr12:56161387-56161575/+/MYL6"), order = TRUE, pt.size = 1) & scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
 p1 + p2
 ```
 
@@ -172,8 +171,10 @@ order.cells <- names(idents)
 dat2 <- dat2[bind.genes,]
 rownames(dat2) <- exons
 
+dat <- cbind(dat1, dat2)
+
 require(ComplexHeatmap)
-d <- dist(dat1)
+d <- dist(dat)
 hc <- hclust(d)
 idx <- hc$labels[hc$order]
 
