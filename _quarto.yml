@@ -55,7 +55,7 @@ format:
     code-block-background: true
     code-block-border-left: true
     page-layout: full
-    fontsize: 1.2em
+    fontsize: 1.05em
     highlight-style: github
 engine: knitr
 editor: visual
