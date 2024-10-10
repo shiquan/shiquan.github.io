@@ -63,12 +63,12 @@ The above command will annotate genes, exons, junctions, and genetic variants al
 
 ```bash
 PISA anno -gtf gencode.v44.annotation.gtf.gz -exon -o anno1.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam 
-PISA anno  -vcf var.vcf.gz -vcf-ss -ref-alt -o anno2.bam anno1.bam
+PISA anno  -vcf var.vcf.gz -ref-alt -o anno2.bam anno1.bam
 ```
 **Notes:**
 
   - `-exon`: Generates exon and junction names.
-  - `-vcf-ss`: Specifies strand information for each genetic variant, necessary because 10X scRNA-seq uses a strand-specific library.
+  - `-ref-alt`: For genetic variants, both reference allele and alternative allele will be annotated. If not set, reference allele will be ignored. This option is important for alelle-specific gene expression.
 
 Comparing raw and annotated records.
 ```{bash}

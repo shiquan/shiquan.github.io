@@ -318,11 +318,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-gtf</span> gencode.v44.annotation.gtf.gz <span class="at">-exon</span> <span class="at">-vcf</span> var.vcf.gz <span class="at">-vcf-ss</span> <span class="at">-ref-alt</span> <span class="at">-o</span> anno.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The above command will annotate genes, exons, junctions, and genetic variants all at once. However, it is also possible to annotate different features sequentially. For example, the command below produces the same results as the previous one, but allows for stepwise annotation.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-gtf</span> gencode.v44.annotation.gtf.gz <span class="at">-exon</span> <span class="at">-o</span> anno1.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno  <span class="at">-vcf</span> var.vcf.gz <span class="at">-vcf-ss</span> <span class="at">-ref-alt</span> <span class="at">-o</span> anno2.bam anno1.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno  <span class="at">-vcf</span> var.vcf.gz <span class="at">-ref-alt</span> <span class="at">-o</span> anno2.bam anno1.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Notes:</strong></p>
 <ul>
 <li><code>-exon</code>: Generates exon and junction names.</li>
-<li><code>-vcf-ss</code>: Specifies strand information for each genetic variant, necessary because 10X scRNA-seq uses a strand-specific library.</li>
+<li><code>-ref-alt</code>: For genetic variants, both reference allele and alternative allele will be annotated. If not set, reference allele will be ignored. This option is important for alelle-specific gene expression.</li>
 </ul>
 <p>Comparing raw and annotated records.</p>
 <div class="cell">
