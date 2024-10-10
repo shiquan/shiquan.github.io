@@ -56,14 +56,14 @@ bcftools mpileup -Ou -f GRCh38.p13.genome.fa ./Parent_SC3v3_Human_Glioblastoma_p
 
 The following command generates gene, transcript, exon, junction and genetic variant for each alignment:
 ``` bash
-PISA anno -gtf gencode.v44.annotation.gtf.gz -exon -vcf var.vcf.gz -vcf-ss -ref-alt -o anno.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam 
+PISA anno -gtf gencode.v44.annotation.gtf.gz -exon -vcf var.vcf.gz -ref-alt -o anno.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam 
 ```
 
 The above command will annotate genes, exons, junctions, and genetic variants all at once. However, it is also possible to annotate different features sequentially. For example, the command below produces the same results as the previous one, but allows for stepwise annotation.
 
 ```bash
 PISA anno -gtf gencode.v44.annotation.gtf.gz -exon -o anno1.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam 
-PISA anno  -vcf var.vcf.gz -ref-alt -o anno2.bam anno1.bam
+PISA anno -vcf var.vcf.gz -ref-alt -o anno2.bam anno1.bam
 ```
 **Notes:**
 
