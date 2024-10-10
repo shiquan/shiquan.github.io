@@ -441,5 +441,17 @@
       "Workflows & Short cases",
       "From FASTQ to counts"
     ]
+  },
+  {
+    "objectID": "anno.html#programs-we-will-use",
+    "href": "anno.html#programs-we-will-use",
+    "title": "Count gene, exon, junction and SNV expression from a BAM file",
+    "section": "Programs we will use",
+    "text": "Programs we will use\n\nPISA (&gt;=v1.3) (https://github.com/shiquan/PISA)\nbcftools (https://github.com/samtools/bcftools)\nsamtools (https://github.com/samtools/samtools)",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Annotate various features"
+    ]
   }
 ]
