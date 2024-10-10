@@ -2,6 +2,9 @@ project:
   type: website
   output-dir: docs
 website:
+  page-navigation: true
+  back-to-top-navigation: true
+  reader-mode: true
   navbar:
     pinned: true
     collapse: false
@@ -18,8 +21,28 @@ website:
         text: Yano
     tools: 
       - icon: github
-        href: https://github.com/shiquan
         text: GitHub
+        menu:
+          - text: My GitHub Page
+            href: https://github.com/shiquan
+          - text: Discussions
+            href: https://github.com/shiquan/Yano/discussions
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "Workflows & Short cases"
+        contents:
+          - text: "From FASTQ to counts"
+            href: workflow1.Rmd
+          - text: "Annotate various features"
+            href: anno.Rmd
+          - text: "Alternative splicing analysis"
+            href: Yano_AS.Rmd
+          - text: "Allele-specific gene expression analysis"
+            href: Yano_ASE.Rmd
+          - text: "Annotating genetic variants"
+            href: Yano_anno.Rmd
 format:
   html:
     theme:

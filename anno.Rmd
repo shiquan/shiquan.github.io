@@ -1,6 +1,5 @@
 ---
 title: Count gene, exon, junction and SNV expression from a BAM file
-version: 2024-07-08
 format:
   html:
     code-overflow: wrap

@@ -1,6 +1,5 @@
 ---
 title: Alelle specific gene expression analysis for single cell RNA sequencing
-date: 2024-07-08
 format:
   html:
     code-overflow: wrap

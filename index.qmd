@@ -1,5 +1,6 @@
 ---
 #page-layout: custom
+sidebar: false
 section-divs: false
 toc: false
 css: index.css
