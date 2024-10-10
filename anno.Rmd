@@ -46,7 +46,11 @@ samtools faidx GRCh38.p13.genome.fa
 # Perform variant calling
 bcftools mpileup -Ou -f GRCh38.p13.genome.fa ./Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam  | bcftools call -vmO z -o var.vcf.gz
 ```
-While several new methods for genetic variant calling have been developed, the basic principle remains the same: identifying differences between sequence reads and the reference genome. For simplicity, we are using the 'traditional' bcftools approach.
+
+**Notes:**
+
+  - While several new methods for genetic variant calling have been developed, the basic principle remains the same: identifying differences between sequence reads and the reference genome. For simplicity, we are using the 'traditional' bcftools approach.
+  - There is no need to filter raw genetic variants by sequencing depth or strand bias tests. Since this is strand-specific RNA sequencing data, strand bias is expected in many cases. Instead, the feature expression matrix can be filtered by cells during downstream analysis.
 
 ### 2. Annotate various features
 
@@ -54,8 +58,17 @@ The following command generates gene, transcript, exon, junction and genetic var
 ``` bash
 PISA anno -gtf gencode.v44.annotation.gtf.gz -exon -vcf var.vcf.gz -vcf-ss -ref-alt -o anno.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam 
 ```
-* `-exon`: Generates exon and junction names.
-* `-vcf-ss`: Specifies strand information for each genetic variant, necessary because 10X scRNA-seq uses a strand-specific library.
+
+The above command will annotate genes, exons, junctions, and genetic variants all at once. However, it is also possible to annotate different features sequentially. For example, the command below produces the same results as the previous one, but allows for stepwise annotation.
+
+```bash
+PISA anno -gtf gencode.v44.annotation.gtf.gz -exon -o anno1.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam 
+PISA anno  -vcf var.vcf.gz -vcf-ss -ref-alt -o anno2.bam anno1.bam
+```
+**Notes:**
+
+  - `-exon`: Generates exon and junction names.
+  - `-vcf-ss`: Specifies strand information for each genetic variant, necessary because 10X scRNA-seq uses a strand-specific library.
 
 Comparing raw and annotated records.
 ```{bash}
@@ -87,11 +100,40 @@ PISA count -tags CB -anno-tag JC -umi UB -outdir junction anno.bam
 PISA count -tags CB -anno-tag VF -umi UB -outdir var anno.bam
 ```
 
-**Notes:**
 
-- There is no need to filter raw genetic variants by sequencing depth or strand bias tests. Since this is strand-specific RNA sequencing data, strand bias is expected in many cases. Instead, the feature expression matrix can be filtered by cells during downstream analysis.
+**Notes:**  These commands will generate raw counts for all droplets. Although the `-list` parameter can be used to export only selected cells with `PISA anno`, cell selection may sometimes lack robustness. Therefore, it is safer to store the raw matrix file for long-term storage.
+
+```{bash}
+ls gene/
+```
+
+```{bash}
+zcat gene/barcodes.tsv.gz|head
+```
+```{bash}
+zcat gene/features.tsv.gz|head
+```
+```{bash}
+zcat gene/matrix.mtx.gz|head
+```
 
 
+```{bash}
+zcat exon/features.tsv.gz|head
+```
+
+```{bash}
+zcat junction/features.tsv.gz|head
+```
+
+The format for exon and junction names is "chr:pos reference_allele>alternative_allele/strand" for alternative alleles, or "chr:pos=/strand" for reference allele.
+```{bash}
+# the format of expressed genetic variant is 
+zcat var/features.tsv.gz|head
+```
+**Notes:** By default, the parameters for `PISA anno` are strand-sensitive. For non-strand-sensitive libraries, such as Smartseq2, the strand should be ignored by using the `-is` option.
+
+### Questions?
 If you have any questions regarding this workflows, please feel free to report them through the [github issues](https://github.com/shiquan/PISA/issues).
 
 If you have any ideas or suggestions regarding PISA annotation, please refer to the [Yano discussion forum](https://github.com/shiquan/Yano/discussions). Since PISA is commonly used alongside Yano, it may not be necessary to host separate forums for each.

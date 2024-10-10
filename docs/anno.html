@@ -138,7 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Yano</span></a>
   </li>  
 </ul>
-          <div class="quarto-navbar-tools tools-wide">
+          <div class="quarto-navbar-tools">
     <div class="dropdown">
       <a href="" title="GitHub" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="GitHub"><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -155,11 +155,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
     </div>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
 </div>
             <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
@@ -247,6 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#genetic-variants-calling" id="toc-genetic-variants-calling" class="nav-link" data-scroll-target="#genetic-variants-calling">1. Genetic variants calling</a></li>
   <li><a href="#annotate-various-features" id="toc-annotate-various-features" class="nav-link" data-scroll-target="#annotate-various-features">2. Annotate various features</a></li>
   <li><a href="#generate-cell-x-feature-expression-matrix" id="toc-generate-cell-x-feature-expression-matrix" class="nav-link" data-scroll-target="#generate-cell-x-feature-expression-matrix">3. Generate Cell X feature expression matrix</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions?</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -310,27 +306,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform variant calling</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> mpileup <span class="at">-Ou</span> <span class="at">-f</span> GRCh38.p13.genome.fa ./Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam  <span class="kw">|</span> <span class="ex">bcftools</span> call <span class="at">-vmO</span> z <span class="at">-o</span> var.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>While several new methods for genetic variant calling have been developed, the basic principle remains the same: identifying differences between sequence reads and the reference genome. For simplicity, we are using the ‘traditional’ bcftools approach.</p>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>While several new methods for genetic variant calling have been developed, the basic principle remains the same: identifying differences between sequence reads and the reference genome. For simplicity, we are using the ‘traditional’ bcftools approach.</li>
+<li>There is no need to filter raw genetic variants by sequencing depth or strand bias tests. Since this is strand-specific RNA sequencing data, strand bias is expected in many cases. Instead, the feature expression matrix can be filtered by cells during downstream analysis.</li>
+</ul>
 </section>
 <section id="annotate-various-features" class="level3">
 <h3 class="anchored" data-anchor-id="annotate-various-features">2. Annotate various features</h3>
 <p>The following command generates gene, transcript, exon, junction and genetic variant for each alignment:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-gtf</span> gencode.v44.annotation.gtf.gz <span class="at">-exon</span> <span class="at">-vcf</span> var.vcf.gz <span class="at">-vcf-ss</span> <span class="at">-ref-alt</span> <span class="at">-o</span> anno.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The above command will annotate genes, exons, junctions, and genetic variants all at once. However, it is also possible to annotate different features sequentially. For example, the command below produces the same results as the previous one, but allows for stepwise annotation.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-gtf</span> gencode.v44.annotation.gtf.gz <span class="at">-exon</span> <span class="at">-o</span> anno1.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno  <span class="at">-vcf</span> var.vcf.gz <span class="at">-vcf-ss</span> <span class="at">-ref-alt</span> <span class="at">-o</span> anno2.bam anno1.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Notes:</strong></p>
 <ul>
 <li><code>-exon</code>: Generates exon and junction names.</li>
 <li><code>-vcf-ss</code>: Specifies strand information for each genetic variant, necessary because 10X scRNA-seq uses a strand-specific library.</li>
 </ul>
 <p>Comparing raw and annotated records.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-overflow-wrap code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A original record</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam  <span class="kw">|</span><span class="fu">head</span> <span class="at">-n</span> 3000<span class="kw">|</span><span class="fu">grep</span> <span class="st">'A00836:286:HMTMVDMXX:2:2354:8422:1391'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-overflow-wrap code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A original record</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam  <span class="kw">|</span><span class="fu">head</span> <span class="at">-n</span> 3000<span class="kw">|</span><span class="fu">grep</span> <span class="st">'A00836:286:HMTMVDMXX:2:2354:8422:1391'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>A00836:286:HMTMVDMXX:2:2354:8422:1391   16  chr1    89995   255 56M236N35M  *   0   0   TTGGTCTCTCTTGCTGCCCTGGAGACCAGCTGCCCCACGAAGGAACCAGAGCCAACCTGCTGCTTCCTGGAGGAAGACAGTCCCTCTGTCC FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFF NH:i:6  HI:i:3  AS:i:89 nM:i:1  RG:Z:Parent_SC3v3_Human_Glioblastoma:0:1:HMTMVDMXX:2    TX:Z:ENST00000495576,+784,91M   GX:Z:ENSG00000239945    GN:Z:AL627309.3 fx:Z:ENSG00000239945    RE:A:E  MM:i:1  xf:i:25 CR:Z:AGATGAATCTACGCGG   CY:Z:FFFFFFFFFF,FFFFF   CB:Z:AGATGAATCTACGCGG-1 UR:Z:TTTCATGCCTCA   UY:Z:FFFFFFFFFFFF   UB:Z:TTTCATGCCTCA</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the same record after annotation</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view anno.bam <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 3000<span class="kw">|</span><span class="fu">grep</span> <span class="st">'A00836:286:HMTMVDMXX:2:2354:8422:1391'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the same record after annotation</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view anno.bam <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 3000<span class="kw">|</span><span class="fu">grep</span> <span class="st">'A00836:286:HMTMVDMXX:2:2354:8422:1391'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>A00836:286:HMTMVDMXX:2:2354:8422:1391   16  chr1    89995   255 56M236N35M  *   0   0   TTGGTCTCTCTTGCTGCCCTGGAGACCAGCTGCCCCACGAAGGAACCAGAGCCAACCTGCTGCTTCCTGGAGGAAGACAGTCCCTCTGTCC FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFF NH:i:6  HI:i:3  AS:i:89 nM:i:1  RG:Z:Parent_SC3v3_Human_Glioblastoma:0:1:HMTMVDMXX:2    fx:Z:ENSG00000239945    MM:i:1  xf:i:25 CR:Z:AGATGAATCTACGCGG   CY:Z:FFFFFFFFFF,FFFFF   CB:Z:AGATGAATCTACGCGG-1 UR:Z:TTTCATGCCTCA   UY:Z:FFFFFFFFFFFF   UB:Z:TTTCATGCCTCA   RE:A:S  GX:Z:ENSG00000239945.1  GN:Z:ENSG00000239945    TX:Z:ENST00000495576.1  EX:Z:chr1:89551-90050/-/ENSG00000239945,chr1:90287-91105/-/ENSG00000239945  JC:Z:chr1:90050-90287/-/ENSG00000239945 VR:Z:chr1:90040A&gt;C/-</code></pre>
 </div>
@@ -343,18 +347,119 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="generate-cell-x-feature-expression-matrix" class="level3">
 <h3 class="anchored" data-anchor-id="generate-cell-x-feature-expression-matrix">3. Generate Cell X feature expression matrix</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> gene</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> exon</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> junction</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> var</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> GN <span class="at">-umi</span> UB <span class="at">-outdir</span> gene anno.bam</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> EX <span class="at">-umi</span> UB <span class="at">-outdir</span> exon anno.bam</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> JC <span class="at">-umi</span> UB <span class="at">-outdir</span> junction anno.bam</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> VF <span class="at">-umi</span> UB <span class="at">-outdir</span> var anno.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>Notes:</strong></p>
-<ul>
-<li>There is no need to filter raw genetic variants by sequencing depth or strand bias tests. Since this is strand-specific RNA sequencing data, strand bias is expected in many cases. Instead, the feature expression matrix can be filtered by cells during downstream analysis.</li>
-</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> gene</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> exon</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> junction</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> var</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> GN <span class="at">-umi</span> UB <span class="at">-outdir</span> gene anno.bam</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> EX <span class="at">-umi</span> UB <span class="at">-outdir</span> exon anno.bam</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> JC <span class="at">-umi</span> UB <span class="at">-outdir</span> junction anno.bam</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> VF <span class="at">-umi</span> UB <span class="at">-outdir</span> var anno.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Notes:</strong> These commands will generate raw counts for all droplets. Although the <code>-list</code> parameter can be used to export only selected cells with <code>PISA anno</code>, cell selection may sometimes lack robustness. Therefore, it is safer to store the raw matrix file for long-term storage.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> gene/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>barcodes.tsv.gz
+features.tsv.gz
+matrix.mtx.gz</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> gene/barcodes.tsv.gz<span class="kw">|</span><span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>TTCCACGGTTCGGCTG-1
+GTGCTTCGTAATGTGA-1
+CACAGGCAGCTGGTGA-1
+TGGCGTGGTGCAACGA-1
+ATCTCTAGTCCATAGT-1
+AGCGCCACAAGCGATG-1
+CGAGTTAGTGTCGATT-1
+GTCAAGTCAGGCTCTG-1
+GGGTAGATCCCGTTGT-1
+GGGACAAAGAGGTATT-1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> gene/features.tsv.gz<span class="kw">|</span><span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MIR1302-2HG
+ENSG00000238009
+ENSG00000239945
+ENSG00000268903
+ENSG00000241860
+WASH9P
+ENSG00000228463
+ENSG00000286448
+ENSG00000236601
+ENSG00000230021</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> gene/matrix.mtx.gz<span class="kw">|</span><span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>%%MatrixMarket matrix coordinate integer general
+% Generated by PISA v0.12-15-g1715853
+37175   967749  23590089
+1   1   1
+1   2   1
+2   3   1
+2   4   1
+2   5   1
+2   6   1
+2   7   1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> exon/features.tsv.gz<span class="kw">|</span><span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>chr1:29554-30039/+/MIR1302-2HG
+chr1:30564-30667/+/MIR1302-2HG
+chr1:89295-91629/-/ENSG00000238009
+chr1:89551-90050/-/ENSG00000239945
+chr1:90287-91105/-/ENSG00000239945
+chr1:135141-135895/-/ENSG00000268903
+chr1:141474-143011/-/ENSG00000241860
+chr1:146386-149707/-/ENSG00000241860
+chr1:142808-143011/-/ENSG00000241860
+chr1:146386-146509/-/ENSG00000241860</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> junction/features.tsv.gz<span class="kw">|</span><span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>chr1:30039-30564/+/MIR1302-2HG
+chr1:90050-90287/-/ENSG00000239945
+chr1:143011-146386/-/ENSG00000241860
+chr1:165942-168100/-/ENSG00000241860
+chr1:168165-168610/-/ENSG00000241860
+chr1:805891-808574/-/ENSG00000290784
+chr1:805891-808574/-/ENSG00000230092
+chr1:827775-829003/+/LINC01128
+chr1:829104-847654/+/LINC01128
+chr1:852110-852671/+/LINC01128</code></pre>
+</div>
+</div>
+<p>The format for exon and junction names is “chr:pos reference_allele&gt;alternative_allele/strand” for alternative alleles, or “chr:pos=/strand” for reference allele.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the format of expressed genetic variant is </span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> var/features.tsv.gz<span class="kw">|</span><span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>chr1:51716G&gt;A/+
+chr1:90040A&gt;C/-
+chr1:136048C&gt;T/+
+chr1:187485G&gt;A/-
+chr1:511685T&gt;C/-
+chr1:511685T=/-
+chr1:629072A&gt;G/+
+chr1:629081A&gt;G/+
+chr1:629087A&gt;G/+
+chr1:629087A=/+</code></pre>
+</div>
+</div>
+<p><strong>Notes:</strong> By default, the parameters for <code>PISA anno</code> are strand-sensitive. For non-strand-sensitive libraries, such as Smartseq2, the strand should be ignored by using the <code>-is</code> option.</p>
+</section>
+<section id="questions" class="level3">
+<h3 class="anchored" data-anchor-id="questions">Questions?</h3>
 <p>If you have any questions regarding this workflows, please feel free to report them through the <a href="https://github.com/shiquan/PISA/issues">github issues</a>.</p>
 <p>If you have any ideas or suggestions regarding PISA annotation, please refer to the <a href="https://github.com/shiquan/Yano/discussions">Yano discussion forum</a>. Since PISA is commonly used alongside Yano, it may not be necessary to host separate forums for each.</p>
 
