@@ -285,7 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>exp <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./exp/"</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(exp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  37175 967749</code></pre>
+<pre><code>[1]  37178 967922</code></pre>
 </div>
 </div>
 <p>In this section, we will perform the standard Seurat analysis pipeline. Since our spatial dissimilarity test does not require predefined cell groups, we only need to calculate the shared nearest neighbors (SNN) using the <code>FindNeighbors</code> function. However, cell clustering and UMAP plots will still be generated to help interpret the results. Note that changing the resolution or other parameters for <code>FindClusters</code> and <code>RunUMAP</code> will not impact the outcome of the spatial dissimilarity test.</p>
@@ -446,15 +446,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Working on assay : exon</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Run autocorrelation test for 117428 features.</code></pre>
+<pre><code>Run autocorrelation test for 117623 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 10.80976 secs</code></pre>
+<pre><code>Runtime : 11.10582 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select autocorrleated features for downstream test.</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>67969 autocorrelated features.</code></pre>
+<pre><code>68219 autocorrelated features.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># IMPORTANT</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The permutation process is computationally expensive. In the example below, I set `perm=20` to only perform 20 permutations. However, the default setting performs 100 permutations for better evaluation. It's possible to increase the number of permutations even further, but it may not be necessary.</span></span>
@@ -466,10 +466,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Working on binding assay RNA.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 67969 features.</code></pre>
+<pre><code>Processing 68219 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 14494 blocks.</code></pre>
+<pre><code>Processing 14506 blocks.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieve binding data from assay RNA.</code></pre>
@@ -484,7 +484,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Use predefined weight matrix "WeightMatrix".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.635196 mins.</code></pre>
+<pre><code>Runtime : 1.675615 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now p values and adjusted p values have been generated</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(obj[[<span class="st">'exon'</span>]][[]]) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -534,14 +534,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">135895</td>
 <td style="text-align: left;">ENSG00000268903</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.0069503</td>
-<td style="text-align: right;">0.0112658</td>
+<td style="text-align: right;">0.0003125</td>
+<td style="text-align: right;">0.0157853</td>
 <td style="text-align: left;">TRUE</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">0.1556373</td>
-<td style="text-align: right;">0.0169764</td>
+<td style="text-align: right;">0.1572478</td>
+<td style="text-align: right;">0.0163800</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
@@ -551,14 +551,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">630683</td>
 <td style="text-align: left;">MTND2P28</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0004574</td>
-<td style="text-align: right;">0.0158126</td>
+<td style="text-align: right;">0.0000527</td>
+<td style="text-align: right;">0.0184898</td>
 <td style="text-align: left;">TRUE</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">0.1619217</td>
-<td style="text-align: right;">0.0182456</td>
+<td style="text-align: right;">0.9999998</td>
+<td style="text-align: right;">0.1588018</td>
+<td style="text-align: right;">0.0209552</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
@@ -568,8 +568,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">632616</td>
 <td style="text-align: left;">MTCO1P12</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.1022939</td>
-<td style="text-align: right;">0.0056345</td>
+<td style="text-align: right;">0.1233841</td>
+<td style="text-align: right;">0.0050748</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
@@ -585,8 +585,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">633438</td>
 <td style="text-align: left;">MTCO2P12</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.5261420</td>
-<td style="text-align: right;">-0.0008127</td>
+<td style="text-align: right;">0.7363272</td>
+<td style="text-align: right;">-0.0034977</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
@@ -603,13 +603,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MTATP6P1</td>
 <td style="text-align: left;">+</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.2979638</td>
+<td style="text-align: right;">0.3279728</td>
 <td style="text-align: left;">TRUE</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">0.9999999</td>
-<td style="text-align: right;">0.1584190</td>
-<td style="text-align: right;">0.0193435</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.1576014</td>
+<td style="text-align: right;">0.0150056</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
@@ -619,8 +619,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">634922</td>
 <td style="text-align: left;">MTCO3P12</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0228036</td>
-<td style="text-align: right;">0.0089770</td>
+<td style="text-align: right;">0.1244564</td>
+<td style="text-align: right;">0.0049582</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
@@ -693,21 +693,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: left;">chr1:154169305-154169383/-/TPM3</td>
+<td style="text-align: left;">chr1</td>
+<td style="text-align: right;">154169305</td>
+<td style="text-align: right;">154169383</td>
+<td style="text-align: left;">TPM3</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.1178906</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3383124</td>
+<td style="text-align: right;">0.0858570</td>
+<td style="text-align: right;">3e-07</td>
+<td style="text-align: right;">0.1567081</td>
+<td style="text-align: right;">0.0246419</td>
+<td style="text-align: right;">0.0006523</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr10:71760482-71760924/-/VSIR</td>
+<td style="text-align: left;">chr10</td>
+<td style="text-align: right;">71760482</td>
+<td style="text-align: right;">71760924</td>
+<td style="text-align: left;">VSIR</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.0800203</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3257133</td>
+<td style="text-align: right;">-0.0090324</td>
+<td style="text-align: right;">2e-07</td>
+<td style="text-align: right;">0.1500845</td>
+<td style="text-align: right;">0.0228392</td>
+<td style="text-align: right;">0.0003936</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">chr11:35197162-35197793/+/CD44</td>
 <td style="text-align: left;">chr11</td>
 <td style="text-align: right;">35197162</td>
 <td style="text-align: right;">35197793</td>
 <td style="text-align: left;">CD44</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.3245891</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.3377169</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3026741</td>
-<td style="text-align: right;">0.4710808</td>
-<td style="text-align: right;">3e-07</td>
-<td style="text-align: right;">0.1608820</td>
-<td style="text-align: right;">0.0191859</td>
-<td style="text-align: right;">0.0006035</td>
+<td style="text-align: right;">0.3151782</td>
+<td style="text-align: right;">0.4604156</td>
+<td style="text-align: right;">4e-07</td>
+<td style="text-align: right;">0.1541558</td>
+<td style="text-align: right;">0.0224920</td>
+<td style="text-align: right;">0.0009211</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr11:75421727-75422280/+/RPS3</td>
@@ -716,15 +750,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">75422280</td>
 <td style="text-align: left;">RPS3</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.0648241</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.0370443</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3353454</td>
-<td style="text-align: right;">-0.1926544</td>
-<td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1518367</td>
-<td style="text-align: right;">0.0220398</td>
-<td style="text-align: right;">0.0001490</td>
+<td style="text-align: right;">0.3130404</td>
+<td style="text-align: right;">-0.2953455</td>
+<td style="text-align: right;">2e-07</td>
+<td style="text-align: right;">0.1557946</td>
+<td style="text-align: right;">0.0210451</td>
+<td style="text-align: right;">0.0005545</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr11:123061588-123061833/-/HSPA8</td>
@@ -733,134 +767,100 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">123061833</td>
 <td style="text-align: left;">HSPA8</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.1115520</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.1171871</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3117357</td>
-<td style="text-align: right;">0.1186682</td>
-<td style="text-align: right;">4e-07</td>
-<td style="text-align: right;">0.1576334</td>
-<td style="text-align: right;">0.0214933</td>
-<td style="text-align: right;">0.0008442</td>
+<td style="text-align: right;">0.3289963</td>
+<td style="text-align: right;">0.1069558</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1554303</td>
+<td style="text-align: right;">0.0202877</td>
+<td style="text-align: right;">0.0000867</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">chr11:123061869-123062022/-/HSPA8</td>
-<td style="text-align: left;">chr11</td>
-<td style="text-align: right;">123061869</td>
-<td style="text-align: right;">123062022</td>
-<td style="text-align: left;">HSPA8</td>
-<td style="text-align: left;">-</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.1277943</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3363602</td>
-<td style="text-align: right;">0.1479084</td>
-<td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1545890</td>
-<td style="text-align: right;">0.0205401</td>
-<td style="text-align: right;">0.0000649</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">chr12:56161387-56161465/+/MYL6</td>
 <td style="text-align: left;">chr12</td>
 <td style="text-align: right;">56161387</td>
 <td style="text-align: right;">56161465</td>
 <td style="text-align: left;">MYL6</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.2383228</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.2417333</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.6450004</td>
-<td style="text-align: right;">-0.2989840</td>
+<td style="text-align: right;">0.6486010</td>
+<td style="text-align: right;">-0.2917451</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1569529</td>
-<td style="text-align: right;">0.0207066</td>
+<td style="text-align: right;">0.1576432</td>
+<td style="text-align: right;">0.0253987</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">chr15:60395645-60396427/-/ANXA2</td>
 <td style="text-align: left;">chr15</td>
 <td style="text-align: right;">60395645</td>
 <td style="text-align: right;">60396427</td>
 <td style="text-align: left;">ANXA2</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.1627957</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.1910156</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3812708</td>
-<td style="text-align: right;">0.0928643</td>
-<td style="text-align: right;">1e-07</td>
-<td style="text-align: right;">0.1551005</td>
-<td style="text-align: right;">0.0288981</td>
-<td style="text-align: right;">0.0003282</td>
+<td style="text-align: right;">0.4082000</td>
+<td style="text-align: right;">0.0863378</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1580097</td>
+<td style="text-align: right;">0.0240199</td>
+<td style="text-align: right;">0.0000049</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">chr15:60395907-60396427/-/ANXA2</td>
 <td style="text-align: left;">chr15</td>
 <td style="text-align: right;">60395907</td>
 <td style="text-align: right;">60396427</td>
 <td style="text-align: left;">ANXA2</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.1464446</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.1757211</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3750716</td>
-<td style="text-align: right;">0.0713444</td>
-<td style="text-align: right;">1e-07</td>
-<td style="text-align: right;">0.1535619</td>
-<td style="text-align: right;">0.0270896</td>
-<td style="text-align: right;">0.0001787</td>
+<td style="text-align: right;">0.3932918</td>
+<td style="text-align: right;">0.0827941</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1561893</td>
+<td style="text-align: right;">0.0231225</td>
+<td style="text-align: right;">0.0000060</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">chr15:43801711-43804427/+/SERF2</td>
 <td style="text-align: left;">chr15</td>
 <td style="text-align: right;">43801711</td>
 <td style="text-align: right;">43804427</td>
 <td style="text-align: left;">SERF2</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.0798547</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.0874794</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3505663</td>
-<td style="text-align: right;">-0.1121371</td>
+<td style="text-align: right;">0.3607658</td>
+<td style="text-align: right;">-0.0893905</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1535719</td>
-<td style="text-align: right;">0.0213392</td>
-<td style="text-align: right;">0.0000354</td>
+<td style="text-align: right;">0.1532996</td>
+<td style="text-align: right;">0.0198371</td>
+<td style="text-align: right;">0.0000048</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">chr15:43801132-43801187/+/SERF2</td>
 <td style="text-align: left;">chr15</td>
 <td style="text-align: right;">43801132</td>
 <td style="text-align: right;">43801187</td>
 <td style="text-align: left;">SERF2</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.0858692</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.0895833</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3294145</td>
-<td style="text-align: right;">-0.0021910</td>
-<td style="text-align: right;">1e-07</td>
-<td style="text-align: right;">0.1574460</td>
-<td style="text-align: right;">0.0209966</td>
-<td style="text-align: right;">0.0001787</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">chr15:43801518-43801569/+/SERF2</td>
-<td style="text-align: left;">chr15</td>
-<td style="text-align: right;">43801518</td>
-<td style="text-align: right;">43801569</td>
-<td style="text-align: left;">SERF2</td>
-<td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.0782095</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3190382</td>
-<td style="text-align: right;">-0.0256482</td>
-<td style="text-align: right;">3e-07</td>
-<td style="text-align: right;">0.1534202</td>
-<td style="text-align: right;">0.0223513</td>
-<td style="text-align: right;">0.0006013</td>
+<td style="text-align: right;">0.3139413</td>
+<td style="text-align: right;">0.0515215</td>
+<td style="text-align: right;">2e-07</td>
+<td style="text-align: right;">0.1523223</td>
+<td style="text-align: right;">0.0211913</td>
+<td style="text-align: right;">0.0004274</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr18:49481681-49482410/-/RPL17-C18orf32</td>
@@ -869,14 +869,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">49482410</td>
 <td style="text-align: left;">RPL17-C18orf32</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.2533198</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.2795427</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.7422266</td>
-<td style="text-align: right;">-0.4322589</td>
+<td style="text-align: right;">0.7739365</td>
+<td style="text-align: right;">-0.4194341</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1610736</td>
-<td style="text-align: right;">0.0290100</td>
+<td style="text-align: right;">0.1577747</td>
+<td style="text-align: right;">0.0263044</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
@@ -886,15 +886,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16095357</td>
 <td style="text-align: left;">TPM4</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.1535339</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.1461186</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5033134</td>
-<td style="text-align: right;">-0.2354778</td>
+<td style="text-align: right;">0.4928437</td>
+<td style="text-align: right;">-0.2169234</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1619867</td>
-<td style="text-align: right;">0.0235177</td>
-<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.1537796</td>
+<td style="text-align: right;">0.0257020</td>
+<td style="text-align: right;">0.0000002</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr19:16095264-16095893/+/TPM4</td>
@@ -903,14 +903,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16095893</td>
 <td style="text-align: left;">TPM4</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.1974737</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.2288684</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5485824</td>
-<td style="text-align: right;">-0.2000289</td>
+<td style="text-align: right;">0.5717909</td>
+<td style="text-align: right;">-0.1674489</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1665385</td>
-<td style="text-align: right;">0.0222253</td>
+<td style="text-align: right;">0.1599023</td>
+<td style="text-align: right;">0.0255768</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
@@ -920,14 +920,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16095591</td>
 <td style="text-align: left;">TPM4</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.1985772</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.2300922</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5503060</td>
-<td style="text-align: right;">-0.2006815</td>
+<td style="text-align: right;">0.5733406</td>
+<td style="text-align: right;">-0.1677868</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1665553</td>
-<td style="text-align: right;">0.0223131</td>
+<td style="text-align: right;">0.1599772</td>
+<td style="text-align: right;">0.0255655</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
@@ -937,14 +937,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16095454</td>
 <td style="text-align: left;">TPM4</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.2003104</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.2200114</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5754882</td>
-<td style="text-align: right;">-0.2481755</td>
+<td style="text-align: right;">0.5792766</td>
+<td style="text-align: right;">-0.1939796</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1624677</td>
-<td style="text-align: right;">0.0238018</td>
+<td style="text-align: right;">0.1544891</td>
+<td style="text-align: right;">0.0231543</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
@@ -954,14 +954,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16096744</td>
 <td style="text-align: left;">TPM4</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.1958395</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.2273541</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5458223</td>
-<td style="text-align: right;">-0.1987989</td>
+<td style="text-align: right;">0.5694307</td>
+<td style="text-align: right;">-0.1667530</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1660061</td>
-<td style="text-align: right;">0.0219158</td>
+<td style="text-align: right;">0.1592289</td>
+<td style="text-align: right;">0.0257001</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
@@ -971,14 +971,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16095496</td>
 <td style="text-align: left;">TPM4</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.2087082</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.2392650</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5764879</td>
-<td style="text-align: right;">-0.2308853</td>
+<td style="text-align: right;">0.5933536</td>
+<td style="text-align: right;">-0.1884518</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1647952</td>
-<td style="text-align: right;">0.0238001</td>
+<td style="text-align: right;">0.1582288</td>
+<td style="text-align: right;">0.0263861</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
@@ -988,14 +988,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">18170494</td>
 <td style="text-align: left;">ENSG00000268173</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.0648628</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.0650724</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.4812762</td>
-<td style="text-align: right;">-0.6364713</td>
+<td style="text-align: right;">0.4845113</td>
+<td style="text-align: right;">-0.6506876</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1499408</td>
-<td style="text-align: right;">0.0145254</td>
+<td style="text-align: right;">0.1560345</td>
+<td style="text-align: right;">0.0220485</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
@@ -1005,15 +1005,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">218346756</td>
 <td style="text-align: left;">PNKD</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.0926463</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.0888735</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5144178</td>
-<td style="text-align: right;">-0.4859120</td>
+<td style="text-align: right;">0.5082524</td>
+<td style="text-align: right;">-0.4592925</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1559733</td>
-<td style="text-align: right;">0.0168771</td>
-<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.1618188</td>
+<td style="text-align: right;">0.0273856</td>
+<td style="text-align: right;">0.0000003</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr2:218344808-218346784/+/PNKD</td>
@@ -1022,15 +1022,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">218346784</td>
 <td style="text-align: left;">PNKD</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.0932123</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.0899762</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5141968</td>
-<td style="text-align: right;">-0.4830341</td>
+<td style="text-align: right;">0.5080146</td>
+<td style="text-align: right;">-0.4556462</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1559033</td>
-<td style="text-align: right;">0.0176262</td>
-<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.1619050</td>
+<td style="text-align: right;">0.0274219</td>
+<td style="text-align: right;">0.0000003</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr2:218344808-218346793/+/PNKD</td>
@@ -1039,15 +1039,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">218346793</td>
 <td style="text-align: left;">PNKD</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.0965975</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.0927296</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5156092</td>
-<td style="text-align: right;">-0.4648465</td>
+<td style="text-align: right;">0.5098734</td>
+<td style="text-align: right;">-0.4446450</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1541167</td>
-<td style="text-align: right;">0.0180445</td>
-<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.1596676</td>
+<td style="text-align: right;">0.0259618</td>
+<td style="text-align: right;">0.0000001</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr2:218344808-218346791/+/PNKD</td>
@@ -1056,15 +1056,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">218346791</td>
 <td style="text-align: left;">PNKD</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.0965975</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.0927296</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5156092</td>
-<td style="text-align: right;">-0.4648465</td>
+<td style="text-align: right;">0.5098734</td>
+<td style="text-align: right;">-0.4446450</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1541167</td>
-<td style="text-align: right;">0.0180445</td>
-<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.1596676</td>
+<td style="text-align: right;">0.0259618</td>
+<td style="text-align: right;">0.0000001</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr2:218344808-218346771/+/PNKD</td>
@@ -1073,32 +1073,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">218346771</td>
 <td style="text-align: left;">PNKD</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.0924650</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.0886928</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5134680</td>
-<td style="text-align: right;">-0.4842921</td>
+<td style="text-align: right;">0.5072716</td>
+<td style="text-align: right;">-0.4575607</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1559988</td>
-<td style="text-align: right;">0.0169838</td>
-<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.1619926</td>
+<td style="text-align: right;">0.0273653</td>
+<td style="text-align: right;">0.0000003</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">chr3:150565796-150567106/-/SERP1</td>
-<td style="text-align: left;">chr3</td>
-<td style="text-align: right;">150565796</td>
-<td style="text-align: right;">150567106</td>
-<td style="text-align: left;">SERP1</td>
-<td style="text-align: left;">-</td>
-<td style="text-align: right;">2.00e-07</td>
-<td style="text-align: right;">0.0243658</td>
+<td style="text-align: left;">chr20:37238402-37238449/+/RPN2</td>
+<td style="text-align: left;">chr20</td>
+<td style="text-align: right;">37238402</td>
+<td style="text-align: right;">37238449</td>
+<td style="text-align: left;">RPN2</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.0419213</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2931678</td>
-<td style="text-align: right;">-0.2964556</td>
-<td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1577562</td>
-<td style="text-align: right;">0.0161748</td>
-<td style="text-align: right;">0.0001441</td>
+<td style="text-align: right;">0.3201019</td>
+<td style="text-align: right;">-0.2906367</td>
+<td style="text-align: right;">1e-07</td>
+<td style="text-align: right;">0.1514906</td>
+<td style="text-align: right;">0.0203855</td>
+<td style="text-align: right;">0.0001389</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr3:181175514-181176513/+/SOX2-OT</td>
@@ -1107,15 +1107,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">181176513</td>
 <td style="text-align: left;">SOX2-OT</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.2197314</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.2443931</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.4048380</td>
-<td style="text-align: right;">0.1533700</td>
+<td style="text-align: right;">0.4241502</td>
+<td style="text-align: right;">0.1374073</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1472731</td>
-<td style="text-align: right;">0.0220283</td>
-<td style="text-align: right;">0.0000008</td>
+<td style="text-align: right;">0.1509441</td>
+<td style="text-align: right;">0.0247622</td>
+<td style="text-align: right;">0.0000021</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr3:181175514-181176523/+/SOX2-OT</td>
@@ -1124,15 +1124,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">181176523</td>
 <td style="text-align: left;">SOX2-OT</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.2197314</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.2443931</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.4048380</td>
-<td style="text-align: right;">0.1533700</td>
+<td style="text-align: right;">0.4241502</td>
+<td style="text-align: right;">0.1374073</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1472731</td>
-<td style="text-align: right;">0.0220283</td>
-<td style="text-align: right;">0.0000008</td>
+<td style="text-align: right;">0.1509441</td>
+<td style="text-align: right;">0.0247622</td>
+<td style="text-align: right;">0.0000021</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr3:181175514-181176524/+/SOX2-OT</td>
@@ -1141,117 +1141,83 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">181176524</td>
 <td style="text-align: left;">SOX2-OT</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.2250442</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.2509736</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.4101859</td>
-<td style="text-align: right;">0.1518836</td>
+<td style="text-align: right;">0.4308978</td>
+<td style="text-align: right;">0.1356910</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1473812</td>
-<td style="text-align: right;">0.0220561</td>
-<td style="text-align: right;">0.0000007</td>
+<td style="text-align: right;">0.1507937</td>
+<td style="text-align: right;">0.0246917</td>
+<td style="text-align: right;">0.0000015</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">chr5:149549328-149549513/-/CSNK1A1</td>
+<td style="text-align: left;">chr3:181610861-181611647/+/SOX2-OT</td>
+<td style="text-align: left;">chr3</td>
+<td style="text-align: right;">181610861</td>
+<td style="text-align: right;">181611647</td>
+<td style="text-align: left;">SOX2-OT</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">0.1213716</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.2767670</td>
+<td style="text-align: right;">0.2252128</td>
+<td style="text-align: right;">4e-07</td>
+<td style="text-align: right;">0.1532974</td>
+<td style="text-align: right;">0.0172217</td>
+<td style="text-align: right;">0.0009211</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chr5:179812407-179813024/+/SQSTM1</td>
 <td style="text-align: left;">chr5</td>
-<td style="text-align: right;">149549328</td>
-<td style="text-align: right;">149549513</td>
-<td style="text-align: left;">CSNK1A1</td>
-<td style="text-align: left;">-</td>
-<td style="text-align: right;">8.56e-05</td>
-<td style="text-align: right;">0.0176042</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2957766</td>
-<td style="text-align: right;">-0.4023145</td>
-<td style="text-align: right;">1e-07</td>
-<td style="text-align: right;">0.1542854</td>
-<td style="text-align: right;">0.0181812</td>
-<td style="text-align: right;">0.0003424</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">chr8:60620674-60620988/+/RAB2A</td>
-<td style="text-align: left;">chr8</td>
-<td style="text-align: right;">60620674</td>
-<td style="text-align: right;">60620988</td>
-<td style="text-align: left;">RAB2A</td>
+<td style="text-align: right;">179812407</td>
+<td style="text-align: right;">179813024</td>
+<td style="text-align: left;">SQSTM1</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">2.21e-05</td>
-<td style="text-align: right;">0.0196326</td>
+<td style="text-align: right;">3.1e-06</td>
+<td style="text-align: right;">0.0212073</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3041362</td>
-<td style="text-align: right;">-0.3694478</td>
-<td style="text-align: right;">1e-07</td>
-<td style="text-align: right;">0.1684176</td>
-<td style="text-align: right;">0.0176309</td>
-<td style="text-align: right;">0.0003863</td>
+<td style="text-align: right;">0.3323975</td>
+<td style="text-align: right;">-0.4490165</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1589061</td>
+<td style="text-align: right;">0.0193273</td>
+<td style="text-align: right;">0.0000431</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">chr8:60620674-60620948/+/RAB2A</td>
-<td style="text-align: left;">chr8</td>
-<td style="text-align: right;">60620674</td>
-<td style="text-align: right;">60620948</td>
-<td style="text-align: left;">RAB2A</td>
+<td style="text-align: left;">chr5:179812407-179813598/+/SQSTM1</td>
+<td style="text-align: left;">chr5</td>
+<td style="text-align: right;">179812407</td>
+<td style="text-align: right;">179813598</td>
+<td style="text-align: left;">SQSTM1</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">7.20e-06</td>
-<td style="text-align: right;">0.0208821</td>
+<td style="text-align: right;">1.7e-06</td>
+<td style="text-align: right;">0.0219269</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3083602</td>
-<td style="text-align: right;">-0.3685185</td>
-<td style="text-align: right;">3e-07</td>
-<td style="text-align: right;">0.1694732</td>
-<td style="text-align: right;">0.0190351</td>
-<td style="text-align: right;">0.0006793</td>
+<td style="text-align: right;">0.3370181</td>
+<td style="text-align: right;">-0.4778707</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1576530</td>
+<td style="text-align: right;">0.0187124</td>
+<td style="text-align: right;">0.0000168</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">chr8:60620674-60620941/+/RAB2A</td>
-<td style="text-align: left;">chr8</td>
-<td style="text-align: right;">60620674</td>
-<td style="text-align: right;">60620941</td>
-<td style="text-align: left;">RAB2A</td>
+<td style="text-align: left;">chr5:179811988-179813641/+/SQSTM1</td>
+<td style="text-align: left;">chr5</td>
+<td style="text-align: right;">179811988</td>
+<td style="text-align: right;">179813641</td>
+<td style="text-align: left;">SQSTM1</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">7.20e-06</td>
-<td style="text-align: right;">0.0208726</td>
+<td style="text-align: right;">1.4e-06</td>
+<td style="text-align: right;">0.0221274</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3079563</td>
-<td style="text-align: right;">-0.3676222</td>
-<td style="text-align: right;">3e-07</td>
-<td style="text-align: right;">0.1694663</td>
-<td style="text-align: right;">0.0188157</td>
-<td style="text-align: right;">0.0006191</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">chr8:60620674-60620938/+/RAB2A</td>
-<td style="text-align: left;">chr8</td>
-<td style="text-align: right;">60620674</td>
-<td style="text-align: right;">60620938</td>
-<td style="text-align: left;">RAB2A</td>
-<td style="text-align: left;">+</td>
-<td style="text-align: right;">6.90e-06</td>
-<td style="text-align: right;">0.0209275</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3085651</td>
-<td style="text-align: right;">-0.3685602</td>
-<td style="text-align: right;">2e-07</td>
-<td style="text-align: right;">0.1690754</td>
-<td style="text-align: right;">0.0187505</td>
-<td style="text-align: right;">0.0005883</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">chrX:151404916-151405157/+/VMA21</td>
-<td style="text-align: left;">chrX</td>
-<td style="text-align: right;">151404916</td>
-<td style="text-align: right;">151405157</td>
-<td style="text-align: left;">VMA21</td>
-<td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
-<td style="text-align: right;">0.0664743</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3335736</td>
-<td style="text-align: right;">-0.1398594</td>
-<td style="text-align: right;">2e-07</td>
-<td style="text-align: right;">0.1566948</td>
-<td style="text-align: right;">0.0237447</td>
-<td style="text-align: right;">0.0005883</td>
+<td style="text-align: right;">0.3374093</td>
+<td style="text-align: right;">-0.4800787</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1574455</td>
+<td style="text-align: right;">0.0188660</td>
+<td style="text-align: right;">0.0000174</td>
 </tr>
 </tbody>
 </table>
@@ -1291,9 +1257,9 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-10-10 20:51:19] [32mGTF loading..[0m
-[2024-10-10 20:51:54] [32mLoad 62700 genes.[0m
-[2024-10-10 20:51:54] [32mLoad time : 34.973 sec[0m</code></pre>
+<pre><code>[2024-10-11 19:06:21] [32mGTF loading..[0m
+[2024-10-11 19:07:00] [32mLoad 62700 genes.[0m
+[2024-10-11 19:07:00] [32mLoad time : 38.927 sec[0m</code></pre>
 </div>
 </div>
 <p>A track plot is used to study the read coverage per cell group. In the track plot shown below, the cell group is specified by the <code>cell.group</code> parameter. Unlike IGV, where read depth is used, we use UMI depth in this plot. The cell barcode tag and UMI tag are predefined as “CB” and “UB” with parameter <code>cell.tag</code> and <code>umi.tag</code>. For each cell group, the UMI depth has been normalized by the number of cells in that group. This means that the depth at each location can be interpreted as the mean UMI depth per cell for the group. As a result, the tracks are directly comparable across different cell groups. If <code>cell.group</code> is not set, the track plot will generate the raw UMI depth per location.</p>
@@ -1338,14 +1304,14 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Working on assay : junction</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Run autocorrelation test for 15036 features.</code></pre>
+<pre><code>Run autocorrelation test for 15069 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 2.118881 secs</code></pre>
+<pre><code>Runtime : 2.528169 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>7120 autocorrelated features.</code></pre>
+<pre><code>7217 autocorrelated features.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse the gene name and coordinates from junction names</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1361,10 +1327,10 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Working on binding assay RNA.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 7120 features.</code></pre>
+<pre><code>Processing 7217 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 3578 blocks.</code></pre>
+<pre><code>Processing 3652 blocks.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieve binding data from assay RNA.</code></pre>
@@ -1379,7 +1345,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Use predefined weight matrix "WeightMatrix".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 10.56551 secs.</code></pre>
+<pre><code>Runtime : 12.02559 secs.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">remove.chr=</span><span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1447,13 +1413,13 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <td style="text-align: left;">MYL6</td>
 <td style="text-align: left;">+</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.2383228</td>
+<td style="text-align: right;">0.2417333</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.6450004</td>
-<td style="text-align: right;">-0.298984</td>
+<td style="text-align: right;">0.648601</td>
+<td style="text-align: right;">-0.2917451</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1569529</td>
-<td style="text-align: right;">0.0207066</td>
+<td style="text-align: right;">0.1576432</td>
+<td style="text-align: right;">0.0253987</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
@@ -1465,7 +1431,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <colgroup>
 <col style="width: 15%">
 <col style="width: 6%">
-<col style="width: 5%">
+<col style="width: 4%">
 <col style="width: 9%">
 <col style="width: 3%">
 <col style="width: 4%">
@@ -1502,19 +1468,19 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <tr class="odd">
 <td style="text-align: left;">chr12:56160320-56161387/+/MYL6</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1920987</td>
+<td style="text-align: right;">0.187453</td>
 <td style="text-align: left;">TRUE</td>
 <td style="text-align: left;">chr12</td>
 <td style="text-align: right;">56160320</td>
 <td style="text-align: right;">56161387</td>
 <td style="text-align: left;">MYL6</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.5175439</td>
-<td style="text-align: right;">-0.1572032</td>
+<td style="text-align: right;">0.524806</td>
+<td style="text-align: right;">-0.183078</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1581717</td>
-<td style="text-align: right;">0.0204129</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1544067</td>
+<td style="text-align: right;">0.0290459</td>
+<td style="text-align: right;">3e-07</td>
 </tr>
 </tbody>
 </table>

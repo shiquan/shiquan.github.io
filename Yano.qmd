@@ -1,5 +1,5 @@
 ---
-title: Yano User's Guide
+title: Yano User Guide
 ---
 
 ## Introduction
@@ -8,7 +8,7 @@ Yano represents an R/C toolkit designed for conducting spatial dissimilarity ana
 
 Yano is seamlessly integrated with Seurat, building upon the Seurat object's framework. Users can perform conventional cell clustering analyses using the state-of-the-art Seurat pipeline and then incorporate exon, SNP counts as new "assays" within the Seurat objects. Subsequently, Yano facilitates the assessment of spatial dissimilarity between these two assays. For more details about the method, please refer to our manuscript.
 
-For those seeking quick guidance, please refer directly to the user cases.
+For those seeking quick guidance, please refer directly to the short cases.
 
 ## Install
 
@@ -26,10 +26,31 @@ devtools::install_github("shiquan/Yano")
 ***Notice:*** Multithread mode is disabled on macOS by default due to the lack of OpenMP support. However, `data.table` provides a useful tutorial on how to enable OpenMP on macOS. For more information, please refer to this guide: [https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos](https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos).
 
 ## Get started
+```{r message=FALSE, warning=FALSE, fig.align='center', fig.width=12, fig.height=6}
+require(Yano)
+data("glbt_small")
+DefaultAssay(glbt_small) <- "RNA"
+glbt_small <- NormalizeData(glbt_small) %>% FindNeighbors() %>% RunUMAP(dim = 1:20)
 
-## Manhatten plot
+DimPlot(glbt_small, label = TRUE, label.size = 5)
 
-## Track plot
+DefaultAssay(glbt_small) <- "exon"
+glbt_small <- NormalizeData(glbt_small)
+glbt_small <- ParseExonName(glbt_small)
+glbt_small <- RunAutoCorr(glbt_small)
+glbt_small <- SetAutoCorrFeatures(glbt_small)
+glbt_small <- RunBlockCorr(glbt_small, bind.name = "gene_name", bind.assay = "RNA")
+
+
+# Manhattan plot for spatial dissimilarity test result
+FbtPlot(glbt_small, val = "gene_name.padj")
+
+FeaturePlot(glbt_small, features = c("chr19:16095264-16095454/+/TPM4", "TPM4"), order=TRUE)
+
+# Track plot for gene coverage at different cell types
+db <- gtf2db("./gencode.v44.annotation.gtf.gz")
+TrackPlot(bamfile="./Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf =db, gene = "TPM4", junc = TRUE, cell.group = Idents(glbt_small), highlights = c(16095264,16095454))
+```
 
 ## Changelog
 
