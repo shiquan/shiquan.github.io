@@ -1,5 +1,10 @@
 ---
 title: PISA User Guide
+sidebar: false
+section-divs: false
+toc: false
+css: index.css
+editor: source
 ---
 
 ## Synopsis
