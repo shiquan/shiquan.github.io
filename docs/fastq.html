@@ -123,9 +123,24 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#an-example" id="toc-an-example" class="nav-link active" data-scroll-target="#an-example">An example</a></li>
+  <li><a href="#optional-tag-fields" id="toc-optional-tag-fields" class="nav-link" data-scroll-target="#optional-tag-fields">Optional tag fields</a></li>
+  <li><a href="#recommended-tag-names-and-types-for-single-cell-experiments" id="toc-recommended-tag-names-and-types-for-single-cell-experiments" class="nav-link" data-scroll-target="#recommended-tag-names-and-types-for-single-cell-experiments">Recommended tag names and types for single cell experiments</a></li>
+  <li><a href="#read-block" id="toc-read-block" class="nav-link" data-scroll-target="#read-block">Read block</a></li>
+  <li><a href="#fastq-version-history" id="toc-fastq-version-history" class="nav-link" data-scroll-target="#fastq-version-history">FASTQ+ Version History</a>
+  <ul class="collapse">
+  <li><a href="#v1.0-apr-2022" id="toc-v1.0-apr-2022" class="nav-link" data-scroll-target="#v1.0-apr-2022">v1.0 : Apr 2022</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -134,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-left">
 
     
   
@@ -154,7 +169,8 @@ ul.task-list li input[type="checkbox"] {
 <li><p>The base call quality scores.</p></li>
 </ul>
 <p>The optional fields of FASTQ+ is consist of numbers of tags in TAG:TYPE:VALUE format. The tag format is inherited from the SAM tag format (<a href="https://samtools.github.io/hts-specs/SAMv1.pdf" class="uri">https://samtools.github.io/hts-specs/SAMv1.pdf</a>). The TAG is a two-character string that matches /[A-Za-z][A-Za-z0-9]/. TYPE is a single case-sensitive letter, which defines the format of VALUE. Tags in optional fields are separated by three ’’ characters. No space allowed in the sequence identifier and optional fields. The total length of the first line should not exceed 254 characters.</p>
-<h2 id="an-example" class="anchored">An example</h2>
+<section id="an-example" class="level2">
+<h2 class="anchored" data-anchor-id="an-example">An example</h2>
 <p>In the example below, SEQ_ID is the sequence identifier that users can set or generate by software. CB is the recommended tag name for the corrected cell barcode, GN is the recommended tag for gene name, and UB is the recommended tag for UMI.</p>
 <div class="framed">
 <pre><code>@SEQ_ID|||CB:Z:ACGT|||GN:Z:BRCA1|||UB:Z:AACG
@@ -162,7 +178,9 @@ GATTTGGGGTTCAAAGCAGTATCGA
 +
 1***-+*''))**5&gt;&gt;CCCCCCC65</code></pre>
 </div>
-<h2 id="optional-tag-fields" class="anchored">Optional tag fields</h2>
+</section>
+<section id="optional-tag-fields" class="level2">
+<h2 class="anchored" data-anchor-id="optional-tag-fields">Optional tag fields</h2>
 <p>All optional tags for FASTQ+ follow the SAM tag format but add two more restrictions.</p>
 <ol type="1">
 <li><p>SAM tags allow space in type Z, but not allowed in FASTQ+ tags.</p></li>
@@ -216,7 +234,9 @@ GATTTGGGGTTCAAAGCAGTATCGA
 </tbody>
 </table>
 </div>
-<h2 id="recommended-tag-names-and-types-for-single-cell-experiments" class="anchored">Recommended tag names and types for single cell experiments</h2>
+</section>
+<section id="recommended-tag-names-and-types-for-single-cell-experiments" class="level2">
+<h2 class="anchored" data-anchor-id="recommended-tag-names-and-types-for-single-cell-experiments">Recommended tag names and types for single cell experiments</h2>
 <p>The following tag names and types have been widely used in single-cell experiments. Although it is not required but highly recommended following the exact definition.</p>
 <div class="center">
 <table class="caption-top table">
@@ -271,7 +291,9 @@ GATTTGGGGTTCAAAGCAGTATCGA
 </tbody>
 </table>
 </div>
-<h2 id="read-block" class="anchored">Read block</h2>
+</section>
+<section id="read-block" class="level2">
+<h2 class="anchored" data-anchor-id="read-block">Read block</h2>
 <p>A combination of tags can define the FASTQ+ block. Reads with the same tags can be selected and manipulated in a group. For example, SEQ1, SEQ2, and SEQ3 share the same cell barcode, and SEQ2 and SEQ3 share the same gene name but not for SEQ1. Using CB to define the block, all these three reads are from the same block. But if using CB and GN to determine the block, SEQ2 and SEQ3 are from the same block, different from SEQ1. Sorting the FASTQ+ file by tags can facilitate downstream analysis, i.e., assembly, for each block to be processed sequentially.</p>
 <div class="framed">
 <pre><code>@SEQ1|||CB:Z:ACGT|||GN:Z:BRCA1
@@ -287,11 +309,16 @@ TATCGACAGGAAGAAGGAGGGAGGG
 +
 AE/EE&lt;/AEEEAEEEEE//AA/EEE</code></pre>
 </div>
-<h1 id="fastq-version-history">FASTQ+ Version History</h1>
-<h2 id="v1.0-apr-2022" class="anchored">v1.0 : Apr 2022</h2>
+</section>
+<section id="fastq-version-history" class="level1">
+<h1>FASTQ+ Version History</h1>
+<section id="v1.0-apr-2022" class="level2">
+<h2 class="anchored" data-anchor-id="v1.0-apr-2022">v1.0 : Apr 2022</h2>
 <p>Initial edition.</p>
 
 
+</section>
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -2,8 +2,6 @@
 title: Yano
 description: Spatial dissimilarity analysis in single cells
 sidebar: false
-section-divs: false
-toc: false
 ---
 
 ## Introduction

@@ -157,9 +157,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#install" id="toc-install" class="nav-link" data-scroll-target="#install">INSTALL</a></li>
+  <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">Get started</a></li>
+  <li><a href="#short-cases" id="toc-short-cases" class="nav-link" data-scroll-target="#short-cases">Short cases</a></li>
+  <li><a href="#changelog" id="toc-changelog" class="nav-link" data-scroll-target="#changelog">Changelog</a></li>
+  <li><a href="#issues-or-questions" id="toc-issues-or-questions" class="nav-link" data-scroll-target="#issues-or-questions">Issues or questions</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -173,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-left">
 
     
   
@@ -185,16 +199,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<h2 id="introduction" class="anchored">Introduction</h2>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Yano represents an R/C toolkit designed for conducting spatial dissimilarity analysis on single-cell RNA sequencing data. This method revolves around the core concept of examining the distinct expression patterns of a given feature (e.g.&nbsp;exon, snp allele) in relation to its associated binding feature (typically a gene or another allele at the same genomic locus) within the context of cell lineage (1D), spatial position (2D), or the multi-dimensional PCA space. The discernible differences in feature expression patterns and their binding features provide insights into a range of biological phenomena, including alternative splicing, cis-antisense RNA regulation, allele-specific gene expression, and more.</p>
 <p>Yano is seamlessly integrated with Seurat, building upon the Seurat object’s framework. Users can perform conventional cell clustering analyses using the state-of-the-art Seurat pipeline and then incorporate exon, SNP counts as new “assays” within the Seurat objects. Subsequently, Yano facilitates the assessment of spatial dissimilarity between these two assays. For more details about the method, please refer to our manuscript.</p>
-<h2 id="install" class="anchored">INSTALL</h2>
+</section>
+<section id="install" class="level2">
+<h2 class="anchored" data-anchor-id="install">INSTALL</h2>
 <pre><code># Dependencies
 install.packages(c("Seurat", "R.utils", "viridis", "devtools"), repos = "https://cloud.r-project.org")</code></pre>
 <pre><code># Install Yano 
 devtools::install_github("shiquan/Yano")</code></pre>
 <p><strong><em>Notice:</em></strong> Multithread mode is disabled on macOS by default due to the lack of OpenMP support. However, <code>data.table</code> provides a useful tutorial on how to enable OpenMP on macOS. For more information, please refer to this guide: <a href="https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos">https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos</a>.</p>
-<h2 id="get-started" class="anchored">Get started</h2>
+</section>
+<section id="get-started" class="level2">
+<h2 class="anchored" data-anchor-id="get-started">Get started</h2>
 <p>A typical workflow with Yano starts by using a built-in dataset.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Yano)</span>
@@ -238,9 +257,9 @@ devtools::install_github("shiquan/Yano")</code></pre>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Track plot for gene coverage at different cell types</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-10-12 19:58:56] [32mGTF loading..[0m
-[2024-10-12 19:59:29] [32mLoad 62700 genes.[0m
-[2024-10-12 19:59:29] [32mLoad time : 33.134 sec[0m</code></pre>
+<pre><code>[2024-10-12 20:06:01] [32mGTF loading..[0m
+[2024-10-12 20:06:29] [32mLoad 62700 genes.[0m
+[2024-10-12 20:06:29] [32mLoad time : 28.039 sec[0m</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile=</span><span class="st">"./Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span>db, <span class="at">gene =</span> <span class="st">"TPM4"</span>, <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(glbt_small), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">16095264</span>,<span class="dv">16095454</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -252,25 +271,33 @@ devtools::install_github("shiquan/Yano")</code></pre>
 </div>
 </div>
 <p>See short cases for more details.</p>
-<h2 id="short-cases" class="anchored">Short cases</h2>
+</section>
+<section id="short-cases" class="level2">
+<h2 class="anchored" data-anchor-id="short-cases">Short cases</h2>
 <ul>
 <li><a href="https://shiquan.github.io/Yano_AS.html">Alternative splicing analysis for scRNA-seq</a></li>
 <li><a href="https://shiquan.github.io/Yano_ASE.html">Allele-specific gene expression analysis for scRNA-seq</a></li>
 <li><a href="https://shiquan.github.io/Yano_anno.html">Annotating and prioritizing genetic variants for scRNA-seq</a></li>
 </ul>
-<h2 id="changelog" class="anchored">Changelog</h2>
+</section>
+<section id="changelog" class="level2">
+<h2 class="anchored" data-anchor-id="changelog">Changelog</h2>
 <details>
 <summary>
 0.0.0.9999 2023/03/22
 </summary>
 <p>Init version.</p>
 </details>
-<h2 id="issues-or-questions" class="anchored">Issues or questions</h2>
+</section>
+<section id="issues-or-questions" class="level2">
+<h2 class="anchored" data-anchor-id="issues-or-questions">Issues or questions</h2>
 <ul>
 <li><a href="https://github.com/shiquan/Yano/issues">https://github.com/shiquan/Yano/issues</a></li>
 <li><a href="https://github.com/shiquan/Yano/discussions">https://github.com/shiquan/Yano/discussions</a></li>
 </ul>
-<h2 id="functions" class="anchored">Functions</h2>
+</section>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -371,6 +398,7 @@ devtools::install_github("shiquan/Yano")</code></pre>
 </table>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
