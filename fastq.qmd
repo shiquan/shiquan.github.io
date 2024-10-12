@@ -1,4 +1,11 @@
-# The FASTQ+ Format Specification
+---
+title: The FASTQ+ Format Specification
+sidebar: false
+section-divs: false
+toc: false
+css: index.css
+editor: source
+---
 
 The FASTQ+ format is a variant of the FASTQ. It is designed to store more features or annotations for FASTQ records but not change the own property of the FASTQ structure. Each FASTQ+ record consists of four lines.
 
