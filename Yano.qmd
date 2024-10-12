@@ -12,12 +12,12 @@ Yano is seamlessly integrated with Seurat, building upon the Seurat object's fra
 
 ## INSTALL
 
-```
+```r
 # Dependencies
 install.packages(c("Seurat", "R.utils", "viridis", "devtools"), repos = "https://cloud.r-project.org")
 ```
 
-```
+```r
 # Install Yano 
 devtools::install_github("shiquan/Yano")
 ```
@@ -86,7 +86,7 @@ Function(s) | Description
 |[FindAltExp](Yano/FindAltExp.md)|Find group specific alternative expressed features.|
 |[FindAllAltExp](Yano/FindAllAltExp.md)|Find alternative expressed features for all groups.|
 |[GetWeights](Yano/GetWeights.md)|Get weight matrix.|
-|[gtf2db](Yano/gtf2db.md)|Load GTF database in memory.|
+|[gtf2db](Yano/gtf2db.md)|Load GTF database into memory.|
 |[mergeMatrix](Yano/mergeMatrix-SMatrix-method.md)|Merge two or more count matrix into one.|
 |[ParseBED](Yano/ParseBED.md)|Parse chromsome name, locations and strand from BED names.|
 |[ParseExonName](Yano/ParseExonName.md)|Parse chromsome name, locations, strand and gene name from Exon/Junction names.||
