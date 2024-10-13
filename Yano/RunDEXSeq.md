@@ -1,14 +1,14 @@
 
 
-# Test for alternative expression with DEXSeq
+# RunDEXSeq
 
 [**Source code**](https://github.com/shiquan/Yano/tree/master/R/#L)
 
 ## Description
 
 This will test the test features and binding features are different
-expressed between groups with a generalised linear model. See DEXSeq and
-DESeq2 paper for details.
+expressed between groups with a generalised linear model. See DEXSeq
+(PMID: 22722343) paper for details.
 
 ## Usage
 
@@ -50,7 +50,8 @@ A Seurat object.
 <code id="bind.name">bind.name</code>
 </td>
 <td>
-The title of binding name in meta table.
+The title of binding name in meta table. Usually be "gene_name" for
+alternative splicing.
 </td>
 </tr>
 <tr>
@@ -205,7 +206,7 @@ library("Yano")
 data("glbt_small")
 DefaultAssay(glbt_small) <- "exon"
 glbt_small <- ParseExonName(glbt_small)
-alt.exon <- RunDEXSeq(object = glbt_small, assay = "exon", bind.assay = "RNA", bind.name = "gene_name")
+alt.exon <- RunDEXSeq(object = glbt_small, assay = "exon", bind.assay = "RNA", bind.name = "gene_name", features = rownames(glbt_small))
 head(alt.exon)
 ```
 

@@ -193,7 +193,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#test-for-alternative-expression-using-delta-ratio" id="toc-test-for-alternative-expression-using-delta-ratio" class="nav-link active" data-scroll-target="#test-for-alternative-expression-using-delta-ratio">Test for alternative expression using delta-ratio</a>
+  <li><a href="#find-alternative-expression" id="toc-find-alternative-expression" class="nav-link active" data-scroll-target="#find-alternative-expression">Find Alternative expression</a>
   <ul class="collapse">
   <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
   <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
@@ -209,12 +209,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="test-for-alternative-expression-using-delta-ratio" class="level1">
-<h1>Test for alternative expression using delta-ratio</h1>
+<section id="find-alternative-expression" class="level1">
+<h1>Find Alternative expression</h1>
 <p><a href="https://github.com/shiquan/Yano/tree/master/R/#L"><strong>Source code</strong></a></p>
 <section id="description" class="level2">
 <h2 class="anchored" data-anchor-id="description">Description</h2>
-<p>Using delta-ratio and permutation method to simulate p value for each event.</p>
+<p>Using linear regression model (implemented by DEXSeq) or PermTest method to calculate delta ratio and simulate p value for each event.</p>
 </section>
 <section id="usage" class="level2">
 <h2 class="anchored" data-anchor-id="usage">Usage</h2>
@@ -226,7 +226,7 @@ ul.task-list li input[type="checkbox"] {
   ident.2 = NULL,
   assay = NULL,
   bind.name = "gene_name",
-  test.use = "DEXSeq",
+  test.use = c("DEXSeq", "PermTest"),
   bind.assay = NULL,
   features = NULL,
   bind.features = NULL,
@@ -353,7 +353,7 @@ Test mode. For mode 1, X (test feature) vs Y (binding feature). For mode 2, X vs
 <code id="threads">threads</code>
 </td>
 <td>
-Threads. If set to 0 (default), will auto check the CPU cores and set threads = number of CPU cores -1.
+Threads. For DEXSeq, threads will set to 1. For other methods, threads set to 0, which will auto check the CPU cores and set threads = number of CPU cores -1.
 </td>
 </tr>
 <tr>
@@ -385,14 +385,14 @@ Print debug logs. Will auto set thread to 1. Default is FALSE.
 <code id="pesudo.group">pesudo.group</code>
 </td>
 <td>
-Aggregate counts into groups for each clusters.
+Aggregate counts into groups for each clusters. Used only for DEXSeq.
 </td>
 </tr>
 </tbody></table>
 </section>
 <section id="details" class="level2">
 <h2 class="anchored" data-anchor-id="details">Details</h2>
-<p>This function first aggregates all raw counts per feature for each group <em>a</em> and <em>b</em>, then calculates the <em>d<strong>e</strong>l<strong>t</strong>a</em> − <em>r<strong>a</strong>t<strong>i</strong>o</em> = <em>X</em><sub><em>a</em></sub>/<em>Y</em><sub><em>a</em></sub> − <em>X</em><sub><em>b</em></sub>/<em>Y</em><sub><em>b</em></sub>.Therefore, this function only retrieve data from layer ‘counts’. It then employs a permutation method to randomize the cells in the two groups 100 times (by default) to evaluate the mean and standard deviation of delta-ratio. A p-value is calculated using a t-test.</p>
+<p>This function first aggregates all raw counts per feature for each group and then perform alternative expression analysis with DEXSeq or PermTest method. For DEXSeq, counts per group will divide into pesudo-groups first. For PermTest method, *d<strong>e</strong>l<strong>t</strong>a<strong>r</strong>a<strong>t</strong>i**o<em> = </em>X<em><sub></sub></em>a<em>/</em>Y<em><sub></sub></em>a<em> − </em>X<em><sub></sub></em>b<em>/</em>Y<em><sub></sub></em>b*. It then employs a permutation method to randomize the cells in the two groups 100 times (by default) to evaluate the mean and standard deviation of delta-ratio. A p-value is calculated using a t-test. The PermTest method is not well tested. Therefore, we use DEXSeq method in default, but it’s very slow if input a lot of features.</p>
 
 
 </section>

@@ -6,7 +6,7 @@
 
 ## Description
 
-Annotate genetic variants.
+Annotate genetic variants with VCF databases.
 
 ## Usage
 

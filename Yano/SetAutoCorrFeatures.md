@@ -1,12 +1,12 @@
 
 
-# Set autocorrection by rank and/or score
+# SetAutoCorrFeatures
 
 [**Source code**](https://github.com/shiquan/Yano/tree/master/R/#L)
 
 ## Description
 
-Set autocorrection by rank and/or score
+Set autocorrection by Moran’s I and/or p value.
 
 ## Usage
 

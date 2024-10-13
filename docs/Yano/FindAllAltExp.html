@@ -264,6 +264,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   min.cells = 10,
   return.thresh = NULL,
   mode = c(1, 2, 3),
+  test.use = c("DEXSeq", "PermTest"),
   threads = 0,
   perm = 100,
   seed = 999,
@@ -360,7 +361,7 @@ Test mode. For mode 1, X (test feature) vs Y (binding feature). For mode 2, X vs
 <code id="threads">threads</code>
 </td>
 <td>
-Threads. If set to 0 (default), will auto check the CPU cores and set threads = number of CPU cores -1.
+Threads. For DEXSeq, threads will set to 1. For other methods, threads set to 0, which will auto check the CPU cores and set threads = number of CPU cores -1.
 </td>
 </tr>
 <tr>
@@ -399,7 +400,7 @@ Print debug logs. Will auto set thread to 1. Default is FALSE.
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"glbt_small"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(glbt_small) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>alt.exon <span class="ot">&lt;-</span> <span class="fu">FindAllAltExp</span>(<span class="at">object =</span> glbt_small, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>alt.exon <span class="ot">&lt;-</span> <span class="fu">FindAllAltExp</span>(<span class="at">object =</span> glbt_small, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">features =</span> <span class="fu">rownames</span>(glbt_small))</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(alt.exon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>data frame with 0 columns and 0 rows</code></pre>
 

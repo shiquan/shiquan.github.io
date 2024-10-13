@@ -227,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#test-for-alternative-expression-with-dexseq" id="toc-test-for-alternative-expression-with-dexseq" class="nav-link active" data-scroll-target="#test-for-alternative-expression-with-dexseq">Test for alternative expression with DEXSeq</a>
+  <li><a href="#rundexseq" id="toc-rundexseq" class="nav-link active" data-scroll-target="#rundexseq">RunDEXSeq</a>
   <ul class="collapse">
   <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
   <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
@@ -244,12 +244,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="test-for-alternative-expression-with-dexseq" class="level1">
-<h1>Test for alternative expression with DEXSeq</h1>
+<section id="rundexseq" class="level1">
+<h1>RunDEXSeq</h1>
 <p><a href="https://github.com/shiquan/Yano/tree/master/R/#L"><strong>Source code</strong></a></p>
 <section id="description" class="level2">
 <h2 class="anchored" data-anchor-id="description">Description</h2>
-<p>This will test the test features and binding features are different expressed between groups with a generalised linear model. See DEXSeq and DESeq2 paper for details.</p>
+<p>This will test the test features and binding features are different expressed between groups with a generalised linear model. See DEXSeq (PMID: 22722343) paper for details.</p>
 </section>
 <section id="usage" class="level2">
 <h2 class="anchored" data-anchor-id="usage">Usage</h2>
@@ -291,7 +291,7 @@ A Seurat object.
 <code id="bind.name">bind.name</code>
 </td>
 <td>
-The title of binding name in meta table.
+The title of binding name in meta table. Usually be “gene_name” for alternative splicing.
 </td>
 </tr>
 <tr>
@@ -427,7 +427,7 @@ Threads passed to DEXSeq. Default is 1.
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"glbt_small"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(glbt_small) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(glbt_small)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>alt.exon <span class="ot">&lt;-</span> <span class="fu">RunDEXSeq</span>(<span class="at">object =</span> glbt_small, <span class="at">assay =</span> <span class="st">"exon"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>alt.exon <span class="ot">&lt;-</span> <span class="fu">RunDEXSeq</span>(<span class="at">object =</span> glbt_small, <span class="at">assay =</span> <span class="st">"exon"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">features =</span> <span class="fu">rownames</span>(glbt_small))</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(alt.exon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>data frame with 0 columns and 0 rows</code></pre>
 

@@ -21,6 +21,7 @@ Test alternative expression for all cell groups
   min.cells = 10,
   return.thresh = NULL,
   mode = c(1, 2, 3),
+  test.use = c("DEXSeq", "PermTest"),
   threads = 0,
   perm = 100,
   seed = 999,
@@ -127,8 +128,9 @@ Test mode. For mode 1, X (test feature) vs Y (binding feature). For mode
 <code id="threads">threads</code>
 </td>
 <td>
-Threads. If set to 0 (default), will auto check the CPU cores and set
-threads = number of CPU cores -1.
+Threads. For DEXSeq, threads will set to 1. For other methods, threads
+set to 0, which will auto check the CPU cores and set threads = number
+of CPU cores -1.
 </td>
 </tr>
 <tr>
@@ -169,7 +171,7 @@ library("Yano")
 
 data("glbt_small")
 DefaultAssay(glbt_small) <- "exon"
-alt.exon <- FindAllAltExp(object = glbt_small, bind.assay = "RNA", bind.name = "gene_name")
+alt.exon <- FindAllAltExp(object = glbt_small, bind.assay = "RNA", bind.name = "gene_name", features = rownames(glbt_small))
 head(alt.exon)
 ```
 

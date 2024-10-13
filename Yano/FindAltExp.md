@@ -1,13 +1,13 @@
 
 
-# Test for alternative expression using delta-ratio
+# Find Alternative expression
 
 [**Source code**](https://github.com/shiquan/Yano/tree/master/R/#L)
 
 ## Description
 
-Using delta-ratio and permutation method to simulate p value for each
-event.
+Using linear regression model (implemented by DEXSeq) or PermTest method
+to calculate delta ratio and simulate p value for each event.
 
 ## Usage
 
@@ -19,7 +19,7 @@ event.
   ident.2 = NULL,
   assay = NULL,
   bind.name = "gene_name",
-  test.use = "DEXSeq",
+  test.use = c("DEXSeq", "PermTest"),
   bind.assay = NULL,
   features = NULL,
   bind.features = NULL,
@@ -155,8 +155,9 @@ Test mode. For mode 1, X (test feature) vs Y (binding feature). For mode
 <code id="threads">threads</code>
 </td>
 <td>
-Threads. If set to 0 (default), will auto check the CPU cores and set
-threads = number of CPU cores -1.
+Threads. For DEXSeq, threads will set to 1. For other methods, threads
+set to 0, which will auto check the CPU cores and set threads = number
+of CPU cores -1.
 </td>
 </tr>
 <tr>
@@ -189,7 +190,7 @@ Print debug logs. Will auto set thread to 1. Default is FALSE.
 <code id="pesudo.group">pesudo.group</code>
 </td>
 <td>
-Aggregate counts into groups for each clusters.
+Aggregate counts into groups for each clusters. Used only for DEXSeq.
 </td>
 </tr>
 </table>
@@ -197,9 +198,12 @@ Aggregate counts into groups for each clusters.
 ## Details
 
 This function first aggregates all raw counts per feature for each group
-*a* and *b*, then calculates the
-*d**e**l**t**a* − *r**a**t**i**o* = *X*<sub>*a*</sub>/*Y*<sub>*a*</sub> − *X*<sub>*b*</sub>/*Y*<sub>*b*</sub>.Therefore,
-this function only retrieve data from layer ‘counts’. It then employs a
-permutation method to randomize the cells in the two groups 100 times
-(by default) to evaluate the mean and standard deviation of delta-ratio.
-A p-value is calculated using a t-test.
+and then perform alternative expression analysis with DEXSeq or PermTest
+method. For DEXSeq, counts per group will divide into pesudo-groups
+first. For PermTest method,
+*d**e**l**t**a**r**a**t**i**o* = *X*<sub>*a*</sub>/*Y*<sub>*a*</sub> − *X*<sub>*b*</sub>/*Y*<sub>*b*</sub>.
+It then employs a permutation method to randomize the cells in the two
+groups 100 times (by default) to evaluate the mean and standard
+deviation of delta-ratio. A p-value is calculated using a t-test. The
+PermTest method is not well tested. Therefore, we use DEXSeq method in
+default, but it’s very slow if input a lot of features.

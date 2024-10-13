@@ -1,13 +1,12 @@
 
 
-# Calculate spatial autocorrelation (Moran’s index) for features in parallel.
+# RunAutoCorr
 
 [**Source code**](https://github.com/shiquan/Yano/tree/master/R/#L)
 
 ## Description
 
-Calculate spatial autocorrelation (Moran’s index) for features in
-parallel.
+Calculate spatial autocorrelation (Moran’s I) for features in parallel.
 
 ## Usage
 
@@ -55,7 +54,7 @@ Working assay
 <code id="layer">layer</code>
 </td>
 <td>
-Input data. For expression, log scaled data is highly recommended
+Input data layer, usually be ‘data’.
 </td>
 </tr>
 <tr>

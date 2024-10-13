@@ -6,7 +6,7 @@
 
 ## Description
 
-Plot read/UMI coverage and transcript tracks.
+Plot read/UMI coverage and transcript tracks from BAM(s).
 
 ## Usage
 
@@ -49,7 +49,8 @@ Plot read/UMI coverage and transcript tracks.
 <code id="bamfile">bamfile</code>
 </td>
 <td>
-A path to bam file or a list to bam files.
+A path to a BAM file or a list to BAM files. BAM file(s) should be
+indexed.
 </td>
 </tr>
 <tr>

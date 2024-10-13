@@ -214,7 +214,7 @@ ul.task-list li input[type="checkbox"] {
 <p><a href="https://github.com/shiquan/Yano/tree/master/R/#L"><strong>Source code</strong></a></p>
 <section id="description" class="level2">
 <h2 class="anchored" data-anchor-id="description">Description</h2>
-<p>Annotate gene region and other tags for genetic variants. VCF database can be specified, and the type of VCF tags will be consider. See VCF specification and manual page for details &lt;https://shiquan.github.io/Yano.html&gt;.</p>
+<p>Annotate genetic variants with preload GTF and/or VCF databases. Will generate gene region and other tags.</p>
 </section>
 <section id="usage" class="level2">
 <h2 class="anchored" data-anchor-id="usage">Usage</h2>
@@ -269,7 +269,7 @@ VCF database. Should be indexed with ‘bcftools index’ at first.
 <code id="tags">tags</code>
 </td>
 <td>
-Vector of tags to annotate. Require VCF database specified, and tags should be well formated in the VCF header.
+Vector of tags to annotate. Require VCF database specified, and tags should be well formated in the VCF header. See VCF specification (https://samtools.github.io/hts-specs/VCFv4.2.pdf) for details.
 </td>
 </tr>
 <tr>

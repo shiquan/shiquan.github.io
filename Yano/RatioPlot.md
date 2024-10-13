@@ -6,7 +6,8 @@
 
 ## Description
 
-Plot PSI score on reduction map.
+Plot ratio score of test feature and its binding feature on reduction
+map.
 
 ## Usage
 

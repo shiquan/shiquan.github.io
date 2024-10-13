@@ -6,10 +6,8 @@
 
 ## Description
 
-Annotate gene region and other tags for genetic variants. VCF database
-can be specified, and the type of VCF tags will be consider. See VCF
-specification and manual page for details
-\<https://shiquan.github.io/Yano.html\>.
+Annotate genetic variants with preload GTF and/or VCF databases. Will
+generate gene region and other tags.
 
 ## Usage
 
@@ -65,7 +63,8 @@ VCF database. Should be indexed with ‘bcftools index’ at first.
 </td>
 <td>
 Vector of tags to annotate. Require VCF database specified, and tags
-should be well formated in the VCF header.
+should be well formated in the VCF header. See VCF specification
+(https://samtools.github.io/hts-specs/VCFv4.2.pdf) for details.
 </td>
 </tr>
 <tr>

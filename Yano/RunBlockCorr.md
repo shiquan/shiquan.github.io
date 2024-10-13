@@ -1,6 +1,6 @@
 
 
-# Run spatial dissimilarity test for features and their binding features in parallel.
+# RunBlockCorr
 
 [**Source code**](https://github.com/shiquan/Yano/tree/master/R/#L)
 
