@@ -2,7 +2,7 @@
 
 # annoVAR
 
-[**Source code**](https://github.com/shiquan/Yano/tree/master/R/#L)
+[**Source code**](https://github.com/shiquan/Yano/tree/master/R/varanno.R#L51)
 
 ## Description
 

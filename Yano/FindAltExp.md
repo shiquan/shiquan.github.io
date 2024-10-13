@@ -2,7 +2,7 @@
 
 # Find Alternative expression
 
-[**Source code**](https://github.com/shiquan/Yano/tree/master/R/#L)
+[**Source code**](https://github.com/shiquan/Yano/tree/master/R/AltEXP.R#L260)
 
 ## Description
 

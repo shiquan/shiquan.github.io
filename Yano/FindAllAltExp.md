@@ -2,7 +2,7 @@
 
 # Test alternative expression for all cell groups
 
-[**Source code**](https://github.com/shiquan/Yano/tree/master/R/#L)
+[**Source code**](https://github.com/shiquan/Yano/tree/master/R/AltEXP.R#L430)
 
 ## Description
 

@@ -246,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="rundexseq" class="level1">
 <h1>RunDEXSeq</h1>
-<p><a href="https://github.com/shiquan/Yano/tree/master/R/#L"><strong>Source code</strong></a></p>
+<p><a href="https://github.com/shiquan/Yano/tree/master/R/AltEXP.R#L184"><strong>Source code</strong></a></p>
 <section id="description" class="level2">
 <h2 class="anchored" data-anchor-id="description">Description</h2>
 <p>This will test the test features and binding features are different expressed between groups with a generalised linear model. See DEXSeq (PMID: 22722343) paper for details.</p>
@@ -427,9 +427,29 @@ Threads passed to DEXSeq. Default is 1.
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"glbt_small"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(glbt_small) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(glbt_small)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>alt.exon <span class="ot">&lt;-</span> <span class="fu">RunDEXSeq</span>(<span class="at">object =</span> glbt_small, <span class="at">assay =</span> <span class="st">"exon"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">features =</span> <span class="fu">rownames</span>(glbt_small))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>alt.exon <span class="ot">&lt;-</span> <span class="fu">RunDEXSeq</span>(<span class="at">object =</span> glbt_small, <span class="at">assay =</span> <span class="st">"exon"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>,<span class="at">ident.1 =</span> <span class="st">"0"</span>, <span class="at">features =</span> <span class="fu">rownames</span>(glbt_small))</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(alt.exon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<pre><code>data frame with 0 columns and 0 rows</code></pre>
+<pre><code>                                                            feature       pct.1
+chr1:154169305-154169383/-/TPM3     chr1:154169305-154169383/-/TPM3 0.004102564
+chr11:35197162-35197793/+/CD44       chr11:35197162-35197793/+/CD44 0.422564103
+chr11:75421727-75422280/+/RPS3       chr11:75421727-75422280/+/RPS3 0.164102564
+chr11:123060825-123061329/-/HSPA8 chr11:123060825-123061329/-/HSPA8 0.087179487
+chr11:123061588-123061833/-/HSPA8 chr11:123061588-123061833/-/HSPA8 0.065641026
+chr11:123061869-123062022/-/HSPA8 chr11:123061869-123062022/-/HSPA8 0.019487179
+                                       pct.2 bind.feature      log2fc
+chr1:154169305-154169383/-/TPM3   0.05073171         TPM3          NA
+chr11:35197162-35197793/+/CD44    0.32097561         CD44          NA
+chr11:75421727-75422280/+/RPS3    0.05268293         RPS3          NA
+chr11:123060825-123061329/-/HSPA8 0.13951220        HSPA8  0.05078704
+chr11:123061588-123061833/-/HSPA8 0.08780488        HSPA8 -0.44071765
+chr11:123061869-123062022/-/HSPA8 0.04195122        HSPA8  0.31086581
+                                           pval          padj
+chr1:154169305-154169383/-/TPM3    7.392274e-11  2.841919e-09
+chr11:35197162-35197793/+/CD44    3.763464e-116 1.302159e-113
+chr11:75421727-75422280/+/RPS3     1.315600e-17  6.502825e-16
+chr11:123060825-123061329/-/HSPA8  1.955408e-08  6.547463e-07
+chr11:123061588-123061833/-/HSPA8  1.135199e-01  6.810299e-01
+chr11:123061869-123062022/-/HSPA8  2.089351e-02  2.285663e-01</code></pre>
 
 
 </section>

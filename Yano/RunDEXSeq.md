@@ -2,7 +2,7 @@
 
 # RunDEXSeq
 
-[**Source code**](https://github.com/shiquan/Yano/tree/master/R/#L)
+[**Source code**](https://github.com/shiquan/Yano/tree/master/R/AltEXP.R#L184)
 
 ## Description
 
@@ -206,8 +206,28 @@ library("Yano")
 data("glbt_small")
 DefaultAssay(glbt_small) <- "exon"
 glbt_small <- ParseExonName(glbt_small)
-alt.exon <- RunDEXSeq(object = glbt_small, assay = "exon", bind.assay = "RNA", bind.name = "gene_name", features = rownames(glbt_small))
+alt.exon <- RunDEXSeq(object = glbt_small, assay = "exon", bind.assay = "RNA", bind.name = "gene_name",ident.1 = "0", features = rownames(glbt_small))
 head(alt.exon)
 ```
 
-    data frame with 0 columns and 0 rows
+                                                                feature       pct.1
+    chr1:154169305-154169383/-/TPM3     chr1:154169305-154169383/-/TPM3 0.004102564
+    chr11:35197162-35197793/+/CD44       chr11:35197162-35197793/+/CD44 0.422564103
+    chr11:75421727-75422280/+/RPS3       chr11:75421727-75422280/+/RPS3 0.164102564
+    chr11:123060825-123061329/-/HSPA8 chr11:123060825-123061329/-/HSPA8 0.087179487
+    chr11:123061588-123061833/-/HSPA8 chr11:123061588-123061833/-/HSPA8 0.065641026
+    chr11:123061869-123062022/-/HSPA8 chr11:123061869-123062022/-/HSPA8 0.019487179
+                                           pct.2 bind.feature      log2fc
+    chr1:154169305-154169383/-/TPM3   0.05073171         TPM3          NA
+    chr11:35197162-35197793/+/CD44    0.32097561         CD44          NA
+    chr11:75421727-75422280/+/RPS3    0.05268293         RPS3          NA
+    chr11:123060825-123061329/-/HSPA8 0.13951220        HSPA8  0.05078704
+    chr11:123061588-123061833/-/HSPA8 0.08780488        HSPA8 -0.44071765
+    chr11:123061869-123062022/-/HSPA8 0.04195122        HSPA8  0.31086581
+                                               pval          padj
+    chr1:154169305-154169383/-/TPM3    7.392274e-11  2.841919e-09
+    chr11:35197162-35197793/+/CD44    3.763464e-116 1.302159e-113
+    chr11:75421727-75422280/+/RPS3     1.315600e-17  6.502825e-16
+    chr11:123060825-123061329/-/HSPA8  1.955408e-08  6.547463e-07
+    chr11:123061588-123061833/-/HSPA8  1.135199e-01  6.810299e-01
+    chr11:123061869-123062022/-/HSPA8  2.089351e-02  2.285663e-01

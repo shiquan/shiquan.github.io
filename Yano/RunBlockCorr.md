@@ -2,7 +2,7 @@
 
 # RunBlockCorr
 
-[**Source code**](https://github.com/shiquan/Yano/tree/master/R/#L)
+[**Source code**](https://github.com/shiquan/Yano/tree/master/R/dissimilarity.R#L78)
 
 ## Description
 

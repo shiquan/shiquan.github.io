@@ -2,7 +2,7 @@
 
 # Perform dissimilarity test (D score) and Lee score test for features and test features in parallel. This function used to select co-expressed features on single cell space.
 
-[**Source code**](https://github.com/shiquan/Yano/tree/master/R/#L)
+[**Source code**](https://github.com/shiquan/Yano/tree/master/R/RunDLScore.R#L13)
 
 ## Description
 
