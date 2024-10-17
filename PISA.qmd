@@ -275,7 +275,7 @@ In most cases, PISA annotation produces results similar to CellRanger, but there
 
 The second difference relates to UMI handling. In CellRanger, if a UMI maps to more than one gene, it is discarded. In contrast, PISA annotates all genes if the read is fully enclosed within the exons of these genes, and the UMI is counted for all of them. However, this type of read can be skipped in PISA if the `-one-hit` option is set during the PISA count process.
 
-For more information on CellRanger's counting strategy, you can refer to the official documentation: [Cell Ranger Algorithm Overview](https://www.10xgenomics.com/support/software/cell-ranger/7.2/algorithms-overview/cr-gex-algorithm.).
+For more information on CellRanger's counting strategy, you can refer to the official documentation: [Cell Ranger Algorithm Overview](https://www.10xgenomics.com/support/software/cell-ranger/7.2/algorithms-overview/cr-gex-algorithm).
 
 ## Changelog
 <details>
