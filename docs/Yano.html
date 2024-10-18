@@ -219,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Yano)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"glbt_small"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(glbt_small) <span class="ot">&lt;-</span> <span class="st">"RNA"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(glbt_small) <span class="sc">%&gt;%</span> <span class="fu">FindNeighbors</span>() <span class="sc">%&gt;%</span> <span class="fu">RunUMAP</span>(<span class="at">dim =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(glbt_small) <span class="sc">%&gt;%</span> <span class="fu">RunUMAP</span>(<span class="at">dim =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(glbt_small, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">label.size =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -232,13 +232,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(glbt_small) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(glbt_small)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(glbt_small)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(glbt_small)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(glbt_small)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(glbt_small, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Manhattan plot for spatial dissimilarity test result</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(glbt_small, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"_wm$"</span>,<span class="fu">names</span>(glbt_small), <span class="at">value=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>character(0)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(glbt_small)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"_wm$"</span>,<span class="fu">names</span>(glbt_small), <span class="at">value=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "pca_wm"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(glbt_small)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(glbt_small, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Manhattan plot for spatial dissimilarity test result</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(glbt_small, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -246,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(glbt_small, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr19:16095264-16095454/+/TPM4"</span>, <span class="st">"TPM4"</span>), <span class="at">order=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(glbt_small, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr19:16095264-16095454/+/TPM4"</span>, <span class="st">"TPM4"</span>), <span class="at">order=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -254,14 +261,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Track plot for gene coverage at different cell types</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Track plot for gene coverage at different cell types</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-10-18 17:37:36] [32mGTF loading..[0m
-[2024-10-18 17:38:13] [32mLoad 62700 genes.[0m
-[2024-10-18 17:38:13] [32mLoad time : 36.857 sec[0m</code></pre>
+<pre><code>[2024-10-18 17:47:22] [32mGTF loading..[0m
+[2024-10-18 17:47:59] [32mLoad 62700 genes.[0m
+[2024-10-18 17:47:59] [32mLoad time : 36.821 sec[0m</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile=</span><span class="st">"./Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span>db, <span class="at">gene =</span> <span class="st">"TPM4"</span>, <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(glbt_small), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">16095264</span>,<span class="dv">16095454</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile=</span><span class="st">"./Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span>db, <span class="at">gene =</span> <span class="st">"TPM4"</span>, <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(glbt_small), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">16095264</span>,<span class="dv">16095454</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">

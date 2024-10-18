@@ -31,17 +31,18 @@ A typical workflow with Yano starts by using a built-in dataset.
 require(Yano)
 data("glbt_small")
 DefaultAssay(glbt_small) <- "RNA"
-glbt_small <- NormalizeData(glbt_small) %>% FindNeighbors() %>% RunUMAP(dim = 1:20)
+glbt_small <- NormalizeData(glbt_small) %>% RunUMAP(dim = 1:20)
 
 DimPlot(glbt_small, label = TRUE, label.size = 5)
 
 DefaultAssay(glbt_small) <- "exon"
 glbt_small <- NormalizeData(glbt_small)
 glbt_small <- ParseExonName(glbt_small)
+grep("_wm$",names(glbt_small), value=TRUE)
 glbt_small <- RunAutoCorr(glbt_small)
+grep("_wm$",names(glbt_small), value=TRUE)
 glbt_small <- SetAutoCorrFeatures(glbt_small)
 glbt_small <- RunBlockCorr(glbt_small, bind.name = "gene_name", bind.assay = "RNA")
-
 
 # Manhattan plot for spatial dissimilarity test result
 FbtPlot(glbt_small, val = "gene_name.padj")
