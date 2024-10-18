@@ -33,6 +33,7 @@ In this vignette, when a genetic variant is detected, all possible alleles at th
 ```{r}
 var <- ReadPISA("./var")
 obj[['var']] <- CreateAssayObject(var[,colnames(obj)], min.cells = 10)
+# Switch working assay to 'var'
 DefaultAssay(obj) <- "var"
 
 obj <- NormalizeData(obj)

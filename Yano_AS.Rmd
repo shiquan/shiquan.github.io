@@ -48,6 +48,7 @@ exon <- ReadPISA("./exon/")
 # Load the exon expression to Seurat object as a new assay, make sure the exon matrix has the same cells.
 obj[['exon']] <- CreateAssayObject(exon[, colnames(obj)], min.cells=20)
 
+# Switch work assay to exon
 DefaultAssay(obj) <- "exon"
 # Empty info for exon features
 head(obj[['exon']][[]]) %>% knitr::kable()

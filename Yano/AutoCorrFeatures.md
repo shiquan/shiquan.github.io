@@ -2,7 +2,7 @@
 
 # AutoCorrFeatures
 
-[**Source code**](https://github.com/shiquan/Yano/tree/master/R/moransi.R#L197)
+[**Source code**](https://github.com/shiquan/Yano/tree/master/R/moransi.R#L233)
 
 ## Description
 
