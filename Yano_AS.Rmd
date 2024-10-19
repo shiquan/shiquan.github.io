@@ -20,7 +20,7 @@ require(Yano)
 exp <- ReadPISA("./exp/")
 dim(exp)
 ```
-In this section, we will perform the standard Seurat analysis pipeline. Since our spatial dissimilarity test does not require predefined cell groups, we only need to calculate the shared nearest neighbors (SNN) using the `FindNeighbors` function. However, cell clustering and UMAP plots will still be generated to help interpret the results. Note that changing the resolution or other parameters for `FindClusters` and `RunUMAP` will not impact the outcome of the spatial dissimilarity test.
+In this section, we will perform the standard Seurat analysis pipeline. Since the spatial dissimilarity test is not rely on cell clustering so changing the resolution or other parameters for `FindClusters` and `RunUMAP` will not impact the outcome of the spatial dissimilarity test.
 ```{r warning=FALSE}
 # Create Seurat object and filter droplets with fewer than 1000 genes
 obj <- CreateSeuratObject(exp, min.features = 1000, min.cells = 10)
@@ -39,7 +39,7 @@ DimPlot(obj, label=TRUE, label.size = 5, label.box = TRUE)
 ```
 
 ## 2. Perform alternative splicing with exon assay
-In this section, we will compare exon expression patterns with the expression patterns of their corresponding genes in a spatial context. Here, the term "spatial" refers to the organization of cells in space. In this vignette, we will use the shared nearest neighbor (SNN) space for the analysis, but the approach can also be applied to lineage trajectories or spatial coordinates. The spatial dissimilarity test is divided into several steps. First, we will load exon data as a new assay in the Seurat object. In the second step, we will perform a spatial autocorrelation test for all exons and select the ones that show significant autocorrelation for further analysis. Next, we will define the binding relationship between exons and their corresponding genes and run the spatial dissimilarity test. After testing, p-values and adjusted p-values for each exon will be provided.
+In this section, we will compare exon expression patterns with the expression patterns of their corresponding genes in a spatial context. Here, the term "spatial" refers to the organization of cells in space. In this vignette, we will use the PCA space for the analysis, but the approach can also be applied to lineage trajectories, spatial coordinates or integration space such as harmony. The spatial dissimilarity test is divided into several steps. First, we will load exon data as a new assay in the Seurat object. In the second step, we will perform a spatial autocorrelation test for all exons and select the ones that show significant autocorrelation for further analysis. Next, we will define the binding relationship between exons and their corresponding genes and run the spatial dissimilarity test. After testing, p-values and adjusted p-values for each exon will be provided.
 
 ```{r warning=FALSE, fig.width=14, fig.height=6}
 # Read exon count matrix file
@@ -65,7 +65,7 @@ obj <- RunAutoCorr(obj)
 obj <- SetAutoCorrFeatures(obj)
 
 # IMPORTANT
-# The permutation process is computationally expensive. In the example below, I set `perm=20` to only perform 20 permutations. However, the default setting performs 100 permutations for better evaluation. It's possible to increase the number of permutations even further, but it may not be necessary.
+# The permutation process can be computationally expensive. In the example below, I set perm=20 to perform only 20 permutations for quicker results. However, the default setting runs 100 permutations for more accurate evaluation. While it's possible to increase the number of permutations for even more precision, it may not always be necessary. If you're running Yano for the first time on your dataset, setting perm=20 can help you save time and provide an initial overview of the entire dataset.
 obj <- RunBlockCorr(obj, bind.name = "gene_name", bind.assay = "RNA", perm=20)
 
 # Now p values and adjusted p values have been generated

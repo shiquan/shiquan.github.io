@@ -288,7 +288,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1]  37178 967922</code></pre>
 </div>
 </div>
-<p>In this section, we will perform the standard Seurat analysis pipeline. Since our spatial dissimilarity test does not require predefined cell groups, we only need to calculate the shared nearest neighbors (SNN) using the <code>FindNeighbors</code> function. However, cell clustering and UMAP plots will still be generated to help interpret the results. Note that changing the resolution or other parameters for <code>FindClusters</code> and <code>RunUMAP</code> will not impact the outcome of the spatial dissimilarity test.</p>
+<p>In this section, we will perform the standard Seurat analysis pipeline. Since the spatial dissimilarity test is not rely on cell clustering so changing the resolution or other parameters for <code>FindClusters</code> and <code>RunUMAP</code> will not impact the outcome of the spatial dissimilarity test.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Seurat object and filter droplets with fewer than 1000 genes</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">CreateSeuratObject</span>(exp, <span class="at">min.features =</span> <span class="dv">1000</span>, <span class="at">min.cells =</span> <span class="dv">10</span>)</span>
@@ -323,7 +323,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="perform-alternative-splicing-with-exon-assay" class="level2">
 <h2 class="anchored" data-anchor-id="perform-alternative-splicing-with-exon-assay">2. Perform alternative splicing with exon assay</h2>
-<p>In this section, we will compare exon expression patterns with the expression patterns of their corresponding genes in a spatial context. Here, the term “spatial” refers to the organization of cells in space. In this vignette, we will use the shared nearest neighbor (SNN) space for the analysis, but the approach can also be applied to lineage trajectories or spatial coordinates. The spatial dissimilarity test is divided into several steps. First, we will load exon data as a new assay in the Seurat object. In the second step, we will perform a spatial autocorrelation test for all exons and select the ones that show significant autocorrelation for further analysis. Next, we will define the binding relationship between exons and their corresponding genes and run the spatial dissimilarity test. After testing, p-values and adjusted p-values for each exon will be provided.</p>
+<p>In this section, we will compare exon expression patterns with the expression patterns of their corresponding genes in a spatial context. Here, the term “spatial” refers to the organization of cells in space. In this vignette, we will use the PCA space for the analysis, but the approach can also be applied to lineage trajectories, spatial coordinates or integration space such as harmony. The spatial dissimilarity test is divided into several steps. First, we will load exon data as a new assay in the Seurat object. In the second step, we will perform a spatial autocorrelation test for all exons and select the ones that show significant autocorrelation for further analysis. Next, we will define the binding relationship between exons and their corresponding genes and run the spatial dissimilarity test. After testing, p-values and adjusted p-values for each exon will be provided.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read exon count matrix file</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>exon <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./exon/"</span>)</span>
@@ -447,7 +447,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Run autocorrelation test for 117623 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 19.67123 secs</code></pre>
+<pre><code>Runtime : 19.95996 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select autocorrleated features for downstream test.</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -455,7 +455,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>72307 autocorrelated features.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># IMPORTANT</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The permutation process is computationally expensive. In the example below, I set `perm=20` to only perform 20 permutations. However, the default setting performs 100 permutations for better evaluation. It's possible to increase the number of permutations even further, but it may not be necessary.</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The permutation process can be computationally expensive. In the example below, I set perm=20 to perform only 20 permutations for quicker results. However, the default setting runs 100 permutations for more accurate evaluation. While it's possible to increase the number of permutations for even more precision, it may not always be necessary. If you're running Yano for the first time on your dataset, setting perm=20 can help you save time and provide an initial overview of the entire dataset.</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">perm=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon.</code></pre>
@@ -482,7 +482,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Use predefined weight matrix "pca_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 3.279698 mins.</code></pre>
+<pre><code>Runtime : 3.211275 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now p values and adjusted p values have been generated</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(obj[[<span class="st">'exon'</span>]][[]]) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1408,9 +1408,9 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-10-18 17:35:26] [32mGTF loading..[0m
-[2024-10-18 17:36:05] [32mLoad 62700 genes.[0m
-[2024-10-18 17:36:05] [32mLoad time : 39.125 sec[0m</code></pre>
+<pre><code>[2024-10-19 15:15:28] [32mGTF loading..[0m
+[2024-10-19 15:16:07] [32mLoad 62700 genes.[0m
+[2024-10-19 15:16:07] [32mLoad time : 38.995 sec[0m</code></pre>
 </div>
 </div>
 <p>A track plot is used to study the read coverage per cell group. In the track plot shown below, the cell group is specified by the <code>cell.group</code> parameter. Unlike IGV, where read depth is used, we use UMI depth in this plot. The cell barcode tag and UMI tag are predefined as “CB” and “UB” with parameter <code>cell.tag</code> and <code>umi.tag</code>. For each cell group, the UMI depth has been normalized by the number of cells in that group. This means that the depth at each location can be interpreted as the mean UMI depth per cell for the group. As a result, the tracks are directly comparable across different cell groups. If <code>cell.group</code> is not set, the track plot will generate the raw UMI depth per location.</p>
@@ -1455,7 +1455,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Run autocorrelation test for 15069 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 3.915725 secs</code></pre>
+<pre><code>Runtime : 4.302312 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -1493,7 +1493,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Use predefined weight matrix "pca_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 21.02706 secs.</code></pre>
+<pre><code>Runtime : 20.99288 secs.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">remove.chr=</span><span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
