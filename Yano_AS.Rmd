@@ -226,11 +226,11 @@ TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", 
 TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "RPS27", cell.group = Idents(obj), highlights = c(153990914,153991034), junc = TRUE, max.depth = 2)
 ```
 
-As we observed here, many events cannot be properly defined by comparing them with exon-skipped events, likely due to the generally low coverage of gene bodies and the presence of dropouts.
+In previous sections, we noted that exon or junction expression is part of gene expression, and inverse expression patterns can strongly indicate alternative splicing. However, exon-skipped reads are largely independent of exon expression, and our D test does not account for the spatial autocorrelation of the binding feature. As a result, many false positives may be generated with mode 1. Therefore, we use mode 3 in this section. You can always run mode 1 and compare it with mode 3 for this test.
 
-In previous sections, we noted that exon or junction expression is part of gene expression, and inverse expression patterns can strongly indicate alternative splicing. However, exon-skipped reads are largely independent of exon expression, and our D test does not account for the spatial autocorrelation of the binding feature. As a result, many false positives may be generated with mode 1. Therefore, we use mode 3 in this section. You can always run mode 1 and compare it with mode 3.
+As we observed here, many events cannot be properly defined by comparing them with exon-skipped events, likely due to the use of mode 3, which sums exon-included and exon-skipped reads as the test feature. While exon-skipped reads need to be sufficiently abundant to influence the expression pattern, the low coverage of gene bodies and the presence of dropouts hindered this analysis.
 
-In this section, we found few differences in expression patterns between exon included and exon included + exon-skipped reads, but for large-scale datasets or full-length scRNA-seq technologies, this setup may reveal more significant events.
+Although we found few differences in expression patterns between exon included and exon included + exon-skipped reads, for large-scale datasets or full-length scRNA-seq technologies, this setup may reveal more significant events.
 
 In this case study, we performed a spatial dissimilarity test between various feature pairs. This method provides an overview of the entire cell population and does not rely on prior cell clustering, making it a powerful tool for analyzing cell data without any prior knowledge. It is recommended to test junctions and exons with their corresponding genes in 3' or 5' biased scRNA-seq. Additionally, testing between exon-included and exon-skipped reads can be more informative for large-scale datasets and full-length scRNA-seq.
 
