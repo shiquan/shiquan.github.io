@@ -449,7 +449,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Run autocorrelation test for 117623 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 18.40872 secs</code></pre>
+<pre><code>Runtime : 18.95963 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select autocorrleated features for downstream test.</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -484,7 +484,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Use predefined weight matrix "pca_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 3.283762 mins.</code></pre>
+<pre><code>Runtime : 3.130068 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now p values and adjusted p values have been generated</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(obj[[<span class="st">'exon'</span>]][[]]) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1410,9 +1410,9 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-10-19 20:19:24] [32mGTF loading..[0m
-[2024-10-19 20:20:03] [32mLoad 62700 genes.[0m
-[2024-10-19 20:20:03] [32mLoad time : 39.403 sec[0m</code></pre>
+<pre><code>[2024-10-19 21:59:05] [32mGTF loading..[0m
+[2024-10-19 21:59:43] [32mLoad 62700 genes.[0m
+[2024-10-19 21:59:43] [32mLoad time : 37.798 sec[0m</code></pre>
 </div>
 </div>
 <p>A track plot is used to study the read coverage per cell group. In the track plot shown below, the cell group is specified by the <code>cell.group</code> parameter. Unlike IGV, where read depth is used, we use UMI depth in this plot. The cell barcode tag and UMI tag are predefined as “CB” and “UB” with parameter <code>cell.tag</code> and <code>umi.tag</code>. For each cell group, the UMI depth has been normalized by the number of cells in that group. This means that the depth at each location can be interpreted as the mean UMI depth per cell for the group. As a result, the tracks are directly comparable across different cell groups. If <code>cell.group</code> is not set, the track plot will generate the raw UMI depth per location.</p>
@@ -1457,7 +1457,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Run autocorrelation test for 15069 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 2.810591 secs</code></pre>
+<pre><code>Runtime : 4.05093 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -1495,7 +1495,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Use predefined weight matrix "pca_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 21.83518 secs.</code></pre>
+<pre><code>Runtime : 20.46429 secs.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">remove.chr=</span><span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1814,8 +1814,11 @@ chr1:153990914-153991034/+/RPS27    0.02145398   1.318963e-09</code></pre>
 </div>
 </div>
 </div>
-<p>Due to the generally low coverage of gene bodies and the presence of dropouts, it is difficult to capture enough skipped reads in scRNA-seq. As a result, the PSI method may not be well-suited for 3’ or 5’ biased scRNA-seq data in some cases.</p>
-<p>In this test case, we performed a spatial dissimilarity test between various feature pairs. This method offers an overview of the entire cell population and does not depend on prior cell clustering, making it a powerful tool for analyzing cell data without any prior knowledge. For alternative splicing analysis in 3’ or 5’ biased scRNA-seq, testing junctions and exons alongside their corresponding genes is generally sufficient. To obtain cell-cluster-specific expression patterns, it is recommended to apply heatmaps and clustering in subsequent analyses.</p>
+<p>As we observed here, many events cannot be properly defined by comparing them with exon-skipped events, likely due to the generally low coverage of gene bodies and the presence of dropouts.</p>
+<p>In previous sections, we noted that exon or junction expression is part of gene expression, and inverse expression patterns can strongly indicate alternative splicing. However, exon-skipped reads are largely independent of exon expression, and our D test does not account for the spatial autocorrelation of the binding feature. As a result, many false positives may be generated with mode 1. Therefore, we use mode 3 in this section. You can always run mode 1 and compare it with mode 3.</p>
+<p>In this section, we found few differences in expression patterns between exon included and exon included + exon-skipped reads, but for large-scale datasets or full-length scRNA-seq technologies, this setup may reveal more significant events.</p>
+<p>In this case study, we performed a spatial dissimilarity test between various feature pairs. This method provides an overview of the entire cell population and does not rely on prior cell clustering, making it a powerful tool for analyzing cell data without any prior knowledge. It is recommended to test junctions and exons with their corresponding genes in 3’ or 5’ biased scRNA-seq. Additionally, testing between exon-included and exon-skipped reads can be more informative for large-scale datasets and full-length scRNA-seq.</p>
+<p>To obtain cell-cluster-specific expression patterns, applying heatmaps and clustering in subsequent analyses is recommended.</p>
 </section>
 <section id="questions" class="level2">
 <h2 class="anchored" data-anchor-id="questions">Questions?</h2>
