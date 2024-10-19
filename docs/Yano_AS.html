@@ -449,7 +449,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Run autocorrelation test for 117623 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 20.15655 secs</code></pre>
+<pre><code>Runtime : 18.67275 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select autocorrleated features for downstream test.</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -484,7 +484,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Use predefined weight matrix "pca_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 3.179923 mins.</code></pre>
+<pre><code>Runtime : 3.172606 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now p values and adjusted p values have been generated</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(obj[[<span class="st">'exon'</span>]][[]]) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1410,9 +1410,9 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-10-19 16:48:58] [32mGTF loading..[0m
-[2024-10-19 16:49:35] [32mLoad 62700 genes.[0m
-[2024-10-19 16:49:35] [32mLoad time : 37.208 sec[0m</code></pre>
+<pre><code>[2024-10-19 19:13:10] [32mGTF loading..[0m
+[2024-10-19 19:13:47] [32mLoad 62700 genes.[0m
+[2024-10-19 19:13:47] [32mLoad time : 36.338 sec[0m</code></pre>
 </div>
 </div>
 <p>A track plot is used to study the read coverage per cell group. In the track plot shown below, the cell group is specified by the <code>cell.group</code> parameter. Unlike IGV, where read depth is used, we use UMI depth in this plot. The cell barcode tag and UMI tag are predefined as “CB” and “UB” with parameter <code>cell.tag</code> and <code>umi.tag</code>. For each cell group, the UMI depth has been normalized by the number of cells in that group. This means that the depth at each location can be interpreted as the mean UMI depth per cell for the group. As a result, the tracks are directly comparable across different cell groups. If <code>cell.group</code> is not set, the track plot will generate the raw UMI depth per location.</p>
@@ -1426,7 +1426,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 </div>
 </div>
 </div>
-<p>In the track plot, we can easily observe that an exon around position 33,794,000 dominates the expression of the SERF2 gene and is highly expressed in many cell groups. However, the exon ‘chr15:43801711-43804427/+/SERF2’ (highlighted) shows low expression and is not visible in the track plot. To visualize low-expressed exons, we can set the <code>max.depth</code> parameter to 2, which caps the UMI depth at 2. And many genes in the region, we set display.genes to SERF2 only. This adjustment allows the low-expressed exons and their related transcipts to be more clearly represented in the plot. In this case, we can found the the highlighed exon shows different expressed pattern with the gene SERF2.</p>
+<p>In the track plot, we can easily observe that an exon around position 33,794,000 dominates the expression of the SERF2 gene and is highly expressed in many cell groups. However, the exon ‘chr15:43801711-43804427/+/SERF2’ (highlighted) shows low expression and is not visible in the track plot. To visualize low-expressed exons, we can set the <code>max.depth</code> parameter to 2, which caps the UMI depth at 2. And many genes in the region, we set <code>display.genes</code> to SERF2 only. This adjustment allows the low-expressed exons and their related transcipts to be more clearly represented in the plot. In this case, we can found the the highlighed exon shows different expressed pattern with the gene SERF2.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"SERF2"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">43801711</span>,<span class="dv">43804427</span>), <span class="at">max.depth =</span> <span class="dv">2</span>, <span class="at">display.genes =</span> <span class="st">"SERF2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1457,7 +1457,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Run autocorrelation test for 15069 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 2.698302 secs</code></pre>
+<pre><code>Runtime : 2.6792 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -1495,7 +1495,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Use predefined weight matrix "pca_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 20.53782 secs.</code></pre>
+<pre><code>Runtime : 20.30164 secs.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">remove.chr=</span><span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1765,27 +1765,10 @@ chr1:634376-634922/+/MTCO3P12               chr1:634376-634922/+/MTCO3P12</code>
 </div>
 </div>
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We find that only a few events can be prioritized.</span></span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(exon_name.padj <span class="sc">&lt;</span> <span class="fl">1e-5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                  chr     start       end gene_name strand
-chr1:153990914-153991034/+/RPS27 chr1 153990914 153991034     RPS27      +
-                                  moransi.pval   moransi autocorr.variable
-chr1:153990914-153991034/+/RPS27 5.679737e-155 0.1111682              TRUE
-                                 gene_name.D gene_name.r gene_name.pval
-chr1:153990914-153991034/+/RPS27   0.2623319   0.2412707   2.210369e-06
-                                 gene_name.mean gene_name.var gene_name.padj
-chr1:153990914-153991034/+/RPS27      0.1295683    0.02094978    0.003196504
-                                                        exon_name exon_name.D
-chr1:153990914-153991034/+/RPS27 chr1:153990914-153991034/+/RPS27   0.2983623
-                                 exon_name.r exon_name.pval exon_name.mean
-chr1:153990914-153991034/+/RPS27   0.1370618    2.34274e-12      0.1296453
-                                 exon_name.var exon_name.padj
-chr1:153990914-153991034/+/RPS27    0.02145398   1.318963e-09</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">PSIPlot</span>(obj, <span class="at">exon.assay =</span> <span class="st">"exon"</span>, <span class="at">exclude.assay =</span> <span class="st">"exclude"</span>, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr1:153990914-153991034/+/RPS27"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj,  <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr1:153990914-153991034/+/RPS27"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj,  <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"RPS27"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>cowplot<span class="sc">::</span><span class="fu">plot_grid</span>(p1, p2,p3, <span class="at">ncol=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">PSIPlot</span>(obj, <span class="at">exon.assay =</span> <span class="st">"exon"</span>, <span class="at">exclude.assay =</span> <span class="st">"exclude"</span>, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr1:153990914-153991034/+/RPS27"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj,  <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr1:153990914-153991034/+/RPS27"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj,  <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"RPS27"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>cowplot<span class="sc">::</span><span class="fu">plot_grid</span>(p1, p2,p3, <span class="at">ncol=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1795,11 +1778,20 @@ chr1:153990914-153991034/+/RPS27    0.02145398   1.318963e-09</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"RPS27"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">153990914</span>,<span class="dv">153991034</span>), <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">max.depth =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"RPS27"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">153990914</span>,<span class="dv">153991034</span>), <span class="at">junc =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="Yano_AS_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># It seems like the exon is in low coverage, we then zoom in by setting the max depth to 2.</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"RPS27"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">153990914</span>,<span class="dv">153991034</span>), <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">max.depth =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Yano_AS_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -1811,7 +1803,7 @@ chr1:153990914-153991034/+/RPS27    0.02145398   1.318963e-09</code></pre>
 <h2 class="anchored" data-anchor-id="questions">Questions?</h2>
 <p>If you have any questions regarding this vignette, please feel free to report them through the <a href="https://github.com/shiquan/Yano/discussions">discussion forum</a>. When submitting your query, please ensure you attach the commands you used for better clarity and support.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "NormalizeData.RNA"            "FindVariableFeatures.RNA"    
  [3] "RunPCA.RNA"                   "FindNeighbors.RNA.pca"       

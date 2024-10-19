@@ -194,7 +194,7 @@ In the previous sections, we conducted a spatial dissimilarity test between exon
 
 PSI = exon reads / (exon reads + reads skipping this exon)
 
-```{r  message=FALSE, warning=FALSE, fig.width=12, fig.height=4}
+```{r  message=FALSE, warning=FALSE, fig.width=12, fig.height=6}
 # The reads that skip exons are annotated using the `-psi` option in PISA anno, and these counts are stored in the `exclude` directory. We then load these excluded counts into a new assay.
 exclude <- ReadPISA("./exclude/")
 obj[['exclude']] <- CreateAssayObject(exclude[,colnames(obj)], min.cells = 10)
@@ -211,13 +211,15 @@ obj <- RunBlockCorr(obj, bind.name = "exon_name", bind.assay = "exclude", mode =
 FbtPlot(obj, val = "exon_name.padj", remove.chr = TRUE)
 
 # We find that only a few events can be prioritized.
-obj[['exon']][[]] %>% filter(exon_name.padj < 1e-5)
 p1 <- PSIPlot(obj, exon.assay = "exon", exclude.assay = "exclude", features = c("chr1:153990914-153991034/+/RPS27"), order = TRUE)
 p2 <- FeaturePlot(obj,  features = c("chr1:153990914-153991034/+/RPS27"), order = TRUE)
 p3 <- FeaturePlot(obj,  features = c("RPS27"), order = TRUE)
 cowplot::plot_grid(p1, p2,p3, ncol=3)
 ```
-```{r message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+```{r message=FALSE, warning=FALSE, fig.width=12, fig.height=8}
+TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "RPS27", cell.group = Idents(obj), highlights = c(153990914,153991034), junc = TRUE)
+
+# It seems like the exon is in low coverage, we then zoom in by setting the max depth to 2.
 TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "RPS27", cell.group = Idents(obj), highlights = c(153990914,153991034), junc = TRUE, max.depth = 2)
 ```
 
