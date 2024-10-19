@@ -68,7 +68,7 @@ Note that not all reads from this gene cover the SNV, which results in the SNV e
 
 ```{r fig.width=14, fig.height=6, fig.align='center'}
 sel.chrs <- c(1:21, "X")
-FbtPlot(obj, val = "locus.padj", remove.chr = TRUE, sel.chrs = sel.chrs, col.by = "CLNSIG", pt.size = 2)
+FbtPlot(obj, val = "locus.padj", remove.chr = TRUE, sel.chrs = sel.chrs, col.by = "CLNSIG", pt.size = 2, cols = c("#131313","blue","#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F","#FF7F00","#CAB2D6","#6A3D9A","#FFFF99","#B15928"))
 ```
 
 ```{r}
