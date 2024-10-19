@@ -208,7 +208,10 @@ obj[['exon']][['exon_name']] %>% head
 
 # Then we perform spatial dissimilarity test between exon and (exon+exclude) using mode 3.
 obj <- RunBlockCorr(obj, bind.name = "exon_name", bind.assay = "exclude", mode = 3)
-FbtPlot(obj, val = "exon_name.padj", remove.chr = TRUE)
+
+obj[['exon']][[]] %>% filter(exon_name.padj<1e-5)
+
+FbtPlot(obj, val = "exon_name.padj", remove.chr = TRUE, point.label = "chr1:153990914-153991034/+/RPS27")
 
 # We find that only a few events can be prioritized.
 p1 <- PSIPlot(obj, exon.assay = "exon", exclude.assay = "exclude", features = c("chr1:153990914-153991034/+/RPS27"), order = TRUE)
@@ -223,7 +226,7 @@ TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", 
 TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "RPS27", cell.group = Idents(obj), highlights = c(153990914,153991034), junc = TRUE, max.depth = 2)
 ```
 
-Due to the generally low coverage of gene bodies and the presence of dropouts, it is difficult to capture enough skipped reads in scRNA-seq. As a result, the PSI method may not be well-suited for 3' or 5' iased scRNA-seq data in some cases.
+Due to the generally low coverage of gene bodies and the presence of dropouts, it is difficult to capture enough skipped reads in scRNA-seq. As a result, the PSI method may not be well-suited for 3' or 5' biased scRNA-seq data in some cases.
 
 In this test case, we performed a spatial dissimilarity test between various feature pairs. This method offers an overview of the entire cell population and does not depend on prior cell clustering, making it a powerful tool for analyzing cell data without any prior knowledge. For alternative splicing analysis in 3' or 5' biased scRNA-seq, testing junctions and exons alongside their corresponding genes is generally sufficient. To obtain cell-cluster-specific expression patterns, it is recommended to apply heatmaps and clustering in subsequent analyses.
 
