@@ -187,6 +187,46 @@ ht <- ht1 + ht2
 draw(ht, heatmap_legend_side = "left",  annotation_legend_side = "left")
 ```
 
+
+### 5. Test between exon and exon skipped reads
+
+In the previous sections, we conducted a spatial dissimilarity test between exon/junction expression and gene expression. However, binding features are not always limited to genes; they can also correspond to other types of features. In this section, we perform a test between exon expression and reads that skip this exon using mode 3. This approach is similar to the Percent Spliced In (PSI) method, which is widely used to analyze alternative splicing in both bulk and single-cell RNA-seq data. The PSI is calculated as:
+
+PSI = exon reads / (exon reads + reads skipping this exon)
+
+```{r  message=FALSE, warning=FALSE, fig.width=12, fig.height=4}
+# The reads that skip exons are annotated using the `-psi` option in PISA anno, and these counts are stored in the `exclude` directory. We then load these excluded counts into a new assay.
+exclude <- ReadPISA("./exclude/")
+obj[['exclude']] <- CreateAssayObject(exclude[,colnames(obj)], min.cells = 10)
+
+# Then we switch to exon assay
+DefaultAssay(obj) <- "exon"
+
+# Because the feature names in the exclude assay are exactly the same as those in the exon assay, they represent the reads that skip each corresponding exon. Therefore, we set up the binding feature using the exon name itself.
+obj[['exon']][['exon_name']] <- rownames(obj)
+obj[['exon']][['exon_name']] %>% head
+
+# Then we perform spatial dissimilarity test between exon and (exon+exclude) using mode 3.
+obj <- RunBlockCorr(obj, bind.name = "exon_name", bind.assay = "exclude", mode = 3)
+FbtPlot(obj, val = "exon_name.padj", remove.chr = TRUE)
+
+# We find that only a few events can be prioritized.
+obj[['exon']][[]] %>% filter(exon_name.padj < 1e-5)
+p1 <- PSIPlot(obj, exon.assay = "exon", exclude.assay = "exclude", features = c("chr1:153990914-153991034/+/RPS27"), order = TRUE)
+p2 <- FeaturePlot(obj,  features = c("chr1:153990914-153991034/+/RPS27"), order = TRUE)
+p3 <- FeaturePlot(obj,  features = c("RPS27"), order = TRUE)
+cowplot::plot_grid(p1, p2,p3, ncol=3)
+```
+```{r message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "RPS27", cell.group = Idents(obj), highlights = c(153990914,153991034), junc = TRUE, max.depth = 2)
+```
+
+Due to the generally low coverage of gene bodies and the presence of dropouts, it is difficult to capture enough skipped reads in scRNA-seq. As a result, the PSI method may not be well-suited for biased scRNA-seq data in most cases.
+
+In this test case, we performed a spatial dissimilarity test between various feature pairs. This method offers an overview of the entire cell population and does not depend on prior cell clustering, making it a powerful tool for analyzing cell data without any prior knowledge. For alternative splicing analysis in 3' or 5' biased scRNA-seq, testing junctions and exons alongside their corresponding genes is generally sufficient. To obtain cell-cluster-specific expression patterns, it is recommended to apply heatmaps and clustering in subsequent analyses.
+
+
+### Questions?
 If you have any questions regarding this vignette, please feel free to report them through the [discussion forum](https://github.com/shiquan/Yano/discussions). When submitting your query, please ensure you attach the commands you used for better clarity and support.
 
 ```{r}

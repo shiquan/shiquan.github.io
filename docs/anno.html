@@ -315,14 +315,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="annotate-various-features" class="level3">
 <h3 class="anchored" data-anchor-id="annotate-various-features">2. Annotate various features</h3>
-<p>The following command generates gene, transcript, exon, junction and genetic variant for each alignment:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-gtf</span> gencode.v44.annotation.gtf.gz <span class="at">-exon</span> <span class="at">-vcf</span> var.vcf.gz <span class="at">-ref-alt</span> <span class="at">-o</span> anno.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The following command generates gene, transcript, exon, exon skipped reads, junction and genetic variant for each alignment:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-gtf</span> gencode.v44.annotation.gtf.gz <span class="at">-exon</span> <span class="at">-psi</span> <span class="at">-vcf</span> var.vcf.gz <span class="at">-ref-alt</span> <span class="at">-o</span> anno.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The above command will annotate genes, exons, junctions, and genetic variants all at once. However, it is also possible to annotate different features sequentially. For example, the command below produces the same results as the previous one, but allows for stepwise annotation.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-gtf</span> gencode.v44.annotation.gtf.gz <span class="at">-exon</span> <span class="at">-o</span> anno1.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam </span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-gtf</span> gencode.v44.annotation.gtf.gz <span class="at">-exon</span> <span class="at">-psi</span> <span class="at">-o</span> anno1.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-vcf</span> var.vcf.gz <span class="at">-ref-alt</span> <span class="at">-o</span> anno2.bam anno1.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Notes:</strong></p>
 <ul>
 <li><code>-exon</code>: Generates exon and junction names.</li>
+<li><code>-psi</code>: Generate labels for exon skipped reads, named after the skipped exons.</li>
 <li><code>-ref-alt</code>: For genetic variants, both reference allele and alternative allele will be annotated. If not set, reference allele will be ignored. This option is important for alelle-specific gene expression.</li>
 </ul>
 <p>Comparing raw and annotated records.</p>
@@ -344,18 +345,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>PISA anno generates <code>GN</code>, <code>TX</code>, <code>RE</code>, and <code>GX</code> tags when the <code>-gtf</code> option is set. Original tag values are replaced, and PISA uses a slightly different annotation strategy than CellRanger. In the example above, the <code>RE</code> tag has been changed from <code>E</code> (exon) to <code>S</code> (spliced).</li>
 <li>When the <code>-exon</code> option is used, <code>EX</code> and <code>JC</code> tags are annotated only if the read has a <code>GN</code> tag.</li>
+<li>When the <code>-psi</code> option is used, <code>ER</code> tag is annotated, the label for ER is the exon name which indicate the read skip this exon.</li>
 </ul>
 </section>
 <section id="generate-cell-x-feature-expression-matrix" class="level3">
 <h3 class="anchored" data-anchor-id="generate-cell-x-feature-expression-matrix">3. Generate Cell X feature expression matrix</h3>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> gene</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> exon</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> junction</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> var</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> GN <span class="at">-umi</span> UB <span class="at">-outdir</span> gene anno.bam</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> EX <span class="at">-umi</span> UB <span class="at">-outdir</span> exon anno.bam</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> JC <span class="at">-umi</span> UB <span class="at">-outdir</span> junction anno.bam</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> VF <span class="at">-umi</span> UB <span class="at">-outdir</span> var anno.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> exclude</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> junction</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> var</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> GN <span class="at">-umi</span> UB <span class="at">-outdir</span> gene anno.bam</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> EX <span class="at">-umi</span> UB <span class="at">-outdir</span> exon anno.bam</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> ER <span class="at">-umi</span> UB <span class="at">-outdir</span> exclude anno.bam</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> JC <span class="at">-umi</span> UB <span class="at">-outdir</span> junction anno.bam</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> VF <span class="at">-umi</span> UB <span class="at">-outdir</span> var anno.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Notes:</strong> These commands will generate raw counts for all droplets. Although the <code>-list</code> parameter can be used to export only selected cells with <code>PISA anno</code>, cell selection may sometimes lack robustness. Therefore, it is safer to store the raw matrix file for long-term storage.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> gene/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

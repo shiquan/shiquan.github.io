@@ -55,20 +55,21 @@ bcftools mpileup -Ou -f GRCh38.p13.genome.fa ./Parent_SC3v3_Human_Glioblastoma_p
 
 ### 2. Annotate various features
 
-The following command generates gene, transcript, exon, junction and genetic variant for each alignment:
+The following command generates gene, transcript, exon, exon skipped reads, junction and genetic variant for each alignment:
 ``` bash
-PISA anno -gtf gencode.v44.annotation.gtf.gz -exon -vcf var.vcf.gz -ref-alt -o anno.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam 
+PISA anno -gtf gencode.v44.annotation.gtf.gz -exon -psi -vcf var.vcf.gz -ref-alt -o anno.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam 
 ```
 
 The above command will annotate genes, exons, junctions, and genetic variants all at once. However, it is also possible to annotate different features sequentially. For example, the command below produces the same results as the previous one, but allows for stepwise annotation.
 
 ```bash
-PISA anno -gtf gencode.v44.annotation.gtf.gz -exon -o anno1.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam 
+PISA anno -gtf gencode.v44.annotation.gtf.gz -exon -psi -o anno1.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam 
 PISA anno -vcf var.vcf.gz -ref-alt -o anno2.bam anno1.bam
 ```
 **Notes:**
 
   - `-exon`: Generates exon and junction names.
+  - `-psi`: Generate labels for exon skipped reads, named after the skipped exons.
   - `-ref-alt`: For genetic variants, both reference allele and alternative allele will be annotated. If not set, reference allele will be ignored. This option is important for alelle-specific gene expression.
 
 Comparing raw and annotated records.
@@ -87,16 +88,20 @@ samtools view anno.bam | head -n 3000|grep 'A00836:286:HMTMVDMXX:2:2354:8422:139
 
   - PISA anno generates `GN`, `TX`, `RE`, and `GX` tags when the `-gtf` option is set. Original tag values are replaced, and PISA uses a slightly different annotation strategy than CellRanger. In the example above, the `RE` tag has been changed from `E` (exon) to `S` (spliced).
   - When the `-exon` option is used, `EX` and `JC` tags are annotated only if the read has a `GN` tag.
-
+  - When the `-psi` option is used, `ER` tag is annotated, the label for ER is the exon name which indicate the read skip this exon.
+  
 ### 3. Generate Cell X feature expression matrix
 
 ``` bash
 mkdir gene
 mkdir exon
+mkdir exclude
 mkdir junction
 mkdir var
+
 PISA count -tags CB -anno-tag GN -umi UB -outdir gene anno.bam
 PISA count -tags CB -anno-tag EX -umi UB -outdir exon anno.bam
+PISA count -tags CB -anno-tag ER -umi UB -outdir exclude anno.bam
 PISA count -tags CB -anno-tag JC -umi UB -outdir junction anno.bam
 PISA count -tags CB -anno-tag VF -umi UB -outdir var anno.bam
 ```
