@@ -232,7 +232,7 @@ As we observed here, many events cannot be properly defined by comparing them wi
 
 Although we found few differences in expression patterns between exon included and exon included + exon-skipped reads, for large-scale datasets or full-length scRNA-seq technologies, this setup may reveal more significant events.
 
-In this case study, we performed a spatial dissimilarity test between various feature pairs. This method provides an overview of the entire cell population and does not rely on prior cell clustering, making it a powerful tool for analyzing cell data without any prior knowledge. It is recommended to test junctions and exons with their corresponding genes in 3' or 5' biased scRNA-seq. Additionally, testing between exon-included and exon-skipped reads can be more informative for large-scale datasets and full-length scRNA-seq.
+In this case study, we performed a spatial dissimilarity test between various feature pairs. This method provides an overview of the entire cell population and does not rely on prior cell clustering and annotation, making it a powerful tool for analyzing cell data without any prior knowledge. It is recommended to test junctions and exons with their corresponding genes in 3' or 5' biased scRNA-seq. Additionally, testing between exon-included and exon-skipped reads can be more informative for large-scale datasets and full-length scRNA-seq.
 
 To obtain cell-cluster-specific expression patterns, applying heatmaps and clustering in subsequent analyses is recommended.
 
