@@ -24,7 +24,7 @@ obj <- subset(obj, nFeature_RNA < 9000 & percent.mt < 20)
 obj <- obj[, sample(colnames(obj),2000)]
 
 # Clustering analysis
-obj <- NormalizeData(obj) %>% FindVariableFeatures() %>% ScaleData() %>%  RunPCA(verbose=FALSE) %>% FindNeighbors(dims = 1:10, verbose=FALSE) %>% FindClusters(resolution = 0.1, verbose=FALSE) %>% RunUMAP(dims=1:10, verbose=FALSE)
+obj <- NormalizeData(obj) %>% FindVariableFeatures() %>% ScaleData(vars.to.regress = "nCount_RNA") %>%  RunPCA(verbose=FALSE) %>% FindNeighbors(dims = 1:10, verbose=FALSE) %>% FindClusters(resolution = 0.5, verbose=FALSE) %>% RunUMAP(dims=1:10, verbose=FALSE)
 DimPlot(obj, label=TRUE, label.size = 5, label.box = TRUE)
 ```
 ## 1. Perform allele-specific gene expression analysis by using SNV anchors
