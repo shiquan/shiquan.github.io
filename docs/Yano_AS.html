@@ -302,8 +302,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsampling to 2000 cells for fast testing</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> obj[, <span class="fu">sample</span>(<span class="fu">colnames</span>(obj),<span class="dv">2000</span>)]</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Clustering analysis</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj) <span class="sc">%&gt;%</span> <span class="fu">FindVariableFeatures</span>() <span class="sc">%&gt;%</span> <span class="fu">ScaleData</span>() <span class="sc">%&gt;%</span>  <span class="fu">RunPCA</span>(<span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">FindNeighbors</span>(<span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">FindClusters</span>(<span class="at">resolution =</span> <span class="fl">0.5</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">RunUMAP</span>(<span class="at">dims=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># In the cell clustering analysis, we regress the scaled data by counts, which is especially important for large-scale datasets. Without this adjustment, the distribution of cells in PCA space may be biased by total counts, potentially labeling features that are influenced by counts rather than biological variation.</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj) <span class="sc">%&gt;%</span> <span class="fu">FindVariableFeatures</span>() <span class="sc">%&gt;%</span> <span class="fu">ScaleData</span>(<span class="at">vars.to.regress =</span> <span class="st">"nCount_RNA"</span>) <span class="sc">%&gt;%</span>  <span class="fu">RunPCA</span>(<span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">FindNeighbors</span>(<span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">FindClusters</span>(<span class="at">resolution =</span> <span class="fl">0.5</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">RunUMAP</span>(<span class="at">dims=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Normalizing layer: counts</code></pre>
 </div>
@@ -311,9 +311,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Finding variable features for layer counts</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Regressing out nCount_RNA</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>Centering and scaling data matrix</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(obj, <span class="at">label=</span><span class="cn">TRUE</span>, <span class="at">label.size =</span> <span class="dv">5</span>, <span class="at">label.box =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(obj, <span class="at">label=</span><span class="cn">TRUE</span>, <span class="at">label.size =</span> <span class="dv">5</span>, <span class="at">label.box =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -327,16 +330,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="perform-alternative-splicing-with-exon-assay">2. Perform alternative splicing with exon assay</h2>
 <p>In this section, we will compare exon expression patterns with the expression patterns of their corresponding genes in a spatial context. Here, the term “spatial” refers to the organization of cells in space. In this vignette, we will use the PCA space for the analysis, but the approach can also be applied to lineage trajectories, spatial coordinates or integration space such as harmony. The spatial dissimilarity test is divided into several steps. First, we will load exon data as a new assay in the Seurat object. In the second step, we will perform a spatial autocorrelation test for all exons and select the ones that show significant autocorrelation for further analysis. Next, we will define the binding relationship between exons and their corresponding genes and run the spatial dissimilarity test. After testing, p-values and adjusted p-values for each exon will be provided.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read exon count matrix file</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>exon <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./exon/"</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the exon expression to Seurat object as a new assay, make sure the exon matrix has the same cells.</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(exon[, <span class="fu">colnames</span>(obj)], <span class="at">min.cells=</span><span class="dv">20</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Switch work assay to exon</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Empty info for exon features</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(obj[[<span class="st">'exon'</span>]][[]]) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read exon count matrix file</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>exon <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./exon/"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the exon expression to Seurat object as a new assay, make sure the exon matrix has the same cells.</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(exon[, <span class="fu">colnames</span>(obj)], <span class="at">min.cells=</span><span class="dv">20</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Switch work assay to exon</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Empty info for exon features</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(obj[[<span class="st">'exon'</span>]][[]]) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -361,12 +364,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gene name and location are parsed from exon name</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(obj[[<span class="st">'exon'</span>]][[]]) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gene name and location are parsed from exon name</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(obj[[<span class="st">'exon'</span>]][[]]) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -439,9 +442,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize the data for spatial autocorrelation test</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize the data for spatial autocorrelation test</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay : exon</code></pre>
 </div>
@@ -449,16 +452,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Run autocorrelation test for 117623 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 18.57067 secs</code></pre>
+<pre><code>Runtime : 18.97771 secs</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select autocorrleated features for downstream test.</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select autocorrleated features for downstream test.</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>72307 autocorrelated features.</code></pre>
+<pre><code>72256 autocorrelated features.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># IMPORTANT</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The permutation process can be computationally expensive. In the example below, I set perm=20 to perform only 20 permutations for quicker results. However, the default setting runs 100 permutations for more accurate evaluation. While it's possible to increase the number of permutations for even more precision, it may not always be necessary. If you're running Yano for the first time on your dataset, setting perm=20 can help you save time and provide an initial overview of the entire dataset.</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">perm=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># IMPORTANT</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The permutation process can be computationally expensive. In the example below, I set perm=20 to perform only 20 permutations for quicker results. However, the default setting runs 100 permutations for more accurate evaluation. While it's possible to increase the number of permutations for even more precision, it may not always be necessary. If you're running Yano for the first time on your dataset, setting perm=20 can help you save time and provide an initial overview of the entire dataset.</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">perm=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon.</code></pre>
 </div>
@@ -466,10 +469,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Working on binding assay RNA.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 72307 features.</code></pre>
+<pre><code>Processing 72256 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 14981 blocks.</code></pre>
+<pre><code>Processing 14964 blocks.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieve binding data from assay RNA.</code></pre>
@@ -484,10 +487,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Use predefined weight matrix "pca_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 3.119285 mins.</code></pre>
+<pre><code>Runtime : 3.27113 mins.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now p values and adjusted p values have been generated</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(obj[[<span class="st">'exon'</span>]][[]]) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now p values and adjusted p values have been generated</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(obj[[<span class="st">'exon'</span>]][[]]) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -535,13 +538,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">ENSG00000268903</td>
 <td style="text-align: left;">-</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0241978</td>
+<td style="text-align: right;">0.0260886</td>
 <td style="text-align: left;">TRUE</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0.9999999</td>
-<td style="text-align: right;">0.1367485</td>
-<td style="text-align: right;">0.0168974</td>
+<td style="text-align: right;">0.1326560</td>
+<td style="text-align: right;">0.0171050</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
@@ -551,14 +554,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">630683</td>
 <td style="text-align: left;">MTND2P28</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0000001</td>
-<td style="text-align: right;">0.0216259</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0215231</td>
 <td style="text-align: left;">TRUE</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">0.9999955</td>
-<td style="text-align: right;">0.1370522</td>
-<td style="text-align: right;">0.0228480</td>
+<td style="text-align: right;">0.9999958</td>
+<td style="text-align: right;">0.1349997</td>
+<td style="text-align: right;">0.0223743</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
@@ -568,8 +571,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">632616</td>
 <td style="text-align: left;">MTCO1P12</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.2142081</td>
-<td style="text-align: right;">0.0027760</td>
+<td style="text-align: right;">0.4218844</td>
+<td style="text-align: right;">0.0002987</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
@@ -585,8 +588,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">633438</td>
 <td style="text-align: left;">MTCO2P12</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.8574323</td>
-<td style="text-align: right;">-0.0048571</td>
+<td style="text-align: right;">0.8239453</td>
+<td style="text-align: right;">-0.0042169</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
@@ -603,13 +606,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">MTATP6P1</td>
 <td style="text-align: left;">+</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.3322578</td>
+<td style="text-align: right;">0.3328391</td>
 <td style="text-align: left;">TRUE</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">0.9999999</td>
-<td style="text-align: right;">0.1325826</td>
-<td style="text-align: right;">0.0166376</td>
+<td style="text-align: right;">0.9999997</td>
+<td style="text-align: right;">0.1310495</td>
+<td style="text-align: right;">0.0177325</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
@@ -619,8 +622,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">634922</td>
 <td style="text-align: left;">MTCO3P12</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.3783291</td>
-<td style="text-align: right;">0.0007606</td>
+<td style="text-align: right;">0.2959913</td>
+<td style="text-align: right;">0.0016368</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
@@ -632,8 +635,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot feature binding test plot</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot feature binding test plot</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -641,9 +644,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The chromosome names are too long and tend to overlap in the visualization. To resolve this, you can either resize the labels or remove the 'chr' prefix from the chromosome names. Additionally, since the Y chromosome and mitochondrial are not of particular interest to us in this analysis, they can be excluded from the visualization.</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The chromosome names are too long and tend to overlap in the visualization. To resolve this, you can either resize the labels or remove the 'chr' prefix from the chromosome names. Additionally, since the Y chromosome and mitochondrial are not of particular interest to us in this analysis, they can be excluded from the visualization.</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -651,8 +654,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's see how many exons are expressed in different spatial pattern with their genes</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj <span class="sc">&lt;</span> <span class="fl">0.001</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's see how many exons are expressed in different spatial pattern with their genes</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj <span class="sc">&lt;</span> <span class="fl">0.001</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -699,15 +702,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">66247654</td>
 <td style="text-align: left;">PDE4B</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0567019</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0546912</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2533879</td>
-<td style="text-align: right;">0.0570079</td>
-<td style="text-align: right;">5e-07</td>
-<td style="text-align: right;">0.1333179</td>
-<td style="text-align: right;">0.0168731</td>
-<td style="text-align: right;">0.0008237</td>
+<td style="text-align: right;">0.2521803</td>
+<td style="text-align: right;">0.0442450</td>
+<td style="text-align: right;">1e-07</td>
+<td style="text-align: right;">0.1296487</td>
+<td style="text-align: right;">0.0157891</td>
+<td style="text-align: right;">0.0002789</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr1:154169305-154169383/-/TPM3</td>
@@ -716,15 +719,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">154169383</td>
 <td style="text-align: left;">TPM3</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0992885</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1028637</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3163845</td>
-<td style="text-align: right;">0.0689852</td>
-<td style="text-align: right;">1e-07</td>
-<td style="text-align: right;">0.1344364</td>
-<td style="text-align: right;">0.0223700</td>
-<td style="text-align: right;">0.0001691</td>
+<td style="text-align: right;">0.3163640</td>
+<td style="text-align: right;">0.0876858</td>
+<td style="text-align: right;">2e-07</td>
+<td style="text-align: right;">0.1326710</td>
+<td style="text-align: right;">0.0239742</td>
+<td style="text-align: right;">0.0003173</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr10:71760482-71760924/-/VSIR</td>
@@ -733,15 +736,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">71760924</td>
 <td style="text-align: left;">VSIR</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0795537</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0791329</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3195819</td>
-<td style="text-align: right;">-0.0144774</td>
+<td style="text-align: right;">0.3172203</td>
+<td style="text-align: right;">-0.0267533</td>
 <td style="text-align: right;">1e-07</td>
-<td style="text-align: right;">0.1279817</td>
-<td style="text-align: right;">0.0234145</td>
-<td style="text-align: right;">0.0001601</td>
+<td style="text-align: right;">0.1272933</td>
+<td style="text-align: right;">0.0242106</td>
+<td style="text-align: right;">0.0002451</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr11:35197162-35197793/+/CD44</td>
@@ -750,15 +753,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">35197793</td>
 <td style="text-align: left;">CD44</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.3244215</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3081383</td>
-<td style="text-align: right;">0.4497633</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1314996</td>
-<td style="text-align: right;">0.0196173</td>
-<td style="text-align: right;">0.0000401</td>
+<td style="text-align: right;">0.3209872</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3034312</td>
+<td style="text-align: right;">0.4555467</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1312166</td>
+<td style="text-align: right;">0.0197699</td>
+<td style="text-align: right;">0.0000576</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr11:75421727-75422280/+/RPS3</td>
@@ -767,15 +770,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">75422280</td>
 <td style="text-align: left;">RPS3</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0394773</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0384226</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2975382</td>
-<td style="text-align: right;">-0.2803398</td>
+<td style="text-align: right;">0.2929609</td>
+<td style="text-align: right;">-0.2637630</td>
 <td style="text-align: right;">1e-07</td>
-<td style="text-align: right;">0.1340909</td>
-<td style="text-align: right;">0.0204337</td>
-<td style="text-align: right;">0.0002094</td>
+<td style="text-align: right;">0.1322595</td>
+<td style="text-align: right;">0.0207516</td>
+<td style="text-align: right;">0.0002795</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr11:113262846-113265197/+/NCAM1</td>
@@ -784,15 +787,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">113265197</td>
 <td style="text-align: left;">NCAM1</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.3866834</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.3844994</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2786649</td>
-<td style="text-align: right;">0.5530048</td>
-<td style="text-align: right;">2e-07</td>
-<td style="text-align: right;">0.1298032</td>
-<td style="text-align: right;">0.0195846</td>
-<td style="text-align: right;">0.0003670</td>
+<td style="text-align: right;">0.2756713</td>
+<td style="text-align: right;">0.5578922</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1268182</td>
+<td style="text-align: right;">0.0169346</td>
+<td style="text-align: right;">0.0000520</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr11:123061588-123061833/-/HSPA8</td>
@@ -801,15 +804,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">123061833</td>
 <td style="text-align: left;">HSPA8</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.1239915</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3327680</td>
-<td style="text-align: right;">0.1015004</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1346784</td>
-<td style="text-align: right;">0.0191973</td>
-<td style="text-align: right;">0.0000057</td>
+<td style="text-align: right;">0.1188512</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3235792</td>
+<td style="text-align: right;">0.1112976</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1349564</td>
+<td style="text-align: right;">0.0193961</td>
+<td style="text-align: right;">0.0000135</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr12:6943817-6944173/+/C12orf57</td>
@@ -818,15 +821,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">6944173</td>
 <td style="text-align: left;">C12orf57</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0865576</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0834297</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3018628</td>
-<td style="text-align: right;">0.0103563</td>
+<td style="text-align: right;">0.2981250</td>
+<td style="text-align: right;">0.0006929</td>
 <td style="text-align: right;">1e-07</td>
-<td style="text-align: right;">0.1348087</td>
-<td style="text-align: right;">0.0213144</td>
-<td style="text-align: right;">0.0002647</td>
+<td style="text-align: right;">0.1323437</td>
+<td style="text-align: right;">0.0204715</td>
+<td style="text-align: right;">0.0001629</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr12:56161387-56161465/+/MYL6</td>
@@ -835,14 +838,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">56161465</td>
 <td style="text-align: left;">MYL6</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.2510070</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.6528440</td>
-<td style="text-align: right;">-0.3024208</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1327208</td>
-<td style="text-align: right;">0.0266574</td>
+<td style="text-align: right;">0.2572222</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.6510128</td>
+<td style="text-align: right;">-0.2902734</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1304956</td>
+<td style="text-align: right;">0.0246133</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
@@ -852,15 +855,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">60384827</td>
 <td style="text-align: left;">ANXA2</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0457067</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0454057</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2675787</td>
-<td style="text-align: right;">-0.0544367</td>
-<td style="text-align: right;">2e-07</td>
-<td style="text-align: right;">0.1158110</td>
-<td style="text-align: right;">0.0201420</td>
-<td style="text-align: right;">0.0004039</td>
+<td style="text-align: right;">0.2627334</td>
+<td style="text-align: right;">-0.0410011</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1131764</td>
+<td style="text-align: right;">0.0156976</td>
+<td style="text-align: right;">0.0000179</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr15:60395645-60396427/-/ANXA2</td>
@@ -869,15 +872,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">60396427</td>
 <td style="text-align: left;">ANXA2</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.1919382</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3888686</td>
-<td style="text-align: right;">0.0961033</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1358692</td>
-<td style="text-align: right;">0.0233337</td>
-<td style="text-align: right;">0.0000027</td>
+<td style="text-align: right;">0.1875689</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3804132</td>
+<td style="text-align: right;">0.1077544</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1336548</td>
+<td style="text-align: right;">0.0241705</td>
+<td style="text-align: right;">0.0000072</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr15:60395907-60396427/-/ANXA2</td>
@@ -886,15 +889,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">60396427</td>
 <td style="text-align: left;">ANXA2</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.1860518</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3871636</td>
-<td style="text-align: right;">0.0940871</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1329494</td>
-<td style="text-align: right;">0.0259915</td>
-<td style="text-align: right;">0.0000129</td>
+<td style="text-align: right;">0.1803375</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3770761</td>
+<td style="text-align: right;">0.1073890</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1298831</td>
+<td style="text-align: right;">0.0265445</td>
+<td style="text-align: right;">0.0000246</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr15:43801711-43804427/+/SERF2</td>
@@ -903,14 +906,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">43804427</td>
 <td style="text-align: left;">SERF2</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0935016</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3586401</td>
-<td style="text-align: right;">-0.0708042</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1333714</td>
-<td style="text-align: right;">0.0183037</td>
+<td style="text-align: right;">0.0939534</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3587817</td>
+<td style="text-align: right;">-0.0824881</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1301253</td>
+<td style="text-align: right;">0.0185195</td>
 <td style="text-align: right;">0.0000004</td>
 </tr>
 <tr class="even">
@@ -920,15 +923,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">43801187</td>
 <td style="text-align: left;">SERF2</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0930897</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0942520</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3077651</td>
-<td style="text-align: right;">0.0551817</td>
-<td style="text-align: right;">1e-07</td>
-<td style="text-align: right;">0.1283683</td>
-<td style="text-align: right;">0.0227235</td>
-<td style="text-align: right;">0.0002457</td>
+<td style="text-align: right;">0.3102141</td>
+<td style="text-align: right;">0.0442776</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1251415</td>
+<td style="text-align: right;">0.0208373</td>
+<td style="text-align: right;">0.0000459</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr15:43801518-43801569/+/SERF2</td>
@@ -937,15 +940,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">43801569</td>
 <td style="text-align: left;">SERF2</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0838638</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0843982</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2920033</td>
-<td style="text-align: right;">0.0559389</td>
-<td style="text-align: right;">1e-07</td>
-<td style="text-align: right;">0.1296588</td>
-<td style="text-align: right;">0.0208572</td>
-<td style="text-align: right;">0.0002838</td>
+<td style="text-align: right;">0.2929838</td>
+<td style="text-align: right;">0.0425922</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1266275</td>
+<td style="text-align: right;">0.0193227</td>
+<td style="text-align: right;">0.0000667</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr17:31305213-31305630/-/ENSG00000265118</td>
@@ -954,15 +957,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">31305630</td>
 <td style="text-align: left;">ENSG00000265118</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0925344</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0920634</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2908769</td>
-<td style="text-align: right;">0.1162025</td>
-<td style="text-align: right;">2e-07</td>
-<td style="text-align: right;">0.1284601</td>
-<td style="text-align: right;">0.0211560</td>
-<td style="text-align: right;">0.0003367</td>
+<td style="text-align: right;">0.2882058</td>
+<td style="text-align: right;">0.1148479</td>
+<td style="text-align: right;">1e-07</td>
+<td style="text-align: right;">0.1261358</td>
+<td style="text-align: right;">0.0206368</td>
+<td style="text-align: right;">0.0002451</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr18:49481681-49482410/-/RPL17-C18orf32</td>
@@ -971,14 +974,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">49482410</td>
 <td style="text-align: left;">RPL17-C18orf32</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.2712334</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.7652111</td>
-<td style="text-align: right;">-0.4425250</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1334769</td>
-<td style="text-align: right;">0.0189740</td>
+<td style="text-align: right;">0.2742176</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.7545718</td>
+<td style="text-align: right;">-0.4268749</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1310111</td>
+<td style="text-align: right;">0.0181007</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
@@ -988,14 +991,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16095357</td>
 <td style="text-align: left;">TPM4</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.1454715</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.4959432</td>
-<td style="text-align: right;">-0.2520437</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1296171</td>
-<td style="text-align: right;">0.0249669</td>
+<td style="text-align: right;">0.1546845</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4897143</td>
+<td style="text-align: right;">-0.2374694</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1264765</td>
+<td style="text-align: right;">0.0224529</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
@@ -1005,14 +1008,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16095893</td>
 <td style="text-align: left;">TPM4</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.2261454</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5840343</td>
-<td style="text-align: right;">-0.2056619</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1351281</td>
-<td style="text-align: right;">0.0226733</td>
+<td style="text-align: right;">0.2312377</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5804058</td>
+<td style="text-align: right;">-0.2019089</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1304144</td>
+<td style="text-align: right;">0.0214677</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
@@ -1022,14 +1025,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16095591</td>
 <td style="text-align: left;">TPM4</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.2273817</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5853636</td>
-<td style="text-align: right;">-0.2052332</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1352362</td>
-<td style="text-align: right;">0.0226483</td>
+<td style="text-align: right;">0.2325371</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5815461</td>
+<td style="text-align: right;">-0.2009467</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1304713</td>
+<td style="text-align: right;">0.0214832</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
@@ -1039,14 +1042,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16095454</td>
 <td style="text-align: left;">TPM4</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.2191048</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5890395</td>
-<td style="text-align: right;">-0.2288942</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1304669</td>
-<td style="text-align: right;">0.0202196</td>
+<td style="text-align: right;">0.2250432</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5837551</td>
+<td style="text-align: right;">-0.2210816</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1274471</td>
+<td style="text-align: right;">0.0184659</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
@@ -1056,14 +1059,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16096744</td>
 <td style="text-align: left;">TPM4</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.2242270</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5810878</td>
-<td style="text-align: right;">-0.2048572</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1344737</td>
-<td style="text-align: right;">0.0229614</td>
+<td style="text-align: right;">0.2290083</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5771710</td>
+<td style="text-align: right;">-0.2008056</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1297432</td>
+<td style="text-align: right;">0.0218414</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
@@ -1073,14 +1076,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16095496</td>
 <td style="text-align: left;">TPM4</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.2364517</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.6061836</td>
-<td style="text-align: right;">-0.2260099</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1329808</td>
-<td style="text-align: right;">0.0234324</td>
+<td style="text-align: right;">0.2401335</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.6015912</td>
+<td style="text-align: right;">-0.2224046</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1291338</td>
+<td style="text-align: right;">0.0216016</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
@@ -1090,14 +1093,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">18170494</td>
 <td style="text-align: left;">ENSG00000268173</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0635275</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.4606002</td>
-<td style="text-align: right;">-0.6735860</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1354589</td>
-<td style="text-align: right;">0.0198610</td>
+<td style="text-align: right;">0.0588381</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4531161</td>
+<td style="text-align: right;">-0.6978941</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1337180</td>
+<td style="text-align: right;">0.0205640</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
@@ -1107,14 +1110,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">218346756</td>
 <td style="text-align: left;">PNKD</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.1002295</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5025179</td>
-<td style="text-align: right;">-0.4545918</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1378699</td>
-<td style="text-align: right;">0.0232533</td>
+<td style="text-align: right;">0.0978251</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4958340</td>
+<td style="text-align: right;">-0.4588755</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1358022</td>
+<td style="text-align: right;">0.0230888</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
@@ -1124,14 +1127,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">218346784</td>
 <td style="text-align: left;">PNKD</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.1011522</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5026997</td>
-<td style="text-align: right;">-0.4518147</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1378125</td>
-<td style="text-align: right;">0.0230702</td>
+<td style="text-align: right;">0.0984377</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4956118</td>
+<td style="text-align: right;">-0.4566855</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1358245</td>
+<td style="text-align: right;">0.0229064</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
@@ -1141,14 +1144,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">218346793</td>
 <td style="text-align: left;">PNKD</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.1032048</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5046922</td>
-<td style="text-align: right;">-0.4395052</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1356859</td>
-<td style="text-align: right;">0.0222583</td>
+<td style="text-align: right;">0.1008913</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4971143</td>
+<td style="text-align: right;">-0.4443276</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1341111</td>
+<td style="text-align: right;">0.0215018</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
@@ -1158,14 +1161,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">218346791</td>
 <td style="text-align: left;">PNKD</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.1032048</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5046922</td>
-<td style="text-align: right;">-0.4395052</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1356859</td>
-<td style="text-align: right;">0.0222583</td>
+<td style="text-align: right;">0.1008913</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4971143</td>
+<td style="text-align: right;">-0.4443276</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1341111</td>
+<td style="text-align: right;">0.0215018</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
@@ -1175,14 +1178,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">218346771</td>
 <td style="text-align: left;">PNKD</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.1000790</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.5016924</td>
-<td style="text-align: right;">-0.4531837</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1379967</td>
-<td style="text-align: right;">0.0232832</td>
+<td style="text-align: right;">0.0976656</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4951175</td>
+<td style="text-align: right;">-0.4577711</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1359252</td>
+<td style="text-align: right;">0.0231094</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
@@ -1192,15 +1195,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">37238449</td>
 <td style="text-align: left;">RPN2</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0394885</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3181135</td>
-<td style="text-align: right;">-0.3213031</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1269294</td>
-<td style="text-align: right;">0.0204291</td>
-<td style="text-align: right;">0.0000249</td>
+<td style="text-align: right;">0.0386639</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3143769</td>
+<td style="text-align: right;">-0.3330383</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1253261</td>
+<td style="text-align: right;">0.0211403</td>
+<td style="text-align: right;">0.0000429</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr3:181175514-181176513/+/SOX2-OT</td>
@@ -1209,15 +1212,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">181176513</td>
 <td style="text-align: left;">SOX2-OT</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.2450655</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.4274000</td>
-<td style="text-align: right;">0.1403391</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1317224</td>
-<td style="text-align: right;">0.0248762</td>
-<td style="text-align: right;">0.0000006</td>
+<td style="text-align: right;">0.2452798</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4279637</td>
+<td style="text-align: right;">0.1402529</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1294827</td>
+<td style="text-align: right;">0.0259017</td>
+<td style="text-align: right;">0.0000010</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr3:181175514-181176523/+/SOX2-OT</td>
@@ -1226,15 +1229,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">181176523</td>
 <td style="text-align: left;">SOX2-OT</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.2450655</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.4274000</td>
-<td style="text-align: right;">0.1403391</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1317224</td>
-<td style="text-align: right;">0.0248762</td>
-<td style="text-align: right;">0.0000006</td>
+<td style="text-align: right;">0.2452798</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4279637</td>
+<td style="text-align: right;">0.1402529</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1294827</td>
+<td style="text-align: right;">0.0259017</td>
+<td style="text-align: right;">0.0000010</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr3:181175514-181176524/+/SOX2-OT</td>
@@ -1243,15 +1246,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">181176524</td>
 <td style="text-align: left;">SOX2-OT</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.2521290</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.4328772</td>
-<td style="text-align: right;">0.1389798</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1315677</td>
-<td style="text-align: right;">0.0244331</td>
-<td style="text-align: right;">0.0000004</td>
+<td style="text-align: right;">0.2521820</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4341266</td>
+<td style="text-align: right;">0.1387279</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1293411</td>
+<td style="text-align: right;">0.0255440</td>
+<td style="text-align: right;">0.0000006</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr5:179812407-179813024/+/SQSTM1</td>
@@ -1260,15 +1263,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">179813024</td>
 <td style="text-align: left;">SQSTM1</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">1.5e-06</td>
-<td style="text-align: right;">0.0187629</td>
+<td style="text-align: right;">5e-07</td>
+<td style="text-align: right;">0.0193018</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3099151</td>
-<td style="text-align: right;">-0.4907841</td>
+<td style="text-align: right;">0.3138433</td>
+<td style="text-align: right;">-0.4873991</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1357058</td>
-<td style="text-align: right;">0.0210103</td>
-<td style="text-align: right;">0.0001364</td>
+<td style="text-align: right;">0.1343151</td>
+<td style="text-align: right;">0.0199617</td>
+<td style="text-align: right;">0.0000408</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr5:179812407-179813598/+/SQSTM1</td>
@@ -1277,15 +1280,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">179813598</td>
 <td style="text-align: left;">SQSTM1</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">2.0e-07</td>
-<td style="text-align: right;">0.0204210</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3147104</td>
-<td style="text-align: right;">-0.5236368</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1339058</td>
-<td style="text-align: right;">0.0195996</td>
-<td style="text-align: right;">0.0000286</td>
+<td style="text-align: right;">0.0227400</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3203367</td>
+<td style="text-align: right;">-0.5190151</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1331069</td>
+<td style="text-align: right;">0.0190491</td>
+<td style="text-align: right;">0.0000125</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr5:179811988-179813641/+/SQSTM1</td>
@@ -1294,15 +1297,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">179813641</td>
 <td style="text-align: left;">SQSTM1</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">2.0e-07</td>
-<td style="text-align: right;">0.0206105</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3154605</td>
-<td style="text-align: right;">-0.5264236</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1338392</td>
-<td style="text-align: right;">0.0194913</td>
-<td style="text-align: right;">0.0000255</td>
+<td style="text-align: right;">0.0227412</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3205962</td>
+<td style="text-align: right;">-0.5219374</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1331148</td>
+<td style="text-align: right;">0.0191646</td>
+<td style="text-align: right;">0.0000129</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr8:60620674-60620988/+/RAB2A</td>
@@ -1311,15 +1314,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">60620988</td>
 <td style="text-align: left;">RAB2A</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0340771</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0379721</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3197475</td>
-<td style="text-align: right;">-0.4327994</td>
+<td style="text-align: right;">0.3148872</td>
+<td style="text-align: right;">-0.3931804</td>
 <td style="text-align: right;">2e-07</td>
-<td style="text-align: right;">0.1445540</td>
-<td style="text-align: right;">0.0229794</td>
-<td style="text-align: right;">0.0003616</td>
+<td style="text-align: right;">0.1403710</td>
+<td style="text-align: right;">0.0231654</td>
+<td style="text-align: right;">0.0003948</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr8:60620674-60620948/+/RAB2A</td>
@@ -1328,15 +1331,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">60620948</td>
 <td style="text-align: left;">RAB2A</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0359988</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0394152</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3193329</td>
-<td style="text-align: right;">-0.4145434</td>
-<td style="text-align: right;">2e-07</td>
-<td style="text-align: right;">0.1446959</td>
-<td style="text-align: right;">0.0232169</td>
-<td style="text-align: right;">0.0004039</td>
+<td style="text-align: right;">0.3129958</td>
+<td style="text-align: right;">-0.3749299</td>
+<td style="text-align: right;">3e-07</td>
+<td style="text-align: right;">0.1401649</td>
+<td style="text-align: right;">0.0233608</td>
+<td style="text-align: right;">0.0004988</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr8:60620674-60620941/+/RAB2A</td>
@@ -1345,15 +1348,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">60620941</td>
 <td style="text-align: left;">RAB2A</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0349094</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0382238</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3178170</td>
-<td style="text-align: right;">-0.4219498</td>
+<td style="text-align: right;">0.3115465</td>
+<td style="text-align: right;">-0.3843719</td>
 <td style="text-align: right;">4e-07</td>
-<td style="text-align: right;">0.1441755</td>
-<td style="text-align: right;">0.0240379</td>
-<td style="text-align: right;">0.0006836</td>
+<td style="text-align: right;">0.1394200</td>
+<td style="text-align: right;">0.0241058</td>
+<td style="text-align: right;">0.0008045</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr8:60620674-60620938/+/RAB2A</td>
@@ -1362,21 +1365,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">60620938</td>
 <td style="text-align: left;">RAB2A</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">0.0350087</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0383230</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3186613</td>
-<td style="text-align: right;">-0.4230088</td>
-<td style="text-align: right;">3e-07</td>
-<td style="text-align: right;">0.1440959</td>
-<td style="text-align: right;">0.0240703</td>
-<td style="text-align: right;">0.0006633</td>
+<td style="text-align: right;">0.3123754</td>
+<td style="text-align: right;">-0.3856379</td>
+<td style="text-align: right;">4e-07</td>
+<td style="text-align: right;">0.1394138</td>
+<td style="text-align: right;">0.0242683</td>
+<td style="text-align: right;">0.0008054</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random select a gene and its exons and visulize with FeaturePlot.</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr15:43801711-43804427/+/SERF2"</span>, <span class="st">"SERF2"</span>), <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random select a gene and its exons and visulize with FeaturePlot.</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr15:43801711-43804427/+/SERF2"</span>, <span class="st">"SERF2"</span>), <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1384,12 +1387,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The default color and parameters perhaps not easily to tell the difference between exon and its binding gene expression. Let's change the scaled colors and enlarge point size and order by expression.</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(RColorBrewer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The default color and parameters perhaps not easily to tell the difference between exon and its binding gene expression. Let's change the scaled colors and enlarge point size and order by expression.</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(RColorBrewer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: RColorBrewer</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr15:43801711-43804427/+/SERF2"</span>, <span class="st">"SERF2"</span>), <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">pt.size=</span><span class="dv">1</span>) <span class="sc">&amp;</span> <span class="fu">scale_colour_gradientn</span>(<span class="at">colours =</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">11</span>, <span class="at">name =</span> <span class="st">"RdBu"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr15:43801711-43804427/+/SERF2"</span>, <span class="st">"SERF2"</span>), <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">pt.size=</span><span class="dv">1</span>) <span class="sc">&amp;</span> <span class="fu">scale_colour_gradientn</span>(<span class="at">colours =</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">11</span>, <span class="at">name =</span> <span class="st">"RdBu"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Scale for colour is already present.
 Adding another scale for colour, which will replace the existing scale.</code></pre>
@@ -1408,16 +1411,16 @@ Adding another scale for colour, which will replace the existing scale.</code></
 </div>
 <p>In our package, retrieving gene locations requires loading a GTF file instead of relying on current Bioconductor databases, such as <code>org.Hs.eg.db</code>. This is due to the varying versions of gene annotations provided by different institutes, which can introduce inconsistencies. To avoid potential bias during preprocessing and postprocessing, we strongly recommend using the same GTF file consistently throughout your project. The Yano package includes the <code>gtf2db</code> function, which enables you to load a GTF file into memory for further analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-10-19 22:28:39] [32mGTF loading..[0m
-[2024-10-19 22:29:09] [32mLoad 62700 genes.[0m
-[2024-10-19 22:29:09] [32mLoad time : 30.572 sec[0m</code></pre>
+<pre><code>[2024-10-20 20:39:20] [32mGTF loading..[0m
+[2024-10-20 20:39:57] [32mLoad 62700 genes.[0m
+[2024-10-20 20:39:57] [32mLoad time : 36.826 sec[0m</code></pre>
 </div>
 </div>
 <p>A track plot is used to study the read coverage per cell group. In the track plot shown below, the cell group is specified by the <code>cell.group</code> parameter. Unlike IGV, where read depth is used, we use UMI depth in this plot. The cell barcode tag and UMI tag are predefined as “CB” and “UB” with parameter <code>cell.tag</code> and <code>umi.tag</code>. For each cell group, the UMI depth has been normalized by the number of cells in that group. This means that the depth at each location can be interpreted as the mean UMI depth per cell for the group. As a result, the tracks are directly comparable across different cell groups. If <code>cell.group</code> is not set, the track plot will generate the raw UMI depth per location.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"SERF2"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">43801711</span>,<span class="dv">43804427</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"SERF2"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">43801711</span>,<span class="dv">43804427</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1428,7 +1431,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 </div>
 <p>In the track plot, we can easily observe that an exon around position 33,794,000 dominates the expression of the SERF2 gene and is highly expressed in many cell groups. However, the exon ‘chr15:43801711-43804427/+/SERF2’ (highlighted) shows low expression and is not visible in the track plot. To visualize low-expressed exons, we can set the <code>max.depth</code> parameter to 2, which caps the UMI depth at 2. And many genes in the region, we set <code>display.genes</code> to SERF2 only. This adjustment allows the low-expressed exons and their related transcipts to be more clearly represented in the plot. In this case, we can found the the highlighed exon shows different expressed pattern with the gene SERF2.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"SERF2"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">43801711</span>,<span class="dv">43804427</span>), <span class="at">max.depth =</span> <span class="dv">2</span>, <span class="at">display.genes =</span> <span class="st">"SERF2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"SERF2"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">43801711</span>,<span class="dv">43804427</span>), <span class="at">max.depth =</span> <span class="dv">2</span>, <span class="at">display.genes =</span> <span class="st">"SERF2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1442,14 +1445,14 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <h2 class="anchored" data-anchor-id="load-junction-assay">3. Load junction assay</h2>
 <p>In addition to exon expression, junction expression can provide insights into different expression patterns across transcripts, offering a complementary perspective. Junction expression refers to the UMI counts of reads that span more than one exon. It’s important to note that junctions are named similarly to exons, but the start and end positions are different. The start of the junction corresponds to the end of the previous exon, while the end of the junction represents the start of the next exon.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>junction <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./junction/"</span>)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'junction'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(junction[, <span class="fu">colnames</span>(obj)], <span class="at">min.cells=</span><span class="dv">20</span>)</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"junction"</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj)</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co"># select spatial autocorrelated junctions</span></span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>junction <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./junction/"</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'junction'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(junction[, <span class="fu">colnames</span>(obj)], <span class="at">min.cells=</span><span class="dv">20</span>)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"junction"</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="co"># select spatial autocorrelated junctions</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay : junction</code></pre>
 </div>
@@ -1457,19 +1460,19 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Run autocorrelation test for 15069 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 2.79616 secs</code></pre>
+<pre><code>Runtime : 2.753262 secs</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>7786 autocorrelated features.</code></pre>
+<pre><code>7869 autocorrelated features.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse the gene name and coordinates from junction names</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse the gene name and coordinates from junction names</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay junction</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform dissimilarity test between junctions and their binding genes</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">perm=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform dissimilarity test between junctions and their binding genes</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">perm=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay junction.</code></pre>
 </div>
@@ -1477,10 +1480,10 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Working on binding assay RNA.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 7786 features.</code></pre>
+<pre><code>Processing 7869 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 3858 blocks.</code></pre>
+<pre><code>Processing 3900 blocks.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieve binding data from assay RNA.</code></pre>
@@ -1495,9 +1498,9 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Use predefined weight matrix "pca_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 20.04805 secs.</code></pre>
+<pre><code>Runtime : 21.38595 secs.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">remove.chr=</span><span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">remove.chr=</span><span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1505,8 +1508,8 @@ Adding another scale for colour, which will replace the existing scale.</code></
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Because both exon and junction are compared with gene, so it's reasonable to combine these two assays in one plot</span></span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exon"</span>, <span class="st">"junction"</span>), <span class="at">col.by =</span> <span class="st">"assay"</span>, <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">pt.size =</span> <span class="dv">2</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs, <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Because both exon and junction are compared with gene, so it's reasonable to combine these two assays in one plot</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exon"</span>, <span class="st">"junction"</span>), <span class="at">col.by =</span> <span class="st">"assay"</span>, <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">pt.size =</span> <span class="dv">2</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs, <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1514,8 +1517,8 @@ Adding another scale for colour, which will replace the existing scale.</code></
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can find there is an exon and a junction at chromosome 12 with very low p value (&lt;1e-8), let's see which gene they are located</span></span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(chr <span class="sc">==</span> <span class="st">"chr12"</span> <span class="sc">&amp;</span> gene_name.pval <span class="sc">&lt;</span> <span class="fl">1e-8</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can find there is an exon and a junction at chromosome 12 with very low p value (&lt;1e-8), let's see which gene they are located</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(chr <span class="sc">==</span> <span class="st">"chr12"</span> <span class="sc">&amp;</span> gene_name.pval <span class="sc">&lt;</span> <span class="fl">1e-8</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -1526,7 +1529,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <col style="width: 5%">
 <col style="width: 3%">
 <col style="width: 6%">
-<col style="width: 4%">
+<col style="width: 5%">
 <col style="width: 9%">
 <col style="width: 6%">
 <col style="width: 6%">
@@ -1563,19 +1566,19 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <td style="text-align: left;">MYL6</td>
 <td style="text-align: left;">+</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.251007</td>
+<td style="text-align: right;">0.2572222</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.652844</td>
-<td style="text-align: right;">-0.3024208</td>
+<td style="text-align: right;">0.6510128</td>
+<td style="text-align: right;">-0.2902734</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1327208</td>
-<td style="text-align: right;">0.0266574</td>
+<td style="text-align: right;">0.1304956</td>
+<td style="text-align: right;">0.0246133</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'junction'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(chr <span class="sc">==</span> <span class="st">"chr12"</span> <span class="sc">&amp;</span> gene_name.pval <span class="sc">&lt;</span> <span class="fl">1e-8</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'junction'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(chr <span class="sc">==</span> <span class="st">"chr12"</span> <span class="sc">&amp;</span> gene_name.pval <span class="sc">&lt;</span> <span class="fl">1e-8</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -1618,24 +1621,24 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <tr class="odd">
 <td style="text-align: left;">chr12:56160320-56161387/+/MYL6</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1882398</td>
+<td style="text-align: right;">0.1971102</td>
 <td style="text-align: left;">TRUE</td>
 <td style="text-align: left;">chr12</td>
 <td style="text-align: right;">56160320</td>
 <td style="text-align: right;">56161387</td>
 <td style="text-align: left;">MYL6</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.5314262</td>
-<td style="text-align: right;">-0.2332527</td>
+<td style="text-align: right;">0.5503842</td>
+<td style="text-align: right;">-0.2524984</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1287858</td>
-<td style="text-align: right;">0.0276567</td>
+<td style="text-align: right;">0.1253981</td>
+<td style="text-align: right;">0.0267199</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr12:56161387-56161465/+/MYL6"</span>,<span class="st">"chr12:56160320-56161387/+/MYL6"</span>, <span class="st">"MYL6"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">pt.size =</span> <span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">3</span>) <span class="sc">&amp;</span> <span class="fu">scale_colour_gradientn</span>(<span class="at">colours =</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">11</span>, <span class="at">name =</span> <span class="st">"RdBu"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr12:56161387-56161465/+/MYL6"</span>,<span class="st">"chr12:56160320-56161387/+/MYL6"</span>, <span class="st">"MYL6"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">pt.size =</span> <span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">3</span>) <span class="sc">&amp;</span> <span class="fu">scale_colour_gradientn</span>(<span class="at">colours =</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">11</span>, <span class="at">name =</span> <span class="st">"RdBu"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Scale for colour is already present.
 Adding another scale for colour, which will replace the existing scale.</code></pre>
@@ -1656,7 +1659,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 </div>
 <p>We then visualize the track plot for this gene, including junction reads by setting <code>junc=TRUE</code>. The height of the splice paths in the plot represents the expression level of each junction within the specified cell group.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"MYL6"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">highlights =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">56160320</span>,<span class="dv">56161387</span>),<span class="fu">c</span>(<span class="dv">56161387</span>,<span class="dv">56161465</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"MYL6"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">highlights =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">56160320</span>,<span class="dv">56161387</span>),<span class="fu">c</span>(<span class="dv">56161387</span>,<span class="dv">56161465</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1669,8 +1672,8 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <p>This discrepancy arises because the exon is overlapping with other exons. We only count reads that are fully contained within the exon as part of the exon’s expression. Therefore, reads that partially overlap with this exon are not included in the count.</p>
 <p>In contrast, the overlapping exon chr12:56161387-56161575/+/MYL6 shows higher expression in group 2 compared to other groups. It’s important to note that if a read is fully contained within two or more overlapping exons, PISA will count it for all relevant exons. Check PISA’s manual for details.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj, <span class="at">label=</span><span class="cn">TRUE</span>, <span class="at">label.size =</span> <span class="dv">5</span>, <span class="at">label.box =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr12:56161387-56161575/+/MYL6"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">pt.size =</span> <span class="dv">1</span>) <span class="sc">&amp;</span> <span class="fu">scale_colour_gradientn</span>(<span class="at">colours =</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">11</span>, <span class="at">name =</span> <span class="st">"RdBu"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj, <span class="at">label=</span><span class="cn">TRUE</span>, <span class="at">label.size =</span> <span class="dv">5</span>, <span class="at">label.box =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr12:56161387-56161575/+/MYL6"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">pt.size =</span> <span class="dv">1</span>) <span class="sc">&amp;</span> <span class="fu">scale_colour_gradientn</span>(<span class="at">colours =</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">11</span>, <span class="at">name =</span> <span class="st">"RdBu"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Could not find chr12:56161387-56161575/+/MYL6 in the default search
 locations, found in 'exon' assay instead</code></pre>
@@ -1679,7 +1682,7 @@ locations, found in 'exon' assay instead</code></pre>
 <pre><code>Scale for colour is already present.
 Adding another scale for colour, which will replace the existing scale.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1693,34 +1696,34 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <h2 class="anchored" data-anchor-id="heatmap-analysis-for-highlight-group-specific-alternative-splicing">4. Heatmap analysis for highlight group specific alternative splicing</h2>
 <p>The spatial dissimilarity test method prioritizes alternatively spliced exons and junctions across all cells but does not identify which specific cell groups exhibit these splicing events. To address this, let’s manually extract the scaled expression data for the selected alternatively spliced exons and their corresponding genes, then perform a co-clustering analysis. A comprehensive heatmap will be generated using the <a href="https://jokergoo.github.io/ComplexHeatmap-reference/book/index.html">ComplexHeatmap</a> package, providing a visual representation of the exon and gene distribution across cell groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">0.001</span>) <span class="sc">%&gt;%</span> rownames <span class="ot">-&gt;</span> exons</span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">0.001</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(gene_name) <span class="ot">-&gt;</span> bind.genes</span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"RNA"</span></span>
-<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ScaleData</span>(obj, <span class="at">features =</span> <span class="fu">unique</span>(bind.genes))</span>
-<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
-<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ScaleData</span>(obj, <span class="at">features =</span> exons)</span>
-<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>dat1 <span class="ot">&lt;-</span> <span class="fu">GetAssayData</span>(obj, <span class="at">assay =</span> <span class="st">'exon'</span>, <span class="at">layer =</span> <span class="st">'scale.data'</span>)</span>
-<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> <span class="fu">GetAssayData</span>(obj, <span class="at">assay =</span> <span class="st">'RNA'</span>, <span class="at">layer =</span> <span class="st">'scale.data'</span>)</span>
-<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a>idents <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">Idents</span>(obj))</span>
-<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a>order.cells <span class="ot">&lt;-</span> <span class="fu">names</span>(idents)</span>
-<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-13"><a href="#cb75-13" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> dat2[bind.genes,]</span>
-<span id="cb75-14"><a href="#cb75-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(dat2) <span class="ot">&lt;-</span> exons</span>
-<span id="cb75-15"><a href="#cb75-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-16"><a href="#cb75-16" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">cbind</span>(dat1, dat2)</span>
-<span id="cb75-17"><a href="#cb75-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-18"><a href="#cb75-18" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ComplexHeatmap)</span>
-<span id="cb75-19"><a href="#cb75-19" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(dat)</span>
-<span id="cb75-20"><a href="#cb75-20" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(d)</span>
-<span id="cb75-21"><a href="#cb75-21" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> hc<span class="sc">$</span>labels[hc<span class="sc">$</span>order]</span>
-<span id="cb75-22"><a href="#cb75-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-23"><a href="#cb75-23" aria-hidden="true" tabindex="-1"></a>ha <span class="ot">&lt;-</span> <span class="fu">HeatmapAnnotation</span>(<span class="at">group=</span>idents, <span class="at">border =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb75-24"><a href="#cb75-24" aria-hidden="true" tabindex="-1"></a>ht1 <span class="ot">&lt;-</span> <span class="fu">Heatmap</span>(dat1[idx, order.cells], <span class="at">cluster_rows =</span> <span class="cn">FALSE</span>, <span class="at">cluster_columns =</span> <span class="cn">FALSE</span>, <span class="at">show_column_names =</span> <span class="cn">FALSE</span>, <span class="at">border =</span> <span class="cn">TRUE</span>,  <span class="at">top_annotation =</span> ha, <span class="at">name =</span> <span class="st">"exon"</span>, <span class="at">column_title =</span> <span class="st">"exon"</span>)</span>
-<span id="cb75-25"><a href="#cb75-25" aria-hidden="true" tabindex="-1"></a>ht2 <span class="ot">&lt;-</span> <span class="fu">Heatmap</span>(dat2[idx, order.cells], <span class="at">cluster_rows =</span> <span class="cn">FALSE</span>, <span class="at">cluster_columns =</span> <span class="cn">FALSE</span>, <span class="at">show_column_names =</span> <span class="cn">FALSE</span>, <span class="at">border =</span> <span class="cn">TRUE</span>,  <span class="at">top_annotation =</span> ha, <span class="at">name =</span> <span class="st">"gene"</span>, <span class="at">column_title =</span> <span class="st">"gene"</span>, <span class="at">row_names_max_width =</span> <span class="fu">max_text_width</span>(<span class="fu">rownames</span>(dat2), <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">fontsize =</span> <span class="dv">12</span>)))</span>
-<span id="cb75-26"><a href="#cb75-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-27"><a href="#cb75-27" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> ht1 <span class="sc">+</span> ht2</span>
-<span id="cb75-28"><a href="#cb75-28" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(ht, <span class="at">heatmap_legend_side =</span> <span class="st">"left"</span>,  <span class="at">annotation_legend_side =</span> <span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">0.001</span>) <span class="sc">%&gt;%</span> rownames <span class="ot">-&gt;</span> exons</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">0.001</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(gene_name) <span class="ot">-&gt;</span> bind.genes</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"RNA"</span></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ScaleData</span>(obj, <span class="at">features =</span> <span class="fu">unique</span>(bind.genes))</span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ScaleData</span>(obj, <span class="at">features =</span> exons)</span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>dat1 <span class="ot">&lt;-</span> <span class="fu">GetAssayData</span>(obj, <span class="at">assay =</span> <span class="st">'exon'</span>, <span class="at">layer =</span> <span class="st">'scale.data'</span>)</span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> <span class="fu">GetAssayData</span>(obj, <span class="at">assay =</span> <span class="st">'RNA'</span>, <span class="at">layer =</span> <span class="st">'scale.data'</span>)</span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>idents <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">Idents</span>(obj))</span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>order.cells <span class="ot">&lt;-</span> <span class="fu">names</span>(idents)</span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> dat2[bind.genes,]</span>
+<span id="cb76-14"><a href="#cb76-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(dat2) <span class="ot">&lt;-</span> exons</span>
+<span id="cb76-15"><a href="#cb76-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-16"><a href="#cb76-16" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">cbind</span>(dat1, dat2)</span>
+<span id="cb76-17"><a href="#cb76-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-18"><a href="#cb76-18" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ComplexHeatmap)</span>
+<span id="cb76-19"><a href="#cb76-19" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(dat)</span>
+<span id="cb76-20"><a href="#cb76-20" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(d)</span>
+<span id="cb76-21"><a href="#cb76-21" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> hc<span class="sc">$</span>labels[hc<span class="sc">$</span>order]</span>
+<span id="cb76-22"><a href="#cb76-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-23"><a href="#cb76-23" aria-hidden="true" tabindex="-1"></a>ha <span class="ot">&lt;-</span> <span class="fu">HeatmapAnnotation</span>(<span class="at">group=</span>idents, <span class="at">border =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb76-24"><a href="#cb76-24" aria-hidden="true" tabindex="-1"></a>ht1 <span class="ot">&lt;-</span> <span class="fu">Heatmap</span>(dat1[idx, order.cells], <span class="at">cluster_rows =</span> <span class="cn">FALSE</span>, <span class="at">cluster_columns =</span> <span class="cn">FALSE</span>, <span class="at">show_column_names =</span> <span class="cn">FALSE</span>, <span class="at">border =</span> <span class="cn">TRUE</span>,  <span class="at">top_annotation =</span> ha, <span class="at">name =</span> <span class="st">"exon"</span>, <span class="at">column_title =</span> <span class="st">"exon"</span>)</span>
+<span id="cb76-25"><a href="#cb76-25" aria-hidden="true" tabindex="-1"></a>ht2 <span class="ot">&lt;-</span> <span class="fu">Heatmap</span>(dat2[idx, order.cells], <span class="at">cluster_rows =</span> <span class="cn">FALSE</span>, <span class="at">cluster_columns =</span> <span class="cn">FALSE</span>, <span class="at">show_column_names =</span> <span class="cn">FALSE</span>, <span class="at">border =</span> <span class="cn">TRUE</span>,  <span class="at">top_annotation =</span> ha, <span class="at">name =</span> <span class="st">"gene"</span>, <span class="at">column_title =</span> <span class="st">"gene"</span>, <span class="at">row_names_max_width =</span> <span class="fu">max_text_width</span>(<span class="fu">rownames</span>(dat2), <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">fontsize =</span> <span class="dv">12</span>)))</span>
+<span id="cb76-26"><a href="#cb76-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-27"><a href="#cb76-27" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> ht1 <span class="sc">+</span> ht2</span>
+<span id="cb76-28"><a href="#cb76-28" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(ht, <span class="at">heatmap_legend_side =</span> <span class="st">"left"</span>,  <span class="at">annotation_legend_side =</span> <span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1735,16 +1738,16 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <p>In the previous sections, we conducted a spatial dissimilarity test between exon/junction expression and gene expression. However, binding features are not always limited to genes; they can also correspond to other types of features. In this section, we perform a test between exon expression and reads that skip this exon using mode 3. This approach is similar to the Percent Spliced In (PSI) method, which is widely used to analyze alternative splicing in both bulk and single-cell RNA-seq data. The PSI is calculated as:</p>
 <p>PSI = exon reads / (exon reads + reads skipping this exon)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The reads that skip exons are annotated using the `-psi` option in PISA anno, and these counts are stored in the `exclude` directory. We then load these excluded counts into a new assay.</span></span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>exclude <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./exclude/"</span>)</span>
-<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exclude'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(exclude[,<span class="fu">colnames</span>(obj)], <span class="at">min.cells =</span> <span class="dv">10</span>)</span>
-<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Then we switch to exon assay</span></span>
-<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
-<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Because the feature names in the exclude assay are exactly the same as those in the exon assay, they represent the reads that skip each corresponding exon. Therefore, we set up the binding feature using the exon name itself.</span></span>
-<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[<span class="st">'exon_name'</span>]] <span class="ot">&lt;-</span> <span class="fu">rownames</span>(obj)</span>
-<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[<span class="st">'exon_name'</span>]] <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The reads that skip exons are annotated using the `-psi` option in PISA anno, and these counts are stored in the `exclude` directory. We then load these excluded counts into a new assay.</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>exclude <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./exclude/"</span>)</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exclude'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(exclude[,<span class="fu">colnames</span>(obj)], <span class="at">min.cells =</span> <span class="dv">10</span>)</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Then we switch to exon assay</span></span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Because the feature names in the exclude assay are exactly the same as those in the exon assay, they represent the reads that skip each corresponding exon. Therefore, we set up the binding feature using the exon name itself.</span></span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[<span class="st">'exon_name'</span>]] <span class="ot">&lt;-</span> <span class="fu">rownames</span>(obj)</span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[<span class="st">'exon_name'</span>]] <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                                                exon_name
 chr1:135141-135895/-/ENSG00000268903 chr1:135141-135895/-/ENSG00000268903
@@ -1754,27 +1757,27 @@ chr1:632757-633438/+/MTCO2P12               chr1:632757-633438/+/MTCO2P12
 chr1:633696-634376/+/MTATP6P1               chr1:633696-634376/+/MTATP6P1
 chr1:634376-634922/+/MTCO3P12               chr1:634376-634922/+/MTCO3P12</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Then we perform spatial dissimilarity test between exon and (exon+exclude) using mode 3.</span></span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj, <span class="at">bind.name =</span> <span class="st">"exon_name"</span>, <span class="at">bind.assay =</span> <span class="st">"exclude"</span>, <span class="at">mode =</span> <span class="dv">3</span>)</span>
-<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(exon_name.padj<span class="sc">&lt;</span><span class="fl">1e-5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Then we perform spatial dissimilarity test between exon and (exon+exclude) using mode 3.</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj, <span class="at">bind.name =</span> <span class="st">"exon_name"</span>, <span class="at">bind.assay =</span> <span class="st">"exclude"</span>, <span class="at">mode =</span> <span class="dv">3</span>)</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(exon_name.padj<span class="sc">&lt;</span><span class="fl">1e-5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                  chr     start       end gene_name strand
 chr1:153990914-153991034/+/RPS27 chr1 153990914 153991034     RPS27      +
                                   moransi.pval   moransi autocorr.variable
-chr1:153990914-153991034/+/RPS27 5.679737e-155 0.1111682              TRUE
+chr1:153990914-153991034/+/RPS27 2.148199e-163 0.1119036              TRUE
                                  gene_name.D gene_name.r gene_name.pval
-chr1:153990914-153991034/+/RPS27   0.2623319   0.2412707   2.210369e-06
+chr1:153990914-153991034/+/RPS27   0.2604436   0.2449969   4.386267e-06
                                  gene_name.mean gene_name.var gene_name.padj
-chr1:153990914-153991034/+/RPS27      0.1295683    0.02094978    0.003196504
+chr1:153990914-153991034/+/RPS27       0.126302    0.02231611    0.006094887
                                                         exon_name exon_name.D
-chr1:153990914-153991034/+/RPS27 chr1:153990914-153991034/+/RPS27   0.2983623
+chr1:153990914-153991034/+/RPS27 chr1:153990914-153991034/+/RPS27   0.2945293
                                  exon_name.r exon_name.pval exon_name.mean
-chr1:153990914-153991034/+/RPS27   0.1370618    2.34274e-12      0.1296453
+chr1:153990914-153991034/+/RPS27   0.1461855   5.953491e-12      0.1281181
                                  exon_name.var exon_name.padj
-chr1:153990914-153991034/+/RPS27    0.02145398   1.318963e-09</code></pre>
+chr1:153990914-153991034/+/RPS27    0.02168537   3.405397e-09</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"exon_name.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">point.label =</span> <span class="st">"chr1:153990914-153991034/+/RPS27"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"exon_name.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">point.label =</span> <span class="st">"chr1:153990914-153991034/+/RPS27"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1782,11 +1785,11 @@ chr1:153990914-153991034/+/RPS27    0.02145398   1.318963e-09</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We find that only a few events can be prioritized.</span></span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">PSIPlot</span>(obj, <span class="at">exon.assay =</span> <span class="st">"exon"</span>, <span class="at">exclude.assay =</span> <span class="st">"exclude"</span>, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr1:153990914-153991034/+/RPS27"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj,  <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr1:153990914-153991034/+/RPS27"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj,  <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"RPS27"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>cowplot<span class="sc">::</span><span class="fu">plot_grid</span>(p1, p2,p3, <span class="at">ncol=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We find that only a few events can be prioritized.</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">PSIPlot</span>(obj, <span class="at">exon.assay =</span> <span class="st">"exon"</span>, <span class="at">exclude.assay =</span> <span class="st">"exclude"</span>, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr1:153990914-153991034/+/RPS27"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj,  <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr1:153990914-153991034/+/RPS27"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj,  <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"RPS27"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>cowplot<span class="sc">::</span><span class="fu">plot_grid</span>(p1, p2,p3, <span class="at">ncol=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1796,7 +1799,7 @@ chr1:153990914-153991034/+/RPS27    0.02145398   1.318963e-09</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"RPS27"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">153990914</span>,<span class="dv">153991034</span>), <span class="at">junc =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"RPS27"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">153990914</span>,<span class="dv">153991034</span>), <span class="at">junc =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1804,8 +1807,8 @@ chr1:153990914-153991034/+/RPS27    0.02145398   1.318963e-09</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># It seems like the exon is in low coverage, we then zoom in by setting the max depth to 2.</span></span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"RPS27"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">153990914</span>,<span class="dv">153991034</span>), <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">max.depth =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># It seems like the exon is in low coverage, we then zoom in by setting the max depth to 2.</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"RPS27"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">153990914</span>,<span class="dv">153991034</span>), <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">max.depth =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1824,7 +1827,7 @@ chr1:153990914-153991034/+/RPS27    0.02145398   1.318963e-09</code></pre>
 <h2 class="anchored" data-anchor-id="questions">Questions?</h2>
 <p>If you have any questions regarding this vignette, please feel free to report them through the <a href="https://github.com/shiquan/Yano/discussions">discussion forum</a>. When submitting your query, please ensure you attach the commands you used for better clarity and support.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "NormalizeData.RNA"            "FindVariableFeatures.RNA"    
  [3] "RunPCA.RNA"                   "FindNeighbors.RNA.pca"       
