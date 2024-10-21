@@ -87,7 +87,7 @@ cat anno.csv
 
 ### 5. Sort BAM by genomics coordinate (Optional)
 
-Sorted and indexed bam can be further used to do a lot of secondary analysis, but it's not mandatory if you just want the gene expression count matrix. Because annotation and expression count step do not require a sorted bam. However, the `corr` step will generate non-robust results if records are not sorted.
+A sorted and indexed BAM file can be useful for many secondary analyses, but it is not mandatory if you only need the gene expression count matrix. The annotation and expression count steps do not require a sorted BAM. However, if two similar UMIs have the same supporting reads, the first one will always be selected, and the second will be corrected during the `corr` step. If the records are not sorted, this may lead to non-robust results.
 
 ``` bash
 ## sambamba can also be used to sort bam for better performance. For simplication, we use samtools here.
