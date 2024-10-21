@@ -343,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>Notes:</strong></p>
 <ul>
-<li>PISA anno generates <code>GN</code>, <code>TX</code>, <code>RE</code>, and <code>GX</code> tags when the <code>-gtf</code> option is set. Original tag values are replaced, and PISA uses a slightly different annotation strategy than CellRanger. In the example above, the <code>RE</code> tag has been changed from <code>E</code> (exon) to <code>S</code> (spliced).</li>
+<li>PISA anno generates <code>GN</code>, <code>TX</code>, <code>RE</code>, and <code>GX</code> tags when the <code>-gtf</code> option is set. Original tag values are replaced, and PISA uses a slightly different annotation strategy than CellRanger, see <a href="https://shiquan.github.io/PISA.html#difference-in-alignment-annotation-between-pisa-and-cellranger">details</a> here. In the example above, the <code>RE</code> tag has been changed from <code>E</code> (exon) to <code>S</code> (spliced).</li>
 <li>When the <code>-exon</code> option is used, <code>EX</code> and <code>JC</code> tags are annotated only if the read has a <code>GN</code> tag.</li>
 <li>When the <code>-psi</code> option is used, <code>ER</code> tag is annotated, the label for ER is the exon name which indicate the read skip this exon.</li>
 </ul>

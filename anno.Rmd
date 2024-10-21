@@ -86,7 +86,7 @@ samtools view anno.bam | head -n 3000|grep 'A00836:286:HMTMVDMXX:2:2354:8422:139
 
 **Notes:**
 
-  - PISA anno generates `GN`, `TX`, `RE`, and `GX` tags when the `-gtf` option is set. Original tag values are replaced, and PISA uses a slightly different annotation strategy than CellRanger. In the example above, the `RE` tag has been changed from `E` (exon) to `S` (spliced).
+  - PISA anno generates `GN`, `TX`, `RE`, and `GX` tags when the `-gtf` option is set. Original tag values are replaced, and PISA uses a slightly different annotation strategy than CellRanger, see [details](https://shiquan.github.io/PISA.html#difference-in-alignment-annotation-between-pisa-and-cellranger) here. In the example above, the `RE` tag has been changed from `E` (exon) to `S` (spliced).
   - When the `-exon` option is used, `EX` and `JC` tags are annotated only if the read has a `GN` tag.
   - When the `-psi` option is used, `ER` tag is annotated, the label for ER is the exon name which indicate the read skip this exon.
   
