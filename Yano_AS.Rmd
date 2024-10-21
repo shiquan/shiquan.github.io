@@ -143,7 +143,7 @@ TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", 
 ```
 You might be wondering why the exon chr12:56161387-56161465/+/MYL6 appears highly expressed in cell group 2 in the track plot, where the overlapping peak is clearly higher than in other groups, but its expression level in the feature plot is not as high as expected.
 
-This discrepancy arises because the exon is overlapping with other exons. We only count reads that are fully contained within the exon as part of the exon’s expression. Therefore, reads that partially overlap with this exon are not included in the count. 
+This discrepancy arises because the exon is overlapping with other exons from different transcripts. We only count reads that are fully contained within the exon as part of the exon’s expression. Therefore, reads that partially overlap with this exon are not included in the count. 
 
 In contrast, the overlapping exon chr12:56161387-56161575/+/MYL6 shows higher expression in group 2 compared to other groups. It's important to note that if a read is fully contained within two or more overlapping exons, PISA will count it for all relevant exons. Check PISA's manual for details.
 

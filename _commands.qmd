@@ -198,7 +198,7 @@ Option -report can specify a quality control report in CSV format. Here is the e
 For RNA libraries, if a read from cDNA maps to an exonic locus but also maps to one or more non-exonic regions, the exonic locus can be prioritized as primary alignments, and mapping quality adjusts to 255. In the below records below, read DP8400008965TLL1C001R0102043364 mapped to three loci, and the aligner random pick one as the primary alignment and others as secondary. Each of these alignments has low mapping quality (MAPQ == 2, is usually filtered at downstream analysis). Our adjustment method will check if only one of these alignments overlaps with exonic regions. In our example, the last alignment overlapped with gene EEF1A1, and the other two hit intergenic regions. After adjustment, the last record has been flagged as a primary hit, and the mapping quality adjusted to 255, and other alignments of the same read are updated as secondary, MAPQ adjust to 0. MM:i:1 tag also is added to the primary record after adjustment. Option -adjust-mapq is reimplemented to mirror the 10X CellRanger's MAPQ adjustment method (<https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview#alignment>).
 
 ```markdown
- #  Output by aligner:
+#  Output by aligner:
  
 DP8400008965TLL1C001R0102043364 0   9   133020979   2   100M    *   0   0   GTTAATGATAACAATGCATCGTAAAACCTTCAGAAGGAAAGGAGAATGTTTTGTGGACCACTTTGGTTTTCTTGTTTGCGTGTGGCAGTTTTAAGTTTTT    ...
 DP8400008965TLL1C001R0102043364 272 7   22510408    2   100M    *   0   0   AAAAACTTAAAACTGCCACACGCAAACAAGAAAACCAAAGTGGTCCACAAAACATTCTCCTTTCCTTCTGAAGGTTTTACGATGCATTGTTATCATTAAC    ...
@@ -267,16 +267,23 @@ Based on their alignment status, reads are then classified into one of nine dist
 ```markdown
 
 # annotate strand-specific reads
-$ PISA anno -gtf genes.gtf -o anno.bam sorted.bam
+$ PISA anno -gtf genes.gtf -o anno.bam in.bam
 
 # annotate non-strand-specific reads, for Smartseq or bulk RNAseq
-$ PISA anno -is -gtf genes.gtf -o anno.bam sorted.bam
+$ PISA anno -is -gtf genes.gtf -o anno.bam in.bam
 
 # also label gene name for intronic reads, i.e. RNA velocity analysis
-$ PISA anno -intron -gtf genes.gtf -o anno.bam sorted.bam
+$ PISA anno -velo -gtf genes.gtf -o anno.bam in.bam
 
-# annotate expressed peaks and genetic variants (both reference allele and alternative allele) 
-$ PISA anno -bed peak.bed -vcf in.vcf.gz -vcf-ss -ref-alt -o anno.bam in.bam
+
+# annotate exon, junction, and exon skipped reads
+$ PISA anno -exon -psi -gtf genes.gtf -o anno.bam in.bam
+
+# annotate expressed peaks
+$ PISA anno -bed peak.bed -o anno.bam in.bam
+
+# annotate genetic variants (both reference allele and alternative allele) 
+$ PISA anno  -vcf in.vcf.gz -ref-alt -o anno.bam in.bam
 ```
 
 Besides these annotation methods, PISA anno also supports a -chr-species method. This method requires a binding list for chromosome and related label relationships. The software will check the chromosome and add the related tag for each chromosome. This method, combined with PISA attrcnt can help to summarize the mixed two cell lines from different species.

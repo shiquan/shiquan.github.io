@@ -839,7 +839,7 @@ Summary report in csv format.
 <section id="mapq-adjust-method" class="level4">
 <h4 class="anchored" data-anchor-id="mapq-adjust-method">MapQ adjust method</h4>
 <p>For RNA libraries, if a read from cDNA maps to an exonic locus but also maps to one or more non-exonic regions, the exonic locus can be prioritized as primary alignments, and mapping quality adjusts to 255. In the below records below, read DP8400008965TLL1C001R0102043364 mapped to three loci, and the aligner random pick one as the primary alignment and others as secondary. Each of these alignments has low mapping quality (MAPQ == 2, is usually filtered at downstream analysis). Our adjustment method will check if only one of these alignments overlaps with exonic regions. In our example, the last alignment overlapped with gene EEF1A1, and the other two hit intergenic regions. After adjustment, the last record has been flagged as a primary hit, and the mapping quality adjusted to 255, and other alignments of the same read are updated as secondary, MAPQ adjust to 0. MM:i:1 tag also is added to the primary record after adjustment. Option -adjust-mapq is reimplemented to mirror the 10X CellRanger’s MAPQ adjustment method (<a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview#alignment" class="uri">https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview#alignment</a>).</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a> #  Output by aligner:</span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">#  Output by aligner:</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>DP8400008965TLL1C001R0102043364 0   9   133020979   2   100M    *   0   0   GTTAATGATAACAATGCATCGTAAAACCTTCAGAAGGAAAGGAGAATGTTTTGTGGACCACTTTGGTTTTCTTGTTTGCGTGTGGCAGTTTTAAGTTTTT    ...</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>DP8400008965TLL1C001R0102043364 272 7   22510408    2   100M    *   0   0   AAAAACTTAAAACTGCCACACGCAAACAAGAAAACCAAAGTGGTCCACAAAACATTCTCCTTTCCTTCTGAAGGTTTTACGATGCATTGTTATCATTAAC    ...</span>
@@ -896,16 +896,23 @@ Summary report in csv format.
 </div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># annotate strand-specific reads</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>$ PISA anno -gtf genes.gtf -o anno.bam sorted.bam</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>$ PISA anno -gtf genes.gtf -o anno.bam in.bam</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># annotate non-strand-specific reads, for Smartseq or bulk RNAseq</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>$ PISA anno -is -gtf genes.gtf -o anno.bam sorted.bam</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>$ PISA anno -is -gtf genes.gtf -o anno.bam in.bam</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu"># also label gene name for intronic reads, i.e. RNA velocity analysis</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>$ PISA anno -intron -gtf genes.gtf -o anno.bam sorted.bam</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>$ PISA anno -velo -gtf genes.gtf -o anno.bam in.bam</span>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu"># annotate expressed peaks and genetic variants (both reference allele and alternative allele) </span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>$ PISA anno -bed peak.bed -vcf in.vcf.gz -vcf-ss -ref-alt -o anno.bam in.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu"># annotate exon, junction, and exon skipped reads</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>$ PISA anno -exon -psi -gtf genes.gtf -o anno.bam in.bam</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu"># annotate expressed peaks</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>$ PISA anno -bed peak.bed -o anno.bam in.bam</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="fu"># annotate genetic variants (both reference allele and alternative allele) </span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>$ PISA anno  -vcf in.vcf.gz -ref-alt -o anno.bam in.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Besides these annotation methods, PISA anno also supports a -chr-species method. This method requires a binding list for chromosome and related label relationships. The software will check the chromosome and add the related tag for each chromosome. This method, combined with PISA attrcnt can help to summarize the mixed two cell lines from different species.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># A binding list is tab-separated two columns txt file.</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>$ cat binding_list.txt</span>
