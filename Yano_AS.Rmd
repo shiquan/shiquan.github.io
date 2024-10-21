@@ -89,6 +89,8 @@ require(RColorBrewer)
 FeaturePlot(obj, features = c("chr15:43801711-43804427/+/SERF2", "SERF2"), ncol=2, order = TRUE, pt.size=1) & scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
 ```
 
+In the feature plot above, the exon appears to lack an expression pattern across cell groups, whereas the gene SERF2 seems to be highly expressed in many groups, except for groups 2 and 8. This inconsistent expression pattern between the exon and its corresponding gene may suggest differential exon usage. To explore the coverage details of both the exon and the gene body, we will generate a track plot next.
+
 In our package, retrieving gene locations requires loading a GTF file instead of relying on current Bioconductor databases, such as `org.Hs.eg.db`. This is due to the varying versions of gene annotations provided by different institutes, which can introduce inconsistencies. To avoid potential bias during preprocessing and postprocessing, we strongly recommend using the same GTF file consistently throughout your project. The Yano package includes the `gtf2db` function, which enables you to load a GTF file into memory for further analysis.
 ```{r}
 gtf <- gtf2db("./gencode.v44.annotation.gtf.gz")
