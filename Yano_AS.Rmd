@@ -32,8 +32,8 @@ obj <- subset(obj, nFeature_RNA < 9000 & percent.mt < 20)
 # Downsampling to 2000 cells for fast testing
 obj <- obj[, sample(colnames(obj),2000)]
 
-# In the cell clustering analysis, we regress the scaled data by counts, which is especially important for large-scale datasets. Without this adjustment, the distribution of cells in PCA space may be biased by total counts, potentially labeling features that are influenced by counts rather than biological variation.
-obj <- NormalizeData(obj) %>% FindVariableFeatures() %>% ScaleData(vars.to.regress = "nCount_RNA") %>%  RunPCA(verbose=FALSE) %>% FindNeighbors(dims = 1:10, verbose=FALSE) %>% FindClusters(resolution = 0.5, verbose=FALSE) %>% RunUMAP(dims=1:10, verbose=FALSE)
+# We run the cell clustering analysis with Seurat pipeline
+obj <- NormalizeData(obj) %>% FindVariableFeatures() %>% ScaleData() %>%  RunPCA(verbose=FALSE) %>% FindNeighbors(dims = 1:10, verbose=FALSE) %>% FindClusters(resolution = 0.5, verbose=FALSE) %>% RunUMAP(dims=1:10, verbose=FALSE)
 
 DimPlot(obj, label=TRUE, label.size = 5, label.box = TRUE)
 ```

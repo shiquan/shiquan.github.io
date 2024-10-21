@@ -313,19 +313,19 @@ chr1:1000814A&gt;G/+ chr1 1000814   A   G      + chr1:1000814/+     ISG15 upstre
 chr1:1000830C&gt;A/+ chr1 1000830   C   A      + chr1:1000830/+     ISG15 upstream
 chr1:1014228G=/+  chr1 1014228   G   G      + chr1:1014228/+     ISG15     utr5
                   moransi.pval     moransi autocorr.variable    locus.D
-chr1:633192G=/+   2.833943e-04 0.013005265              TRUE         NA
-chr1:1000079A&gt;G/- 3.459311e-01 0.001086509             FALSE         NA
-chr1:1000731C=/+  4.320622e-02 0.006363381             FALSE         NA
-chr1:1000814A&gt;G/+ 1.659330e-04 0.014159731              TRUE         NA
-chr1:1000830C&gt;A/+ 2.297435e-06 0.018231295              TRUE         NA
-chr1:1014228G=/+  1.473139e-83 0.079659951              TRUE 0.04521464
+chr1:633192G=/+   3.235392e-01 0.001330283             FALSE         NA
+chr1:1000079A&gt;G/- 1.270509e-01 0.004159267             FALSE         NA
+chr1:1000731C=/+  5.063894e-03 0.010004135              TRUE         NA
+chr1:1000814A&gt;G/+ 6.632273e-06 0.017655831              TRUE         NA
+chr1:1000830C&gt;A/+ 3.142598e-06 0.018340286              TRUE         NA
+chr1:1014228G=/+  3.650720e-80 0.079578829              TRUE 0.04032407
                     locus.r locus.pval locus.mean  locus.var locus.padj chr0
 chr1:633192G=/+          NA         NA         NA         NA         NA    1
 chr1:1000079A&gt;G/-        NA         NA         NA         NA         NA    1
 chr1:1000731C=/+         NA         NA         NA         NA         NA    1
 chr1:1000814A&gt;G/+        NA         NA         NA         NA         NA    1
 chr1:1000830C&gt;A/+        NA         NA         NA         NA         NA    1
-chr1:1014228G=/+  0.8456603  0.9999838  0.1301404 0.01949527          1    1</code></pre>
+chr1:1014228G=/+  0.8618829  0.9999916  0.1330176 0.02047667          1    1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># here we annotate RS id and clinical signification for variants, to check the VCF header for all possible tags</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">annoVAR</span>(obj, <span class="at">vcf =</span> <span class="st">"clinvar.vcf.gz"</span>, <span class="at">chr =</span> <span class="st">"chr0"</span>, <span class="at">tags =</span> <span class="fu">c</span>(<span class="st">"RS"</span>, <span class="st">"CLNSIG"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -344,19 +344,19 @@ chr1:1000814A&gt;G/+ chr1 1000814   A   G      + chr1:1000814/+     ISG15 upstre
 chr1:1000830C&gt;A/+ chr1 1000830   C   A      + chr1:1000830/+     ISG15 upstream
 chr1:1014228G=/+  chr1 1014228   G   G      + chr1:1014228/+     ISG15     utr5
                   moransi.pval     moransi autocorr.variable    locus.D
-chr1:633192G=/+   2.833943e-04 0.013005265              TRUE         NA
-chr1:1000079A&gt;G/- 3.459311e-01 0.001086509             FALSE         NA
-chr1:1000731C=/+  4.320622e-02 0.006363381             FALSE         NA
-chr1:1000814A&gt;G/+ 1.659330e-04 0.014159731              TRUE         NA
-chr1:1000830C&gt;A/+ 2.297435e-06 0.018231295              TRUE         NA
-chr1:1014228G=/+  1.473139e-83 0.079659951              TRUE 0.04521464
+chr1:633192G=/+   3.235392e-01 0.001330283             FALSE         NA
+chr1:1000079A&gt;G/- 1.270509e-01 0.004159267             FALSE         NA
+chr1:1000731C=/+  5.063894e-03 0.010004135              TRUE         NA
+chr1:1000814A&gt;G/+ 6.632273e-06 0.017655831              TRUE         NA
+chr1:1000830C&gt;A/+ 3.142598e-06 0.018340286              TRUE         NA
+chr1:1014228G=/+  3.650720e-80 0.079578829              TRUE 0.04032407
                     locus.r locus.pval locus.mean  locus.var locus.padj chr0
 chr1:633192G=/+          NA         NA         NA         NA         NA    1
 chr1:1000079A&gt;G/-        NA         NA         NA         NA         NA    1
 chr1:1000731C=/+         NA         NA         NA         NA         NA    1
 chr1:1000814A&gt;G/+        NA         NA         NA         NA         NA    1
 chr1:1000830C&gt;A/+        NA         NA         NA         NA         NA    1
-chr1:1014228G=/+  0.8456603  0.9999838  0.1301404 0.01949527          1    1
+chr1:1014228G=/+  0.8618829  0.9999916  0.1330176 0.02047667          1    1
                     RS CLNSIG
 chr1:633192G=/+   &lt;NA&gt;   &lt;NA&gt;
 chr1:1000079A&gt;G/- &lt;NA&gt;   &lt;NA&gt;
@@ -403,21 +403,21 @@ chr1:97450058C=/-    chr1  97450058   C   C      -  chr1:97450058/-
 chr1:196690107C=/+   chr1 196690107   C   C      + chr1:196690107/+
 chr13:50945445G=/+  chr13  50945445   G   G      + chr13:50945445/+
 chr13:50945445G&gt;A/+ chr13  50945445   G   A      + chr13:50945445/+
-                              gene_name       type moransi.pval       moransi
-chr1:97450058C=/-                  DPYD     intron 5.386864e-01 -0.0008814502
-chr1:196690107C=/+  CFH,ENSG00000289697 multigenes 7.084628e-58  0.0616295022
-chr13:50945445G=/+             RNASEH2B       utr3 4.673997e-08  0.0213975176
-chr13:50945445G&gt;A/+            RNASEH2B       utr3 1.159176e-06  0.0189117956
+                              gene_name       type moransi.pval      moransi
+chr1:97450058C=/-                  DPYD     intron 4.368919e-01 0.0001360072
+chr1:196690107C=/+  CFH,ENSG00000289697 multigenes 3.903101e-61 0.0647296819
+chr13:50945445G=/+             RNASEH2B       utr3 1.374427e-06 0.0191248673
+chr13:50945445G&gt;A/+            RNASEH2B       utr3 7.057338e-07 0.0197286674
                     autocorr.variable    locus.D   locus.r locus.pval
 chr1:97450058C=/-               FALSE         NA        NA         NA
-chr1:196690107C=/+               TRUE 0.08307587 0.7276547  0.9751190
-chr13:50945445G=/+               TRUE 0.10262645 0.4488275  0.9333939
-chr13:50945445G&gt;A/+              TRUE 0.10884742 0.4488275  0.8785505
+chr1:196690107C=/+               TRUE 0.07481304 0.7473314  0.9902322
+chr13:50945445G=/+               TRUE 0.11670969 0.3809105  0.8034837
+chr13:50945445G&gt;A/+              TRUE 0.12248441 0.3809105  0.7251275
                     locus.mean  locus.var locus.padj chr0       RS
 chr1:97450058C=/-           NA         NA         NA    1  3918290
-chr1:196690107C=/+   0.1300794 0.02366358          1    1  1061170
-chr13:50945445G=/+   0.1288440 0.01731677          1   13 75184679
-chr13:50945445G&gt;A/+  0.1318634 0.01959168          1   13 75184679
+chr1:196690107C=/+   0.1350459 0.02537402          1    1  1061170
+chr13:50945445G=/+   0.1316099 0.01736865          1   13 75184679
+chr13:50945445G&gt;A/+  0.1352893 0.02133448          1   13 75184679
                                           CLNSIG
 chr1:97450058C=/-   Pathogenic/Likely_pathogenic
 chr1:196690107C=/+        Pathogenic|risk_factor
@@ -502,7 +502,7 @@ chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic</code></pre>
 ##contig=&lt;ID=NT_187693.1&gt;
 ##contig=&lt;ID=NW_009646201.1&gt;
 ##bcftools_viewVersion=1.13+htslib-1.13
-##bcftools_viewCommand=view clinvar.vcf.gz 15:92992967-92992967; Date=Sun Oct 20 21:19:47 2024
+##bcftools_viewCommand=view clinvar.vcf.gz 15:92992967-92992967; Date=Mon Oct 21 14:13:56 2024
 #CHROM  POS ID  REF ALT QUAL    FILTER  INFO
 15  92992967    633515  C   G   .   .   ALLELEID=621980;CLNDISDB=MedGen:CN517202;CLNDN=not_provided;CLNHGVS=NC_000015.10:g.92992967C&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Pathogenic;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=CHD2:1106;MC=SO:0001587|nonsense;ORIGIN=1;RS=2272457
 15  92992967    257709  C   T   .   .   AF_ESP=0.2485;AF_EXAC=0.22658;AF_TGP=0.19349;ALLELEID=255446;CLNDISDB=MeSH:D030342,MedGen:C0950123|MONDO:MONDO:0014150,MedGen:C3809278,OMIM:615369,Orphanet:1942,Orphanet:2382|MedGen:CN169374|MedGen:C3661900;CLNDN=Inborn_genetic_diseases|Developmental_and_epileptic_encephalopathy_94|not_specified|not_provided;CLNHGVS=NC_000015.10:g.92992967C&gt;T;CLNREVSTAT=criteria_provided,_multiple_submitters,_no_conflicts;CLNSIG=Benign;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA7748248;GENEINFO=CHD2:1106;MC=SO:0001819|synonymous_variant;ORIGIN=1;RS=2272457</code></pre>

@@ -279,12 +279,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsampling to 2000 cells for fast testing</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> obj[, <span class="fu">sample</span>(<span class="fu">colnames</span>(obj),<span class="dv">2000</span>)]</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Clustering analysis</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj) <span class="sc">%&gt;%</span> <span class="fu">FindVariableFeatures</span>() <span class="sc">%&gt;%</span> <span class="fu">ScaleData</span>(<span class="at">vars.to.regress =</span> <span class="st">"nCount_RNA"</span>) <span class="sc">%&gt;%</span>  <span class="fu">RunPCA</span>(<span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">FindNeighbors</span>(<span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">FindClusters</span>(<span class="at">resolution =</span> <span class="fl">0.5</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">RunUMAP</span>(<span class="at">dims=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># To improve visualization, we reduced the resolution when identifying cell clusters.</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj) <span class="sc">%&gt;%</span> <span class="fu">FindVariableFeatures</span>() <span class="sc">%&gt;%</span> <span class="fu">ScaleData</span>() <span class="sc">%&gt;%</span>  <span class="fu">RunPCA</span>(<span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">FindNeighbors</span>(<span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">FindClusters</span>(<span class="at">resolution =</span> <span class="fl">0.1</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">RunUMAP</span>(<span class="at">dims=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">verbose=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Normalizing layer: counts
 Finding variable features for layer counts
-Regressing out nCount_RNA
 Centering and scaling data matrix</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(obj, <span class="at">label=</span><span class="cn">TRUE</span>, <span class="at">label.size =</span> <span class="dv">5</span>, <span class="at">label.box =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -311,9 +310,9 @@ Centering and scaling data matrix</code></pre>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># you can skip to read GTF again if you already load it</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-10-20 21:14:15] [32mGTF loading..[0m
-[2024-10-20 21:14:43] [32mLoad 62700 genes.[0m
-[2024-10-20 21:14:43] [32mLoad time : 27.796 sec[0m</code></pre>
+<pre><code>[2024-10-21 14:03:36] [32mGTF loading..[0m
+[2024-10-21 14:04:04] [32mLoad 62700 genes.[0m
+[2024-10-21 14:04:04] [32mLoad time : 27.800 sec[0m</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At this moment the meta infomation for genetic variant assay is still empty</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -443,11 +442,11 @@ Centering and scaling data matrix</code></pre>
 <pre><code>Run autocorrelation test for 41603 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 6.678955 secs</code></pre>
+<pre><code>Runtime : 6.469093 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>14036 autocorrelated features.</code></pre>
+<pre><code>13908 autocorrelated features.</code></pre>
 </div>
 </div>
 <p>In the alternative splicing analysis, we use mode 1 (the default mode). However, for allele-specific gene expression, we switch to mode 2 to compare the expression of an SNV with other SNVs at the same location. Since no binding assay is specified, the records at the same locus are first aggregated, and then the test feature is subtracted from the aggregated data (mode 2).</p>
@@ -457,10 +456,10 @@ Centering and scaling data matrix</code></pre>
 <pre><code>Working on assay var.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 14036 features.</code></pre>
+<pre><code>Processing 13908 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 11977 blocks.</code></pre>
+<pre><code>Processing 11863 blocks.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>No bind.assay specified, update min.features.per.block to 2.</code></pre>
@@ -478,7 +477,7 @@ Centering and scaling data matrix</code></pre>
 <pre><code>Use predefined weight matrix "pca_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.317096 mins.</code></pre>
+<pre><code>Runtime : 1.236972 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -507,23 +506,23 @@ Centering and scaling data matrix</code></pre>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 10%">
-<col style="width: 3%">
+<col style="width: 9%">
+<col style="width: 2%">
 <col style="width: 4%">
-<col style="width: 2%">
-<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
 <col style="width: 3%">
 <col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 4%">
-<col style="width: 6%">
-<col style="width: 5%">
 <col style="width: 9%">
 <col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 4%">
+<col style="width: 8%">
+<col style="width: 4%">
 <col style="width: 5%">
 <col style="width: 5%">
 <col style="width: 5%">
-<col style="width: 5%">
+<col style="width: 4%">
 <col style="width: 5%">
 </colgroup>
 <thead>
@@ -560,16 +559,36 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">LMO4</td>
 <td style="text-align: left;">upstream</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.2649415</td>
+<td style="text-align: right;">0.2847268</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3403922</td>
-<td style="text-align: right;">0.3306207</td>
+<td style="text-align: right;">0.3741513</td>
+<td style="text-align: right;">0.2951529</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1335399</td>
-<td style="text-align: right;">0.0189944</td>
+<td style="text-align: right;">0.1369521</td>
+<td style="text-align: right;">0.0193356</td>
 <td style="text-align: right;">0e+00</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">chr10:3136689C&gt;T/+</td>
+<td style="text-align: left;">chr10</td>
+<td style="text-align: right;">3136689</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">T</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr10:3136689/+</td>
+<td style="text-align: left;">PFKP</td>
+<td style="text-align: left;">utr3</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0737779</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.2726127</td>
+<td style="text-align: right;">0.0231785</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1341919</td>
+<td style="text-align: right;">0.0194997</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">chr10:12250345A&gt;G/+</td>
 <td style="text-align: left;">chr10</td>
 <td style="text-align: right;">12250345</td>
@@ -580,16 +599,16 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">CDC123</td>
 <td style="text-align: left;">utr3</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.0392357</td>
+<td style="text-align: right;">0.0409800</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2996791</td>
-<td style="text-align: right;">-0.3377251</td>
+<td style="text-align: right;">0.3206669</td>
+<td style="text-align: right;">-0.3938907</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1308248</td>
-<td style="text-align: right;">0.0205671</td>
+<td style="text-align: right;">0.1337098</td>
+<td style="text-align: right;">0.0196854</td>
 <td style="text-align: right;">0e+00</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">chr10:12250345A=/+</td>
 <td style="text-align: left;">chr10</td>
 <td style="text-align: right;">12250345</td>
@@ -599,17 +618,17 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">chr10:12250345/+</td>
 <td style="text-align: left;">CDC123</td>
 <td style="text-align: left;">utr3</td>
-<td style="text-align: right;">1e-07</td>
-<td style="text-align: right;">0.0206728</td>
+<td style="text-align: right;">2e-07</td>
+<td style="text-align: right;">0.0209383</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2730814</td>
-<td style="text-align: right;">-0.3377251</td>
+<td style="text-align: right;">0.2848129</td>
+<td style="text-align: right;">-0.3938907</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1324671</td>
-<td style="text-align: right;">0.0220762</td>
-<td style="text-align: right;">1e-06</td>
+<td style="text-align: right;">0.1339931</td>
+<td style="text-align: right;">0.0217665</td>
+<td style="text-align: right;">1e-07</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">chr10:17237326C&gt;T/+</td>
 <td style="text-align: left;">chr10</td>
 <td style="text-align: right;">17237326</td>
@@ -620,16 +639,16 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">VIM</td>
 <td style="text-align: left;">utr3</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.6820382</td>
+<td style="text-align: right;">0.6973703</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.8667701</td>
-<td style="text-align: right;">-0.0608496</td>
+<td style="text-align: right;">0.8887915</td>
+<td style="text-align: right;">-0.0716207</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1294682</td>
-<td style="text-align: right;">0.0265071</td>
+<td style="text-align: right;">0.1324497</td>
+<td style="text-align: right;">0.0262362</td>
 <td style="text-align: right;">0e+00</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">chr10:17237326C=/+</td>
 <td style="text-align: left;">chr10</td>
 <td style="text-align: right;">17237326</td>
@@ -640,16 +659,16 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">VIM</td>
 <td style="text-align: left;">utr3</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.6009790</td>
+<td style="text-align: right;">0.5901062</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.8154674</td>
-<td style="text-align: right;">-0.0608496</td>
+<td style="text-align: right;">0.8177534</td>
+<td style="text-align: right;">-0.0716207</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1319203</td>
-<td style="text-align: right;">0.0234972</td>
+<td style="text-align: right;">0.1353377</td>
+<td style="text-align: right;">0.0231055</td>
 <td style="text-align: right;">0e+00</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">chr10:62069780C=/+</td>
 <td style="text-align: left;">chr10</td>
 <td style="text-align: right;">62069780</td>
@@ -660,16 +679,16 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">ARID5B</td>
 <td style="text-align: left;">utr3</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1059959</td>
+<td style="text-align: right;">0.1063609</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3728708</td>
-<td style="text-align: right;">-0.1061673</td>
+<td style="text-align: right;">0.3842072</td>
+<td style="text-align: right;">-0.1395669</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1338420</td>
-<td style="text-align: right;">0.0247704</td>
+<td style="text-align: right;">0.1365213</td>
+<td style="text-align: right;">0.0245408</td>
 <td style="text-align: right;">0e+00</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">chr10:62069780C&gt;T/+</td>
 <td style="text-align: left;">chr10</td>
 <td style="text-align: right;">62069780</td>
@@ -680,16 +699,16 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">ARID5B</td>
 <td style="text-align: left;">utr3</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1062701</td>
+<td style="text-align: right;">0.1150453</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3611372</td>
-<td style="text-align: right;">-0.1061673</td>
+<td style="text-align: right;">0.3927766</td>
+<td style="text-align: right;">-0.1395669</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1318410</td>
-<td style="text-align: right;">0.0223886</td>
+<td style="text-align: right;">0.1339618</td>
+<td style="text-align: right;">0.0221892</td>
 <td style="text-align: right;">0e+00</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">chr10:71816550C=/-</td>
 <td style="text-align: left;">chr10</td>
 <td style="text-align: right;">71816550</td>
@@ -700,14 +719,34 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">PSAP</td>
 <td style="text-align: left;">utr3</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.3223368</td>
+<td style="text-align: right;">0.3131290</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.4174734</td>
-<td style="text-align: right;">0.2651428</td>
+<td style="text-align: right;">0.4566285</td>
+<td style="text-align: right;">0.1929786</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1318480</td>
-<td style="text-align: right;">0.0192246</td>
+<td style="text-align: right;">0.1346446</td>
+<td style="text-align: right;">0.0208746</td>
 <td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr14:70326287A&gt;G/-</td>
+<td style="text-align: left;">chr14</td>
+<td style="text-align: right;">70326287</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">chr14:70326287/-</td>
+<td style="text-align: left;">COX16,SYNJ2BP-COX16</td>
+<td style="text-align: left;">multigenes</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.0937174</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.2402538</td>
+<td style="text-align: right;">0.2599863</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1333912</td>
+<td style="text-align: right;">0.0161020</td>
+<td style="text-align: right;">3e-07</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr2:74969604A&gt;G/+</td>
@@ -720,13 +759,13 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">POLE4</td>
 <td style="text-align: left;">utr3</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.0815978</td>
+<td style="text-align: right;">0.0831258</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3677606</td>
-<td style="text-align: right;">-0.2297149</td>
+<td style="text-align: right;">0.3735274</td>
+<td style="text-align: right;">-0.2156281</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1337972</td>
-<td style="text-align: right;">0.0224278</td>
+<td style="text-align: right;">0.1367878</td>
+<td style="text-align: right;">0.0238660</td>
 <td style="text-align: right;">0e+00</td>
 </tr>
 <tr class="even">
@@ -740,14 +779,14 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">PPDPF</td>
 <td style="text-align: left;">utr3</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1284040</td>
+<td style="text-align: right;">0.1234781</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2893666</td>
-<td style="text-align: right;">0.1896883</td>
+<td style="text-align: right;">0.2714920</td>
+<td style="text-align: right;">0.2427846</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1326156</td>
-<td style="text-align: right;">0.0212378</td>
-<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1361309</td>
+<td style="text-align: right;">0.0210482</td>
+<td style="text-align: right;">7e-07</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr20:63521953A&gt;C/+</td>
@@ -760,54 +799,14 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">PPDPF</td>
 <td style="text-align: left;">utr3</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1108369</td>
+<td style="text-align: right;">0.1057650</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3490573</td>
-<td style="text-align: right;">-0.0389358</td>
+<td style="text-align: right;">0.3202730</td>
+<td style="text-align: right;">0.0492431</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1321261</td>
-<td style="text-align: right;">0.0145813</td>
+<td style="text-align: right;">0.1350250</td>
+<td style="text-align: right;">0.0163272</td>
 <td style="text-align: right;">0e+00</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">chr4:87983190A&gt;C/+</td>
-<td style="text-align: left;">chr4</td>
-<td style="text-align: right;">87983190</td>
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">+</td>
-<td style="text-align: left;">chr4:87983190/+</td>
-<td style="text-align: left;">SPP1</td>
-<td style="text-align: left;">utr3</td>
-<td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.5930839</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2503684</td>
-<td style="text-align: right;">0.6663485</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1279244</td>
-<td style="text-align: right;">0.0191023</td>
-<td style="text-align: right;">9e-07</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">chr6:30009735T&gt;C/+</td>
-<td style="text-align: left;">chr6</td>
-<td style="text-align: right;">30009735</td>
-<td style="text-align: left;">T</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">+</td>
-<td style="text-align: left;">chr6:30009735/+</td>
-<td style="text-align: left;">ENSG00000290574</td>
-<td style="text-align: left;">exon</td>
-<td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.0431633</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2618154</td>
-<td style="text-align: right;">-0.1235718</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1301269</td>
-<td style="text-align: right;">0.0200655</td>
-<td style="text-align: right;">4e-07</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr6:30009771C&gt;G/+</td>
@@ -820,14 +819,14 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">ENSG00000290574</td>
 <td style="text-align: left;">exon</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.0550699</td>
+<td style="text-align: right;">0.0512442</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3056708</td>
-<td style="text-align: right;">-0.2005222</td>
+<td style="text-align: right;">0.2910770</td>
+<td style="text-align: right;">-0.1724933</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1325359</td>
-<td style="text-align: right;">0.0236248</td>
-<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1352401</td>
+<td style="text-align: right;">0.0239597</td>
+<td style="text-align: right;">6e-07</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr6:30009772T&gt;C/+</td>
@@ -840,14 +839,14 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">ENSG00000290574</td>
 <td style="text-align: left;">exon</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.0556577</td>
+<td style="text-align: right;">0.0518072</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.2912292</td>
-<td style="text-align: right;">-0.1378144</td>
+<td style="text-align: right;">0.2889873</td>
+<td style="text-align: right;">-0.1577786</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1320740</td>
-<td style="text-align: right;">0.0214949</td>
-<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1349317</td>
+<td style="text-align: right;">0.0225212</td>
+<td style="text-align: right;">1e-07</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr6:30009773G&gt;T/+</td>
@@ -860,14 +859,14 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">ENSG00000290574</td>
 <td style="text-align: left;">exon</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.0556597</td>
+<td style="text-align: right;">0.0518087</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3035432</td>
-<td style="text-align: right;">-0.1857588</td>
+<td style="text-align: right;">0.3019921</td>
+<td style="text-align: right;">-0.2096809</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1314858</td>
-<td style="text-align: right;">0.0226789</td>
-<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0.1344433</td>
+<td style="text-align: right;">0.0238232</td>
+<td style="text-align: right;">1e-07</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">chr6:30009808A&gt;G/+</td>
@@ -880,13 +879,13 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">ENSG00000290574</td>
 <td style="text-align: left;">exon</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.0540774</td>
+<td style="text-align: right;">0.0506208</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3002537</td>
-<td style="text-align: right;">-0.1868265</td>
+<td style="text-align: right;">0.2975530</td>
+<td style="text-align: right;">-0.2043567</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1323167</td>
-<td style="text-align: right;">0.0226643</td>
+<td style="text-align: right;">0.1351984</td>
+<td style="text-align: right;">0.0222195</td>
 <td style="text-align: right;">0e+00</td>
 </tr>
 <tr class="even">
@@ -900,13 +899,13 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">HLA-C</td>
 <td style="text-align: left;">utr3</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.2908182</td>
+<td style="text-align: right;">0.2910691</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3870842</td>
-<td style="text-align: right;">0.2742891</td>
+<td style="text-align: right;">0.3702501</td>
+<td style="text-align: right;">0.3125711</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1315532</td>
-<td style="text-align: right;">0.0194922</td>
+<td style="text-align: right;">0.1365832</td>
+<td style="text-align: right;">0.0219892</td>
 <td style="text-align: right;">0e+00</td>
 </tr>
 <tr class="odd">
@@ -920,13 +919,13 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">MT-ATP6</td>
 <td style="text-align: left;">exon</td>
 <td style="text-align: right;">0e+00</td>
-<td style="text-align: right;">0.1534806</td>
+<td style="text-align: right;">0.1550720</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.3221180</td>
-<td style="text-align: right;">0.1752870</td>
+<td style="text-align: right;">0.3065418</td>
+<td style="text-align: right;">0.2258546</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1327722</td>
-<td style="text-align: right;">0.0160951</td>
+<td style="text-align: right;">0.1356581</td>
+<td style="text-align: right;">0.0162168</td>
 <td style="text-align: right;">0e+00</td>
 </tr>
 </tbody>
