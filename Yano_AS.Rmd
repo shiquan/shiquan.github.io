@@ -18,7 +18,6 @@ require(Yano)
 ```{r warning=FALSE}
 # Read raw gene expression matrix
 exp <- ReadPISA("./exp/")
-dim(exp)
 ```
 In this section, we will perform the standard Seurat analysis pipeline. Since the spatial dissimilarity test is not rely on cell clustering so changing the resolution or other parameters for `FindClusters` and `RunUMAP` will not impact the outcome of the spatial dissimilarity test.
 ```{r warning=FALSE}
@@ -39,7 +38,7 @@ DimPlot(obj, label=TRUE, label.size = 5, label.box = TRUE)
 ```
 
 ## 2. Perform alternative splicing with exon assay
-In this section, we will compare exon expression patterns with the expression patterns of their corresponding genes in a spatial context. Here, the term "spatial" refers to the organization of cells in space. In this vignette, we will use the PCA space for the analysis, but the approach can also be applied to lineage trajectories, spatial coordinates or integration space such as harmony. The spatial dissimilarity test is divided into several steps. First, we will load exon data as a new assay in the Seurat object. In the second step, we will perform a spatial autocorrelation test for all exons and select the ones that show significant autocorrelation for further analysis. Next, we will define the binding relationship between exons and their corresponding genes and run the spatial dissimilarity test. After testing, p-values and adjusted p-values for each exon will be provided.
+In this section, we will compare exon expression patterns with the expression patterns of their corresponding genes in a spatial context. Here, the term "spatial" refers to the organization of cells in space. In this vignette, we will use the PCA space for the analysis, but the approach can also be applied to lineage trajectories, spatial coordinates or integration space such as harmony. The spatial dissimilarity test is divided into several steps. First, we will load exon data as a new assay in the Seurat object. In the second step, we will perform a spatial autocorrelation test for all exons and select the ones that show significant autocorrelation for further analysis. Next, we will define the binding relationship between exons and their corresponding genes and run the spatial dissimilarity test. After testing, P values and adjusted P values for each exon will be provided.
 
 ```{r warning=FALSE, fig.width=14, fig.height=6}
 # Read exon count matrix file
@@ -105,12 +104,11 @@ A track plot is used to study the read coverage per cell group. In the track plo
 ```{r message=FALSE, fig.width=12, fig.height=8}
 TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "SERF2", cell.group = Idents(obj), highlights = c(43801711,43804427) )
 ```
-In the track plot, we can easily observe that an exon around position 33,794,000 dominates the expression of the SERF2 gene and is highly expressed in many cell groups. However, the exon 'chr15:43801711-43804427/+/SERF2' (highlighted) shows low expression and is not visible in the track plot. To visualize low-expressed exons, we can set the `max.depth` parameter to 2, which caps the UMI depth at 2. And many genes in the region, we set `display.genes` to SERF2 only. This adjustment allows the low-expressed exons and their related transcipts to be more clearly represented in the plot. In this case, we can found the the highlighed exon shows different expressed pattern with the gene SERF2.
+In the track plot, we can easily observe that an exon around position 43,794,000 dominates the expression of the SERF2 gene and is highly expressed in many cell groups. However, the exon 'chr15:43801711-43804427/+/SERF2' (highlighted) shows low expression and is not visible in the track plot. To visualize low-expressed exons, we can set the `max.depth` parameter to 2, which caps the UMI depth at 2. And many genes in the region, we set `display.genes` to SERF2 only. This adjustment allows the low-expressed exons and their related transcripts to be more clearly represented in the plot. In this case, we can found the the highlighed exon shows different expressed pattern with the gene SERF2.
 
 ```{r message=FALSE, fig.width=12, fig.height=8}
 TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "SERF2", cell.group = Idents(obj), highlights = c(43801711,43804427), max.depth = 2, display.genes = "SERF2")
 ```
-
 
 ## 3. Load junction assay
 In addition to exon expression, junction expression can provide insights into different expression patterns across transcripts, offering a complementary perspective. Junction expression refers to the UMI counts of reads that span more than one exon. It's important to note that junctions are named similarly to exons, but the start and end positions are different. The start of the junction corresponds to the end of the previous exon, while the end of the junction represents the start of the next exon.
@@ -132,6 +130,8 @@ obj <- ParseExonName(obj)
 obj <- RunBlockCorr(obj, bind.name = "gene_name", bind.assay = "RNA", perm=20)
 
 FbtPlot(obj, val="gene_name.padj", remove.chr=TRUE, sel.chrs = sel.chrs)
+
+obj[['junction']][[]] %>% filter(gene_name.padj<1e-5)
 
 # Because both exon and junction are compared with gene, so it's reasonable to combine these two assays in one plot
 FbtPlot(obj, val="gene_name.padj", assay = c("exon", "junction"), col.by = "assay", shape.by = "assay", pt.size = 2, remove.chr = TRUE, sel.chrs = sel.chrs, cols = c("red", "blue"))
@@ -202,15 +202,15 @@ draw(ht, heatmap_legend_side = "left",  annotation_legend_side = "left")
 
 ## 5. Test between exon and exon skipped reads
 
-In the previous sections, we conducted a spatial dissimilarity test between exon/junction expression and gene expression. However, binding features are not always limited to genes; they can also correspond to other types of features. In this section, we perform a test between exon expression and reads that skip this exon using mode 3. This approach is similar to the Percent Spliced In (PSI) method, which is widely used to analyze alternative splicing in both bulk and single-cell RNA-seq data. The PSI is calculated as:
-
-PSI = exon reads / (exon reads + reads skipping this exon)
+In the previous sections, we conducted a spatial dissimilarity test between exon/junction expression and gene expression. However, binding features are not always limited to genes; they can also correspond to other types of features. In this section, we perform a test between exon expression and reads that skip this exon (exclude assay). This approach is similar to the Percent Spliced In (PSI) method, which is widely used to analyze alternative splicing in both bulk and single-cell RNA-seq data. The PSI is calculated as: `PSI = exon reads / (exon reads + reads skipping this exon)`. 
 
 ```{r  message=FALSE, warning=FALSE, fig.width=12, fig.height=4}
 # The reads that skip exons are annotated using the `-psi` option in PISA anno, and these counts are stored in the `exclude` directory. We then load these excluded counts into a new assay.
-exclude <- ReadPISA("./exclude/")
+exclude <- ReadPISA("exclude/")
 obj[['exclude']] <- CreateAssayObject(exclude[,colnames(obj)], min.cells = 10)
-
+DefaultAssay(obj) <- "exclude"
+# Normalize counts for exon-excluded reads
+obj <- NormalizeData(obj)
 # Then we switch to exon assay
 DefaultAssay(obj) <- "exon"
 
@@ -218,39 +218,59 @@ DefaultAssay(obj) <- "exon"
 obj[['exon']][['exon_name']] <- rownames(obj)
 obj[['exon']][['exon_name']] %>% head
 
-# Then we perform spatial dissimilarity test between exon and (exon+exclude) using mode 3.
-obj <- RunBlockCorr(obj, bind.name = "exon_name", bind.assay = "exclude", mode = 3)
+# Then we perform spatial dissimilarity test between exon and exclude, mode 1
+obj <- RunBlockCorr(obj, bind.name = "exon_name", bind.assay = "exclude")
 
-obj[['exon']][[]] %>% filter(exon_name.padj<1e-5)
+# Swith to exon exluded assay
+DefaultAssay(obj) <- "exclude"
+obj <- RunAutoCorr(obj)
+obj <- SetAutoCorrFeatures(obj)
+obj <- ParseExonName(obj)
+obj[['exclude']][['exon_name']] <- rownames(obj)
 
-FbtPlot(obj, val = "exon_name.padj", remove.chr = TRUE, point.label = "chr1:153990914-153991034/+/RPS27")
+obj <- RunBlockCorr(obj, bind.name = "exon_name", bind.assay = "exon")
 
-# We find that only a few events can be prioritized.
-p1 <- PSIPlot(obj, exon.assay = "exon", exclude.assay = "exclude", features = c("chr1:153990914-153991034/+/RPS27"), order = TRUE)
-p2 <- FeaturePlot(obj,  features = c("chr1:153990914-153991034/+/RPS27"), order = TRUE)
-p3 <- FeaturePlot(obj,  features = c("RPS27"), order = TRUE)
-cowplot::plot_grid(p1, p2,p3, ncol=3)
+FbtPlot(obj, val = "exon_name.padj", remove.chr = TRUE, assay = c("exclude", "exon"), shape.by = "assay", col.by = "assay", cols = c("yellow", "green"), pt.size = 2)
 ```
-```{r message=FALSE, warning=FALSE, fig.width=12, fig.height=7}
-TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "RPS27", cell.group = Idents(obj), highlights = c(153990914,153991034), junc = TRUE)
+```{r  message=FALSE, warning=FALSE, fig.width=12, fig.height=4}
+# Let's how many exons can be prioritized by both exon assay and exclude assay
+obj[['exclude']][[]] %>% filter(exon_name.padj<1e-5) %>% rownames -> sel1
+obj[['exon']][[]] %>% filter(exon_name.padj<1e-5) %>% rownames -> sel2
+intersect(sel1,sel2)
 
-# It seems like the exon is in low coverage, we then zoom in by setting the max depth to 2.
-TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "RPS27", cell.group = Idents(obj), highlights = c(153990914,153991034), junc = TRUE, max.depth = 2)
+DefaultAssay(obj) <- "exclude"
+p1 <- FeaturePlot(obj, features = c("chr19:16095264-16095357/+/TPM4"),order = TRUE)
+DefaultAssay(obj) <- "exon"
+p2 <- FeaturePlot(obj, features = c("chr19:16095264-16095357/+/TPM4"),order = TRUE)
+p3 <- PSIPlot(obj, exon.assay = "exon", exclude.assay = "exclude", features = c("chr19:16095264-16095357/+/TPM4"),order = TRUE)
+cowplot::plot_grid(p1,p2,p3, ncol=3)
+```
+```{r message=FALSE, warning=FALSE, fig.width=12, fig.height=8}
+TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "TPM4", cell.group = Idents(obj), highlights = c(16095264,16095357), junc = TRUE)
 ```
 
-In previous sections, we noted that exon or junction expression is part of gene expression, and inverse expression patterns can strongly indicate alternative splicing. However, exon-skipped reads are largely independent of exon expression, and our D test does not account for the spatial autocorrelation of the binding feature. As a result, many false positives may be generated with mode 1. Therefore, we use mode 3 in this section. You can always run mode 1 and compare it with mode 3 for this test.
 
-As we observed here, many events cannot be properly defined by comparing them with exon-skipped events, likely due to the use of mode 3, which sums exon-included and exon-skipped reads as the test feature. While exon-skipped reads need to be sufficiently abundant to influence the expression pattern, the low coverage of gene bodies and the presence of dropouts hindered this analysis.
+In previous sections, we noted that exon or junction expression is part of gene expression, and inverse expression patterns can strongly indicate alternative splicing. However, exon-skipped reads are largely independent of exon expression, making them more sensitive for detecting alternative splicing and allowing for the prioritization of many events. 
 
-Although we found few differences in expression patterns between exon included and exon included + exon-skipped reads, for large-scale datasets or full-length scRNA-seq technologies, this setup may reveal more significant events.
+Because the D test does not account for the spatial dependency of the binding feature, numerous events may be prioritized, especially when the binding feature is sparsely expressed. While some of these events may be true, others might arise due to low coverage. To enhance detection power and reduce potential false positives, intersecting the selected exons with the corresponding exon-excluded features can help refine the results.
 
-In this case study, we performed a spatial dissimilarity test between various feature pairs. This method provides an overview of the entire cell population and does not rely on prior cell clustering and annotation, making it a powerful tool for analyzing cell data without any prior knowledge. It is recommended to test junctions and exons with their corresponding genes in 3' or 5' biased scRNA-seq. Additionally, testing between exon-included and exon-skipped reads can be more informative for large-scale datasets and full-length scRNA-seq.
+Mode 3 can be used as an alternative to mode 1 to specifically detect events with strong inverse expression patterns. In mode 3, the exon reads and exon-excluded reads are summed for the binding assay, allowing for a more targeted analysis of such patterns. It is important to note that events detected with mode 3 are always detectable with mode 1, making mode 3 a refined approach for prioritizing inverse expression events.
+
+```{r  message=FALSE, warning=FALSE, fig.width=12, fig.height=4}
+DefaultAssay(obj) <- "exclude"
+obj <- RunBlockCorr(obj, bind.name = "exon_name", bind.assay = "exon", mode = 3, prefix = "mode3")
+DefaultAssay(obj) <- "exon"
+obj <- RunBlockCorr(obj, bind.name = "exon_name", bind.assay = "exclude", mode = 3, prefix = "mode3")
+FbtPlot(obj, val = "mode3.padj", remove.chr = TRUE, assay = c("exclude", "exon"), shape.by = "assay", col.by = "assay", pt.size = 2, cols=c("yellow", "green"))
+```
+
+
+In this case study, we performed a spatial dissimilarity test between various feature pairs. This method provides an overview of the entire cell population and does not rely on prior cell clustering and annotation, making it a powerful tool for analyzing cell data without any prior knowledge. It is recommended to test different features including junctions and exons, and set up different with their corresponding genes in 3’ or 5’ biased scRNA-seq. Additionally, testing between exon-included and exon-skipped reads have more power to detect exon excluded events.
 
 To obtain cell-cluster-specific expression patterns, applying heatmaps and clustering in subsequent analyses is recommended.
 
-
 ## Questions?
-If you have any questions regarding this vignette, please feel free to report them through the [discussion forum](https://github.com/shiquan/Yano/discussions). When submitting your query, please ensure you attach the commands you used for better clarity and support.
+If you have any questions regarding this vignette and the usage of Yano, please feel free to report them through the [discussion forum](https://github.com/shiquan/Yano/discussions). When submitting your query, please ensure you attach the commands you used for better clarity and support.
 
 ```{r}
 Command(obj)

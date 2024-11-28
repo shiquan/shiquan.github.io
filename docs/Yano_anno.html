@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-07-08">
 
 <title>Annotating and prioritizing genetic variants for single cell RNA sequencing</title>
 <style>
@@ -229,7 +228,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#annotate-genetic-variants" id="toc-annotate-genetic-variants" class="nav-link active" data-scroll-target="#annotate-genetic-variants">Annotate genetic variants</a></li>
+  <li><a href="#predict-the-consequence-of-genetic-variants" id="toc-predict-the-consequence-of-genetic-variants" class="nav-link active" data-scroll-target="#predict-the-consequence-of-genetic-variants">Predict the consequence of genetic variants</a></li>
+  <li><a href="#annotate-genetic-variants" id="toc-annotate-genetic-variants" class="nav-link" data-scroll-target="#annotate-genetic-variants">Annotate genetic variants</a></li>
   </ul>
 </nav>
     </div>
@@ -246,12 +246,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta column-body">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">July 8, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -262,17 +256,443 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>This vignette demonstrates how Yano can annotate genetic variants using public databases and assist users in interpreting the functional impact of these variants.</p>
+<section id="predict-the-consequence-of-genetic-variants" class="level2">
+<h2 class="anchored" data-anchor-id="predict-the-consequence-of-genetic-variants">Predict the consequence of genetic variants</h2>
+<p>Load the object which generated from <a href="./Yano_ASE.html">allele specific gene expression from scRNA-seq</a>. In that case, we used annoVAR to annotate the gene and approximate gene region type for the variants. The predicted consequences were derived from transcript annotations. However, gencode annotations, generated as part of the ENCODE project, contain numerous truncated transcript records that are not fully consistent with the reference genome, which can introduce bias when predicting amino acid changes. For clinical research, validated annotations like RefSeq are preferred for genetic variant annotation. In this analysis, RefSeq annotations were downloaded from the UCSC server to provide more accurate and reliable predictions. Furthermore, the human genome reference is also need for the prediction.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-c</span> https://hgdownload.soe.ucsc.edu/goldenPath/archive/hg38/ncbiRefSeq/110/hg38.110.ncbiRefSeq.gtf.gz</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-c</span> https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/GRCh38.p13.genome.fa.gz</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> GRCh38.p13.genome.fa.gz</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># FASTA need to be indexed</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> faidx GRCh38.p13.genome.fa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Yano)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Yano</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ────────────────────────────────────────────── Yano 1.0 ──
+✔ dplyr   1.1.4     ✔ Seurat  5.1.0
+✔ ggplot2 3.5.1     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"glioblastoma5k.rds"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"hg38.110.ncbiRefSeq.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[2024-11-28 12:22:41] [32mGTF loading..[0m
+[2024-11-28 12:23:02] [32mLoad 66991 genes.[0m
+[2024-11-28 12:23:02] [32mLoad time : 21.191 sec[0m</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"var"</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">annoVAR</span>(obj, <span class="at">gtf =</span> gtf, <span class="at">fasta =</span> <span class="st">"./GRCh38.p13.genome.fa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Parse names ..</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CDS region of transcript NM_001261418.2 cannot translate to codons properly.
+CDS region of transcript XM_047433500.1 cannot translate to codons properly.
+CDS region of transcript NM_001350237.2 cannot translate to codons properly.
+CDS region of transcript XM_017002563.2 cannot translate to codons properly.
+CDS region of transcript XM_047432264.1 cannot translate to codons properly.
+CDS region of transcript XM_017002566.2 cannot translate to codons properly.
+CDS region of transcript NM_001350238.2 cannot translate to codons properly.
+CDS region of transcript XM_017002570.2 cannot translate to codons properly.
+CDS region of transcript XM_017002567.2 cannot translate to codons properly.
+CDS region of transcript XM_047432272.1 cannot translate to codons properly.
+CDS region of transcript XM_017002562.2 cannot translate to codons properly.
+CDS region of transcript NM_001350241.2 cannot translate to codons properly.
+CDS region of transcript XM_047432255.1 cannot translate to codons properly.
+CDS region of transcript XM_017002560.3 cannot translate to codons properly.
+CDS region of transcript NM_001350239.2 cannot translate to codons properly.
+CDS region of transcript NM_001032291.3 cannot translate to codons properly.
+CDS region of transcript NM_001394005.1 cannot translate to codons properly.
+CDS region of transcript NM_001350240.2 cannot translate to codons properly.
+CDS region of transcript NM_032636.8 cannot translate to codons properly.
+CDS region of transcript XM_047432251.1 cannot translate to codons properly.
+CDS region of transcript XM_047432274.1 cannot translate to codons properly.
+CDS region of transcript XM_017002569.2 cannot translate to codons properly.
+CDS region of transcript XM_017002564.2 cannot translate to codons properly.
+CDS region of transcript NM_001350242.2 cannot translate to codons properly.
+CDS region of transcript NM_001394002.1 cannot translate to codons properly.
+CDS region of transcript NM_001363309.2 cannot translate to codons properly.
+CDS region of transcript XM_047432275.1 cannot translate to codons properly.
+CDS region of transcript XM_005271283.4 cannot translate to codons properly.
+CDS region of transcript XM_017015641.3 cannot translate to codons properly.
+CDS region of transcript NM_001385672.1 cannot translate to codons properly.
+CDS region of transcript XM_011536897.3 cannot translate to codons properly.
+CDS region of transcript NM_001018005.2 cannot translate to codons properly.
+CDS region of transcript XM_006720667.5 cannot translate to codons properly.
+CDS region of transcript NM_001301244.2 cannot translate to codons properly.
+CDS region of transcript XM_047433003.1 cannot translate to codons properly.
+CDS region of transcript NM_001330346.2 cannot translate to codons properly.
+CDS region of transcript XM_005254650.4 cannot translate to codons properly.
+CDS region of transcript NM_004850.5 cannot translate to codons properly.
+CDS region of transcript NM_001321643.2 cannot translate to codons properly.
+CDS region of transcript NM_080794.4 cannot translate to codons properly.
+CDS region of transcript NM_001243385.2 cannot translate to codons properly.
+CDS region of transcript XM_047441349.1 cannot translate to codons properly.
+CDS region of transcript XM_024452237.2 cannot translate to codons properly.
+CDS region of transcript XM_047441350.1 cannot translate to codons properly.
+CDS region of transcript XM_047447996.1 cannot translate to codons properly.
+CDS region of transcript XM_047416720.1 cannot translate to codons properly.
+CDS region of transcript XM_047416719.1 cannot translate to codons properly.
+CDS region of transcript XM_005248250.4 cannot translate to codons properly.
+CDS region of transcript XM_011513966.3 cannot translate to codons properly.
+CDS region of transcript NM_001077654.3 cannot translate to codons properly.
+CDS region of transcript NM_001385620.1 cannot translate to codons properly.
+CDS region of transcript XM_047418494.1 cannot translate to codons properly.
+CDS region of transcript XM_017010597.2 cannot translate to codons properly.
+CDS region of transcript XM_006716181.5 cannot translate to codons properly.
+CDS region of transcript XM_047421050.1 cannot translate to codons properly.
+CDS region of transcript XM_047422695.1 cannot translate to codons properly.
+CDS region of transcript rna-CYTB cannot translate to codons properly.
+CDS region of transcript rna-COX3 cannot translate to codons properly.
+CDS region of transcript rna-ND1 cannot translate to codons properly.
+CDS region of transcript rna-ND2 cannot translate to codons properly.
+CDS region of transcript rna-ND4 cannot translate to codons properly.
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000205.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000205.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000218.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270737.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270713.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270733.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270733.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270733.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270733.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome KI270733.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m
+[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="ot">-&gt;</span> df</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   chr   start ref alt strand          locus gene_name     type
+chr1:633192G=/+   chr1  633192   G   G      +  chr1:633192/+  MTCO2P12     utr5
+chr1:1000079A&gt;G/- chr1 1000079   A   G      - chr1:1000079/-      HES4     utr5
+chr1:1000731C=/+  chr1 1000731   C   C      + chr1:1000731/+      HES4 upstream
+chr1:1000814A&gt;G/+ chr1 1000814   A   G      + chr1:1000814/+      HES4 upstream
+chr1:1000830C&gt;A/+ chr1 1000830   C   A      + chr1:1000830/+      HES4 upstream
+chr1:1014228G=/+  chr1 1014228   G   G      + chr1:1014228/+     ISG15     exon
+                  moransi.pval     moransi autocorr.variable    locus.D
+chr1:633192G=/+   3.235392e-01 0.001330283             FALSE         NA
+chr1:1000079A&gt;G/- 1.270509e-01 0.004159267             FALSE         NA
+chr1:1000731C=/+  5.063894e-03 0.010004135              TRUE         NA
+chr1:1000814A&gt;G/+ 6.632273e-06 0.017655831              TRUE         NA
+chr1:1000830C&gt;A/+ 3.142598e-06 0.018340286              TRUE         NA
+chr1:1014228G=/+  3.650720e-80 0.079578829              TRUE 0.04032407
+                    locus.r locus.pval locus.mean  locus.var locus.padj
+chr1:633192G=/+          NA         NA         NA         NA         NA
+chr1:1000079A&gt;G/-        NA         NA         NA         NA         NA
+chr1:1000731C=/+         NA         NA         NA         NA         NA
+chr1:1000814A&gt;G/+        NA         NA         NA         NA         NA
+chr1:1000830C&gt;A/+        NA         NA         NA         NA         NA
+chr1:1014228G=/+  0.8618829  0.9999916  0.1330176 0.02047667          1
+                            consequence
+chr1:633192G=/+                     ref
+chr1:1000079A&gt;G/-                  utr5
+chr1:1000731C=/+  antisense_upstream_1K
+chr1:1000814A&gt;G/+ antisense_upstream_1K
+chr1:1000830C&gt;A/+ antisense_upstream_1K
+chr1:1014228G=/+                    ref</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>consequence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+antisense_downstream_1K          antisense_exon        antisense_intron 
+                     84                     623                    4446 
+  antisense_upstream_1K           downstream_1K               exon_loss 
+                    192                     350                       3 
+  frameshift_elongation   frameshift_truncation              intergenic 
+                      1                       3                    2851 
+                 intron                missense          noncoding_exon 
+                  11827                     661                     935 
+       noncoding_intron noncoding_splice_region                     ref 
+                    914                       4                   12064 
+        splice_acceptor            splice_donor           splice_region 
+                      5                       9                      26 
+           splice_sites              start_loss          start_retained 
+                     12                       2                       1 
+            stop_gained              synonymous             upstream_1K 
+                      5                     831                     111 
+                   utr3                    utr5 
+                   5018                     625 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(df, consequence <span class="sc">%in%</span> <span class="st">"stop_gained"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                      chr     start ref alt strand            locus gene_name
+chr11:62602409G&gt;A/- chr11  62602409   G   A      - chr11:62602409/-      EML3
+chr16:15086183G&gt;A/- chr16  15086183   G   A      - chr16:15086183/-      RRN3
+chr21:21480040G&gt;A/+ chr21  21480040   G   A      + chr21:21480040/+     NCAM2
+chr5:140557175G&gt;T/-  chr5 140557175   G   T      - chr5:140557175/-      SRA1
+chr7:55473014G&gt;A/-   chr7  55473014   G   A      -  chr7:55473014/-     VOPP1
+                      type moransi.pval      moransi autocorr.variable locus.D
+chr11:62602409G&gt;A/-   exon  0.336093969  0.001276426             FALSE      NA
+chr16:15086183G&gt;A/-   exon  0.655940637 -0.002113975             FALSE      NA
+chr21:21480040G&gt;A/+ intron  0.001069736  0.012035608              TRUE      NA
+chr5:140557175G&gt;T/-   exon  0.268485438  0.001999330             FALSE      NA
+chr7:55473014G&gt;A/-    exon  0.006479300  0.009925890              TRUE      NA
+                    locus.r locus.pval locus.mean locus.var locus.padj
+chr11:62602409G&gt;A/-      NA         NA         NA        NA         NA
+chr16:15086183G&gt;A/-      NA         NA         NA        NA         NA
+chr21:21480040G&gt;A/+      NA         NA         NA        NA         NA
+chr5:140557175G&gt;T/-      NA         NA         NA        NA         NA
+chr7:55473014G&gt;A/-       NA         NA         NA        NA         NA
+                    consequence
+chr11:62602409G&gt;A/- stop_gained
+chr16:15086183G&gt;A/- stop_gained
+chr21:21480040G&gt;A/+ stop_gained
+chr5:140557175G&gt;T/- stop_gained
+chr7:55473014G&gt;A/-  stop_gained</code></pre>
+</div>
+</div>
+</section>
 <section id="annotate-genetic-variants" class="level2">
 <h2 class="anchored" data-anchor-id="annotate-genetic-variants">Annotate genetic variants</h2>
 <p>One key advancement in genetic variant studies is the ability to perform functional interpretation and annotation using genotype-phenotype and allele frequency databases. For demonstration purposes, we use the <a href="https://www.ncbi.nlm.nih.gov/clinvar/">ClinVar</a> database for annotation in this vignette.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the database in VCF format</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-c</span>  https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># remeber to index this database, otherwise annoVAR will report error.</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> index clinvar.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the database in VCF format</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-c</span>  https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># remeber to index this database, otherwise annoVAR will report error.</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> index clinvar.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Let’s take a look at the format of the ClinVar database. As noted, the chromosome names are in the NCBI style, meaning they do not include the “chr” prefix. Therefore, we need to generate a new column with chromosome names formatted for annotation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view clinvar.vcf.gz<span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span><span class="kw">|</span> <span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view clinvar.vcf.gz<span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span><span class="kw">|</span> <span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1   69134   2205837 A   G   .   .   ALLELEID=2193183;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69134A&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Likely_benign;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
 1   69314   3205580 T   G   .   .   ALLELEID=3374047;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69314T&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
@@ -286,32 +706,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 1   925952  1019397 G   A   .   .   ALLELEID=1003021;CLNDISDB=MedGen:C3661900;CLNDN=not_provided;CLNHGVS=NC_000001.11:g.925952G&gt;A;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=SAMD11:148398;MC=SO:0001583|missense_variant;ORIGIN=1;RS=1640863258</code></pre>
 </div>
 </div>
-<p>Load the object which generated from <a href="./Yano_ASE.html">allele specific gene expression from scRNA-seq</a>.</p>
+<p>We need to create new chromosome names that are compatible with the NCBI database format, because chromosome names in Clinvar database are look like ‘1’, ‘2’.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Yano)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: Yano</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ────────────────────────────────────────────── Yano 1.0 ──
-✔ dplyr   1.1.4     ✔ Seurat  5.1.0
-✔ ggplot2 3.5.1     </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"glioblastoma5k.rds"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"var"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>We need to create new chromosome names that are compatible with the NCBI database format.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[<span class="st">'chr0'</span>]] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"chr(.*)"</span>,<span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, obj[[<span class="st">'var'</span>]][[]]<span class="sc">$</span>chr)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[<span class="st">'chr0'</span>]] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"chr(.*)"</span>,<span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, obj[[<span class="st">'var'</span>]][[]]<span class="sc">$</span>chr)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   chr   start ref alt strand          locus gene_name     type
-chr1:633192G=/+   chr1  633192   G   G      +  chr1:633192/+  MTCO2P12     exon
+chr1:633192G=/+   chr1  633192   G   G      +  chr1:633192/+  MTCO2P12     utr5
 chr1:1000079A&gt;G/- chr1 1000079   A   G      - chr1:1000079/-      HES4     utr5
-chr1:1000731C=/+  chr1 1000731   C   C      + chr1:1000731/+     ISG15 upstream
-chr1:1000814A&gt;G/+ chr1 1000814   A   G      + chr1:1000814/+     ISG15 upstream
-chr1:1000830C&gt;A/+ chr1 1000830   C   A      + chr1:1000830/+     ISG15 upstream
-chr1:1014228G=/+  chr1 1014228   G   G      + chr1:1014228/+     ISG15     utr5
+chr1:1000731C=/+  chr1 1000731   C   C      + chr1:1000731/+      HES4 upstream
+chr1:1000814A&gt;G/+ chr1 1000814   A   G      + chr1:1000814/+      HES4 upstream
+chr1:1000830C&gt;A/+ chr1 1000830   C   A      + chr1:1000830/+      HES4 upstream
+chr1:1014228G=/+  chr1 1014228   G   G      + chr1:1014228/+     ISG15     exon
                   moransi.pval     moransi autocorr.variable    locus.D
 chr1:633192G=/+   3.235392e-01 0.001330283             FALSE         NA
 chr1:1000079A&gt;G/- 1.270509e-01 0.004159267             FALSE         NA
@@ -319,30 +725,37 @@ chr1:1000731C=/+  5.063894e-03 0.010004135              TRUE         NA
 chr1:1000814A&gt;G/+ 6.632273e-06 0.017655831              TRUE         NA
 chr1:1000830C&gt;A/+ 3.142598e-06 0.018340286              TRUE         NA
 chr1:1014228G=/+  3.650720e-80 0.079578829              TRUE 0.04032407
-                    locus.r locus.pval locus.mean  locus.var locus.padj chr0
-chr1:633192G=/+          NA         NA         NA         NA         NA    1
-chr1:1000079A&gt;G/-        NA         NA         NA         NA         NA    1
-chr1:1000731C=/+         NA         NA         NA         NA         NA    1
-chr1:1000814A&gt;G/+        NA         NA         NA         NA         NA    1
-chr1:1000830C&gt;A/+        NA         NA         NA         NA         NA    1
-chr1:1014228G=/+  0.8618829  0.9999916  0.1330176 0.02047667          1    1</code></pre>
+                    locus.r locus.pval locus.mean  locus.var locus.padj
+chr1:633192G=/+          NA         NA         NA         NA         NA
+chr1:1000079A&gt;G/-        NA         NA         NA         NA         NA
+chr1:1000731C=/+         NA         NA         NA         NA         NA
+chr1:1000814A&gt;G/+        NA         NA         NA         NA         NA
+chr1:1000830C&gt;A/+        NA         NA         NA         NA         NA
+chr1:1014228G=/+  0.8618829  0.9999916  0.1330176 0.02047667          1
+                            consequence chr0
+chr1:633192G=/+                     ref    1
+chr1:1000079A&gt;G/-                  utr5    1
+chr1:1000731C=/+  antisense_upstream_1K    1
+chr1:1000814A&gt;G/+ antisense_upstream_1K    1
+chr1:1000830C&gt;A/+ antisense_upstream_1K    1
+chr1:1014228G=/+                    ref    1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># here we annotate RS id and clinical signification for variants, to check the VCF header for all possible tags</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">annoVAR</span>(obj, <span class="at">vcf =</span> <span class="st">"clinvar.vcf.gz"</span>, <span class="at">chr =</span> <span class="st">"chr0"</span>, <span class="at">tags =</span> <span class="fu">c</span>(<span class="st">"RS"</span>, <span class="st">"CLNSIG"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># here we annotate RS id and clinical signification for variants, to check the VCF header for all possible tags</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">annoVAR</span>(obj, <span class="at">vcf =</span> <span class="st">"clinvar.vcf.gz"</span>, <span class="at">chr =</span> <span class="st">"chr0"</span>, <span class="at">tags =</span> <span class="fu">c</span>(<span class="st">"RS"</span>, <span class="st">"CLNSIG"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Parse names ..</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The RS id and CLNSIG tag now created</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="ot">-&gt;</span> df</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The RS id and CLNSIG tag now created</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="ot">-&gt;</span> df</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   chr   start ref alt strand          locus gene_name     type
-chr1:633192G=/+   chr1  633192   G   G      +  chr1:633192/+  MTCO2P12     exon
+chr1:633192G=/+   chr1  633192   G   G      +  chr1:633192/+  MTCO2P12     utr5
 chr1:1000079A&gt;G/- chr1 1000079   A   G      - chr1:1000079/-      HES4     utr5
-chr1:1000731C=/+  chr1 1000731   C   C      + chr1:1000731/+     ISG15 upstream
-chr1:1000814A&gt;G/+ chr1 1000814   A   G      + chr1:1000814/+     ISG15 upstream
-chr1:1000830C&gt;A/+ chr1 1000830   C   A      + chr1:1000830/+     ISG15 upstream
-chr1:1014228G=/+  chr1 1014228   G   G      + chr1:1014228/+     ISG15     utr5
+chr1:1000731C=/+  chr1 1000731   C   C      + chr1:1000731/+      HES4 upstream
+chr1:1000814A&gt;G/+ chr1 1000814   A   G      + chr1:1000814/+      HES4 upstream
+chr1:1000830C&gt;A/+ chr1 1000830   C   A      + chr1:1000830/+      HES4 upstream
+chr1:1014228G=/+  chr1 1014228   G   G      + chr1:1014228/+     ISG15     exon
                   moransi.pval     moransi autocorr.variable    locus.D
 chr1:633192G=/+   3.235392e-01 0.001330283             FALSE         NA
 chr1:1000079A&gt;G/- 1.270509e-01 0.004159267             FALSE         NA
@@ -350,23 +763,23 @@ chr1:1000731C=/+  5.063894e-03 0.010004135              TRUE         NA
 chr1:1000814A&gt;G/+ 6.632273e-06 0.017655831              TRUE         NA
 chr1:1000830C&gt;A/+ 3.142598e-06 0.018340286              TRUE         NA
 chr1:1014228G=/+  3.650720e-80 0.079578829              TRUE 0.04032407
-                    locus.r locus.pval locus.mean  locus.var locus.padj chr0
-chr1:633192G=/+          NA         NA         NA         NA         NA    1
-chr1:1000079A&gt;G/-        NA         NA         NA         NA         NA    1
-chr1:1000731C=/+         NA         NA         NA         NA         NA    1
-chr1:1000814A&gt;G/+        NA         NA         NA         NA         NA    1
-chr1:1000830C&gt;A/+        NA         NA         NA         NA         NA    1
-chr1:1014228G=/+  0.8618829  0.9999916  0.1330176 0.02047667          1    1
-                    RS CLNSIG
-chr1:633192G=/+   &lt;NA&gt;   &lt;NA&gt;
-chr1:1000079A&gt;G/- &lt;NA&gt;   &lt;NA&gt;
-chr1:1000731C=/+  &lt;NA&gt;   &lt;NA&gt;
-chr1:1000814A&gt;G/+ &lt;NA&gt;   &lt;NA&gt;
-chr1:1000830C&gt;A/+ &lt;NA&gt;   &lt;NA&gt;
-chr1:1014228G=/+  1921 Benign</code></pre>
+                    locus.r locus.pval locus.mean  locus.var locus.padj
+chr1:633192G=/+          NA         NA         NA         NA         NA
+chr1:1000079A&gt;G/-        NA         NA         NA         NA         NA
+chr1:1000731C=/+         NA         NA         NA         NA         NA
+chr1:1000814A&gt;G/+        NA         NA         NA         NA         NA
+chr1:1000830C&gt;A/+        NA         NA         NA         NA         NA
+chr1:1014228G=/+  0.8618829  0.9999916  0.1330176 0.02047667          1
+                            consequence chr0   RS CLNSIG
+chr1:633192G=/+                     ref    1 &lt;NA&gt;   &lt;NA&gt;
+chr1:1000079A&gt;G/-                  utr5    1 &lt;NA&gt;   &lt;NA&gt;
+chr1:1000731C=/+  antisense_upstream_1K    1 &lt;NA&gt;   &lt;NA&gt;
+chr1:1000814A&gt;G/+ antisense_upstream_1K    1 &lt;NA&gt;   &lt;NA&gt;
+chr1:1000830C&gt;A/+ antisense_upstream_1K    1 &lt;NA&gt;   &lt;NA&gt;
+chr1:1014228G=/+                    ref    1 1921 Benign</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We note that there are several pathogenic variants detected</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df[[<span class="st">'CLNSIG'</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We note that there are several pathogenic variants detected</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df[[<span class="st">'CLNSIG'</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
                                              association 
@@ -396,28 +809,28 @@ Conflicting_classifications_of_pathogenicity|risk_factor
                                   Uncertain_significance 
                                                       26 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(CLNSIG <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'Pathogenic'</span>, <span class="st">'Pathogenic/Likely_pathogenic'</span>, <span class="st">'Pathogenic|risk_factor'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(CLNSIG <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'Pathogenic'</span>, <span class="st">'Pathogenic/Likely_pathogenic'</span>, <span class="st">'Pathogenic|risk_factor'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                      chr     start ref alt strand            locus
-chr1:97450058C=/-    chr1  97450058   C   C      -  chr1:97450058/-
-chr1:196690107C=/+   chr1 196690107   C   C      + chr1:196690107/+
-chr13:50945445G=/+  chr13  50945445   G   G      + chr13:50945445/+
-chr13:50945445G&gt;A/+ chr13  50945445   G   A      + chr13:50945445/+
-                              gene_name       type moransi.pval      moransi
-chr1:97450058C=/-                  DPYD     intron 4.368919e-01 0.0001360072
-chr1:196690107C=/+  CFH,ENSG00000289697 multigenes 3.903101e-61 0.0647296819
-chr13:50945445G=/+             RNASEH2B       utr3 1.374427e-06 0.0191248673
-chr13:50945445G&gt;A/+            RNASEH2B       utr3 7.057338e-07 0.0197286674
-                    autocorr.variable    locus.D   locus.r locus.pval
-chr1:97450058C=/-               FALSE         NA        NA         NA
-chr1:196690107C=/+               TRUE 0.07481304 0.7473314  0.9902322
-chr13:50945445G=/+               TRUE 0.11670969 0.3809105  0.8034837
-chr13:50945445G&gt;A/+              TRUE 0.12248441 0.3809105  0.7251275
-                    locus.mean  locus.var locus.padj chr0       RS
-chr1:97450058C=/-           NA         NA         NA    1  3918290
-chr1:196690107C=/+   0.1350459 0.02537402          1    1  1061170
-chr13:50945445G=/+   0.1316099 0.01736865          1   13 75184679
-chr13:50945445G&gt;A/+  0.1352893 0.02133448          1   13 75184679
+<pre><code>                      chr     start ref alt strand            locus gene_name
+chr1:97450058C=/-    chr1  97450058   C   C      -  chr1:97450058/-      DPYD
+chr1:196690107C=/+   chr1 196690107   C   C      + chr1:196690107/+       CFH
+chr13:50945445G=/+  chr13  50945445   G   G      + chr13:50945445/+  RNASEH2B
+chr13:50945445G&gt;A/+ chr13  50945445   G   A      + chr13:50945445/+  RNASEH2B
+                          type moransi.pval      moransi autocorr.variable
+chr1:97450058C=/-       intron 4.368919e-01 0.0001360072             FALSE
+chr1:196690107C=/+  multigenes 3.903101e-61 0.0647296819              TRUE
+chr13:50945445G=/+        exon 1.374427e-06 0.0191248673              TRUE
+chr13:50945445G&gt;A/+       exon 7.057338e-07 0.0197286674              TRUE
+                       locus.D   locus.r locus.pval locus.mean  locus.var
+chr1:97450058C=/-           NA        NA         NA         NA         NA
+chr1:196690107C=/+  0.07481304 0.7473314  0.9902322  0.1350459 0.02537402
+chr13:50945445G=/+  0.11670969 0.3809105  0.8034837  0.1316099 0.01736865
+chr13:50945445G&gt;A/+ 0.12248441 0.3809105  0.7251275  0.1352893 0.02133448
+                    locus.padj consequence chr0       RS
+chr1:97450058C=/-           NA         ref    1  3918290
+chr1:196690107C=/+           1         ref    1  1061170
+chr13:50945445G=/+           1         ref   13 75184679
+chr13:50945445G&gt;A/+          1    missense   13 75184679
                                           CLNSIG
 chr1:97450058C=/-   Pathogenic/Likely_pathogenic
 chr1:196690107C=/+        Pathogenic|risk_factor
@@ -427,7 +840,7 @@ chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic</code></pre>
 </div>
 <p>In the selected SNVs, we found some reference alleles are highlighted, such as chr15:92992967C=/+. These reference alelles are more like to be benign allele. Let’s query the orignal record in the clinvar database to check what exactly stituation it should be.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view clinvar.vcf.gz 15:92992967-92992967</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view clinvar.vcf.gz 15:92992967-92992967</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>##fileformat=VCFv4.1
 ##FILTER=&lt;ID=PASS,Description="All filters passed"&gt;
@@ -502,7 +915,7 @@ chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic</code></pre>
 ##contig=&lt;ID=NT_187693.1&gt;
 ##contig=&lt;ID=NW_009646201.1&gt;
 ##bcftools_viewVersion=1.13+htslib-1.13
-##bcftools_viewCommand=view clinvar.vcf.gz 15:92992967-92992967; Date=Mon Oct 21 14:13:56 2024
+##bcftools_viewCommand=view clinvar.vcf.gz 15:92992967-92992967; Date=Thu Nov 28 12:23:09 2024
 #CHROM  POS ID  REF ALT QUAL    FILTER  INFO
 15  92992967    633515  C   G   .   .   ALLELEID=621980;CLNDISDB=MedGen:CN517202;CLNDN=not_provided;CLNHGVS=NC_000015.10:g.92992967C&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Pathogenic;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=CHD2:1106;MC=SO:0001587|nonsense;ORIGIN=1;RS=2272457
 15  92992967    257709  C   T   .   .   AF_ESP=0.2485;AF_EXAC=0.22658;AF_TGP=0.19349;ALLELEID=255446;CLNDISDB=MeSH:D030342,MedGen:C0950123|MONDO:MONDO:0014150,MedGen:C3809278,OMIM:615369,Orphanet:1942,Orphanet:2382|MedGen:CN169374|MedGen:C3661900;CLNDN=Inborn_genetic_diseases|Developmental_and_epileptic_encephalopathy_94|not_specified|not_provided;CLNHGVS=NC_000015.10:g.92992967C&gt;T;CLNREVSTAT=criteria_provided,_multiple_submitters,_no_conflicts;CLNSIG=Benign;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA7748248;GENEINFO=CHD2:1106;MC=SO:0001819|synonymous_variant;ORIGIN=1;RS=2272457</code></pre>
@@ -513,7 +926,7 @@ chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic</code></pre>
 <p>Unfortunately, many databases distributed in VCF format may contain non-uniformly formatted tags. Apart from manually updating these databases or filter reference allele afterward, there is no straightforward solution to this issue.</p>
 <p>In addition, the RS tag is annotated, and we can refer to the NCBI SNP database for more information. For example, the mutation chr13:50945445G&gt;A/+ at RS 75184679 can be found at the following link: <a href="https://www.ncbi.nlm.nih.gov/snp/rs75184679">https://www.ncbi.nlm.nih.gov/snp/rs75184679</a>. This mutation is associated with conditions such as “Abnormality of the nervous system” and other diseases.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr13:50945445G&gt;A/+"</span>, <span class="st">"chr13:50945445G=/+"</span>, <span class="st">"RNASEH2B"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr13:50945445G&gt;A/+"</span>, <span class="st">"chr13:50945445G=/+"</span>, <span class="st">"RNASEH2B"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Could not find RNASEH2B in the default search locations, found in
 'RNA' assay instead</code></pre>
@@ -528,8 +941,8 @@ chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic</code></pre>
 </div>
 <p>Note that not all reads from this gene cover the SNV, which results in the SNV expression being sparser compared to the overall gene expression. Moreover, it also possible to map the clinical significant labels or other tags to the Manhatten plot.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs, <span class="at">col.by =</span> <span class="st">"CLNSIG"</span>, <span class="at">pt.size =</span> <span class="dv">2</span>, <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"#131313"</span>,<span class="st">"blue"</span>,<span class="st">"#A6CEE3"</span>,<span class="st">"#1F78B4"</span>,<span class="st">"#B2DF8A"</span>,<span class="st">"#33A02C"</span>,<span class="st">"#FB9A99"</span>,<span class="st">"#E31A1C"</span>,<span class="st">"#FDBF6F"</span>,<span class="st">"#FF7F00"</span>,<span class="st">"#CAB2D6"</span>,<span class="st">"#6A3D9A"</span>,<span class="st">"#FFFF99"</span>,<span class="st">"#B15928"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs, <span class="at">col.by =</span> <span class="st">"CLNSIG"</span>, <span class="at">pt.size =</span> <span class="dv">2</span>, <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"#131313"</span>,<span class="st">"blue"</span>,<span class="st">"#A6CEE3"</span>,<span class="st">"#1F78B4"</span>,<span class="st">"#B2DF8A"</span>,<span class="st">"#33A02C"</span>,<span class="st">"#FB9A99"</span>,<span class="st">"#E31A1C"</span>,<span class="st">"#FDBF6F"</span>,<span class="st">"#FF7F00"</span>,<span class="st">"#CAB2D6"</span>,<span class="st">"#6A3D9A"</span>,<span class="st">"#FFFF99"</span>,<span class="st">"#B15928"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -539,7 +952,7 @@ chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "NormalizeData.RNA"        "FindVariableFeatures.RNA"
  [3] "ScaleData.RNA"            "RunPCA.RNA"              

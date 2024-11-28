@@ -310,9 +310,9 @@ Centering and scaling data matrix</code></pre>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># you can skip to read GTF again if you already load it</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-10-21 14:03:36] [32mGTF loading..[0m
-[2024-10-21 14:04:04] [32mLoad 62700 genes.[0m
-[2024-10-21 14:04:04] [32mLoad time : 27.800 sec[0m</code></pre>
+<pre><code>[2024-11-28 12:11:26] [32mGTF loading..[0m
+[2024-11-28 12:11:56] [32mLoad 62700 genes.[0m
+[2024-11-28 12:11:56] [32mLoad time : 30.110 sec[0m</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At this moment the meta infomation for genetic variant assay is still empty</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -373,7 +373,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr1:633192/+</td>
 <td style="text-align: left;">MTCO2P12</td>
-<td style="text-align: left;">exon</td>
+<td style="text-align: left;">utr5</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">chr1:1000079A&gt;G/-</td>
@@ -428,7 +428,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr1:1014228/+</td>
 <td style="text-align: left;">ISG15</td>
-<td style="text-align: left;">utr5</td>
+<td style="text-align: left;">exon</td>
 </tr>
 </tbody>
 </table>
@@ -442,7 +442,7 @@ Centering and scaling data matrix</code></pre>
 <pre><code>Run autocorrelation test for 41603 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 6.469093 secs</code></pre>
+<pre><code>Runtime : 5.965064 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -465,7 +465,10 @@ Centering and scaling data matrix</code></pre>
 <pre><code>No bind.assay specified, update min.features.per.block to 2.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Aggregate counts.</code></pre>
+<pre><code>Use "counts" layer for test features.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Aggregate counts for binding features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Using 15 threads.</code></pre>
@@ -477,10 +480,10 @@ Centering and scaling data matrix</code></pre>
 <pre><code>Use predefined weight matrix "pca_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.236972 mins.</code></pre>
+<pre><code>Runtime : 1.165169 mins.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -488,9 +491,9 @@ Centering and scaling data matrix</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We could also zoom in specific region</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Interesting, we can found the peak at chromosome 6 is located at 3' of gene HLA-J</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">chr=</span><span class="st">"chr6"</span>, <span class="at">start =</span> <span class="dv">30000000</span>, <span class="at">end =</span> <span class="dv">30020000</span>, <span class="at">gtf =</span> gtf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We could also zoom in specific region</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Interesting, we can found the peak at chromosome 6 is located at 3' of gene HLA-J</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">chr=</span><span class="st">"chr6"</span>, <span class="at">start =</span> <span class="dv">30000000</span>, <span class="at">end =</span> <span class="dv">30020000</span>, <span class="at">gtf =</span> gtf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Zoom in chr6 : 29999000-30021000</code></pre>
 </div>
@@ -501,8 +504,8 @@ Centering and scaling data matrix</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's random pick a pair of features at the same locus</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(locus.padj <span class="sc">&lt;</span> <span class="fl">1e-6</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's random pick a pair of features at the same locus</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(locus.padj <span class="sc">&lt;</span> <span class="fl">1e-6</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -577,7 +580,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr10:3136689/+</td>
 <td style="text-align: left;">PFKP</td>
-<td style="text-align: left;">utr3</td>
+<td style="text-align: left;">utr5</td>
 <td style="text-align: right;">0e+00</td>
 <td style="text-align: right;">0.0737779</td>
 <td style="text-align: left;">TRUE</td>
@@ -597,7 +600,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr10:12250345/+</td>
 <td style="text-align: left;">CDC123</td>
-<td style="text-align: left;">utr3</td>
+<td style="text-align: left;">utr5</td>
 <td style="text-align: right;">0e+00</td>
 <td style="text-align: right;">0.0409800</td>
 <td style="text-align: left;">TRUE</td>
@@ -617,7 +620,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr10:12250345/+</td>
 <td style="text-align: left;">CDC123</td>
-<td style="text-align: left;">utr3</td>
+<td style="text-align: left;">utr5</td>
 <td style="text-align: right;">2e-07</td>
 <td style="text-align: right;">0.0209383</td>
 <td style="text-align: left;">TRUE</td>
@@ -637,7 +640,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr10:17237326/+</td>
 <td style="text-align: left;">VIM</td>
-<td style="text-align: left;">utr3</td>
+<td style="text-align: left;">utr5</td>
 <td style="text-align: right;">0e+00</td>
 <td style="text-align: right;">0.6973703</td>
 <td style="text-align: left;">TRUE</td>
@@ -657,7 +660,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr10:17237326/+</td>
 <td style="text-align: left;">VIM</td>
-<td style="text-align: left;">utr3</td>
+<td style="text-align: left;">utr5</td>
 <td style="text-align: right;">0e+00</td>
 <td style="text-align: right;">0.5901062</td>
 <td style="text-align: left;">TRUE</td>
@@ -677,7 +680,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr10:62069780/+</td>
 <td style="text-align: left;">ARID5B</td>
-<td style="text-align: left;">utr3</td>
+<td style="text-align: left;">exon</td>
 <td style="text-align: right;">0e+00</td>
 <td style="text-align: right;">0.1063609</td>
 <td style="text-align: left;">TRUE</td>
@@ -697,7 +700,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr10:62069780/+</td>
 <td style="text-align: left;">ARID5B</td>
-<td style="text-align: left;">utr3</td>
+<td style="text-align: left;">exon</td>
 <td style="text-align: right;">0e+00</td>
 <td style="text-align: right;">0.1150453</td>
 <td style="text-align: left;">TRUE</td>
@@ -757,7 +760,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr2:74969604/+</td>
 <td style="text-align: left;">POLE4</td>
-<td style="text-align: left;">utr3</td>
+<td style="text-align: left;">utr5</td>
 <td style="text-align: right;">0e+00</td>
 <td style="text-align: right;">0.0831258</td>
 <td style="text-align: left;">TRUE</td>
@@ -777,7 +780,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr20:63521948/+</td>
 <td style="text-align: left;">PPDPF</td>
-<td style="text-align: left;">utr3</td>
+<td style="text-align: left;">utr5</td>
 <td style="text-align: right;">0e+00</td>
 <td style="text-align: right;">0.1234781</td>
 <td style="text-align: left;">TRUE</td>
@@ -797,7 +800,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr20:63521953/+</td>
 <td style="text-align: left;">PPDPF</td>
-<td style="text-align: left;">utr3</td>
+<td style="text-align: left;">utr5</td>
 <td style="text-align: right;">0e+00</td>
 <td style="text-align: right;">0.1057650</td>
 <td style="text-align: left;">TRUE</td>
@@ -817,7 +820,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr6:30009771/+</td>
 <td style="text-align: left;">ENSG00000290574</td>
-<td style="text-align: left;">exon</td>
+<td style="text-align: left;">utr5</td>
 <td style="text-align: right;">0e+00</td>
 <td style="text-align: right;">0.0512442</td>
 <td style="text-align: left;">TRUE</td>
@@ -837,7 +840,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr6:30009772/+</td>
 <td style="text-align: left;">ENSG00000290574</td>
-<td style="text-align: left;">exon</td>
+<td style="text-align: left;">utr5</td>
 <td style="text-align: right;">0e+00</td>
 <td style="text-align: right;">0.0518072</td>
 <td style="text-align: left;">TRUE</td>
@@ -857,7 +860,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr6:30009773/+</td>
 <td style="text-align: left;">ENSG00000290574</td>
-<td style="text-align: left;">exon</td>
+<td style="text-align: left;">utr5</td>
 <td style="text-align: right;">0e+00</td>
 <td style="text-align: right;">0.0518087</td>
 <td style="text-align: left;">TRUE</td>
@@ -877,7 +880,7 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: left;">+</td>
 <td style="text-align: left;">chr6:30009808/+</td>
 <td style="text-align: left;">ENSG00000290574</td>
-<td style="text-align: left;">exon</td>
+<td style="text-align: left;">utr5</td>
 <td style="text-align: right;">0e+00</td>
 <td style="text-align: right;">0.0506208</td>
 <td style="text-align: left;">TRUE</td>
@@ -931,7 +934,7 @@ Centering and scaling data matrix</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr10:17237326C&gt;T/+"</span>, <span class="st">"chr10:17237326C=/+"</span>, <span class="st">"VIM"</span> ), <span class="at">order=</span><span class="cn">TRUE</span>, <span class="at">pt.size =</span> <span class="dv">1</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr10:17237326C&gt;T/+"</span>, <span class="st">"chr10:17237326C=/+"</span>, <span class="st">"VIM"</span> ), <span class="at">order=</span><span class="cn">TRUE</span>, <span class="at">pt.size =</span> <span class="dv">1</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Could not find VIM in the default search locations, found in 'RNA'
 assay instead</code></pre>
@@ -947,11 +950,11 @@ assay instead</code></pre>
 <p>It appears that the T allele of the gene VIM is expressed in most cell groups, while the C allele seems to be primarily expressed in groups 1 and 4.</p>
 <p>Using our spatial dissimilarity analysis method, we have identified many cases of allele-specific gene expression. This phenomenon can be influenced by several known and unknown mechanisms, including gene imprinting, genetic recombination, and somatic variants during cell or disease development. While we won’t explore these mechanisms in detail here, you can refer to our manuscript, which includes several case studies dedicated to this topic.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the Seurat object for further use</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(obj, <span class="at">file =</span> <span class="st">"glioblastoma5k.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the Seurat object for further use</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(obj, <span class="at">file =</span> <span class="st">"glioblastoma5k.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "NormalizeData.RNA"        "FindVariableFeatures.RNA"
  [3] "ScaleData.RNA"            "RunPCA.RNA"              
