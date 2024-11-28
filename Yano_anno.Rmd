@@ -37,7 +37,7 @@ sel.chrs <- c(1:21, "X")
 FbtPlot(obj, val = "locus.padj", remove.chr = TRUE, sel.chrs = sel.chrs, col.by = "consequence", pt.size = 2)
 ```
 
-## Annotate genetic variants
+## Annotate genetic variants with publish databases
 One key advancement in genetic variant studies is the ability to perform functional interpretation and annotation using genotype-phenotype and allele frequency databases. For demonstration purposes, we use the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database for annotation in this vignette.
 ```bash
 # download the database in VCF format
