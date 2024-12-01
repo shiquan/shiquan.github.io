@@ -7,9 +7,11 @@ format:
 ---
 This vignette demonstrates how Yano can annotate genetic variants using public databases and assist users in interpreting the functional impact of these variants.
 
-## Predict the consequence of genetic variants
+## 1. Predict the consequence of genetic variants
 
-Load the object which generated from [allele specific gene expression from scRNA-seq](Yano_ASE.Rmd). In that case, we used annoVAR to annotate the gene and approximate gene region type for the variants. The predicted consequences were derived from transcript annotations. However, gencode annotations, generated as part of the ENCODE project, contain numerous truncated transcript records that are not fully consistent with the reference genome, which can introduce bias when predicting amino acid changes. For gene expression analysis, such as scRNA-seq, it's more common to use gencode, consider the good coverage. But for clinical research, validated annotations like RefSeq are preferred for genetic variant annotation. In this analysis, RefSeq annotations were downloaded from the UCSC server to provide more accurate and reliable predictions. Furthermore, the human genome reference is also need for the prediction.
+Load the object which generated from [allele specific gene expression from scRNA-seq](Yano_ASE.Rmd). In that case, we used annoVAR to annotate the gene and approximate gene region type for the variants. In this section, we will go further, to predict the consequence of genetic variants. Note that, different from genetic annotation at DNA level, strand information is also consdiered here, so antisense terms will also be generated. 
+
+The predicted consequences were derived from transcript annotations. However, gencode annotations, generated as part of the ENCODE project, contain numerous truncated transcript records that are not fully consistent with the reference genome, which can introduce bias when predicting amino acid changes. For gene expression analysis, such as scRNA-seq, it's more common to use gencode, consider the good coverage. But for clinical research, validated annotations like RefSeq are preferred for genetic variant annotation. In this analysis, RefSeq annotations were downloaded from the UCSC server to provide more accurate and reliable predictions. Furthermore, the human genome reference is also need for the prediction.
 ```bash
 wget -c https://hgdownload.soe.ucsc.edu/goldenPath/archive/hg38/ncbiRefSeq/110/hg38.110.ncbiRefSeq.gtf.gz
 wget -c https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/GRCh38.p13.genome.fa.gz
@@ -37,8 +39,8 @@ sel.chrs <- c(1:21, "X")
 FbtPlot(obj, val = "locus.padj", remove.chr = TRUE, sel.chrs = sel.chrs, col.by = "consequence", pt.size = 2)
 ```
 
-## Annotate genetic variants with publish databases
-One key advancement in genetic variant studies is the ability to perform functional interpretation and annotation using genotype-phenotype and allele frequency databases. For demonstration purposes, we use the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database for annotation in this vignette.
+## 2. Annotate genetic variants with publish databases
+Another key advancement in genetic variant studies is the ability to perform annotation using genotype-phenotype and allele frequency databases. For demonstration purposes, we use the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database for annotation in this vignette.
 ```bash
 # download the database in VCF format
 wget -c  https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz
@@ -93,6 +95,7 @@ Note that not all reads from this gene cover the SNV, which results in the SNV e
 sel.chrs <- c(1:21, "X")
 FbtPlot(obj, val = "locus.padj", remove.chr = TRUE, sel.chrs = sel.chrs, col.by = "CLNSIG", pt.size = 2, cols = c("#131313","blue","#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F","#FF7F00","#CAB2D6","#6A3D9A","#FFFF99","#B15928"))
 ```
+
 
 ```{r}
 Command(obj)
