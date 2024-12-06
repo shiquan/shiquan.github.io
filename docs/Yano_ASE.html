@@ -310,9 +310,9 @@ Centering and scaling data matrix</code></pre>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># you can skip to read GTF again if you already load it</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-11-28 12:11:26] [32mGTF loading..[0m
-[2024-11-28 12:11:56] [32mLoad 62700 genes.[0m
-[2024-11-28 12:11:56] [32mLoad time : 30.110 sec[0m</code></pre>
+<pre><code>[2024-12-06 14:18:08] GTF loading..
+[2024-12-06 14:18:41] Load 62700 genes.
+[2024-12-06 14:18:41] Load time : 32.579 sec</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At this moment the meta infomation for genetic variant assay is still empty</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -324,16 +324,16 @@ Centering and scaling data matrix</code></pre>
 <pre><code>Parse names ..</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[33m[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? [0m
-[33m[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? [0m
-[33m[warnings] Chromosome GL000205.2 not found in GTF, use wrong database? [0m
-[33m[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? [0m
-[33m[warnings] Chromosome GL000218.1 not found in GTF, use wrong database? [0m
-[33m[warnings] Chromosome KI270737.1 not found in GTF, use wrong database? [0m
-[33m[warnings] Chromosome KI270713.1 not found in GTF, use wrong database? [0m
-[33m[warnings] Chromosome KI270733.1 not found in GTF, use wrong database? [0m
-[33m[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? [0m
-[33m[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? [0m</code></pre>
+<pre><code>[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? 
+[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? 
+[warnings] Chromosome GL000205.2 not found in GTF, use wrong database? 
+[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? 
+[warnings] Chromosome GL000218.1 not found in GTF, use wrong database? 
+[warnings] Chromosome KI270737.1 not found in GTF, use wrong database? 
+[warnings] Chromosome KI270713.1 not found in GTF, use wrong database? 
+[warnings] Chromosome KI270733.1 not found in GTF, use wrong database? 
+[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? 
+[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># After annotation, the locations are parsed from the feature name, and overlapped gene are also annotated.</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -442,7 +442,7 @@ Centering and scaling data matrix</code></pre>
 <pre><code>Run autocorrelation test for 41603 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 5.965064 secs</code></pre>
+<pre><code>Runtime : 6.131478 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -480,7 +480,7 @@ Centering and scaling data matrix</code></pre>
 <pre><code>Use predefined weight matrix "pca_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.165169 mins.</code></pre>
+<pre><code>Runtime : 1.186783 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

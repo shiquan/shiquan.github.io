@@ -445,7 +445,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Run autocorrelation test for 117623 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 18.91687 secs</code></pre>
+<pre><code>Runtime : 18.06503 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select autocorrleated features for downstream test.</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -484,7 +484,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Use predefined weight matrix "pca_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 3.023999 mins.</code></pre>
+<pre><code>Runtime : 3.03819 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now p values and adjusted p values have been generated</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(obj[[<span class="st">'exon'</span>]][[]]) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1441,9 +1441,9 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-12-01 11:53:23] [32mGTF loading..[0m
-[2024-12-01 11:54:02] [32mLoad 62700 genes.[0m
-[2024-12-01 11:54:02] [32mLoad time : 39.001 sec[0m</code></pre>
+<pre><code>[2024-12-06 14:24:53] GTF loading..
+[2024-12-06 14:25:32] Load 62700 genes.
+[2024-12-06 14:25:32] Load time : 38.377 sec</code></pre>
 </div>
 </div>
 <p>A track plot is used to study the read coverage per cell group. In the track plot shown below, the cell group is specified by the <code>cell.group</code> parameter. Unlike IGV, where read depth is used, we use UMI depth in this plot. The cell barcode tag and UMI tag are predefined as “CB” and “UB” with parameter <code>cell.tag</code> and <code>umi.tag</code>. For each cell group, the UMI depth has been normalized by the number of cells in that group. This means that the depth at each location can be interpreted as the mean UMI depth per cell for the group. As a result, the tracks are directly comparable across different cell groups. If <code>cell.group</code> is not set, the track plot will generate the raw UMI depth per location.</p>
@@ -1488,7 +1488,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Run autocorrelation test for 15069 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 3.999465 secs</code></pre>
+<pre><code>Runtime : 2.598373 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -1529,7 +1529,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Use predefined weight matrix "pca_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 19.17244 secs.</code></pre>
+<pre><code>Runtime : 19.54453 secs.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">remove.chr=</span><span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1887,7 +1887,7 @@ chr1:634376-634922/+/MTCO3P12               chr1:634376-634922/+/MTCO3P12</code>
 </div>
 <p>In previous sections, we noted that exon or junction expression is part of gene expression, and inverse expression patterns can strongly indicate alternative splicing. However, exon-skipped reads are largely independent of exon expression, making them more sensitive for detecting alternative splicing and allowing for the prioritization of many events.</p>
 <p>Because our spatial dissimilarity test does not account for the spatial dependency of the binding feature, numerous events may be prioritized, especially when the binding feature is sparsely expressed. While some of these events may be true, others might arise due to low coverage. To enhance detection power and reduce potential false positives, intersecting the prioritized exons with the prioritized exon-excluded features can help refine the results.</p>
-<p>Mode 3 can be used as an alternative to mode 1 to specifically detect events with strong inverse expression patterns. In mode 3, the exon reads and exon-excluded reads are summed for the binding assay, allowing for a more targeted analysis of such patterns. It is important to note that events detected with mode 3 are always detectable with mode 1, making mode 3 a refined approach for prioritizing inverse expression events.</p>
+<p>Mode 3 can be used as an alternative to mode 1 to specifically detect events with strong inverse expression patterns. In mode 3, the exon reads and exon-excluded reads are summed as the binding assay, allowing for a more targeted analysis of such patterns. It is important to note that events detected with mode 3 are always detectable with mode 1, making mode 3 a refined approach for prioritizing inverse expression events.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exclude"</span></span>
 <span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj, <span class="at">bind.name =</span> <span class="st">"exon_name"</span>, <span class="at">bind.assay =</span> <span class="st">"exon"</span>, <span class="at">mode =</span> <span class="dv">3</span>, <span class="at">prefix =</span> <span class="st">"mode3"</span>)</span>

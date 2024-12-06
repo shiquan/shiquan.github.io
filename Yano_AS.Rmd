@@ -258,7 +258,7 @@ In previous sections, we noted that exon or junction expression is part of gene 
 
 Because our spatial dissimilarity test does not account for the spatial dependency of the binding feature, numerous events may be prioritized, especially when the binding feature is sparsely expressed. While some of these events may be true, others might arise due to low coverage. To enhance detection power and reduce potential false positives, intersecting the prioritized exons with the prioritized exon-excluded features can help refine the results.
 
-Mode 3 can be used as an alternative to mode 1 to specifically detect events with strong inverse expression patterns. In mode 3, the exon reads and exon-excluded reads are summed for the binding assay, allowing for a more targeted analysis of such patterns. It is important to note that events detected with mode 3 are always detectable with mode 1, making mode 3 a refined approach for prioritizing inverse expression events.
+Mode 3 can be used as an alternative to mode 1 to specifically detect events with strong inverse expression patterns. In mode 3, the exon reads and exon-excluded reads are summed as the binding assay, allowing for a more targeted analysis of such patterns. It is important to note that events detected with mode 3 are always detectable with mode 1, making mode 3 a refined approach for prioritizing inverse expression events.
 
 ```{r  message=FALSE, warning=FALSE, fig.width=12, fig.height=4}
 DefaultAssay(obj) <- "exclude"
