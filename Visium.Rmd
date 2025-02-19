@@ -1,0 +1,216 @@
+---
+title: Perform alternative splicing analysis for multiple Visium samples
+format:
+  html:
+    code-overflow: wrap
+---
+
+This vignette demonstrates how to analyze alternative splicing across multiple Visium samples. The procedure for spatial transcriptomics follows the same principles as scRNA-seq but requires careful handling of imaging data and spatial coordinates for accurate visualization. Additionally, this example illustrates how to visualize genome tracks from multiple BAM files.
+
+## 0. Prepare the data.
+We will use four Visium slices for 10X data source page. These slices come from two sections, each section contain two slices, one is sagittal anterior, and another one is sagittal posterior of mouse brain. We download the processed BAM files, and annotated them with PISA.
+
+[Section 1, sagittal anterior](https://www.10xgenomics.com/datasets/mouse-brain-serial-section-1-sagittal-anterior-1-standard-1-1-0)
+
+[Section 1, sagittal posterior](https://www.10xgenomics.com/datasets/mouse-brain-serial-section-1-sagittal-posterior-1-standard-1-1-0)
+
+[Section 2, sagittal anterior](https://www.10xgenomics.com/datasets/mouse-brain-serial-section-2-sagittal-anterior-1-standard-1-1-0)
+
+[Section 2, sagittal posterior](https://www.10xgenomics.com/datasets/mouse-brain-serial-section-2-sagittal-posterior-1-standard-1-1-0)
+
+
+The following commands run on a terminal.
+```bash
+# Create directory for each section and slice
+mkdir -p visium/section1/Posterior
+mkdir -p visium/section1/Anterior
+mkdir -p visium/section2/Posterior
+mkdir -p visium/section2/Anterior
+
+# Enter to work directory and download GTF for mouse
+cd visium;
+wget -c https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M10/gencode.vM10.annotation.gtf.gz
+
+# Download the bam file and image files to each directory
+cd section1/Posterior
+wget -c https://cf.10xgenomics.com/samples/spatial-exp/1.1.0/V1_Mouse_Brain_Sagittal_Posterior/V1_Mouse_Brain_Sagittal_Posterior_possorted_genome_bam.bam
+wget -c https://cf.10xgenomics.com/samples/spatial-exp/1.1.0/V1_Mouse_Brain_Sagittal_Posterior/V1_Mouse_Brain_Sagittal_Posterior_possorted_genome_bam.bam.bai
+wget -c https://cf.10xgenomics.com/samples/spatial-exp/1.1.0/V1_Mouse_Brain_Sagittal_Posterior/V1_Mouse_Brain_Sagittal_Posterior_spatial.tar.gz
+
+# unpack image files
+tar zxvf V1_Mouse_Brain_Sagittal_Posterior_spatial.tar.gz
+
+# Annotate and count features
+PISA anno -gtf ../../gencode.vM10.annotation.gtf.gz -exon -psi -o anno.bam -t 7 V1_Mouse_Brain_Sagittal_Posterior_possorted_genome_bam.bam
+
+mkdir exp
+mkdir exon
+mkdir junction
+mkdir exclude
+PISA count -tag CB -umi UB -anno-tag GN -outdir exp anno.bam
+PISA count -tag CB -umi UB -anno-tag EX -outdir exon anno.bam
+PISA count -tag CB -umi UB -anno-tag JC -outdir junction anno.bam
+PISA count -tag CB -umi UB -anno-tag ER -outdir exclude anno.bam
+
+## Go back to work directory, and reenter to another slice's directory
+cd -; 
+cd section1/Anterior
+wget -c https://s3-us-west-2.amazonaws.com/10x.files/samples/spatial-exp/1.1.0/V1_Mouse_Brain_Sagittal_Anterior/V1_Mouse_Brain_Sagittal_Anterior_possorted_genome_bam.bam
+wget -c https://cf.10xgenomics.com/samples/spatial-exp/1.1.0/V1_Mouse_Brain_Sagittal_Anterior/V1_Mouse_Brain_Sagittal_Anterior_possorted_genome_bam.bam.bai
+wget -c https://cf.10xgenomics.com/samples/spatial-exp/1.1.0/V1_Mouse_Brain_Sagittal_Anterior/V1_Mouse_Brain_Sagittal_Anterior_spatial.tar.gz
+
+# unpack image file
+tar zxvf V1_Mouse_Brain_Sagittal_Anterior_spatial.tar.gz
+
+# Annotate and count features
+PISA anno -gtf ../../gencode.vM10.annotation.gtf.gz -exon -psi -o anno.bam -t 7 V1_Mouse_Brain_Sagittal_Anterior_possorted_genome_bam.bam
+
+mkdir exp
+mkdir exon
+mkdir junction
+mkdir exclude
+PISA count -tag CB -umi UB -anno-tag GN -outdir exp anno.bam
+PISA count -tag CB -umi UB -anno-tag EX -outdir exon anno.bam
+PISA count -tag CB -umi UB -anno-tag JC -outdir junction anno.bam
+PISA count -tag CB -umi UB -anno-tag ER -outdir exclude anno.bam
+
+# Swith to section 2 
+cd -;
+cd section2/Anterior
+wget -c https://s3-us-west-2.amazonaws.com/10x.files/samples/spatial-exp/1.1.0/V1_Mouse_Brain_Sagittal_Anterior_Section_2/V1_Mouse_Brain_Sagittal_Anterior_Section_2_possorted_genome_bam.bam
+wget -c https://cf.10xgenomics.com/samples/spatial-exp/1.1.0/V1_Mouse_Brain_Sagittal_Anterior_Section_2/V1_Mouse_Brain_Sagittal_Anterior_Section_2_possorted_genome_bam.bam.bai
+wget -c https://cf.10xgenomics.com/samples/spatial-exp/1.1.0/V1_Mouse_Brain_Sagittal_Anterior_Section_2/V1_Mouse_Brain_Sagittal_Anterior_Section_2_spatial.tar.gz
+
+tar zxvf V1_Mouse_Brain_Sagittal_Anterior_Section_2_spatial.tar.gz
+
+PISA anno -gtf ../../gencode.vM10.annotation.gtf.gz -exon -psi -o anno.bam -t 7 V1_Mouse_Brain_Sagittal_Anterior_Section_2_possorted_genome_bam.bam
+
+mkdir exp
+mkdir exon
+mkdir junction
+mkdir exclude
+PISA count -tag CB -umi UB -anno-tag GN -outdir exp anno.bam
+PISA count -tag CB -umi UB -anno-tag EX -outdir exon anno.bam
+PISA count -tag CB -umi UB -anno-tag JC -outdir junction anno.bam
+PISA count -tag CB -umi UB -anno-tag ER -outdir exclude anno.bam
+
+
+cd -;
+cd section2/Sagittal
+wget -c https://cf.10xgenomics.com/samples/spatial-exp/1.1.0/V1_Mouse_Brain_Sagittal_Posterior_Section_2/V1_Mouse_Brain_Sagittal_Posterior_Section_2_possorted_genome_bam.bam
+wget -c https://cf.10xgenomics.com/samples/spatial-exp/1.1.0/V1_Mouse_Brain_Sagittal_Posterior_Section_2/V1_Mouse_Brain_Sagittal_Posterior_Section_2_possorted_genome_bam.bam.bai
+wget -c https://cf.10xgenomics.com/samples/spatial-exp/1.1.0/V1_Mouse_Brain_Sagittal_Posterior_Section_2/V1_Mouse_Brain_Sagittal_Posterior_Section_2_spatial.tar.gz
+
+tar zxvf V1_Mouse_Brain_Sagittal_Posterior_Section_2_spatial.tar.gz
+
+PISA anno -gtf ../../gencode.vM10.annotation.gtf.gz -exon -psi -o anno.bam -t 7 V1_Mouse_Brain_Sagittal_Posterior_Section_2_possorted_genome_bam.bam
+
+mkdir exp
+mkdir exon
+mkdir junction
+mkdir exclude
+PISA count -tag CB -umi UB -anno-tag GN -outdir exp anno.bam
+PISA count -tag CB -umi UB -anno-tag EX -outdir exon anno.bam
+PISA count -tag CB -umi UB -anno-tag JC -outdir junction anno.bam
+PISA count -tag CB -umi UB -anno-tag ER -outdir exclude anno.bam
+
+# Now go back to work directory
+cd ../../..
+
+```
+
+## 1. Preprocess all four slices and intergrate them into one object
+
+This section will perform Seurat pipeline for all the sections. A Seurat workflow for one section can be found here https://satijalab.org/seurat/articles/spatial_vignette. The difference between this workflow with Seurat's is we use counts generated from PISA, while Seurat use counts generated with CellRanger's pipeline. For the details of different between PISA and CellRanger, please see our [manual](https://shiquan.github.io/PISA.html#difference-in-alignment-annotation-between-pisa-and-cellranger).
+
+```{r warning=FALSE, fig.width=10, fig.height=5}
+require(Yano)
+exp.1 <- ReadPISA("./visium/section1/Anterior/exp/")
+image.1 <- Read10X_Image("./visium/section1/Anterior/spatial/")
+
+## QuickRecipe() is actually an integration function of Seurat workflow
+obj.1 <- QuickRecipe(exp.1[, Cells(image.1)], verbose = FALSE)
+obj.1[['slice1']] <- image.1[colnames(obj.1),]
+obj.1$orig.ident <- "sec1_ant"
+
+
+exp.2 <- ReadPISA("./visium/section1/Posterior/exp/")
+image.2 <- Read10X_Image("./visium/section1/Posterior/spatial/")
+obj.2 <- QuickRecipe(exp.2[,Cells(image.2)], verbose = FALSE)
+obj.2[['slice2']] <- image.2[colnames(obj.2),]
+obj.2$orig.ident <- "sec1_pos"
+
+exp.3 <- ReadPISA("./visium/section2/Anterior/exp/")
+image.3 <- Read10X_Image("./visium/section2/Anterior/spatial/")
+obj.3 <- QuickRecipe(exp.3[, Cells(image.3)], verbose = FALSE)
+obj.3[['slice3']] <- image.3[colnames(obj.3),]
+obj.3$orig.ident <- "sec2_ant"
+
+exp.4 <- ReadPISA("./visium/section2/Posterior/exp/")
+image.4 <- Read10X_Image("./visium/section2/Posterior/spatial/")
+obj.4 <- QuickRecipe(exp.4[, Cells(image.4)], verbose = FALSE)
+obj.4[['slice4']] <- image.4[colnames(obj.4),]
+obj.4$orig.ident <- "sec2_pos"
+
+# Merge all processed Seurat object
+obj <- merge(obj.1, y = list(obj.2, obj.3, obj.4), add.cell.ids = c("sec1_ant", "sec1_pos", "sec2_ant", "sec2_pos"))
+
+obj <- QuickRecipe(obj)
+
+p1 <- DimPlot(obj, group.by = "orig.ident")
+p2 <- DimPlot(obj)
+p1 + p2
+
+SpatialPlot(obj, pt.size.factor = 2) 
+
+exon.1 <- ReadPISA("./visium/section1/Anterior/exon/", prefix = "sec1_ant_", cells = Cells(obj))
+exon.2 <- ReadPISA("./visium/section1/Posterior/exon/", prefix = "sec1_pos_", cells = Cells(obj))
+exon.3 <- ReadPISA("./visium/section2/Anterior/exon/", prefix = "sec2_ant_", cells = Cells(obj))
+exon.4 <- ReadPISA("./visium/section2/Posterior/exon/", prefix = "sec2_pos_", cells = Cells(obj))
+exon <- mergeMatrix(exon.1, exon.2, exon.3, exon.4)
+
+obj[['exon']] <- CreateAssayObject(exon[, Cells(obj)], min.cells = 20)
+DefaultAssay(obj) <- "exon"
+obj <- NormalizeData(obj)
+obj <- ParseExonName(obj)
+obj <- RunAutoCorr(obj)
+obj <- SetAutoCorrFeatures(obj)
+
+obj <- RunBlockCorr(obj, bind.name = "gene_name", bind.assay = "RNA")
+
+FbtPlot(obj, val = "gene_name.padj")
+
+obj[['exon']][[]] %>% filter(gene_name.pval<1e-40)
+```
+```{r warning=FALSE, fig.width=15, fig.height=8}
+SpatialPlot(obj, features = c("chr11:53548291-53549565/+/Sept8","Sept8"), pt.size.factor = 2)
+```
+
+## 2. Visualize genome tracks of multiple samples
+
+Since the spot/cell names have already been renamed in the Seurat object, we need to define a binding list that maps the new cell names to their original names, which will be used for reading sequences from the BAM files. In this vignette, we use four BAM files, requiring us to define four corresponding cell vectors. Each vector contains group factor values, where the names of the values correspond to the original cell names in the BAM file.
+
+```{r message=FALSE, fig.width=15, fig.height=10}
+gtf <- gtf2db("./visium/gencode.vM10.annotation.gtf.gz")
+
+bamfiles <- list(
+  sec1_ant = "./visium/section1/Anterior/V1_Mouse_Brain_Sagittal_Anterior_possorted_genome_bam.bam",
+  sec1_pos = "./visium/section1/Posterior/V1_Mouse_Brain_Sagittal_Posterior_possorted_genome_bam.bam",
+  sec2_ant = "./visium/section2/Anterior/V1_Mouse_Brain_Sagittal_Anterior_Section_2_possorted_genome_bam.bam",
+  sec2_pos = "./visium/section2/Posterior/V1_Mouse_Brain_Sagittal_Posterior_Section_2_possorted_genome_bam.bam"
+  )
+
+cell.list <- split(obj$seurat_clusters, obj$orig.ident)
+str(cell.list)
+
+cell.list1 <- lapply(cell.list, function(x) {
+  nm <- names(x)
+  names(x) <- gsub(".*_(.*)","\\1",nm)
+  x
+})
+str(cell.list1)
+
+TrackPlot(bamfile = bamfiles, cell.group = cell.list1, gtf = gtf, gene = "Sept8", highlights = c(53548291,53549565), junc=TRUE)
+```
+
+

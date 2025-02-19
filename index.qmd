@@ -13,6 +13,8 @@ This website outlines the key tools and software packages developed from my rese
 -   **FASTQ+**: This format enhances the standard FASTQ file by integrating barcode information directly into the read name. This modification facilitates the harmonization of single-cell sequencing data across various platforms. FASTQ+ can be generated with PISA.
 -   **PISA**: A suite of programs specifically designed for preprocessing data from single-cell sequencing and spatial transcriptomics. It efficiently processes FASTQ+, BAM, and BED files, and generates various feature counts and annotations.
 -   **Yano**: An R package that employs the spatial dissimilarity test method as its core algorithm. Yano is tailored for exploring various biological events in single-cell and spatial transcriptomics data, including alternative splicing, allele-specific gene expression, somatic variants and more, providing comprehensive insights into cellular dynamics.
+-   **dST**: An R package designed for zonation analysis and rankable cell-cell interaction analysis. This package is currently under development.
+
 
 <strong>Workflows and Short Cases for scRNA-seq and Spatial Transcriptome</strong>
 
@@ -21,9 +23,8 @@ This website outlines the key tools and software packages developed from my rese
 - [Alternative splicing analysis for scRNA-seq](Yano_AS.Rmd) (Yano)
 - [Allele-specific gene expression analysis for scRNA-seq](Yano_ASE.Rmd) (Yano)
 - [Annotating and prioritizing genetic variants for scRNA-seq](Yano_anno.Rmd) (Yano)
-<!--
-- [Alternative splicing analysis for Adult Mouse Brain Coronal Section](Yano_Visium.Rmd) (Yano, Visium)
-- [Run PISA and Yano with Smartseq2 data](Smartseq2.Rmd) (Smartseq2)
--->
+- [Perform alternative splicing analysis for multiple Visium samples](Visium.Rmd) (Yano)
+- [Select cells from reduction maps and spatial locations](dST_selector.Rmd) (dST)
+
 
   
