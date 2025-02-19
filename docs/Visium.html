@@ -63,6 +63,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./dST_selector.html" rel="next">
+<link href="./Yano_anno.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -156,7 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Perform alternative splicing analysis for multiple Visium samples</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workflow1.html">Workflows &amp; Short cases</a></li><li class="breadcrumb-item"><a href="./Visium.html">Analysis multiple Visium samples</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -215,6 +217,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Annotating genetic variants</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Visium.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Analysis multiple Visium samples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dST_selector.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Select cells from reduction maps</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -236,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workflow1.html">Workflows &amp; Short cases</a></li><li class="breadcrumb-item"><a href="./Visium.html">Analysis multiple Visium samples</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Perform alternative splicing analysis for multiple Visium samples</h1>
 </div>
@@ -379,9 +393,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## QuickRecipe() is actually an integration function of Seurat workflow</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(exp<span class="fl">.1</span>[, <span class="fu">Cells</span>(image<span class="fl">.1</span>)], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Set default assay to RNA
-object &lt;- NormalizeData(object, normalization.method = "LogNormalize", scale.factor = 10000)
-Normalizing layer: counts</code></pre>
+<pre><code>Normalizing layer: counts</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.1</span>[[<span class="st">'slice1'</span>]] <span class="ot">&lt;-</span> image<span class="fl">.1</span>[<span class="fu">colnames</span>(obj<span class="fl">.1</span>),]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.1</span><span class="sc">$</span>orig.ident <span class="ot">&lt;-</span> <span class="st">"sec1_ant"</span></span>
@@ -391,9 +403,7 @@ Normalizing layer: counts</code></pre>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Read10X_Image</span>(<span class="st">"./visium/section1/Posterior/spatial/"</span>)</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(exp<span class="fl">.2</span>[,<span class="fu">Cells</span>(image<span class="fl">.2</span>)], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Set default assay to RNA
-object &lt;- NormalizeData(object, normalization.method = "LogNormalize", scale.factor = 10000)
-Normalizing layer: counts</code></pre>
+<pre><code>Normalizing layer: counts</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.2</span>[[<span class="st">'slice2'</span>]] <span class="ot">&lt;-</span> image<span class="fl">.2</span>[<span class="fu">colnames</span>(obj<span class="fl">.2</span>),]</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.2</span><span class="sc">$</span>orig.ident <span class="ot">&lt;-</span> <span class="st">"sec1_pos"</span></span>
@@ -402,9 +412,7 @@ Normalizing layer: counts</code></pre>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">Read10X_Image</span>(<span class="st">"./visium/section2/Anterior/spatial/"</span>)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(exp<span class="fl">.3</span>[, <span class="fu">Cells</span>(image<span class="fl">.3</span>)], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Set default assay to RNA
-object &lt;- NormalizeData(object, normalization.method = "LogNormalize", scale.factor = 10000)
-Normalizing layer: counts</code></pre>
+<pre><code>Normalizing layer: counts</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.3</span>[[<span class="st">'slice3'</span>]] <span class="ot">&lt;-</span> image<span class="fl">.3</span>[<span class="fu">colnames</span>(obj<span class="fl">.3</span>),]</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.3</span><span class="sc">$</span>orig.ident <span class="ot">&lt;-</span> <span class="st">"sec2_ant"</span></span>
@@ -413,9 +421,7 @@ Normalizing layer: counts</code></pre>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">Read10X_Image</span>(<span class="st">"./visium/section2/Posterior/spatial/"</span>)</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(exp<span class="fl">.4</span>[, <span class="fu">Cells</span>(image<span class="fl">.4</span>)], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Set default assay to RNA
-object &lt;- NormalizeData(object, normalization.method = "LogNormalize", scale.factor = 10000)
-Normalizing layer: counts</code></pre>
+<pre><code>Normalizing layer: counts</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.4</span>[[<span class="st">'slice4'</span>]] <span class="ot">&lt;-</span> image<span class="fl">.4</span>[<span class="fu">colnames</span>(obj<span class="fl">.4</span>),]</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.4</span><span class="sc">$</span>orig.ident <span class="ot">&lt;-</span> <span class="st">"sec2_pos"</span></span>
@@ -493,20 +499,20 @@ Elapsed time: 0 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>object &lt;- RunUMAP(object, dims = 1:20)
-22:11:02 UMAP embedding parameters a = 0.9922 b = 1.112
-22:11:02 Read 12148 rows and found 20 numeric columns
-22:11:02 Using Annoy for neighbor search, n_neighbors = 30
-22:11:02 Building Annoy index with metric = cosine, n_trees = 50
+23:29:59 UMAP embedding parameters a = 0.9922 b = 1.112
+23:29:59 Read 12148 rows and found 20 numeric columns
+23:29:59 Using Annoy for neighbor search, n_neighbors = 30
+23:29:59 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-22:11:03 Writing NN index file to temp file /var/folders/38/qfwf72jx3413kwjx7lgqv3xr0000gn/T//RtmpzziwhI/file6e885eade4d1
-22:11:03 Searching Annoy index using 1 thread, search_k = 3000
-22:11:05 Annoy recall = 100%
-22:11:06 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-22:11:06 Initializing from normalized Laplacian + noise (using RSpectra)
-22:11:06 Commencing optimization for 200 epochs, with 498054 positive edges
-22:11:11 Optimization finished</code></pre>
+23:30:00 Writing NN index file to temp file /var/folders/38/qfwf72jx3413kwjx7lgqv3xr0000gn/T//RtmpWK6jSu/file85b761505099
+23:30:00 Searching Annoy index using 1 thread, search_k = 3000
+23:30:02 Annoy recall = 100%
+23:30:02 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+23:30:02 Initializing from normalized Laplacian + noise (using RSpectra)
+23:30:02 Commencing optimization for 200 epochs, with 498054 positive edges
+23:30:07 Optimization finished</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj, <span class="at">group.by =</span> <span class="st">"orig.ident"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj)</span>
@@ -514,7 +520,7 @@ Elapsed time: 0 seconds</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Visium_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="Visium_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -522,7 +528,7 @@ Elapsed time: 0 seconds</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Visium_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="Visium_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -547,7 +553,7 @@ See help("Deprecated") and help("Matrix-deprecated").</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay : exon
 Run autocorrelation test for 80178 features.
-Runtime : 47.66058 secs</code></pre>
+Runtime : 40.62745 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -564,13 +570,13 @@ Use "data" layer for test features and binding features.
 Using 7 threads.
 Using method "D" with mode 1.
 Use predefined weight matrix "pca_wm".
-Runtime : 33.61797 mins.</code></pre>
+Runtime : 30.41442 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Visium_files/figure-html/unnamed-chunk-1-3.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="Visium_files/figure-html/unnamed-chunk-1-3.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -631,8 +637,8 @@ chrX:163926903-163929546/+/Ap1s2      0.1235875   0.009203270   3.173088e-42</co
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./visium/gencode.vM10.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2025-02-19 22:46:39] GTF loading..
-[2025-02-19 22:46:45] Load 48440 genes.</code></pre>
+<pre><code>[2025-02-20 00:02:14] GTF loading..
+[2025-02-20 00:02:20] Load 48440 genes.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>bamfiles <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec1_ant =</span> <span class="st">"./visium/section1/Anterior/V1_Mouse_Brain_Sagittal_Anterior_possorted_genome_bam.bam"</span>,</span>
@@ -1246,6 +1252,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="./Yano_anno.html" class="pagination-link" aria-label="Annotating genetic variants">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Annotating genetic variants</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./dST_selector.html" class="pagination-link" aria-label="Select cells from reduction maps">
+        <span class="nav-page-text">Select cells from reduction maps</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
