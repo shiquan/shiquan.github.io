@@ -1246,55 +1246,95 @@
     "href": "dST_selector.html",
     "title": "Select cells from reduction maps and spatial locations",
     "section": "",
-    "text": "This vignette demonstrates how to use dST build functions to interactively select or pick cells/spots from a plot using your mouse and keyboard. While tools like CellxGene are widely used for this purpose, to the best of our knowledge, an efficient solution for performing this task within the R environment is still lacking."
+    "text": "This vignette demonstrates how to use dST build functions to interactively select or pick cells/spots from a plot using your mouse and keyboard. While tools like CellxGene are widely used for this purpose, to the best of our knowledge, an efficient solution for performing this task within the R environment is still lacking.",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
   },
   {
     "objectID": "dST_selector.html#prepare-the-data.",
     "href": "dST_selector.html#prepare-the-data.",
     "title": "Select cells from reduction maps and spatial locations",
     "section": "Prepare the data.",
-    "text": "Prepare the data.\nWe use demo data from SeuratData for simplity.\n\nrequire(Seurat)\nrequire(SeuratData)\nrequire(dST)\n\nInstallData(\"stxBrain\")\n\nWarning: The following packages are already installed and will not be\nreinstalled: stxBrain\n\nbrain &lt;- LoadData(\"stxBrain\", type = \"anterior1\")\nbrain &lt;- SCTransform(brain, assay = \"Spatial\", verbose = FALSE)\nbrain &lt;- RunPCA(brain, assay = \"SCT\", verbose = FALSE)\nbrain &lt;- FindNeighbors(brain, reduction = \"pca\", dims = 1:30)\nbrain &lt;- FindClusters(brain, verbose = FALSE)\nbrain &lt;- RunUMAP(brain, reduction = \"pca\", dims = 1:30)\n\nWarning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric\nTo use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'\nThis message will be shown once per session\n\nSpatialPlot(brain)"
+    "text": "Prepare the data.\nWe use demo data from SeuratData for simplity.\n\nrequire(Seurat)\nrequire(SeuratData)\nrequire(dST)\n\nInstallData(\"stxBrain\")\n\nWarning: The following packages are already installed and will not be\nreinstalled: stxBrain\n\nbrain &lt;- LoadData(\"stxBrain\", type = \"anterior1\")\nbrain &lt;- SCTransform(brain, assay = \"Spatial\", verbose = FALSE)\nbrain &lt;- RunPCA(brain, assay = \"SCT\", verbose = FALSE)\nbrain &lt;- FindNeighbors(brain, reduction = \"pca\", dims = 1:30)\nbrain &lt;- FindClusters(brain, verbose = FALSE)\nbrain &lt;- RunUMAP(brain, reduction = \"pca\", dims = 1:30)\n\nWarning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric\nTo use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'\nThis message will be shown once per session\n\nSpatialPlot(brain)",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
   },
   {
     "objectID": "dST_selector.html#select-spots-from-spatial-plot",
     "href": "dST_selector.html#select-spots-from-spatial-plot",
     "title": "Select cells from reduction maps and spatial locations",
     "section": "Select spots from spatial plot",
-    "text": "Select spots from spatial plot\nsel.1 &lt;- SpatialSelector(brain)\nPress ESC on your keyboard to exist the selection!\n\nNow the selected cells will be exported to sel.1. If you want return a object, try to set return.object=TRUE in the function."
+    "text": "Select spots from spatial plot\nsel.1 &lt;- SpatialSelector(brain)\nPress ESC on your keyboard to exist the selection!\n\nNow the selected cells will be exported to sel.1. If you want return a object, try to set return.object=TRUE in the function.",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
   },
   {
     "objectID": "dST_selector.html#select-cells-from-dimension-reduction-plot",
     "href": "dST_selector.html#select-cells-from-dimension-reduction-plot",
     "title": "Select cells from reduction maps and spatial locations",
     "section": "Select cells from dimension reduction plot",
-    "text": "Select cells from dimension reduction plot\nWe can also select cells from dimension reduction plot.\n\nDimPlot(brain)\n\n\n\n\n\n\n\n\nsel.1 &lt;- DimSelector(brain)\nPress ESC on your keyboard to exist the selection!"
+    "text": "Select cells from dimension reduction plot\nWe can also select cells from dimension reduction plot.\n\nDimPlot(brain)\n\n\n\n\n\n\n\n\nsel.1 &lt;- DimSelector(brain)\nPress ESC on your keyboard to exist the selection!",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
   },
   {
     "objectID": "dST_selector.html#select-cells-based-on-a-feature-expression",
     "href": "dST_selector.html#select-cells-based-on-a-feature-expression",
     "title": "Select cells from reduction maps and spatial locations",
     "section": "Select cells based on a feature expression",
-    "text": "Select cells based on a feature expression\n\nFeaturePlot(brain, features = c('Ttr'), order=TRUE)\n\n\n\n\n\n\n\n\nFeatureSelector(brain, feature = c('Ttr'), order=TRUE)\nPlease note in FeatureSelector() only one feature is support at each selection. Therefore, I designed the parameter feature instead of orignal features here."
+    "text": "Select cells based on a feature expression\n\nFeaturePlot(brain, features = c('Ttr'), order=TRUE)\n\n\n\n\n\n\n\n\nFeatureSelector(brain, feature = c('Ttr'), order=TRUE)\nPlease note in FeatureSelector() only one feature is support at each selection. Therefore, I designed the parameter feature instead of orignal features here.",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
   },
   {
     "objectID": "dST_selector.html#select-cells-from-image-based-spatial-data",
     "href": "dST_selector.html#select-cells-from-image-based-spatial-data",
     "title": "Select cells from reduction maps and spatial locations",
     "section": "Select cells from Image-based spatial data",
-    "text": "Select cells from Image-based spatial data\nHere we will use 10x Genomics Xenium data, generated from Seurat’s tutorial.\n\nxenium.obj &lt;- readRDS(\"xenium.rds\")\nImageDimPlot(xenium.obj, border.color = \"white\", border.size = 0.1, cols = \"polychrome\")\n\nWarning: No FOV associated with assay 'SCT', using global default FOV\n\n\n\n\n\n\n\n\n\nImageDimSelector(xenium.obj, border.color = \"white\", border.size = 0.1)"
+    "text": "Select cells from Image-based spatial data\nHere we will use 10x Genomics Xenium data, generated from Seurat’s tutorial.\n\nxenium.obj &lt;- readRDS(\"xenium.rds\")\nImageDimPlot(xenium.obj, border.color = \"white\", border.size = 0.1, cols = \"polychrome\")\n\nWarning: No FOV associated with assay 'SCT', using global default FOV\n\n\n\n\n\n\n\n\n\nImageDimSelector(xenium.obj, border.color = \"white\", border.size = 0.1)",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
   },
   {
     "objectID": "dST_selector.html#select-concave-hull-of-selected-region",
     "href": "dST_selector.html#select-concave-hull-of-selected-region",
     "title": "Select cells from reduction maps and spatial locations",
     "section": "Select concave hull of selected region",
-    "text": "Select concave hull of selected region\nIn spatial transcriptomics, it is sometimes necessary to manually define capsule or membrane regions, as these areas are often thin, mixed with neighboring cells, and difficult to identify accurately. Manually specifying these regions can be beneficial for downstream analyses, such as zonation analysis, where precise spatial organization of cells is critical for understanding tissue architecture and functional gradients.\nsel &lt;- SpatialConcaveHull(brain)"
+    "text": "Select concave hull of selected region\nIn spatial transcriptomics, it is sometimes necessary to manually define capsule or membrane regions, as these areas are often thin, mixed with neighboring cells, and difficult to identify accurately. Manually specifying these regions can be beneficial for downstream analyses, such as zonation analysis, where precise spatial organization of cells is critical for understanding tissue architecture and functional gradients.\nsel &lt;- SpatialConcaveHull(brain)",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
   },
   {
     "objectID": "dST_selector.html#questions",
     "href": "dST_selector.html#questions",
     "title": "Select cells from reduction maps and spatial locations",
     "section": "Questions?",
-    "text": "Questions?\nIf you have any questions regarding this vignette, the usage of dST or suggestions, please feel free to report them through the discussion forum."
+    "text": "Questions?\nIf you have any questions regarding this vignette, the usage of dST or suggestions, please feel free to report them through the discussion forum.",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
   }
 ]
