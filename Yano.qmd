@@ -63,6 +63,12 @@ See short cases for more details.
 - [Annotating and prioritizing genetic variants for scRNA-seq](https://shiquan.github.io/Yano_anno.html)
 
 ## Changelog
+<details>
+<summary>1.0 2025/02/19</summary>
+
+First stable release.
+
+</details>
 
 <details>
 <summary>0.0.0.9999 2023/03/22</summary>
