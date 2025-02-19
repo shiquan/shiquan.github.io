@@ -1356,5 +1356,17 @@
       "Workflows & Short cases",
       "Select cells from reduction maps"
     ]
+  },
+  {
+    "objectID": "dST_selector.html#generate-2d-concave-hull-of-selected-region",
+    "href": "dST_selector.html#generate-2d-concave-hull-of-selected-region",
+    "title": "Select cells from reduction maps and spatial locations",
+    "section": "Generate 2D concave hull of selected region",
+    "text": "Generate 2D concave hull of selected region\nIn spatial transcriptomics, it is sometimes necessary to manually define capsule or membrane regions, as these areas are often thin, mixed with neighboring cells, and difficult to identify accurately. Manually specifying these regions can be beneficial for downstream analyses, such as zonation analysis, where precise spatial organization of cells is critical for understanding tissue architecture and functional gradients.\nsel &lt;- SpatialConcaveHull(brain)",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
   }
 ]

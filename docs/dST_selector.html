@@ -245,7 +245,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#select-cells-from-dimension-reduction-plot" id="toc-select-cells-from-dimension-reduction-plot" class="nav-link" data-scroll-target="#select-cells-from-dimension-reduction-plot">Select cells from dimension reduction plot</a></li>
   <li><a href="#select-cells-based-on-a-feature-expression" id="toc-select-cells-based-on-a-feature-expression" class="nav-link" data-scroll-target="#select-cells-based-on-a-feature-expression">Select cells based on a feature expression</a></li>
   <li><a href="#select-cells-from-image-based-spatial-data" id="toc-select-cells-from-image-based-spatial-data" class="nav-link" data-scroll-target="#select-cells-from-image-based-spatial-data">Select cells from Image-based spatial data</a></li>
-  <li><a href="#select-concave-hull-of-selected-region" id="toc-select-concave-hull-of-selected-region" class="nav-link" data-scroll-target="#select-concave-hull-of-selected-region">Select concave hull of selected region</a></li>
+  <li><a href="#generate-2d-concave-hull-of-selected-region" id="toc-generate-2d-concave-hull-of-selected-region" class="nav-link" data-scroll-target="#generate-2d-concave-hull-of-selected-region">Generate 2D concave hull of selected region</a></li>
   <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions?</a></li>
   </ul>
 </nav>
@@ -367,8 +367,8 @@ This message will be shown once per session</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ImageDimSelector</span>(xenium.obj, <span class="at">border.color =</span> <span class="st">"white"</span>, <span class="at">border.size =</span> <span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="image_selector.gif" class="img-fluid" style="width:80.0%"></p>
 </section>
-<section id="select-concave-hull-of-selected-region" class="level2">
-<h2 class="anchored" data-anchor-id="select-concave-hull-of-selected-region">Select concave hull of selected region</h2>
+<section id="generate-2d-concave-hull-of-selected-region" class="level2">
+<h2 class="anchored" data-anchor-id="generate-2d-concave-hull-of-selected-region">Generate 2D concave hull of selected region</h2>
 <p>In spatial transcriptomics, it is sometimes necessary to manually define capsule or membrane regions, as these areas are often thin, mixed with neighboring cells, and difficult to identify accurately. Manually specifying these regions can be beneficial for downstream analyses, such as zonation analysis, where precise spatial organization of cells is critical for understanding tissue architecture and functional gradients.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sel <span class="ot">&lt;-</span> <span class="fu">SpatialConcaveHull</span>(brain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="concave_selector.gif" class="img-fluid" style="width:50.0%"></p>

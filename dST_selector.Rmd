@@ -82,7 +82,7 @@ ImageDimSelector(xenium.obj, border.color = "white", border.size = 0.1)
 ![](image_selector.gif){width=80%}
 
 
-## Select concave hull of selected region
+## Generate 2D concave hull of selected region
 
 In spatial transcriptomics, it is sometimes necessary to manually define capsule or membrane regions, as these areas are often thin, mixed with neighboring cells, and difficult to identify accurately. Manually specifying these regions can be beneficial for downstream analyses, such as zonation analysis, where precise spatial organization of cells is critical for understanding tissue architecture and functional gradients.
 
