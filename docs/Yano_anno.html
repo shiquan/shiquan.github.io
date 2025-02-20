@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.53">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -63,18 +63,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./Visium.html" rel="next">
 <link href="./Yano_ASE.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-f8dc6eab18fde03278982b0b35885446.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2cae7a44443c7384b30cd79a64306367.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-2d6ecf2d45d93a56a874280a57c27dd9.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -216,6 +217,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Annotating genetic variants</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Visium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysis multiple Visium samples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dST_selector.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Select cells from reduction maps</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -273,16 +286,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching packages ────────────────────────────────────────────── Yano 1.0 ──
-✔ dplyr   1.1.4     ✔ Seurat  5.1.0
+✔ dplyr   1.1.4     ✔ Seurat  5.2.1
 ✔ ggplot2 3.5.1     </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"glioblastoma5k.rds"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"hg38.110.ncbiRefSeq.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2024-12-06 14:29:23] GTF loading..
-[2024-12-06 14:29:38] Load 66991 genes.
-[2024-12-06 14:29:38] Load time : 14.904 sec</code></pre>
+<pre><code>[2025-02-20 18:26:48] GTF loading..
+[2025-02-20 18:26:54] Load 66991 genes.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"var"</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">annoVAR</span>(obj, <span class="at">gtf =</span> gtf, <span class="at">fasta =</span> <span class="st">"./GRCh38.p13.genome.fa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -292,7 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>CDS region of transcript NM_001261418.2 cannot translate to codons properly.
 CDS region of transcript XM_047433500.1 cannot translate to codons properly.
-CDS region of transcript NM_001350237.2 cannot translate to codons properly.
+CDS region of transcript XM_005271283.4 cannot translate to codons properly.
 CDS region of transcript XM_017002563.2 cannot translate to codons properly.
 CDS region of transcript XM_047432264.1 cannot translate to codons properly.
 CDS region of transcript XM_017002566.2 cannot translate to codons properly.
@@ -317,32 +329,20 @@ CDS region of transcript NM_001350242.2 cannot translate to codons properly.
 CDS region of transcript NM_001394002.1 cannot translate to codons properly.
 CDS region of transcript NM_001363309.2 cannot translate to codons properly.
 CDS region of transcript XM_047432275.1 cannot translate to codons properly.
-CDS region of transcript XM_005271283.4 cannot translate to codons properly.
-CDS region of transcript XM_017015641.3 cannot translate to codons properly.
+CDS region of transcript NM_001350237.2 cannot translate to codons properly.
 CDS region of transcript NM_001385672.1 cannot translate to codons properly.
-CDS region of transcript XM_011536897.3 cannot translate to codons properly.
-CDS region of transcript NM_001018005.2 cannot translate to codons properly.
-CDS region of transcript XM_006720667.5 cannot translate to codons properly.
-CDS region of transcript NM_001301244.2 cannot translate to codons properly.
 CDS region of transcript XM_047433003.1 cannot translate to codons properly.
+CDS region of transcript NM_001301244.2 cannot translate to codons properly.
+CDS region of transcript XM_006720667.5 cannot translate to codons properly.
+CDS region of transcript NM_001018005.2 cannot translate to codons properly.
 CDS region of transcript NM_001330346.2 cannot translate to codons properly.
 CDS region of transcript XM_005254650.4 cannot translate to codons properly.
 CDS region of transcript NM_004850.5 cannot translate to codons properly.
 CDS region of transcript NM_001321643.2 cannot translate to codons properly.
 CDS region of transcript NM_080794.4 cannot translate to codons properly.
-CDS region of transcript NM_001243385.2 cannot translate to codons properly.
-CDS region of transcript XM_047441349.1 cannot translate to codons properly.
-CDS region of transcript XM_024452237.2 cannot translate to codons properly.
-CDS region of transcript XM_047441350.1 cannot translate to codons properly.
 CDS region of transcript XM_047447996.1 cannot translate to codons properly.
-CDS region of transcript XM_047416720.1 cannot translate to codons properly.
-CDS region of transcript XM_047416719.1 cannot translate to codons properly.
-CDS region of transcript XM_005248250.4 cannot translate to codons properly.
-CDS region of transcript XM_011513966.3 cannot translate to codons properly.
 CDS region of transcript NM_001077654.3 cannot translate to codons properly.
 CDS region of transcript NM_001385620.1 cannot translate to codons properly.
-CDS region of transcript XM_047418494.1 cannot translate to codons properly.
-CDS region of transcript XM_017010597.2 cannot translate to codons properly.
 CDS region of transcript XM_006716181.5 cannot translate to codons properly.
 CDS region of transcript XM_047421050.1 cannot translate to codons properly.
 CDS region of transcript XM_047422695.1 cannot translate to codons properly.
@@ -350,98 +350,83 @@ CDS region of transcript rna-CYTB cannot translate to codons properly.
 CDS region of transcript rna-COX3 cannot translate to codons properly.
 CDS region of transcript rna-ND1 cannot translate to codons properly.
 CDS region of transcript rna-ND2 cannot translate to codons properly.
-CDS region of transcript rna-ND4 cannot translate to codons properly.
-[warnings] Chromosome KI270442.1 not found in GTF, use wrong database? 
-[warnings] Chromosome KI270729.1 not found in GTF, use wrong database? 
-[warnings] Chromosome GL000205.2 not found in GTF, use wrong database? 
-[warnings] Chromosome GL000195.1 not found in GTF, use wrong database? 
-[warnings] Chromosome GL000218.1 not found in GTF, use wrong database? 
-[warnings] Chromosome KI270737.1 not found in GTF, use wrong database? 
-[warnings] Chromosome KI270713.1 not found in GTF, use wrong database? 
-[warnings] Chromosome KI270733.1 not found in GTF, use wrong database? 
-[warnings] Chromosome GL000219.1 not found in GTF, use wrong database? 
-[warnings] Chromosome GL000216.2 not found in GTF, use wrong database? </code></pre>
+CDS region of transcript rna-ND4 cannot translate to codons properly.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="ot">-&gt;</span> df</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   chr   start ref alt strand          locus gene_name     type
-chr1:633192G=/+   chr1  633192   G   G      +  chr1:633192/+  MTCO2P12     utr5
-chr1:1000079A&gt;G/- chr1 1000079   A   G      - chr1:1000079/-      HES4     utr5
-chr1:1000731C=/+  chr1 1000731   C   C      + chr1:1000731/+      HES4 upstream
-chr1:1000814A&gt;G/+ chr1 1000814   A   G      + chr1:1000814/+      HES4 upstream
-chr1:1000830C&gt;A/+ chr1 1000830   C   A      + chr1:1000830/+      HES4 upstream
-chr1:1014228G=/+  chr1 1014228   G   G      + chr1:1014228/+     ISG15     exon
-                  moransi.pval     moransi autocorr.variable    locus.D
-chr1:633192G=/+   3.235392e-01 0.001330283             FALSE         NA
-chr1:1000079A&gt;G/- 1.270509e-01 0.004159267             FALSE         NA
-chr1:1000731C=/+  5.063894e-03 0.010004135              TRUE         NA
-chr1:1000814A&gt;G/+ 6.632273e-06 0.017655831              TRUE         NA
-chr1:1000830C&gt;A/+ 3.142598e-06 0.018340286              TRUE         NA
-chr1:1014228G=/+  3.650720e-80 0.079578829              TRUE 0.04032407
-                    locus.r locus.pval locus.mean  locus.var locus.padj
-chr1:633192G=/+          NA         NA         NA         NA         NA
-chr1:1000079A&gt;G/-        NA         NA         NA         NA         NA
-chr1:1000731C=/+         NA         NA         NA         NA         NA
-chr1:1000814A&gt;G/+        NA         NA         NA         NA         NA
-chr1:1000830C&gt;A/+        NA         NA         NA         NA         NA
-chr1:1014228G=/+  0.8618829  0.9999916  0.1330176 0.02047667          1
-                            consequence
-chr1:633192G=/+                     ref
-chr1:1000079A&gt;G/-                  utr5
-chr1:1000731C=/+  antisense_upstream_1K
-chr1:1000814A&gt;G/+ antisense_upstream_1K
-chr1:1000830C&gt;A/+ antisense_upstream_1K
-chr1:1014228G=/+                    ref</code></pre>
+<pre><code>                  chr  start ref alt strand         locus gene_name type
+chr1:631862G&gt;A/+ chr1 631862   G   A      + chr1:631862/+  MTCO1P12 utr5
+chr1:633192G=/+  chr1 633192   G   G      + chr1:633192/+  MTCO2P12 utr5
+chr1:634337T&gt;C/+ chr1 634337   T   C      + chr1:634337/+  MTATP6P1 utr5
+chr1:826352C&gt;T/- chr1 826352   C   T      - chr1:826352/- LINC00115 utr5
+chr1:853876T&gt;C/+ chr1 853876   T   C      + chr1:853876/+ LINC01128 utr5
+chr1:944296G&gt;A/- chr1 944296   G   A      - chr1:944296/-     NOC2L utr3
+                 moransi.pval       moransi autocorr.variable locus.D locus.r
+chr1:631862G&gt;A/+ 6.440179e-01 -0.0019406190             FALSE      NA      NA
+chr1:633192G=/+  1.788439e-05  0.0162169048              TRUE      NA      NA
+chr1:634337T&gt;C/+ 5.363547e-01 -0.0008627216             FALSE      NA      NA
+chr1:826352C&gt;T/- 6.044278e-01 -0.0015544905             FALSE      NA      NA
+chr1:853876T&gt;C/+ 2.535326e-02  0.0076669031             FALSE      NA      NA
+chr1:944296G&gt;A/- 2.779540e-01  0.0019637008             FALSE      NA      NA
+                 locus.pval locus.mean locus.var locus.padj    consequence
+chr1:631862G&gt;A/+         NA         NA        NA         NA noncoding_exon
+chr1:633192G=/+          NA         NA        NA         NA            ref
+chr1:634337T&gt;C/+         NA         NA        NA         NA noncoding_exon
+chr1:826352C&gt;T/-         NA         NA        NA         NA noncoding_exon
+chr1:853876T&gt;C/+         NA         NA        NA         NA noncoding_exon
+chr1:944296G&gt;A/-         NA         NA        NA         NA           utr3</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>consequence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 antisense_downstream_1K          antisense_exon        antisense_intron 
-                     84                     623                    4446 
-  antisense_upstream_1K           downstream_1K   frameshift_elongation 
-                    192                     350                       1 
-  frameshift_truncation              intergenic                  intron 
-                      3                    2851                   11827 
-               missense          noncoding_exon        noncoding_intron 
-                    661                     935                     914 
-noncoding_splice_region                     ref         splice_acceptor 
-                      4                   12064                       9 
-           splice_donor           splice_region            splice_sites 
-                      4                      26                      13 
-             start_loss          start_retained             stop_gained 
-                      2                       1                       5 
-             synonymous             upstream_1K                    utr3 
-                    832                     111                    5020 
-                   utr5 
-                    625 </code></pre>
+                     71                     543                    4112 
+  antisense_upstream_1K           downstream_1K   frameshift_truncation 
+                    188                     445                       3 
+             intergenic                  intron                missense 
+                   2459                   11399                     643 
+         noncoding_exon        noncoding_intron noncoding_splice_region 
+                    900                     836                       3 
+                    ref         splice_acceptor            splice_donor 
+                  11017                       7                       2 
+          splice_region            splice_sites              start_loss 
+                     22                      10                       1 
+         start_retained             stop_gained              synonymous 
+                      1                       6                     810 
+            upstream_1K                    utr3                    utr5 
+                    171                    4946                     633 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(df, consequence <span class="sc">%in%</span> <span class="st">"stop_gained"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      chr     start ref alt strand            locus gene_name
 chr11:62602409G&gt;A/- chr11  62602409   G   A      - chr11:62602409/-      EML3
-chr16:15086183G&gt;A/- chr16  15086183   G   A      - chr16:15086183/-      RRN3
 chr21:21480040G&gt;A/+ chr21  21480040   G   A      + chr21:21480040/+     NCAM2
+chr3:53865249C&gt;T/+   chr3  53865249   C   T      +  chr3:53865249/+    IL17RB
 chr5:140557175G&gt;T/-  chr5 140557175   G   T      - chr5:140557175/-      SRA1
 chr7:55473014G&gt;A/-   chr7  55473014   G   A      -  chr7:55473014/-     VOPP1
-                      type moransi.pval      moransi autocorr.variable locus.D
-chr11:62602409G&gt;A/-   exon  0.336093969  0.001276426             FALSE      NA
-chr16:15086183G&gt;A/-   exon  0.655940637 -0.002113975             FALSE      NA
-chr21:21480040G&gt;A/+ intron  0.001069736  0.012035608              TRUE      NA
-chr5:140557175G&gt;T/-   exon  0.268485438  0.001999330             FALSE      NA
-chr7:55473014G&gt;A/-    exon  0.006479300  0.009925890              TRUE      NA
+chr7:74732529C&gt;T/+   chr7  74732529   C   T      +  chr7:74732529/+     GTF2I
+                      type moransi.pval     moransi autocorr.variable locus.D
+chr11:62602409G&gt;A/-   exon  0.029637026 0.007389854             FALSE      NA
+chr21:21480040G&gt;A/+ intron  0.209927165 0.002747371             FALSE      NA
+chr3:53865249C&gt;T/+    exon  0.190773076 0.003027348             FALSE      NA
+chr5:140557175G&gt;T/-   exon  0.287196180 0.001781930             FALSE      NA
+chr7:55473014G&gt;A/-    exon  0.001181852 0.012179684              TRUE      NA
+chr7:74732529C&gt;T/+    exon  0.013786724 0.008317105             FALSE      NA
                     locus.r locus.pval locus.mean locus.var locus.padj
 chr11:62602409G&gt;A/-      NA         NA         NA        NA         NA
-chr16:15086183G&gt;A/-      NA         NA         NA        NA         NA
 chr21:21480040G&gt;A/+      NA         NA         NA        NA         NA
+chr3:53865249C&gt;T/+       NA         NA         NA        NA         NA
 chr5:140557175G&gt;T/-      NA         NA         NA        NA         NA
 chr7:55473014G&gt;A/-       NA         NA         NA        NA         NA
+chr7:74732529C&gt;T/+       NA         NA         NA        NA         NA
                     consequence
 chr11:62602409G&gt;A/- stop_gained
-chr16:15086183G&gt;A/- stop_gained
 chr21:21480040G&gt;A/+ stop_gained
+chr3:53865249C&gt;T/+  stop_gained
 chr5:140557175G&gt;T/- stop_gained
-chr7:55473014G&gt;A/-  stop_gained</code></pre>
+chr7:55473014G&gt;A/-  stop_gained
+chr7:74732529C&gt;T/+  stop_gained</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
@@ -468,16 +453,16 @@ chr7:55473014G&gt;A/-  stop_gained</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view clinvar.vcf.gz<span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span><span class="kw">|</span> <span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1   69134   2205837 A   G   .   .   ALLELEID=2193183;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69134A&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Likely_benign;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
-1   69314   3205580 T   G   .   .   ALLELEID=3374047;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69314T&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
-1   69423   3205581 G   A   .   .   ALLELEID=3374048;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69423G&gt;A;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
-1   69581   2252161 C   G   .   .   ALLELEID=2238986;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69581C&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
-1   69682   2396347 G   A   .   .   ALLELEID=2386655;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69682G&gt;A;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
-1   69731   3205582 T   C   .   .   ALLELEID=3374049;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69731T&gt;C;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
-1   69769   2288999 T   C   .   .   ALLELEID=2278803;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69769T&gt;C;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
-1   69995   2351346 G   C   .   .   ALLELEID=2333177;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69995G&gt;C;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
-1   925946  1924157 C   G   .   .   ALLELEID=1983057;CLNDISDB=MedGen:C3661900;CLNDN=not_provided;CLNHGVS=NC_000001.11:g.925946C&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=SAMD11:148398;MC=SO:0001583|missense_variant;ORIGIN=1
-1   925952  1019397 G   A   .   .   ALLELEID=1003021;CLNDISDB=MedGen:C3661900;CLNDN=not_provided;CLNHGVS=NC_000001.11:g.925952G&gt;A;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=SAMD11:148398;MC=SO:0001583|missense_variant;ORIGIN=1;RS=1640863258</code></pre>
+<pre><code>1   66926   3385321 AG  A   .   .   ALLELEID=3544463;CLNDISDB=Human_Phenotype_Ontology:HP:0000547,MONDO:MONDO:0019200,MeSH:D012174,MedGen:C0035334,OMIM:268000,OMIM:PS268000,Orphanet:791;CLNDN=Retinitis_pigmentosa;CLNHGVS=NC_000001.11:g.66927del;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNSIGSCV=SCV005419006;CLNVC=Deletion;CLNVCSO=SO:0000159;GENEINFO=OR4F5:79501;MC=SO:0001627|intron_variant;ORIGIN=0
+1   69134   2205837 A   G   .   .   ALLELEID=2193183;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69134A&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Likely_benign;CLNSIGSCV=SCV003526545;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA502008;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69314   3205580 T   G   .   .   ALLELEID=3374047;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69314T&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNSIGSCV=SCV004995495;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA338197388;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69423   3205581 G   A   .   .   ALLELEID=3374048;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69423G&gt;A;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNSIGSCV=SCV004995496;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA338197763;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69581   2252161 C   G   .   .   ALLELEID=2238986;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69581C&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNSIGSCV=SCV003584698;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA338198277;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69682   2396347 G   A   .   .   ALLELEID=2386655;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69682G&gt;A;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNSIGSCV=SCV003739621;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA502063;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69731   3205582 T   C   .   .   ALLELEID=3374049;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69731T&gt;C;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNSIGSCV=SCV004995497;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA338198606;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69769   2288999 T   C   .   .   ALLELEID=2278803;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69769T&gt;C;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNSIGSCV=SCV003620560;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA338198691;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   69995   2351346 G   C   .   .   ALLELEID=2333177;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69995G&gt;C;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNSIGSCV=SCV003688488;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA502093;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
+1   924518  3388928 G   C   .   .   ALLELEID=3548054;CLNDISDB=MedGen:C3661900;CLNDN=not_provided;CLNHGVS=NC_000001.11:g.924518G&gt;C;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Likely_benign;CLNSIGSCV=SCV005435063;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=SAMD11:148398|LOC107985728:107985728;MC=SO:0001819|synonymous_variant;ORIGIN=1</code></pre>
 </div>
 </div>
 <p>We need to create new chromosome names that are compatible with the NCBI database format, because chromosome names in Clinvar database are look like ‘1’, ‘2’.</p>
@@ -485,34 +470,27 @@ chr7:55473014G&gt;A/-  stop_gained</code></pre>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[<span class="st">'chr0'</span>]] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"chr(.*)"</span>,<span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, obj[[<span class="st">'var'</span>]][[]]<span class="sc">$</span>chr)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   chr   start ref alt strand          locus gene_name     type
-chr1:633192G=/+   chr1  633192   G   G      +  chr1:633192/+  MTCO2P12     utr5
-chr1:1000079A&gt;G/- chr1 1000079   A   G      - chr1:1000079/-      HES4     utr5
-chr1:1000731C=/+  chr1 1000731   C   C      + chr1:1000731/+      HES4 upstream
-chr1:1000814A&gt;G/+ chr1 1000814   A   G      + chr1:1000814/+      HES4 upstream
-chr1:1000830C&gt;A/+ chr1 1000830   C   A      + chr1:1000830/+      HES4 upstream
-chr1:1014228G=/+  chr1 1014228   G   G      + chr1:1014228/+     ISG15     exon
-                  moransi.pval     moransi autocorr.variable    locus.D
-chr1:633192G=/+   3.235392e-01 0.001330283             FALSE         NA
-chr1:1000079A&gt;G/- 1.270509e-01 0.004159267             FALSE         NA
-chr1:1000731C=/+  5.063894e-03 0.010004135              TRUE         NA
-chr1:1000814A&gt;G/+ 6.632273e-06 0.017655831              TRUE         NA
-chr1:1000830C&gt;A/+ 3.142598e-06 0.018340286              TRUE         NA
-chr1:1014228G=/+  3.650720e-80 0.079578829              TRUE 0.04032407
-                    locus.r locus.pval locus.mean  locus.var locus.padj
-chr1:633192G=/+          NA         NA         NA         NA         NA
-chr1:1000079A&gt;G/-        NA         NA         NA         NA         NA
-chr1:1000731C=/+         NA         NA         NA         NA         NA
-chr1:1000814A&gt;G/+        NA         NA         NA         NA         NA
-chr1:1000830C&gt;A/+        NA         NA         NA         NA         NA
-chr1:1014228G=/+  0.8618829  0.9999916  0.1330176 0.02047667          1
-                            consequence chr0
-chr1:633192G=/+                     ref    1
-chr1:1000079A&gt;G/-                  utr5    1
-chr1:1000731C=/+  antisense_upstream_1K    1
-chr1:1000814A&gt;G/+ antisense_upstream_1K    1
-chr1:1000830C&gt;A/+ antisense_upstream_1K    1
-chr1:1014228G=/+                    ref    1</code></pre>
+<pre><code>                  chr  start ref alt strand         locus gene_name type
+chr1:631862G&gt;A/+ chr1 631862   G   A      + chr1:631862/+  MTCO1P12 utr5
+chr1:633192G=/+  chr1 633192   G   G      + chr1:633192/+  MTCO2P12 utr5
+chr1:634337T&gt;C/+ chr1 634337   T   C      + chr1:634337/+  MTATP6P1 utr5
+chr1:826352C&gt;T/- chr1 826352   C   T      - chr1:826352/- LINC00115 utr5
+chr1:853876T&gt;C/+ chr1 853876   T   C      + chr1:853876/+ LINC01128 utr5
+chr1:944296G&gt;A/- chr1 944296   G   A      - chr1:944296/-     NOC2L utr3
+                 moransi.pval       moransi autocorr.variable locus.D locus.r
+chr1:631862G&gt;A/+ 6.440179e-01 -0.0019406190             FALSE      NA      NA
+chr1:633192G=/+  1.788439e-05  0.0162169048              TRUE      NA      NA
+chr1:634337T&gt;C/+ 5.363547e-01 -0.0008627216             FALSE      NA      NA
+chr1:826352C&gt;T/- 6.044278e-01 -0.0015544905             FALSE      NA      NA
+chr1:853876T&gt;C/+ 2.535326e-02  0.0076669031             FALSE      NA      NA
+chr1:944296G&gt;A/- 2.779540e-01  0.0019637008             FALSE      NA      NA
+                 locus.pval locus.mean locus.var locus.padj    consequence chr0
+chr1:631862G&gt;A/+         NA         NA        NA         NA noncoding_exon    1
+chr1:633192G=/+          NA         NA        NA         NA            ref    1
+chr1:634337T&gt;C/+         NA         NA        NA         NA noncoding_exon    1
+chr1:826352C&gt;T/-         NA         NA        NA         NA noncoding_exon    1
+chr1:853876T&gt;C/+         NA         NA        NA         NA noncoding_exon    1
+chr1:944296G&gt;A/-         NA         NA        NA         NA           utr3    1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># here we annotate RS id and clinical signification for variants, to check the VCF header for all possible tags</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">annoVAR</span>(obj, <span class="at">vcf =</span> <span class="st">"clinvar.vcf.gz"</span>, <span class="at">chr =</span> <span class="st">"chr0"</span>, <span class="at">tags =</span> <span class="fu">c</span>(<span class="st">"RS"</span>, <span class="st">"CLNSIG"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -523,34 +501,34 @@ chr1:1014228G=/+                    ref    1</code></pre>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="ot">-&gt;</span> df</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   chr   start ref alt strand          locus gene_name     type
-chr1:633192G=/+   chr1  633192   G   G      +  chr1:633192/+  MTCO2P12     utr5
-chr1:1000079A&gt;G/- chr1 1000079   A   G      - chr1:1000079/-      HES4     utr5
-chr1:1000731C=/+  chr1 1000731   C   C      + chr1:1000731/+      HES4 upstream
-chr1:1000814A&gt;G/+ chr1 1000814   A   G      + chr1:1000814/+      HES4 upstream
-chr1:1000830C&gt;A/+ chr1 1000830   C   A      + chr1:1000830/+      HES4 upstream
-chr1:1014228G=/+  chr1 1014228   G   G      + chr1:1014228/+     ISG15     exon
-                  moransi.pval     moransi autocorr.variable    locus.D
-chr1:633192G=/+   3.235392e-01 0.001330283             FALSE         NA
-chr1:1000079A&gt;G/- 1.270509e-01 0.004159267             FALSE         NA
-chr1:1000731C=/+  5.063894e-03 0.010004135              TRUE         NA
-chr1:1000814A&gt;G/+ 6.632273e-06 0.017655831              TRUE         NA
-chr1:1000830C&gt;A/+ 3.142598e-06 0.018340286              TRUE         NA
-chr1:1014228G=/+  3.650720e-80 0.079578829              TRUE 0.04032407
-                    locus.r locus.pval locus.mean  locus.var locus.padj
-chr1:633192G=/+          NA         NA         NA         NA         NA
-chr1:1000079A&gt;G/-        NA         NA         NA         NA         NA
-chr1:1000731C=/+         NA         NA         NA         NA         NA
-chr1:1000814A&gt;G/+        NA         NA         NA         NA         NA
-chr1:1000830C&gt;A/+        NA         NA         NA         NA         NA
-chr1:1014228G=/+  0.8618829  0.9999916  0.1330176 0.02047667          1
-                            consequence chr0   RS CLNSIG
-chr1:633192G=/+                     ref    1 &lt;NA&gt;   &lt;NA&gt;
-chr1:1000079A&gt;G/-                  utr5    1 &lt;NA&gt;   &lt;NA&gt;
-chr1:1000731C=/+  antisense_upstream_1K    1 &lt;NA&gt;   &lt;NA&gt;
-chr1:1000814A&gt;G/+ antisense_upstream_1K    1 &lt;NA&gt;   &lt;NA&gt;
-chr1:1000830C&gt;A/+ antisense_upstream_1K    1 &lt;NA&gt;   &lt;NA&gt;
-chr1:1014228G=/+                    ref    1 1921 Benign</code></pre>
+<pre><code>                  chr  start ref alt strand         locus gene_name type
+chr1:631862G&gt;A/+ chr1 631862   G   A      + chr1:631862/+  MTCO1P12 utr5
+chr1:633192G=/+  chr1 633192   G   G      + chr1:633192/+  MTCO2P12 utr5
+chr1:634337T&gt;C/+ chr1 634337   T   C      + chr1:634337/+  MTATP6P1 utr5
+chr1:826352C&gt;T/- chr1 826352   C   T      - chr1:826352/- LINC00115 utr5
+chr1:853876T&gt;C/+ chr1 853876   T   C      + chr1:853876/+ LINC01128 utr5
+chr1:944296G&gt;A/- chr1 944296   G   A      - chr1:944296/-     NOC2L utr3
+                 moransi.pval       moransi autocorr.variable locus.D locus.r
+chr1:631862G&gt;A/+ 6.440179e-01 -0.0019406190             FALSE      NA      NA
+chr1:633192G=/+  1.788439e-05  0.0162169048              TRUE      NA      NA
+chr1:634337T&gt;C/+ 5.363547e-01 -0.0008627216             FALSE      NA      NA
+chr1:826352C&gt;T/- 6.044278e-01 -0.0015544905             FALSE      NA      NA
+chr1:853876T&gt;C/+ 2.535326e-02  0.0076669031             FALSE      NA      NA
+chr1:944296G&gt;A/- 2.779540e-01  0.0019637008             FALSE      NA      NA
+                 locus.pval locus.mean locus.var locus.padj    consequence chr0
+chr1:631862G&gt;A/+         NA         NA        NA         NA noncoding_exon    1
+chr1:633192G=/+          NA         NA        NA         NA            ref    1
+chr1:634337T&gt;C/+         NA         NA        NA         NA noncoding_exon    1
+chr1:826352C&gt;T/-         NA         NA        NA         NA noncoding_exon    1
+chr1:853876T&gt;C/+         NA         NA        NA         NA noncoding_exon    1
+chr1:944296G&gt;A/-         NA         NA        NA         NA           utr3    1
+                   RS CLNSIG
+chr1:631862G&gt;A/+ &lt;NA&gt;   &lt;NA&gt;
+chr1:633192G=/+  &lt;NA&gt;   &lt;NA&gt;
+chr1:634337T&gt;C/+ &lt;NA&gt;   &lt;NA&gt;
+chr1:826352C&gt;T/- &lt;NA&gt;   &lt;NA&gt;
+chr1:853876T&gt;C/+ &lt;NA&gt;   &lt;NA&gt;
+chr1:944296G&gt;A/- &lt;NA&gt;   &lt;NA&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We note that there are several pathogenic variants detected</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df[[<span class="st">'CLNSIG'</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -559,57 +537,61 @@ chr1:1014228G=/+                    ref    1 1921 Benign</code></pre>
                                              association 
                                                        8 
                                                   Benign 
-                                                    1702 
+                                                    1695 
                                     Benign/Likely_benign 
-                                                      47 
+                                                      48 
             Conflicting_classifications_of_pathogenicity 
-                                                       8 
+                                                      10 
 Conflicting_classifications_of_pathogenicity|risk_factor 
-                                                       2 
+                                                       3 
+                                           drug_response 
+                                                       1 
                                            Likely_benign 
-                                                      56 
+                                                      50 
                 no_classification_for_the_single_variant 
-                                                       8 
+                                                      12 
                                             not_provided 
                                                        1 
                                                    other 
-                                                      11 
+                                                       9 
+                                              Pathogenic 
+                                                       1 
                             Pathogenic/Likely_pathogenic 
-                                                       3 
+                                                       2 
                                   Pathogenic|risk_factor 
                                                        1 
                                              risk_factor 
-                                                       5 
+                                                       6 
                                   Uncertain_significance 
-                                                      26 </code></pre>
+                                                      32 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(CLNSIG <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'Pathogenic'</span>, <span class="st">'Pathogenic/Likely_pathogenic'</span>, <span class="st">'Pathogenic|risk_factor'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      chr     start ref alt strand            locus gene_name
-chr1:97450058C=/-    chr1  97450058   C   C      -  chr1:97450058/-      DPYD
 chr1:196690107C=/+   chr1 196690107   C   C      + chr1:196690107/+       CFH
 chr13:50945445G=/+  chr13  50945445   G   G      + chr13:50945445/+  RNASEH2B
 chr13:50945445G&gt;A/+ chr13  50945445   G   A      + chr13:50945445/+  RNASEH2B
+chr15:92992967C=/+  chr15  92992967   C   C      + chr15:92992967/+      CHD2
                           type moransi.pval      moransi autocorr.variable
-chr1:97450058C=/-       intron 4.368919e-01 0.0001360072             FALSE
-chr1:196690107C=/+  multigenes 3.903101e-61 0.0647296819              TRUE
-chr13:50945445G=/+        exon 1.374427e-06 0.0191248673              TRUE
-chr13:50945445G&gt;A/+       exon 7.057338e-07 0.0197286674              TRUE
-                       locus.D   locus.r locus.pval locus.mean  locus.var
-chr1:97450058C=/-           NA        NA         NA         NA         NA
-chr1:196690107C=/+  0.07481304 0.7473314  0.9902322  0.1350459 0.02537402
-chr13:50945445G=/+  0.11670969 0.3809105  0.8034837  0.1316099 0.01736865
-chr13:50945445G&gt;A/+ 0.12248441 0.3809105  0.7251275  0.1352893 0.02133448
+chr1:196690107C=/+  multigenes 3.157616e-83  0.076099277              TRUE
+chr13:50945445G=/+        exon 7.383672e-04  0.012759657              TRUE
+chr13:50945445G&gt;A/+       exon 5.361263e-07  0.019831392              TRUE
+chr15:92992967C=/+        exon 8.122443e-01 -0.004134115             FALSE
+                       locus.D     locus.r locus.pval locus.mean  locus.var
+chr1:196690107C=/+  0.02705684 -0.06973842  1.0000000  0.1375470 0.01593908
+chr13:50945445G=/+  0.09075579 -0.17376880  0.9803301  0.1322497 0.01987003
+chr13:50945445G&gt;A/+ 0.09640131 -0.20326243  0.9323122  0.1316205 0.02339347
+chr15:92992967C=/+          NA          NA         NA         NA         NA
                     locus.padj consequence chr0       RS
-chr1:97450058C=/-           NA         ref    1  3918290
 chr1:196690107C=/+           1         ref    1  1061170
 chr13:50945445G=/+           1         ref   13 75184679
 chr13:50945445G&gt;A/+          1    missense   13 75184679
+chr15:92992967C=/+          NA         ref   15  2272457
                                           CLNSIG
-chr1:97450058C=/-   Pathogenic/Likely_pathogenic
 chr1:196690107C=/+        Pathogenic|risk_factor
 chr13:50945445G=/+  Pathogenic/Likely_pathogenic
-chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic</code></pre>
+chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic
+chr15:92992967C=/+                    Pathogenic</code></pre>
 </div>
 </div>
 <p>In the selected SNVs, we found some reference alleles are highlighted, such as chr15:92992967C=/+. These reference alelles are more like to be benign allele. Let’s query the orignal record in the clinvar database to check what exactly stituation it should be.</p>
@@ -618,7 +600,7 @@ chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>##fileformat=VCFv4.1
 ##FILTER=&lt;ID=PASS,Description="All filters passed"&gt;
-##fileDate=2024-10-01
+##fileDate=2025-02-17
 ##source=ClinVar
 ##reference=GRCh38
 ##ID=&lt;Description="ClinVar Variation ID"&gt;
@@ -635,6 +617,7 @@ chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic</code></pre>
 ##INFO=&lt;ID=CLNSIG,Number=.,Type=String,Description="Aggregate germline classification for this single variant; multiple values are separated by a vertical bar"&gt;
 ##INFO=&lt;ID=CLNSIGCONF,Number=.,Type=String,Description="Conflicting germline classification for this single variant; multiple values are separated by a vertical bar"&gt;
 ##INFO=&lt;ID=CLNSIGINCL,Number=.,Type=String,Description="Germline classification for a haplotype or genotype that includes this variant. Reported as pairs of VariationID:classification; multiple values are separated by a vertical bar"&gt;
+##INFO=&lt;ID=CLNSIGSCV,Number=.,Type=String,Description="SCV accession numbers for the submissions that contribute to the aggregate germline classification in ClinVar; multiple values are separated by a vertical bar"&gt;
 ##INFO=&lt;ID=CLNVC,Number=1,Type=String,Description="Variant type"&gt;
 ##INFO=&lt;ID=CLNVCSO,Number=1,Type=String,Description="Sequence Ontology id for variant type"&gt;
 ##INFO=&lt;ID=CLNVI,Number=.,Type=String,Description="the variant's clinical sources reported as tag-value pairs of database and variant identifier"&gt;
@@ -648,6 +631,7 @@ chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic</code></pre>
 ##INFO=&lt;ID=ONC,Number=.,Type=String,Description="Aggregate oncogenicity classification for this single variant; multiple values are separated by a vertical bar"&gt;
 ##INFO=&lt;ID=ONCINCL,Number=.,Type=String,Description="Oncogenicity classification for a haplotype or genotype that includes this variant. Reported as pairs of VariationID:classification; multiple values are separated by a vertical bar"&gt;
 ##INFO=&lt;ID=ONCREVSTAT,Number=.,Type=String,Description="ClinVar review status of oncogenicity classification for the Variation ID"&gt;
+##INFO=&lt;ID=ONCSCV,Number=.,Type=String,Description="SCV accession numbers for the submissions that contribute to the aggregate oncogenicity classification in ClinVar; multiple values are separated by a vertical bar"&gt;
 ##INFO=&lt;ID=ONCCONF,Number=.,Type=String,Description="Conflicting oncogenicity classification for this single variant; multiple values are separated by a vertical bar"&gt;
 ##INFO=&lt;ID=ORIGIN,Number=.,Type=String,Description="Allele origin. One or more of the following values may be added: 0 - unknown; 1 - germline; 2 - somatic; 4 - inherited; 8 - paternal; 16 - maternal; 32 - de-novo; 64 - biparental; 128 - uniparental; 256 - not-tested; 512 - tested-inconclusive; 1073741824 - other"&gt;
 ##INFO=&lt;ID=RS,Number=.,Type=String,Description="dbSNP ID (i.e. rs number)"&gt;
@@ -658,6 +642,7 @@ chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic</code></pre>
 ##INFO=&lt;ID=SCIREVSTAT,Number=.,Type=String,Description="ClinVar review status of somatic clinical impact for the Variation ID"&gt;
 ##INFO=&lt;ID=SCI,Number=.,Type=String,Description="Aggregate somatic clinical impact for this single variant; multiple values are separated by a vertical bar"&gt;
 ##INFO=&lt;ID=SCIINCL,Number=.,Type=String,Description="Somatic clinical impact classification for a haplotype or genotype that includes this variant. Reported as pairs of VariationID:classification; multiple values are separated by a vertical bar"&gt;
+##INFO=&lt;ID=SCISCV,Number=.,Type=String,Description="SCV accession numbers for the submissions that contribute to the aggregate somatic clinical impact in ClinVar; multiple values are separated by a vertical bar"&gt;
 ##contig=&lt;ID=1&gt;
 ##contig=&lt;ID=2&gt;
 ##contig=&lt;ID=3&gt;
@@ -688,11 +673,11 @@ chr13:50945445G&gt;A/+ Pathogenic/Likely_pathogenic</code></pre>
 ##contig=&lt;ID=NT_187661.1&gt;
 ##contig=&lt;ID=NT_187693.1&gt;
 ##contig=&lt;ID=NW_009646201.1&gt;
-##bcftools_viewVersion=1.13+htslib-1.13
-##bcftools_viewCommand=view clinvar.vcf.gz 15:92992967-92992967; Date=Fri Dec  6 14:29:46 2024
+##bcftools_viewVersion=1.21+htslib-1.21
+##bcftools_viewCommand=view clinvar.vcf.gz 15:92992967-92992967; Date=Thu Feb 20 18:26:56 2025
 #CHROM  POS ID  REF ALT QUAL    FILTER  INFO
-15  92992967    633515  C   G   .   .   ALLELEID=621980;CLNDISDB=MedGen:CN517202;CLNDN=not_provided;CLNHGVS=NC_000015.10:g.92992967C&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Pathogenic;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;GENEINFO=CHD2:1106;MC=SO:0001587|nonsense;ORIGIN=1;RS=2272457
-15  92992967    257709  C   T   .   .   AF_ESP=0.2485;AF_EXAC=0.22658;AF_TGP=0.19349;ALLELEID=255446;CLNDISDB=MeSH:D030342,MedGen:C0950123|MONDO:MONDO:0014150,MedGen:C3809278,OMIM:615369,Orphanet:1942,Orphanet:2382|MedGen:CN169374|MedGen:C3661900;CLNDN=Inborn_genetic_diseases|Developmental_and_epileptic_encephalopathy_94|not_specified|not_provided;CLNHGVS=NC_000015.10:g.92992967C&gt;T;CLNREVSTAT=criteria_provided,_multiple_submitters,_no_conflicts;CLNSIG=Benign;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA7748248;GENEINFO=CHD2:1106;MC=SO:0001819|synonymous_variant;ORIGIN=1;RS=2272457</code></pre>
+15  92992967    633515  C   G   .   .   ALLELEID=621980;CLNDISDB=MedGen:CN517202;CLNDN=not_provided;CLNHGVS=NC_000015.10:g.92992967C&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Pathogenic;CLNSIGSCV=SCV000920484;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA393896759;GENEINFO=CHD2:1106;MC=SO:0001587|nonsense;ORIGIN=1;RS=2272457
+15  92992967    257709  C   T   .   .   AF_ESP=0.2485;AF_EXAC=0.22658;AF_TGP=0.19349;ALLELEID=255446;CLNDISDB=MeSH:D030342,MedGen:C0950123|MONDO:MONDO:0014150,MedGen:C3809278,OMIM:615369,Orphanet:1942,Orphanet:2382|MedGen:C3661900|MedGen:CN169374;CLNDN=Inborn_genetic_diseases|Developmental_and_epileptic_encephalopathy_94|not_provided|not_specified;CLNHGVS=NC_000015.10:g.92992967C&gt;T;CLNREVSTAT=criteria_provided,_multiple_submitters,_no_conflicts;CLNSIG=Benign;CLNSIGSCV=SCV000307175|SCV000519223|SCV000841518|SCV000846021|SCV001730597|SCV001806395|SCV005087698|SCV005297510;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA7748248;GENEINFO=CHD2:1106;MC=SO:0001819|synonymous_variant;ORIGIN=1;RS=2272457</code></pre>
 </div>
 </div>
 <p>You can easily observe that the pathogenic allele is G, where the change from C to G leads to a nonsense mutation. However, if we examine the header, we see that the ‘Number’ field of CLNSIG is labeled as ‘.’, which indicates that this term is not allele-specific—an inappropriate type for this record. In fact, this issue extends beyond just CLNSIG; all terms in the ClinVar database are labeled as ‘.’.</p>
@@ -968,8 +953,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1080,7 +1063,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -1313,6 +1295,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./Visium.html" class="pagination-link" aria-label="Analysis multiple Visium samples">
+        <span class="nav-page-text">Analysis multiple Visium samples</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
