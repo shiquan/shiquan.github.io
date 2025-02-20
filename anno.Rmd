@@ -37,7 +37,7 @@ The following vignette demonstrates how to generate various feature counts from 
 
 ### 1. Genetic variants calling
 
-``` bash
+```bash
 # Unpack the FASTA file
 gzip -d GRCh38.p13.genome.fa.gz
 
@@ -114,28 +114,28 @@ ls exp/
 ```
 
 ```{bash}
-zcat exp/barcodes.tsv.gz|head
+zless exp/barcodes.tsv.gz|head
 ```
 ```{bash}
-zcat exp/features.tsv.gz|head
+zless exp/features.tsv.gz|head
 ```
 ```{bash}
-zcat exp/matrix.mtx.gz|head
-```
-
-
-```{bash}
-zcat exon/features.tsv.gz|head
+zless exp/matrix.mtx.gz|head
 ```
 
+
 ```{bash}
-zcat junction/features.tsv.gz|head
+zless exon/features.tsv.gz|head
+```
+
+```{bash}
+zless junction/features.tsv.gz|head
 ```
 
 The format for exon and junction names is "chr:pos reference_allele>alternative_allele/strand" for alternative alleles, or "chr:pos=/strand" for reference allele.
 ```{bash}
 # the format of expressed genetic variant is 
-zcat var/features.tsv.gz|head
+zless var/features.tsv.gz|head
 ```
 **Notes:** By default, the parameters for `PISA anno` are strand-sensitive. For non-strand-sensitive libraries, such as Smartseq2, the strand should be ignored by using the `-is` option.
 
