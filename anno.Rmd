@@ -93,34 +93,34 @@ samtools view anno.bam | head -n 3000|grep 'A00836:286:HMTMVDMXX:2:2354:8422:139
 ### 3. Generate Cell X feature expression matrix
 
 ``` bash
-mkdir gene
+mkdir exp 
 mkdir exon
 mkdir exclude
 mkdir junction
 mkdir var
 
-PISA count -tags CB -anno-tag GN -umi UB -outdir gene anno.bam
+PISA count -tags CB -anno-tag GN -umi UB -outdir exp anno.bam
 PISA count -tags CB -anno-tag EX -umi UB -outdir exon anno.bam
 PISA count -tags CB -anno-tag ER -umi UB -outdir exclude anno.bam
 PISA count -tags CB -anno-tag JC -umi UB -outdir junction anno.bam
-PISA count -tags CB -anno-tag VF -umi UB -outdir var anno.bam
+PISA count -tags CB -anno-tag VR -umi UB -outdir var anno.bam
 ```
 
 
 **Notes:**  These commands will generate raw counts for all droplets. Although the `-list` parameter can be used to export only selected cells with `PISA anno`, cell selection may sometimes lack robustness. Therefore, it is safer to store the raw matrix file for long-term storage.
 
 ```{bash}
-ls gene/
+ls exp/
 ```
 
 ```{bash}
-zcat gene/barcodes.tsv.gz|head
+zcat exp/barcodes.tsv.gz|head
 ```
 ```{bash}
-zcat gene/features.tsv.gz|head
+zcat exp/features.tsv.gz|head
 ```
 ```{bash}
-zcat gene/matrix.mtx.gz|head
+zcat exp/matrix.mtx.gz|head
 ```
 
 
