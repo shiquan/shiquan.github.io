@@ -279,6 +279,16 @@ For more information on CellRanger's counting strategy, you can refer to the off
 
 ## Changelog
 
+
+<details>
+
+<summary>v1.5 2025/03/17</summary>
+
+Check and label EXACT_MATCH for all cell barcode segments. Previous only check the first segment. Thanks to @lishuangshuang0616 report this bug.
+
+</details>
+
+
 <details>
 
 <summary>v1.4 2025/03/15</summary>
