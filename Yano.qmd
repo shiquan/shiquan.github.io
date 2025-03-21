@@ -13,13 +13,8 @@ Yano is seamlessly integrated with Seurat, building upon the Seurat object's fra
 ## INSTALL
 
 ```r
-# Dependencies
-install.packages(c("Seurat", "R.utils", "viridis", "devtools"), repos = "https://cloud.r-project.org")
-```
-
-```r
-# Install Yano 
-devtools::install_github("shiquan/Yano")
+if (!require("BiocManager")) install.packages('BiocManager') 
+BiocManager::install("shiquan/Yano")
 ```
 ***Notice:*** Multithread mode is disabled on macOS by default due to the lack of OpenMP support. However, `data.table` provides a useful tutorial on how to enable OpenMP on macOS. For more information, please refer to this guide: [https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos](https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos).
 
