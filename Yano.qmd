@@ -22,7 +22,7 @@ BiocManager::install("shiquan/Yano")
 
 A typical workflow with Yano starts by using a built-in dataset.
 
-```{r message=FALSE, warning=FALSE, fig.align='center', fig.width=12, fig.height=6}
+```{r message=FALSE, warning=FALSE, fig.align='center', fig.width=10, fig.height=5}
 require(Yano)
 data("glbt_small")
 DefaultAssay(glbt_small) <- "RNA"
@@ -61,6 +61,13 @@ See short cases for more details.
 - [Perform alternative splicing analysis for cell trajectory and user-defined embeddings](Yano_trajectory.Rmd)
 
 ## Changelog
+<details>
+<summary>1.1 2025/06/02</summary>
+
+Simplified parameters for RunBlockCorr() to streamlines the function and makes it more concise. In addition, new selector functions, *Selector(), introduced.
+
+</details>
+
 <details>
 <summary>1.0 2025/02/19</summary>
 

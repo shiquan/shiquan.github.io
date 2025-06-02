@@ -222,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Yano_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1152"></p>
+<p><img src="Yano_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -245,7 +245,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Yano_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1152"></p>
+<p><img src="Yano_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -253,21 +253,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Yano_files/figure-html/unnamed-chunk-1-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1152"></p>
+<p><img src="Yano_files/figure-html/unnamed-chunk-1-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Track plot for gene coverage at different cell types</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2025-06-02 18:18:11] GTF loading..
-[2025-06-02 18:18:57] Load 62700 genes.</code></pre>
+<pre><code>[2025-06-02 21:53:40] GTF loading..
+[2025-06-02 21:54:02] Load 62700 genes.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile=</span><span class="st">"./Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span>db, <span class="at">gene =</span> <span class="st">"TPM4"</span>, <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(glbt_small), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">16095264</span>,<span class="dv">16095454</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Yano_files/figure-html/unnamed-chunk-1-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1152"></p>
+<p><img src="Yano_files/figure-html/unnamed-chunk-1-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -287,6 +287,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="changelog" class="level2">
 <h2 class="anchored" data-anchor-id="changelog">Changelog</h2>
+<details>
+<summary>
+1.1 2025/06/02
+</summary>
+<p>Simplified parameters for RunBlockCorr() to streamlines the function and makes it more concise. In addition, new selector functions, *Selector(), introduced.</p>
+</details>
 <details>
 <summary>
 1.0 2025/02/19
