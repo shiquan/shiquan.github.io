@@ -220,7 +220,7 @@ TrackPlot(bamfile = bamfiles, cell.group = cell.list1, gtf = gtf, gene = "Sept8"
 ```
 
 ## Optional: Build cell-cell weight matrix by spatial coordinates
-We previously used PCA to construct the cell weight matrix, but for spatial transcriptomics data, it is also possible to use the spatial coordinates—specifically, the real spot-to-spot distances—to build the weight matrix. Here, we demonstrate how to do this. Note that if we use spatial coordinates, the analysis can only be performed within a single slice.
+We previously used PCA to construct the cell weight matrix, but for spatial transcriptomics data, it is also possible to use the spatial coordinates, the real spot-to-spot distances, to build the weight matrix. Here, we demonstrate how to do this. Note that if we use spatial coordinates, the analysis can only be performed within a single slice.
 
 ```{r warning=FALSE, fig.width=12, fig.height=5}
 obj <- subset(obj, orig.ident == "sec1_ant")

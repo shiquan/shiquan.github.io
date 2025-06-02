@@ -12,10 +12,6 @@ In the previous vignette, we performed cell clustering using unsupervised method
 We used the human testis single-cell atlas dataset for this analysis. The full dataset is publicly available at [GSE112013](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE112013). For this vignette, we only used replicate 1.
 
 ```bash
-## Create a work directory
-mkdir humantestis
-cd humantestis/
-
 ## We first download the BAM files and GTF file
 wget -c https://sra-pub-src-1.s3.amazonaws.com/SRR6860519/14515X1.bam.1 -O donor1_rep1.bam
 wget -c https://sra-pub-src-1.s3.amazonaws.com/SRR6860520/14606X1.bam.1 -O donor1_rep2.bam

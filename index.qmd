@@ -25,9 +25,9 @@ This website outlines the key tools and software packages developed from my rese
 - [Alternative splicing analysis for scRNA-seq](Yano_AS.Rmd) (Yano)
 - [Allele-specific gene expression analysis for scRNA-seq](Yano_ASE.Rmd) (Yano)
 - [Annotating and prioritizing genetic variants for scRNA-seq](Yano_anno.Rmd) (Yano)
-- [Perform alternative splicing analysis for cell trajectory and user-defined embeddings](Yano_trajectory.Rmd) (Yano)
 - [Perform alternative splicing analysis for multiple Visium samples](Visium.Rmd) (Yano)
 - [Select cells from reduction maps and spatial locations](dST_selector.Rmd) (Yano)
+- [Perform alternative splicing analysis for cell trajectory and user-defined embeddings](Yano_trajectory.Rmd) (Yano)
 
 
   

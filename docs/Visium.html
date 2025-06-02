@@ -496,25 +496,25 @@ Number of edges: 388091
 Running Louvain algorithm...
 Maximum modularity in 10 random starts: 0.9314
 Number of communities: 16
-Elapsed time: 1 seconds</code></pre>
+Elapsed time: 2 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>object &lt;- RunUMAP(object, dims = 1:20)
-16:04:03 UMAP embedding parameters a = 0.9922 b = 1.112
-16:04:03 Read 12148 rows and found 20 numeric columns
-16:04:03 Using Annoy for neighbor search, n_neighbors = 30
-16:04:03 Building Annoy index with metric = cosine, n_trees = 50
+23:23:39 UMAP embedding parameters a = 0.9922 b = 1.112
+23:23:39 Read 12148 rows and found 20 numeric columns
+23:23:39 Using Annoy for neighbor search, n_neighbors = 30
+23:23:39 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-16:04:05 Writing NN index file to temp file /var/folders/38/qfwf72jx3413kwjx7lgqv3xr0000gn/T//Rtmp5ATxdw/file8a6b373c5833
-16:04:05 Searching Annoy index using 1 thread, search_k = 3000
-16:04:09 Annoy recall = 100%
-16:04:09 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-16:04:10 Initializing from normalized Laplacian + noise (using RSpectra)
-16:04:10 Commencing optimization for 200 epochs, with 500558 positive edges
-16:04:10 Using rng type: pcg
-16:04:19 Optimization finished</code></pre>
+23:23:42 Writing NN index file to temp file /var/folders/38/qfwf72jx3413kwjx7lgqv3xr0000gn/T//RtmpCwA74Z/filef58e3550ded6
+23:23:42 Searching Annoy index using 1 thread, search_k = 3000
+23:23:48 Annoy recall = 100%
+23:23:50 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+23:23:52 Initializing from normalized Laplacian + noise (using RSpectra)
+23:23:54 Commencing optimization for 200 epochs, with 500558 positive edges
+23:23:54 Using rng type: pcg
+23:24:09 Optimization finished</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj, <span class="at">group.by =</span> <span class="st">"orig.ident"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj)</span>
@@ -555,7 +555,7 @@ See help("Deprecated") and help("Matrix-deprecated").</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay : exon
 Run autocorrelation test for 80178 features.
-Runtime : 3.617481 mins
+Runtime : 8.81576 mins
 38771 autocorrelated features.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -568,7 +568,7 @@ Processing 18748 binding features.
 Retrieve binding data from assay RNA.
 Use "data" layer for test features and binding features.
 Using 7 threads.
-Runtime : 1.500692 hours.</code></pre>
+Runtime : 2.249563 hours.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -626,8 +626,8 @@ chrX:163926903-163929546/+/Ap1s2    25.79267   4.953734e-46   3.148759e-42</code
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./visium/gencode.vM10.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2025-06-02 17:40:32] GTF loading..
-[2025-06-02 17:40:55] Load 48440 genes.</code></pre>
+<pre><code>[2025-06-03 01:54:20] GTF loading..
+[2025-06-03 01:54:37] Load 48440 genes.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>bamfiles <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec1_ant =</span> <span class="st">"./visium/section1/Anterior/V1_Mouse_Brain_Sagittal_Anterior_possorted_genome_bam.bam"</span>,</span>
@@ -670,7 +670,7 @@ chrX:163926903-163929546/+/Ap1s2    25.79267   4.953734e-46   3.148759e-42</code
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Visium_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="1440"></p>
+<p><img src="Visium_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -678,7 +678,7 @@ chrX:163926903-163929546/+/Ap1s2    25.79267   4.953734e-46   3.148759e-42</code
 </section>
 <section id="optional-build-cell-cell-weight-matrix-by-spatial-coordinates" class="level2">
 <h2 class="anchored" data-anchor-id="optional-build-cell-cell-weight-matrix-by-spatial-coordinates">Optional: Build cell-cell weight matrix by spatial coordinates</h2>
-<p>We previously used PCA to construct the cell weight matrix, but for spatial transcriptomics data, it is also possible to use the spatial coordinates—specifically, the real spot-to-spot distances—to build the weight matrix. Here, we demonstrate how to do this. Note that if we use spatial coordinates, the analysis can only be performed within a single slice.</p>
+<p>We previously used PCA to construct the cell weight matrix, but for spatial transcriptomics data, it is also possible to use the spatial coordinates, the real spot-to-spot distances, to build the weight matrix. Here, we demonstrate how to do this. Note that if we use spatial coordinates, the analysis can only be performed within a single slice.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">subset</span>(obj, orig.ident <span class="sc">==</span> <span class="st">"sec1_ant"</span>)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj, <span class="at">image =</span> <span class="st">"slice1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -692,7 +692,7 @@ chrX:163926903-163929546/+/Ap1s2    25.79267   4.953734e-46   3.148759e-42</code
 <pre><code>Run autocorrelation test for 61463 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 11.08109 secs</code></pre>
+<pre><code>Runtime : 7.325192 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>18989 autocorrelated features.</code></pre>
@@ -727,13 +727,13 @@ chrX:163926903-163929546/+/Ap1s2    25.79267   4.953734e-46   3.148759e-42</code
 <pre><code>Using 7 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 2.385869 mins.</code></pre>
+<pre><code>Runtime : 1.594298 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Visium_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="1440"></p>
+<p><img src="Visium_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -759,7 +759,7 @@ chr9:112065234-112066022/-/Arpp21    7.475056   1.569355e-11   9.678793e-08</cod
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Visium_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="1440"></p>
+<p><img src="Visium_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
