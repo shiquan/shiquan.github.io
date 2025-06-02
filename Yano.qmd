@@ -36,7 +36,7 @@ glbt_small <- ParseExonName(glbt_small)
 grep("_wm$",names(glbt_small), value=TRUE)
 glbt_small <- RunAutoCorr(glbt_small)
 grep("_wm$",names(glbt_small), value=TRUE)
-glbt_small <- SetAutoCorrFeatures(glbt_small)
+
 glbt_small <- RunBlockCorr(glbt_small, bind.name = "gene_name", bind.assay = "RNA")
 
 # Manhattan plot for spatial dissimilarity test result
@@ -57,6 +57,8 @@ See short cases for more details.
 - [Allele-specific gene expression analysis for scRNA-seq](https://shiquan.github.io/Yano_ASE.html)
 - [Annotating and prioritizing genetic variants for scRNA-seq](https://shiquan.github.io/Yano_anno.html)
 - [Perform alternative splicing analysis for multiple Visium samples](https://shiquan.github.io/Visium.html)
+- [Select cells from reduction maps](https://shiquan.github.io/dST_selector.html)
+- [Perform alternative splicing analysis for cell trajectory and user-defined embeddings](Yano_trajectory.Rmd)
 
 ## Changelog
 <details>
@@ -78,6 +80,7 @@ Init version.
 - [https://github.com/shiquan/Yano/issues](https://github.com/shiquan/Yano/issues)
 - [https://github.com/shiquan/Yano/discussions](https://github.com/shiquan/Yano/discussions)
 
+<!--
 ## Functions
 
 Function(s) | Description
@@ -105,3 +108,4 @@ Function(s) | Description
 |[TrackPlot](Yano/TrackPlot.md)|Generate tracks plot from BAM(s).|
 |[varanno](Yano/varanno.md)|Low level version of annoVAR, need specify chr, position manually.|
 
+-->

@@ -168,7 +168,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#short-cases" id="toc-short-cases" class="nav-link" data-scroll-target="#short-cases">Short cases</a></li>
   <li><a href="#changelog" id="toc-changelog" class="nav-link" data-scroll-target="#changelog">Changelog</a></li>
   <li><a href="#issues-or-questions" id="toc-issues-or-questions" class="nav-link" data-scroll-target="#issues-or-questions">Issues or questions</a></li>
-  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a></li>
   </ul>
 </nav>
     </div>
@@ -239,11 +238,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "pca_wm"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">SetAutoCorrFeatures</span>(glbt_small)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(glbt_small, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Manhattan plot for spatial dissimilarity test result</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(glbt_small, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(glbt_small, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Manhattan plot for spatial dissimilarity test result</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(glbt_small, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -262,8 +260,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Track plot for gene coverage at different cell types</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2025-03-21 13:12:43] GTF loading..
-[2025-03-21 13:12:55] Load 62700 genes.</code></pre>
+<pre><code>[2025-06-02 18:18:11] GTF loading..
+[2025-06-02 18:18:57] Load 62700 genes.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile=</span><span class="st">"./Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span>db, <span class="at">gene =</span> <span class="st">"TPM4"</span>, <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(glbt_small), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">16095264</span>,<span class="dv">16095454</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -283,6 +281,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://shiquan.github.io/Yano_ASE.html">Allele-specific gene expression analysis for scRNA-seq</a></li>
 <li><a href="https://shiquan.github.io/Yano_anno.html">Annotating and prioritizing genetic variants for scRNA-seq</a></li>
 <li><a href="https://shiquan.github.io/Visium.html">Perform alternative splicing analysis for multiple Visium samples</a></li>
+<li><a href="https://shiquan.github.io/dST_selector.html">Select cells from reduction maps</a></li>
+<li><a href="./Yano_trajectory.html">Perform alternative splicing analysis for cell trajectory and user-defined embeddings</a></li>
 </ul>
 </section>
 <section id="changelog" class="level2">
@@ -306,107 +306,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://github.com/shiquan/Yano/issues">https://github.com/shiquan/Yano/issues</a></li>
 <li><a href="https://github.com/shiquan/Yano/discussions">https://github.com/shiquan/Yano/discussions</a></li>
 </ul>
-</section>
-<section id="functions" class="level2">
-<h2 class="anchored" data-anchor-id="functions">Functions</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Function(s)</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="./Yano/annoBED.html">annoBED</a></td>
-<td>Annotate BED with preload GTF.</td>
-</tr>
-<tr class="even">
-<td><a href="./Yano/annoVAR.html">annoVAR</a></td>
-<td>Annotate genetic variants with preload GTF and/or VCF databases.</td>
-</tr>
-<tr class="odd">
-<td><a href="./Yano/AutoCorrFeatures.html">AutoCorrFeatures</a></td>
-<td>Select spatial autocorrelated features.</td>
-</tr>
-<tr class="even">
-<td><a href="./Yano/FbtPlot.html">FbtPlot</a></td>
-<td>Generate a mahattan plot for features.</td>
-</tr>
-<tr class="odd">
-<td><a href="./Yano/FindAltExp.html">FindAltExp</a></td>
-<td>Find group specific alternative expressed features.</td>
-</tr>
-<tr class="even">
-<td><a href="./Yano/FindAllAltExp.html">FindAllAltExp</a></td>
-<td>Find alternative expressed features for all groups.</td>
-</tr>
-<tr class="odd">
-<td><a href="./Yano/GetWeights.html">GetWeights</a></td>
-<td>Get weight matrix.</td>
-</tr>
-<tr class="even">
-<td><a href="./Yano/gtf2db.html">gtf2db</a></td>
-<td>Load GTF database into memory.</td>
-</tr>
-<tr class="odd">
-<td><a href="./Yano/mergeMatrix-SMatrix-method.html">mergeMatrix</a></td>
-<td>Merge two or more count matrix into one.</td>
-</tr>
-<tr class="even">
-<td><a href="./Yano/ParseBED.html">ParseBED</a></td>
-<td>Parse chromsome name, locations and strand from BED names.</td>
-</tr>
-<tr class="odd">
-<td><a href="./Yano/ParseExonName.html">ParseExonName</a></td>
-<td>Parse chromsome name, locations, strand and gene name from Exon/Junction names.</td>
-</tr>
-<tr class="even">
-<td><a href="./Yano/ParseVarName.html">ParseVarName</a></td>
-<td>Parse chromsome name, locations and strand from genetic variant names.</td>
-</tr>
-<tr class="odd">
-<td><a href="./Yano/PSIPlot.html">PSIPlot</a></td>
-<td>Plot Percent Spliced-IN value on a reduction map.</td>
-</tr>
-<tr class="even">
-<td><a href="./Yano/RatioPlot.html">RatioPlot</a></td>
-<td>Plot ratio of feature and binding feature expression on a reduction map.</td>
-</tr>
-<tr class="odd">
-<td><a href="./Yano/ReadPISA.html">ReadPISA</a></td>
-<td>Load raw matrix which generated by PISA.</td>
-</tr>
-<tr class="even">
-<td><a href="./Yano/RunAutoCorr.html">RunAutoCorr</a></td>
-<td>Perform spatial autocorrelation test for features.</td>
-</tr>
-<tr class="odd">
-<td><a href="./Yano/RunBlockCorr.html">RunBlockCorr</a></td>
-<td>Perform spatial dissimilarity test for features.</td>
-</tr>
-<tr class="even">
-<td><a href="./Yano/RunDEXSeq.html">RunDEXSeq</a></td>
-<td>Run alternative expression analysis with DEXSeq.</td>
-</tr>
-<tr class="odd">
-<td><a href="./Yano/QuickRecipe-Seurat-method.html">QuickRecipe</a></td>
-<td>Run Seurat pipeline.</td>
-</tr>
-<tr class="even">
-<td><a href="./Yano/SetAutoCorrFeatures.html">SetAutoCorrFeatures</a></td>
-<td>Setup spatial autocorrelated features.</td>
-</tr>
-<tr class="odd">
-<td><a href="./Yano/TrackPlot.html">TrackPlot</a></td>
-<td>Generate tracks plot from BAM(s).</td>
-</tr>
-<tr class="even">
-<td><a href="./Yano/varanno.html">varanno</a></td>
-<td>Low level version of annoVAR, need specify chr, position manually.</td>
-</tr>
-</tbody>
-</table>
+<!--
+## Functions
+
+Function(s) | Description
+|---|---|
+|[annoBED](Yano/annoBED.md)|Annotate BED with preload GTF.|
+|[annoVAR](Yano/annoVAR.md)|Annotate genetic variants with preload GTF and/or VCF databases.|
+|[AutoCorrFeatures](Yano/AutoCorrFeatures.md)|Select spatial autocorrelated features.|
+|[FbtPlot](Yano/FbtPlot.md)|Generate a mahattan plot for features.|
+|[FindAltExp](Yano/FindAltExp.md)|Find group specific alternative expressed features.|
+|[FindAllAltExp](Yano/FindAllAltExp.md)|Find alternative expressed features for all groups.|
+|[GetWeights](Yano/GetWeights.md)|Get weight matrix.|
+|[gtf2db](Yano/gtf2db.md)|Load GTF database into memory.|
+|[mergeMatrix](Yano/mergeMatrix-SMatrix-method.md)|Merge two or more count matrix into one.|
+|[ParseBED](Yano/ParseBED.md)|Parse chromsome name, locations and strand from BED names.|
+|[ParseExonName](Yano/ParseExonName.md)|Parse chromsome name, locations, strand and gene name from Exon/Junction names.|
+|[ParseVarName](Yano/ParseVarName.md)|Parse chromsome name, locations and strand from genetic variant names.|
+|[PSIPlot](Yano/PSIPlot.md)|Plot Percent Spliced-IN value on a reduction map.|
+|[RatioPlot](Yano/RatioPlot.md)|Plot ratio of feature and binding feature expression on a reduction map.|
+|[ReadPISA](Yano/ReadPISA.md)|Load raw matrix which generated by PISA.|
+|[RunAutoCorr](Yano/RunAutoCorr.md)|Perform spatial autocorrelation test for features.|
+|[RunBlockCorr](Yano/RunBlockCorr.md)|Perform spatial dissimilarity test for features.|
+|[RunDEXSeq](Yano/RunDEXSeq.md)|Run alternative expression analysis with DEXSeq.|
+|[QuickRecipe](Yano/QuickRecipe-Seurat-method.md)|Run Seurat pipeline.|
+|[SetAutoCorrFeatures](Yano/SetAutoCorrFeatures.md)|Setup spatial autocorrelated features.|
+|[TrackPlot](Yano/TrackPlot.md)|Generate tracks plot from BAM(s).|
+|[varanno](Yano/varanno.md)|Low level version of annoVAR, need specify chr, position manually.|
+
+-->
 
 
 </section>

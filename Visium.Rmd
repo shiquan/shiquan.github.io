@@ -125,35 +125,43 @@ This section will perform Seurat pipeline for all the sections. A Seurat workflo
 
 ```{r warning=FALSE, fig.width=12, fig.height=5}
 require(Yano)
-exp.1 <- ReadPISA("./visium/section1/Anterior/exp/")
+
+exp.1 <- ReadPISA("./visium/section1/Anterior/exp/", prefix = "sec1_ant_")
 image.1 <- Read10X_Image("./visium/section1/Anterior/spatial/")
+new.names <- paste0("sec1_ant_",Cells(image.1))
+image.1 <- RenameCells(image.1, new.names = new.names)
 
 ## QuickRecipe() is actually an integration function of Seurat workflow
 obj.1 <- QuickRecipe(exp.1[, Cells(image.1)], verbose = FALSE)
 obj.1[['slice1']] <- image.1[colnames(obj.1),]
 obj.1$orig.ident <- "sec1_ant"
 
-
-exp.2 <- ReadPISA("./visium/section1/Posterior/exp/")
+exp.2 <- ReadPISA("./visium/section1/Posterior/exp/", prefix = "sec1_pos_")
 image.2 <- Read10X_Image("./visium/section1/Posterior/spatial/")
+new.names <- paste0("sec1_pos_",Cells(image.2))
+image.2 <- RenameCells(image.2, new.names = new.names)
 obj.2 <- QuickRecipe(exp.2[,Cells(image.2)], verbose = FALSE)
 obj.2[['slice2']] <- image.2[colnames(obj.2),]
 obj.2$orig.ident <- "sec1_pos"
 
-exp.3 <- ReadPISA("./visium/section2/Anterior/exp/")
+exp.3 <- ReadPISA("./visium/section2/Anterior/exp/", prefix="sec2_ant_")
 image.3 <- Read10X_Image("./visium/section2/Anterior/spatial/")
+new.names <- paste0("sec2_ant_",Cells(image.3))
+image.3 <- RenameCells(image.3, new.names = new.names)
 obj.3 <- QuickRecipe(exp.3[, Cells(image.3)], verbose = FALSE)
 obj.3[['slice3']] <- image.3[colnames(obj.3),]
 obj.3$orig.ident <- "sec2_ant"
 
-exp.4 <- ReadPISA("./visium/section2/Posterior/exp/")
+exp.4 <- ReadPISA("./visium/section2/Posterior/exp/", prefix="sec2_pos_")
 image.4 <- Read10X_Image("./visium/section2/Posterior/spatial/")
+new.names <- paste0("sec2_pos_",Cells(image.4))
+image.4 <- RenameCells(image.4, new.names = new.names)
 obj.4 <- QuickRecipe(exp.4[, Cells(image.4)], verbose = FALSE)
 obj.4[['slice4']] <- image.4[colnames(obj.4),]
 obj.4$orig.ident <- "sec2_pos"
 
 # Merge all processed Seurat object
-obj <- merge(obj.1, y = list(obj.2, obj.3, obj.4), add.cell.ids = c("sec1_ant", "sec1_pos", "sec2_ant", "sec2_pos"))
+obj <- merge(obj.1, y = list(obj.2, obj.3, obj.4))
 
 obj <- QuickRecipe(obj)
 
@@ -174,8 +182,6 @@ DefaultAssay(obj) <- "exon"
 obj <- NormalizeData(obj)
 obj <- ParseExonName(obj)
 obj <- RunAutoCorr(obj)
-obj <- SetAutoCorrFeatures(obj)
-
 obj <- RunBlockCorr(obj, bind.name = "gene_name", bind.assay = "RNA")
 
 FbtPlot(obj, val = "gene_name.padj")
@@ -190,7 +196,7 @@ SpatialPlot(obj, features = c("chr11:53548291-53549565/+/Sept8","Sept8"), pt.siz
 
 Since the spot/cell names have already been renamed in the Seurat object, we need to define a binding list that maps the new cell names to their original names, which will be used for reading sequences from the BAM files. In this vignette, we use four BAM files, requiring us to define four corresponding cell vectors. Each vector contains group factor values, where the names of the values correspond to the original cell names in the BAM file.
 
-```{r message=FALSE, fig.width=15, fig.height=10}
+```{r message=FALSE, fig.width=12, fig.height=5}
 gtf <- gtf2db("./visium/gencode.vM10.annotation.gtf.gz")
 
 bamfiles <- list(
@@ -213,4 +219,17 @@ str(cell.list1)
 TrackPlot(bamfile = bamfiles, cell.group = cell.list1, gtf = gtf, gene = "Sept8", highlights = c(53548291,53549565), junc=TRUE)
 ```
 
+## Optional: Build cell-cell weight matrix by spatial coordinates
+We previously used PCA to construct the cell weight matrix, but for spatial transcriptomics data, it is also possible to use the spatial coordinates—specifically, the real spot-to-spot distances—to build the weight matrix. Here, we demonstrate how to do this. Note that if we use spatial coordinates, the analysis can only be performed within a single slice.
+
+```{r warning=FALSE, fig.width=12, fig.height=5}
+obj <- subset(obj, orig.ident == "sec1_ant")
+obj <- RunAutoCorr(obj, image = "slice1")
+grep("_wm", names(obj), value=TRUE)
+
+obj <- RunBlockCorr(obj, bind.name = "gene_name", bind.assay = "RNA", wm.name = "spatial_wm")
+FbtPlot(obj, val = "gene_name.padj")
+Meta(obj) %>% filter(gene_name.padj<1e-7)
+SpatialFeaturePlot(obj, features = c("chr11:30106785-30109152/-/Sptbn1","Sptbn1"))
+```
 

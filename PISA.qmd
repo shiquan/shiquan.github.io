@@ -278,6 +278,15 @@ The second difference relates to UMI handling. In CellRanger, if a UMI maps to m
 For more information on CellRanger's counting strategy, you can refer to the official documentation: [Cell Ranger Algorithm Overview](https://www.10xgenomics.com/support/software/cell-ranger/7.2/algorithms-overview/cr-gex-algorithm).
 
 ## Changelog
+<details>
+
+<summary>v1.6 2025/05/29</summary>
+
+* Fix a bug if gene_name or gene_id is empty in GTF, annotation may case segmental fault.
+* `PISA bin` method is introduced.
+
+</details>
+
 
 
 <details>

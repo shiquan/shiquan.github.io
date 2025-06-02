@@ -60,8 +60,8 @@ head(obj[['exon']][[]]) %>% knitr::kable()
 obj <- NormalizeData(obj)
 obj <- RunAutoCorr(obj)
 
-# Select autocorrleated features for downstream test.
-obj <- SetAutoCorrFeatures(obj)
+## Select autocorrleated features for downstream test. This function is integrated with RunAutoCorr after V2, so no need to run it unless you want reselect features based on different p value or Moran's I.
+## obj <- SetAutoCorrFeatures(obj)
 
 ```
 
@@ -278,5 +278,8 @@ If you have any questions regarding this vignette and the usage of Yano, please 
 
 ```{r}
 Command(obj)
+
+sessionInfo()
 ```
 
+    

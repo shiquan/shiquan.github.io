@@ -99,5 +99,7 @@ FbtPlot(obj, val = "locus.padj", remove.chr = TRUE, sel.chrs = sel.chrs, col.by 
 
 ```{r}
 Command(obj)
+
+sessionInfo()
 ```
 

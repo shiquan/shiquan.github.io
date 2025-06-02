@@ -5,17 +5,16 @@ format:
     code-overflow: wrap
 ---
 
-This vignette demonstrates how to use dST build functions to interactively select or pick cells/spots from a plot using your mouse and keyboard. While tools like CellxGene are widely used for this purpose, to the best of our knowledge, an efficient solution for performing this task within the R environment is still lacking.
+This vignette demonstrates how to use Yano build functions to interactively select or pick cells/spots from a plot using your mouse and keyboard. While tools like CellxGene are widely used for this purpose, to the best of our knowledge, an efficient solution for performing this task within the R environment is still lacking.
 
 ## Prepare the data.
 We use demo data from SeuratData for simplity.
 
-```{r message=FALSE}
-require(Seurat)
+```{r message=FALSE, warning=FALSE}
+require(Yano)
 require(SeuratData)
-require(dST)
 
-InstallData("stxBrain")
+#InstallData("stxBrain")
 
 brain <- LoadData("stxBrain", type = "anterior1")
 brain <- SCTransform(brain, assay = "Spatial", verbose = FALSE)
@@ -84,7 +83,7 @@ ImageDimSelector(xenium.obj, border.color = "white", border.size = 0.1)
 
 ## Generate 2D concave hull of selected region
 
-In spatial transcriptomics, it is sometimes necessary to manually define capsule or membrane regions, as these areas are often thin, mixed with neighboring cells, and difficult to identify accurately. Manually specifying these regions can be beneficial for downstream analyses, such as zonation analysis, where precise spatial organization of cells is critical for understanding tissue architecture and functional gradients.
+In spatial transcriptomics, it is sometimes necessary to manually define capsule or membrane regions, as these areas are often thin, mixed with neighboring cells, and difficult to identify accurately. Manually specifying these regions can be beneficial for downstream analyses, where precise spatial organization of cells is critical for understanding tissue architecture and functional gradients.
 
 ```r
 sel <- SpatialConcaveHull(brain)
@@ -95,5 +94,9 @@ sel <- SpatialConcaveHull(brain)
 
 ## Questions?
 
-If you have any questions regarding this vignette, the usage of dST or suggestions, please feel free to report them through the [discussion forum](https://github.com/shiquan/dST/discussions).
+If you have any questions regarding this vignette, the usage of Yano or suggestions, please feel free to report them through the [discussion forum](https://github.com/shiquan/Yano/discussions).
 
+
+```{r}
+sessionInfo()
+```

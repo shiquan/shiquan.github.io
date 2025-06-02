@@ -37,6 +37,8 @@ website:
             href: workflow1.Rmd
           - text: "Annotate various features"
             href: anno.Rmd
+          - text: "Select cells from reduction maps"
+            href: dST_selector.Rmd
           - text: "Alternative splicing analysis"
             href: Yano_AS.Rmd
           - text: "Allele-specific gene expression analysis"
@@ -45,8 +47,9 @@ website:
             href: Yano_anno.Rmd
           - text: "Analysis multiple Visium samples"
             href: Visium.Rmd
-          - text: "Select cells from reduction maps"
-            href: dST_selector.Rmd
+          - text: "Cell trajectory analysis"
+            href: Yano_trajectory.Rmd
+
 format:
   html:
     theme:
