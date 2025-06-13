@@ -150,13 +150,15 @@ FeaturePlot(obj.sel, features = c("3:52413996-52414048/+/PHF7", "3:52414048-5241
 
 # Perform alternative splicing analysis for all cell space
 
-We do not specify a name for the weight matrix here, so it will default to using the PCA reduction map to generate the weight matrix. The resulting matrix will be named "$reduction$_wm".
+To use all cell space, we do not need to specify a name for the weight matrix here, because it will default to using the PCA reduction map to generate the weight matrix. The resulting matrix will be named "*reduction*_wm".
+
 ```{r}
 DefaultAssay(obj.sel) <- "exon"
 obj.sel <- RunAutoCorr(obj.sel)
 ```
 
-Now we have two weight matrices. If no name is specified, the first matrix will always be used by default, so we need to explicitly specify "pca_wm" to avoid misusing the weight matrix.
+Now we have two weight matrices. If no name is specified in RunBlockCorr(), the first matrix will always be used by default, so we need to explicitly specify "pca_wm" to avoid misusing the weight matrix here.
+
 ```{r}
 grep("_wm", names(obj.sel), value=TRUE)
 obj.sel <- RunBlockCorr(obj.sel, bind.name = "gene_name", bind.assay = "RNA", wm.name = "pca_wm", prefix="all")
@@ -165,7 +167,7 @@ obj.sel <- RunAutoCorr(obj.sel)
 obj.sel <- RunBlockCorr(obj.sel, bind.name = "gene_name", bind.assay = "RNA", wm.name = "pca_wm", prefix="all")
 ```
 
-By comparing the use of cell trajectory ordering with the PCA space, we found that using the PCA approach can detect more alternatively expressed genes. This is because forcing all cells into a 1D trajectory ordering preserves only the rank of each cell, but loses much of the neighborhood information about cells in the broader context. Since cell trajectories are typically constructed based on cell–cell distances in high-dimensional space, regardless of the algorithm used to build the trajectory, I personally recommend using the cell space directly rather than relying solely on 1D cell ordering, unless you have specific reasons or detailed knowledge.
+***By comparing the use of cell trajectory ordering with the PCA space, we found that using the PCA approach can detect more alternatively expressed genes. This is because forcing all cells into a 1D trajectory ordering preserves only the rank of each cell, but loses much of the neighborhood information about cells in the broader context. Since cell trajectories are typically constructed based on cell–cell distances in high-dimensional space, regardless of the algorithm used to build the trajectory, I personally recommend using the cell space directly rather than relying solely on 1D cell ordering, unless you have specific reasons or detailed knowledge.***
 
 ```{r fig.width=12, fig.height=5}
 FbtPlot(obj.sel, val = "all.padj", assay = c("exon", "junction"), shape.by = "assay", color.by = "assay")
@@ -175,6 +177,8 @@ Meta(obj.sel, assay = "junction") %>% filter(all.padj <1e-20) %>% knitr::kable()
 
 ```
 # Perform alternative splicing on a supervised two dimension space
+
+We can also perform the analysis using a supervised two-dimensional cell space. As an example, we utilize Seurat’s built-in cell cycle scoring scheme for demonstration purposes.
 
 ```{r fig.width=12, fig.height=5}
 DefaultAssay(obj.sel) <- "RNA"
@@ -211,6 +215,7 @@ Meta(obj.sel, assay = "exon") %>% filter(ccc.padj<1e-30) %>% knitr::kable()
 
 FeaturePlot(obj.sel, reduction =  "ccc", features = c("7:74196642-74197050/+/EIF4H", "EIF4H"), order = TRUE)
 ```
+
 ```{r message=FALSE, fig.width=15, fig.height=10}
 gtf <- gtf2db("./Homo_sapiens.GRCh38.114.chr.gtf.gz")
 bamfiles <- list(rep1 = "./donor1_rep1.bam", rep2 = "./donor1_rep2.bam")
