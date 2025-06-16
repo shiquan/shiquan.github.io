@@ -631,5 +631,101 @@
       "Workflows & Short cases",
       "From FASTQ to counts"
     ]
+  },
+  {
+    "objectID": "selector.html",
+    "href": "selector.html",
+    "title": "Select cells from reduction maps and spatial locations",
+    "section": "",
+    "text": "This vignette demonstrates how to use Yano build functions to interactively select or pick cells/spots from a plot using your mouse and keyboard. While tools like CellxGene are widely used for this purpose, to the best of our knowledge, an efficient solution for performing this task within the R environment is still lacking. Here a native implement of cell selector is proposed. Here, we introduce a lightweight, fast and native implementation of a cell selector to address this gap.",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
+  },
+  {
+    "objectID": "selector.html#prepare-the-data.",
+    "href": "selector.html#prepare-the-data.",
+    "title": "Select cells from reduction maps and spatial locations",
+    "section": "Prepare the data.",
+    "text": "Prepare the data.\nWe use demo data from SeuratData for simplity.\n\nrequire(Yano)\nrequire(SeuratData)\n\n#InstallData(\"stxBrain\")\n\nbrain &lt;- LoadData(\"stxBrain\", type = \"anterior1\")\nbrain &lt;- SCTransform(brain, assay = \"Spatial\", verbose = FALSE)\nbrain &lt;- RunPCA(brain, assay = \"SCT\", verbose = FALSE)\nbrain &lt;- FindNeighbors(brain, reduction = \"pca\", dims = 1:30)\nbrain &lt;- FindClusters(brain, verbose = FALSE)\nbrain &lt;- RunUMAP(brain, reduction = \"pca\", dims = 1:30)\n\nSpatialPlot(brain)",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
+  },
+  {
+    "objectID": "selector.html#select-spots-from-spatial-plot",
+    "href": "selector.html#select-spots-from-spatial-plot",
+    "title": "Select cells from reduction maps and spatial locations",
+    "section": "Select spots from spatial plot",
+    "text": "Select spots from spatial plot\nsel.1 &lt;- SpatialSelector(brain)\nPress ESC on your keyboard to exist the selection!\n\nNow the selected cells will be exported to sel.1. If you want return a object, try to set return.object=TRUE in the function.",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
+  },
+  {
+    "objectID": "selector.html#select-cells-from-dimension-reduction-plot",
+    "href": "selector.html#select-cells-from-dimension-reduction-plot",
+    "title": "Select cells from reduction maps and spatial locations",
+    "section": "Select cells from dimension reduction plot",
+    "text": "Select cells from dimension reduction plot\nWe can also select cells from dimension reduction plot.\n\nDimPlot(brain)\n\n\n\n\n\n\n\n\nsel.1 &lt;- DimSelector(brain)\nPress ESC on your keyboard to exist the selection!",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
+  },
+  {
+    "objectID": "selector.html#select-cells-based-on-a-feature-expression",
+    "href": "selector.html#select-cells-based-on-a-feature-expression",
+    "title": "Select cells from reduction maps and spatial locations",
+    "section": "Select cells based on a feature expression",
+    "text": "Select cells based on a feature expression\n\nFeaturePlot(brain, features = c('Ttr'), order=TRUE)\n\nWarning: The `slot` argument of `FetchData()` is deprecated as of SeuratObject 5.0.0.\nℹ Please use the `layer` argument instead.\nℹ The deprecated feature was likely used in the Seurat package.\n  Please report the issue at &lt;https://github.com/satijalab/seurat/issues&gt;.\n\n\n\n\n\n\n\n\n\nFeatureSelector(brain, feature = c('Ttr'), order=TRUE)\nPlease note in FeatureSelector() only one feature is support at each selection. Therefore, I designed the parameter feature instead of orignal features here.",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
+  },
+  {
+    "objectID": "selector.html#select-cells-from-image-based-spatial-data",
+    "href": "selector.html#select-cells-from-image-based-spatial-data",
+    "title": "Select cells from reduction maps and spatial locations",
+    "section": "Select cells from Image-based spatial data",
+    "text": "Select cells from Image-based spatial data\nHere we will use 10x Genomics Xenium data, generated from Seurat’s tutorial.\n\nxenium.obj &lt;- readRDS(\"xenium.rds\")\nImageDimPlot(xenium.obj, border.color = \"white\", border.size = 0.1, cols = \"polychrome\")\n\nWarning: No FOV associated with assay 'SCT', using global default FOV\n\n\n\n\n\n\n\n\n\nImageDimSelector(xenium.obj, border.color = \"white\", border.size = 0.1)",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
+  },
+  {
+    "objectID": "selector.html#generate-2d-concave-hull-of-selected-region",
+    "href": "selector.html#generate-2d-concave-hull-of-selected-region",
+    "title": "Select cells from reduction maps and spatial locations",
+    "section": "Generate 2D concave hull of selected region",
+    "text": "Generate 2D concave hull of selected region\nIn spatial transcriptomics, it is sometimes necessary to manually define capsule or membrane regions, as these areas are often thin, mixed with neighboring cells, and difficult to identify accurately. Manually specifying these regions can be beneficial for downstream analyses, where precise spatial organization of cells is critical for understanding tissue architecture and functional gradients.\nsel &lt;- SpatialConcaveHull(brain)",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
+  },
+  {
+    "objectID": "selector.html#questions",
+    "href": "selector.html#questions",
+    "title": "Select cells from reduction maps and spatial locations",
+    "section": "Questions?",
+    "text": "Questions?\nIf you have any questions regarding this vignette, the usage of Yano or suggestions, please feel free to report them through the discussion forum.\n\nsessionInfo()\n\nR version 4.5.0 (2025-04-11)\nPlatform: aarch64-apple-darwin24.4.0\nRunning under: macOS Sequoia 15.5\n\nMatrix products: default\nBLAS:   /opt/homebrew/Cellar/openblas/0.3.29/lib/libopenblasp-r0.3.29.dylib \nLAPACK: /opt/homebrew/Cellar/r/4.5.0/lib/R/lib/libRlapack.dylib;  LAPACK version 3.12.1\n\nlocale:\n[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8\n\ntime zone: Asia/Shanghai\ntzcode source: internal\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nother attached packages:\n[1] future_1.49.0             stxBrain.SeuratData_0.1.2\n[3] SeuratData_0.2.2.9002     dplyr_1.1.4              \n[5] Seurat_5.3.0              SeuratObject_5.1.0       \n[7] sp_2.2-0                  ggplot2_3.5.2            \n[9] Yano_1.1                 \n\nloaded via a namespace (and not attached):\n  [1] deldir_2.0-4           pbapply_1.7-2          gridExtra_2.3         \n  [4] rlang_1.1.6            magrittr_2.0.3         RcppAnnoy_0.0.22      \n  [7] spatstat.geom_3.3-6    matrixStats_1.5.0      ggridges_0.5.6        \n [10] compiler_4.5.0         png_0.1-8              vctrs_0.6.5           \n [13] reshape2_1.4.4         stringr_1.5.1          crayon_1.5.3          \n [16] pkgconfig_2.0.3        fastmap_1.2.0          labeling_0.4.3        \n [19] promises_1.3.2         rmarkdown_2.29         purrr_1.0.4           \n [22] xfun_0.52              jsonlite_2.0.0         goftest_1.2-3         \n [25] later_1.4.2            spatstat.utils_3.1-4   irlba_2.3.5.1         \n [28] parallel_4.5.0         cluster_2.1.8.1        R6_2.6.1              \n [31] ica_1.0-3              stringi_1.8.7          RColorBrewer_1.1-3    \n [34] spatstat.data_3.1-6    reticulate_1.42.0      spatstat.univar_3.1-3 \n [37] parallelly_1.44.0      lmtest_0.9-40          scattermore_1.2       \n [40] Rcpp_1.0.14            knitr_1.50             tensor_1.5            \n [43] future.apply_1.11.3    zoo_1.8-14             R.utils_2.13.0        \n [46] sctransform_0.4.2      httpuv_1.6.16          Matrix_1.7-3          \n [49] splines_4.5.0          igraph_2.1.4           tidyselect_1.2.1      \n [52] viridis_0.6.5          abind_1.4-8            yaml_2.3.10           \n [55] spatstat.random_3.3-3  codetools_0.2-20       miniUI_0.1.2          \n [58] spatstat.explore_3.4-2 listenv_0.9.1          lattice_0.22-6        \n [61] tibble_3.2.1           plyr_1.8.9             withr_3.0.2           \n [64] shiny_1.10.0           ROCR_1.0-11            evaluate_1.0.3        \n [67] Rtsne_0.17             fastDummies_1.7.5      survival_3.8-3        \n [70] polyclip_1.10-7        fitdistrplus_1.2-2     pillar_1.10.2         \n [73] KernSmooth_2.23-26     plotly_4.10.4          generics_0.1.4        \n [76] RcppHNSW_0.6.0         scales_1.4.0           gtools_3.9.5          \n [79] globals_0.18.0         xtable_1.8-4           glue_1.8.0            \n [82] lazyeval_0.2.2         tools_4.5.0            data.table_1.17.2     \n [85] RSpectra_0.16-2        RANN_2.6.2             dotCall64_1.2         \n [88] cowplot_1.1.3          grid_4.5.0             tidyr_1.3.1           \n [91] nlme_3.1-168           patchwork_1.3.0        cli_3.6.5             \n [94] rappdirs_0.3.3         spatstat.sparse_3.1-0  spam_2.11-1           \n [97] viridisLite_0.4.2      uwot_0.2.3             gtable_0.3.6          \n[100] R.methodsS3_1.8.2      digest_0.6.37          progressr_0.15.1      \n[103] ggrepel_0.9.6          htmlwidgets_1.6.4      farver_2.1.2          \n[106] htmltools_0.5.8.1      R.oo_1.27.1            lifecycle_1.0.4       \n[109] httr_1.4.7             mime_0.13              MASS_7.3-65",
+    "crumbs": [
+      "Overview",
+      "Workflows & Short cases",
+      "Select cells from reduction maps"
+    ]
   }
 ]

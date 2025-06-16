@@ -38,7 +38,7 @@ website:
           - text: "Annotate various features"
             href: anno.Rmd
           - text: "Select cells from reduction maps"
-            href: dST_selector.Rmd
+            href: selector.Rmd
           - text: "Alternative splicing analysis"
             href: Yano_AS.Rmd
           - text: "Allele-specific gene expression analysis"

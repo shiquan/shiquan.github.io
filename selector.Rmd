@@ -5,7 +5,7 @@ format:
     code-overflow: wrap
 ---
 
-This vignette demonstrates how to use Yano build functions to interactively select or pick cells/spots from a plot using your mouse and keyboard. While tools like CellxGene are widely used for this purpose, to the best of our knowledge, an efficient solution for performing this task within the R environment is still lacking.
+This vignette demonstrates how to use Yano build functions to interactively select or pick cells/spots from a plot using your mouse and keyboard. While tools like CellxGene are widely used for this purpose, to the best of our knowledge, an efficient solution for performing this task within the R environment is still lacking. Here a native implement of cell selector is proposed. Here, we introduce a lightweight, fast and native implementation of a cell selector to address this gap.
 
 ## Prepare the data.
 We use demo data from SeuratData for simplity.
