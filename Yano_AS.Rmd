@@ -59,15 +59,11 @@ head(obj[['exon']][[]]) %>% knitr::kable()
 # Normalize the data for spatial autocorrelation test
 obj <- NormalizeData(obj)
 obj <- RunAutoCorr(obj)
-
-## Select autocorrleated features for downstream test. This function is integrated with RunAutoCorr after V2, so no need to run it unless you want reselect features based on different p value or Moran's I.
-## obj <- SetAutoCorrFeatures(obj)
-
 ```
 
 The permutation process can be computationally expensive. In the example below, I set perm=20 to perform only 20 permutations for quicker results. However, the default setting runs 100 permutations for more accurate evaluation. While it's possible to increase the number of permutations for even more precision, it may not always be necessary. If you're running Yano for the first time on your dataset, setting perm=20 can help you save time and provide an initial overview of the entire dataset.
 ```{r warning=FALSE, fig.width=14, fig.height=6}
-obj <- RunBlockCorr(obj, bind.name = "gene_name", bind.assay = "RNA", perm=20)
+obj <- RunSDT(obj, bind.name = "gene_name", bind.assay = "RNA", perm=20)
 
 # Now p values and adjusted p values have been generated
 head(obj[['exon']][[]]) %>% knitr::kable()
@@ -125,13 +121,12 @@ obj <- NormalizeData(obj)
 
 # select spatial autocorrelated junctions
 obj <- RunAutoCorr(obj)
-obj <- SetAutoCorrFeatures(obj)
 
 # Parse the gene name and coordinates from junction names
 obj <- ParseExonName(obj)
 
 # perform dissimilarity test between junctions and their binding genes
-obj <- RunBlockCorr(obj, bind.name = "gene_name", bind.assay = "RNA", perm=20)
+obj <- RunSDT(obj, bind.name = "gene_name", bind.assay = "RNA", perm=20)
 
 FbtPlot(obj, val="gene_name.padj", remove.chr=TRUE, sel.chrs = sel.chrs)
 
@@ -223,16 +218,15 @@ obj[['exon']][['exon_name']] <- rownames(obj)
 obj[['exon']][['exon_name']] %>% head
 
 # Then we perform spatial dissimilarity test between exon and exclude, mode 1
-obj <- RunBlockCorr(obj, bind.name = "exon_name", bind.assay = "exclude")
+obj <- RunSDT(obj, bind.name = "exon_name", bind.assay = "exclude")
 
 # Swith to exon exluded assay
 DefaultAssay(obj) <- "exclude"
 obj <- RunAutoCorr(obj)
-obj <- SetAutoCorrFeatures(obj)
 obj <- ParseExonName(obj)
 obj[['exclude']][['exon_name']] <- rownames(obj)
 
-obj <- RunBlockCorr(obj, bind.name = "exon_name", bind.assay = "exon")
+obj <- RunSDT(obj, bind.name = "exon_name", bind.assay = "exon")
 
 FbtPlot(obj, val = "exon_name.padj", remove.chr = TRUE, assay = c("exclude", "exon"), shape.by = "assay", col.by = "assay", cols = c("yellow", "green"), pt.size = 2)
 ```
@@ -262,9 +256,9 @@ Mode 3 can be used as an alternative to mode 1 to specifically detect events wit
 
 ```{r  message=FALSE, warning=FALSE, fig.width=12, fig.height=4}
 DefaultAssay(obj) <- "exclude"
-obj <- RunBlockCorr(obj, bind.name = "exon_name", bind.assay = "exon", mode = 3, prefix = "mode3")
+obj <- RunSDT(obj, bind.name = "exon_name", bind.assay = "exon", mode = 3, prefix = "mode3")
 DefaultAssay(obj) <- "exon"
-obj <- RunBlockCorr(obj, bind.name = "exon_name", bind.assay = "exclude", mode = 3, prefix = "mode3")
+obj <- RunSDT(obj, bind.name = "exon_name", bind.assay = "exclude", mode = 3, prefix = "mode3")
 FbtPlot(obj, val = "mode3.padj", remove.chr = TRUE, assay = c("exclude", "exon"), shape.by = "assay", col.by = "assay", pt.size = 2, cols=c("yellow", "green"))
 ```
 

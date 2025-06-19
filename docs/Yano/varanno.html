@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Count gene, exon, junction and SNV expression from a BAM file</title>
+<title>varanno</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,62 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./dST_selector.html" rel="next">
-<link href="./workflow1.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-de84f8d6bb715db06a919283c2d1e787.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-9a023c9ade86a60361e96e3e3f11bc54.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2cae7a44443c7384b30cd79a64306367.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-2d6ecf2d45d93a56a874280a57c27dd9.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de84f8d6bb715db06a919283c2d1e787.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-9a023c9ade86a60361e96e3e3f11bc54.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2cae7a44443c7384b30cd79a64306367.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-2d6ecf2d45d93a56a874280a57c27dd9.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -103,15 +67,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<style>
- .cell-output-stdout code {
-  word-break: break-wor !important;
-  white-space: pre-wrap !important;
-  }
-</style>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
@@ -122,19 +80,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
           <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Overview</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./fastq.html"> 
+    <a class="nav-link" href="../fastq.html"> 
 <span class="menu-text">FASTQ+</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./PISA.html"> 
+    <a class="nav-link" href="../PISA.html"> 
 <span class="menu-text">PISA</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./Yano.html"> 
+    <a class="nav-link" href="../Yano.html"> 
 <span class="menu-text">Yano</span></a>
   </li>  
 </ul>
@@ -164,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workflow1.html">Workflows &amp; Short cases</a></li><li class="breadcrumb-item"><a href="./anno.html">Annotate various features</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -195,49 +153,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./workflow1.html" class="sidebar-item-text sidebar-link">
+  <a href="../workflow1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">From FASTQ to counts</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./anno.html" class="sidebar-item-text sidebar-link active">
+  <a href="../anno.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Annotate various features</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dST_selector.html" class="sidebar-item-text sidebar-link">
+  <a href="../selector.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Select cells from reduction maps</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Yano_AS.html" class="sidebar-item-text sidebar-link">
+  <a href="../Yano_AS.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Alternative splicing analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Yano_ASE.html" class="sidebar-item-text sidebar-link">
+  <a href="../Yano_ASE.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Allele-specific gene expression analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Yano_anno.html" class="sidebar-item-text sidebar-link">
+  <a href="../Yano_anno.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Annotating genetic variants</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Visium.html" class="sidebar-item-text sidebar-link">
+  <a href="../Visium.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Analysis multiple Visium samples</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Yano_trajectory.html" class="sidebar-item-text sidebar-link">
+  <a href="../Yano_trajectory.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Cell trajectory analysis</span></a>
   </div>
 </li>
@@ -253,239 +211,119 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#prepare-the-raw-data-and-reference" id="toc-prepare-the-raw-data-and-reference" class="nav-link active" data-scroll-target="#prepare-the-raw-data-and-reference">Prepare the raw data and reference</a></li>
-  <li><a href="#programs-we-will-use" id="toc-programs-we-will-use" class="nav-link" data-scroll-target="#programs-we-will-use">Programs we will use</a></li>
-  <li><a href="#step-by-step-tutorial" id="toc-step-by-step-tutorial" class="nav-link" data-scroll-target="#step-by-step-tutorial">Step by step tutorial</a>
+  <li><a href="#varanno" id="toc-varanno" class="nav-link active" data-scroll-target="#varanno">varanno</a>
   <ul class="collapse">
-  <li><a href="#genetic-variants-calling" id="toc-genetic-variants-calling" class="nav-link" data-scroll-target="#genetic-variants-calling">1. Genetic variants calling</a></li>
-  <li><a href="#annotate-various-features" id="toc-annotate-various-features" class="nav-link" data-scroll-target="#annotate-various-features">2. Annotate various features</a></li>
-  <li><a href="#generate-cell-x-feature-expression-matrix" id="toc-generate-cell-x-feature-expression-matrix" class="nav-link" data-scroll-target="#generate-cell-x-feature-expression-matrix">3. Generate Cell X feature expression matrix</a></li>
-  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions?</a></li>
+  <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
+  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workflow1.html">Workflows &amp; Short cases</a></li><li class="breadcrumb-item"><a href="./anno.html">Annotate various features</a></li></ol></nav>
-<div class="quarto-title">
-<h1 class="title">Count gene, exon, junction and SNV expression from a BAM file</h1>
-</div>
+<main class="content column-body" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta column-body">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>The following vignette demonstrates how to generate various feature counts from an alignment BAM file. Here we use a 10X demo data of human glioblastoma cells. The description of data can be found at <a href="https://www.10xgenomics.com/datasets/human-glioblastoma-multiforme-3-v-3-whole-transcriptome-analysis-3-standard-4-0-0" class="uri">https://www.10xgenomics.com/datasets/human-glioblastoma-multiforme-3-v-3-whole-transcriptome-analysis-3-standard-4-0-0</a>.</p>
-<section id="prepare-the-raw-data-and-reference" class="level2">
-<h2 class="anchored" data-anchor-id="prepare-the-raw-data-and-reference">Prepare the raw data and reference</h2>
-<ul>
-<li>Download <a href="https://cf.10xgenomics.com/samples/cell-exp/4.0.0/Parent_SC3v3_Human_Glioblastoma/Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam">alignment data (BAM)</a>. (~14G).</li>
-</ul>
-<section id="the-following-file-is-used-for-variant-calling-and-allele-specific-gene-expression.-it-can-be-skipped-for-alternative-splicing-analysis." class="level4">
-<h4 class="anchored" data-anchor-id="the-following-file-is-used-for-variant-calling-and-allele-specific-gene-expression.-it-can-be-skipped-for-alternative-splicing-analysis.">The following file is used for variant calling and allele specific gene expression. It can be skipped for alternative splicing analysis.</h4>
-<ul>
-<li>BAM Index File (for variant calling): <a href="https://cf.10xgenomics.com/samples/cell-exp/4.0.0/Parent_SC3v3_Human_Glioblastoma/Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam.bai">Download BAM index</a></li>
-<li>Human Reference Databases and Gene Annotation Files:
-<ul>
-<li><a href="https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/GRCh38.p13.genome.fa.gz">GRCh38.p13 genome</a></li>
-<li><a href="https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.annotation.gtf.gz">Gencode v44 annotation</a></li>
-</ul></li>
-</ul>
+<section id="varanno" class="level1">
+<h1>varanno</h1>
+<p><a href="https://github.com/shiquan/Yano/tree/master/R/varanno.R#L19"><strong>Source code</strong></a></p>
+<section id="description" class="level2">
+<h2 class="anchored" data-anchor-id="description">Description</h2>
+<p>Annotate genetic variants with VCF databases.</p>
 </section>
+<section id="usage" class="level2">
+<h2 class="anchored" data-anchor-id="usage">Usage</h2>
+<pre><code class="language-R">varanno(
+  chr = NULL,
+  start = NULL,
+  end = NULL,
+  ref = NULL,
+  alt = NULL,
+  strand = NULL,
+  vcf = NULL,
+  tags = NULL,
+  check.alt.only = FALSE
+)
+</code></pre>
 </section>
-<section id="programs-we-will-use" class="level2">
-<h2 class="anchored" data-anchor-id="programs-we-will-use">Programs we will use</h2>
-<ul>
-<li>PISA (&gt;=v1.3) (<a href="https://github.com/shiquan/PISA" class="uri">https://github.com/shiquan/PISA</a>)</li>
-<li>bcftools (<a href="https://github.com/samtools/bcftools" class="uri">https://github.com/samtools/bcftools</a>)</li>
-<li>samtools (<a href="https://github.com/samtools/samtools" class="uri">https://github.com/samtools/samtools</a>)</li>
-</ul>
-</section>
-<section id="step-by-step-tutorial" class="level2">
-<h2 class="anchored" data-anchor-id="step-by-step-tutorial">Step by step tutorial</h2>
-<section id="genetic-variants-calling" class="level3">
-<h3 class="anchored" data-anchor-id="genetic-variants-calling">1. Genetic variants calling</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unpack the FASTA file</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gzip</span> <span class="at">-d</span> GRCh38.p13.genome.fa.gz</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the FASTA index</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> faidx GRCh38.p13.genome.fa</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform variant calling</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> mpileup <span class="at">-Ou</span> <span class="at">-f</span> GRCh38.p13.genome.fa ./Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam  <span class="kw">|</span> <span class="ex">bcftools</span> call <span class="at">-vmO</span> z <span class="at">-o</span> var.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>Notes:</strong></p>
-<ul>
-<li>While several new methods for genetic variant calling have been developed, the basic principle remains the same: identifying differences between sequence reads and the reference genome. For simplicity, we are using the ‘traditional’ bcftools approach.</li>
-<li>There is no need to filter raw genetic variants by sequencing depth or strand bias tests. Since this is strand-specific RNA sequencing data, strand bias is expected in many cases. Instead, the feature expression matrix can be filtered by cells during downstream analysis.</li>
-</ul>
-</section>
-<section id="annotate-various-features" class="level3">
-<h3 class="anchored" data-anchor-id="annotate-various-features">2. Annotate various features</h3>
-<p>The following command generates gene, transcript, exon, exon skipped reads, junction and genetic variant for each alignment:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-gtf</span> gencode.v44.annotation.gtf.gz <span class="at">-exon</span> <span class="at">-psi</span> <span class="at">-vcf</span> var.vcf.gz <span class="at">-ref-alt</span> <span class="at">-o</span> anno.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The above command will annotate genes, exons, junctions, and genetic variants all at once. However, it is also possible to annotate different features sequentially. For example, the command below produces the same results as the previous one, but allows for stepwise annotation.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-gtf</span> gencode.v44.annotation.gtf.gz <span class="at">-exon</span> <span class="at">-psi</span> <span class="at">-o</span> anno1.bam Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> anno <span class="at">-vcf</span> var.vcf.gz <span class="at">-ref-alt</span> <span class="at">-o</span> anno2.bam anno1.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>Notes:</strong></p>
-<ul>
-<li><code>-exon</code>: Generates exon and junction names.</li>
-<li><code>-psi</code>: Generate labels for exon skipped reads, named after the skipped exons.</li>
-<li><code>-ref-alt</code>: For genetic variants, both reference allele and alternative allele will be annotated. If not set, reference allele will be ignored. This option is important for alelle-specific gene expression.</li>
-</ul>
-<p>Comparing raw and annotated records.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-overflow-wrap code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A original record</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam  <span class="kw">|</span><span class="fu">head</span> <span class="at">-n</span> 3000<span class="kw">|</span><span class="fu">grep</span> <span class="st">'A00836:286:HMTMVDMXX:2:2354:8422:1391'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>A00836:286:HMTMVDMXX:2:2354:8422:1391   16  chr1    89995   255 56M236N35M  *   0   0   TTGGTCTCTCTTGCTGCCCTGGAGACCAGCTGCCCCACGAAGGAACCAGAGCCAACCTGCTGCTTCCTGGAGGAAGACAGTCCCTCTGTCC FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFF NH:i:6  HI:i:3  AS:i:89 nM:i:1  RG:Z:Parent_SC3v3_Human_Glioblastoma:0:1:HMTMVDMXX:2    TX:Z:ENST00000495576,+784,91M   GX:Z:ENSG00000239945    GN:Z:AL627309.3 fx:Z:ENSG00000239945    RE:A:E  MM:i:1  xf:i:25 CR:Z:AGATGAATCTACGCGG   CY:Z:FFFFFFFFFF,FFFFF   CB:Z:AGATGAATCTACGCGG-1 UR:Z:TTTCATGCCTCA   UY:Z:FFFFFFFFFFFF   UB:Z:TTTCATGCCTCA</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the same record after annotation</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view anno.bam <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 3000<span class="kw">|</span><span class="fu">grep</span> <span class="st">'A00836:286:HMTMVDMXX:2:2354:8422:1391'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>A00836:286:HMTMVDMXX:2:2354:8422:1391   16  chr1    89995   255 56M236N35M  *   0   0   TTGGTCTCTCTTGCTGCCCTGGAGACCAGCTGCCCCACGAAGGAACCAGAGCCAACCTGCTGCTTCCTGGAGGAAGACAGTCCCTCTGTCC FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFF NH:i:6  HI:i:3  AS:i:89 nM:i:1  RG:Z:Parent_SC3v3_Human_Glioblastoma:0:1:HMTMVDMXX:2    fx:Z:ENSG00000239945    MM:i:1  xf:i:25 CR:Z:AGATGAATCTACGCGG   CY:Z:FFFFFFFFFF,FFFFF   CB:Z:AGATGAATCTACGCGG-1 UR:Z:TTTCATGCCTCA   UY:Z:FFFFFFFFFFFF   UB:Z:TTTCATGCCTCA   RE:A:S  GX:Z:ENSG00000239945.1  GN:Z:ENSG00000239945    TX:Z:ENST00000495576.1  EX:Z:chr1:89551-90050/-/ENSG00000239945,chr1:90287-91105/-/ENSG00000239945  JC:Z:chr1:90050-90287/-/ENSG00000239945</code></pre>
-</div>
-</div>
-<p><strong>Notes:</strong></p>
-<ul>
-<li>PISA anno generates <code>GN</code>, <code>TX</code>, <code>RE</code>, and <code>GX</code> tags when the <code>-gtf</code> option is set. Original tag values are replaced, and PISA uses a slightly different annotation strategy than CellRanger, see <a href="https://shiquan.github.io/PISA.html#difference-in-alignment-annotation-between-pisa-and-cellranger">details</a> here. In the example above, the <code>RE</code> tag has been changed from <code>E</code> (exon) to <code>S</code> (spliced).</li>
-<li>When the <code>-exon</code> option is used, <code>EX</code> and <code>JC</code> tags are annotated only if the read has a <code>GN</code> tag.</li>
-<li>When the <code>-psi</code> option is used, <code>ER</code> tag is annotated, the label for ER is the exon name which indicate the read skip this exon.</li>
-</ul>
-</section>
-<section id="generate-cell-x-feature-expression-matrix" class="level3">
-<h3 class="anchored" data-anchor-id="generate-cell-x-feature-expression-matrix">3. Generate Cell X feature expression matrix</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> exp </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> exon</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> exclude</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> junction</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> var</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> GN <span class="at">-umi</span> UB <span class="at">-outdir</span> exp anno.bam</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> EX <span class="at">-umi</span> UB <span class="at">-outdir</span> exon anno.bam</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> ER <span class="at">-umi</span> UB <span class="at">-outdir</span> exclude anno.bam</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> JC <span class="at">-umi</span> UB <span class="at">-outdir</span> junction anno.bam</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tags</span> CB <span class="at">-anno-tag</span> VR <span class="at">-umi</span> UB <span class="at">-outdir</span> var anno.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>Notes:</strong> These commands will generate raw counts for all droplets. Although the <code>-list</code> parameter can be used to export only selected cells with <code>PISA anno</code>, cell selection may sometimes lack robustness. Therefore, it is safer to store the raw matrix file for long-term storage.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> exp/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>barcodes.tsv.gz
-features.tsv.gz
-matrix.mtx.gz</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zless</span> exp/barcodes.tsv.gz<span class="kw">|</span><span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>TTCCACGGTTCGGCTG-1
-GTGCTTCGTAATGTGA-1
-CACAGGCAGCTGGTGA-1
-TGGCGTGGTGCAACGA-1
-ATCTCTAGTCCATAGT-1
-AGCGCCACAAGCGATG-1
-CGAGTTAGTGTCGATT-1
-GTCAAGTCAGGCTCTG-1
-GGGTAGATCCCGTTGT-1
-GGGACAAAGAGGTATT-1</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zless</span> exp/features.tsv.gz<span class="kw">|</span><span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>MIR1302-2HG
-ENSG00000238009
-ENSG00000239945
-ENSG00000268903
-ENSG00000241860
-ENSG00000236601
-ENSG00000230021
-MTND1P23
-WASH9P
-ENSG00000228463</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zless</span> exp/matrix.mtx.gz<span class="kw">|</span><span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>%%MatrixMarket matrix coordinate integer general
-% Generated by PISA v1.3
-37716   971962  23795359
-1   1   1
-1   2   1
-2   3   1
-2   4   1
-2   5   1
-2   6   1
-2   7   1</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zless</span> exon/features.tsv.gz<span class="kw">|</span><span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>chr1:29554-30039/+/MIR1302-2HG
-chr1:30564-30667/+/MIR1302-2HG
-chr1:89295-91629/-/ENSG00000238009
-chr1:89551-90050/-/ENSG00000239945
-chr1:90287-91105/-/ENSG00000239945
-chr1:135141-135895/-/ENSG00000268903
-chr1:141474-143011/-/ENSG00000241860
-chr1:146386-149707/-/ENSG00000241860
-chr1:142808-143011/-/ENSG00000241860
-chr1:146386-146509/-/ENSG00000241860</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zless</span> junction/features.tsv.gz<span class="kw">|</span><span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>chr1:30039-30564/+/MIR1302-2HG
-chr1:90050-90287/-/ENSG00000239945
-chr1:143011-146386/-/ENSG00000241860
-chr1:165942-168100/-/ENSG00000241860
-chr1:168165-168610/-/ENSG00000241860
-chr1:805891-808574/-/ENSG00000290784
-chr1:805891-808574/-/ENSG00000230092
-chr1:827775-829003/+/LINC01128
-chr1:829104-847654/+/LINC01128
-chr1:868530-868627/-/FAM41C</code></pre>
-</div>
-</div>
-<p>The format for exon and junction names is “chr:pos reference_allele&gt;alternative_allele/strand” for alternative alleles, or “chr:pos=/strand” for reference allele.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the format of expressed genetic variant is </span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">zless</span> var/features.tsv.gz<span class="kw">|</span><span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>chr1:631862G&gt;A/+
-chr1:632403T=/+
-chr1:632403T&gt;C/+
-chr1:632427T&gt;C/+
-chr1:633192G&gt;A/+
-chr1:633192G=/+
-chr1:633236A&gt;G/+
-chr1:633300A=/+
-chr1:633372T&gt;C/+
-chr1:634244T&gt;C/+</code></pre>
-</div>
-</div>
-<p><strong>Notes:</strong> By default, the parameters for <code>PISA anno</code> are strand-sensitive. For non-strand-sensitive libraries, such as Smartseq2, the strand should be ignored by using the <code>-is</code> option.</p>
-</section>
-<section id="questions" class="level3">
-<h3 class="anchored" data-anchor-id="questions">Questions?</h3>
-<p>If you have any questions regarding this workflows, please feel free to report them through the <a href="https://github.com/shiquan/PISA/issues">github issues</a>.</p>
-<p>If you have any ideas or suggestions regarding PISA annotation, please refer to the <a href="https://github.com/shiquan/Yano/discussions">Yano discussion forum</a>. Since PISA is commonly used alongside Yano, it may not be necessary to host separate forums for each.</p>
+<section id="arguments" class="level2">
+<h2 class="anchored" data-anchor-id="arguments">Arguments</h2>
+<table>
+<tbody><tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="chr">chr</code>
+</td>
+<td>
+Vector of chromosome names.
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="start">start</code>
+</td>
+<td>
+Vector of start positions.
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="end">end</code>
+</td>
+<td>
+Vector of end positions.
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="ref">ref</code>
+</td>
+<td>
+Vector of reference alleles.
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="alt">alt</code>
+</td>
+<td>
+Vector of alternative alleles.
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="strand">strand</code>
+</td>
+<td>
+Vector of strands.
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="vcf">vcf</code>
+</td>
+<td>
+VCF database. Should be indexed with ‘bcftools index’ at first.
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="tags">tags</code>
+</td>
+<td>
+Vector of tags to annotate. Require VCF database specified, and tags should be well formated in the VCF header.
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="check.alt.only">check.alt.only</code>
+</td>
+<td>
+Only annotate records for alternative allele (non-ref allele). Default is FASLE.
+</td>
+</tr>
+</tbody></table>
 
 
 </section>
@@ -1053,18 +891,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation column-body">
-  <div class="nav-page nav-page-previous">
-      <a href="./workflow1.html" class="pagination-link" aria-label="From FASTQ to counts">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">From FASTQ to counts</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="./dST_selector.html" class="pagination-link" aria-label="Select cells from reduction maps">
-        <span class="nav-page-text">Select cells from reduction maps</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 
 

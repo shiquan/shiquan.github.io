@@ -132,18 +132,18 @@ When setup order cells, the weight matrix name will be named to "trajectory_wm".
 
 ```{r fig.width=12, fig.height=5}
 obj.sel <- RunAutoCorr(obj.sel, order.cells = order.cells, wm.name = "trajectory_wm")
-obj.sel <- RunBlockCorr(obj.sel, wm.name = "trajectory_wm", bind.name = "gene_name", bind.assay = "RNA")
+obj.sel <- RunSDT(obj.sel, wm.name = "trajectory_wm", bind.name = "gene_name", bind.assay = "RNA")
 
 DefaultAssay(obj.sel) <- "junction"
 obj.sel <- NormalizeData(obj.sel)
 obj.sel <- ParseExonName(obj.sel)
 obj.sel <- RunAutoCorr(obj.sel, order.cells = order.cells, wm.name = "trajectory_wm")
-obj.sel <- RunBlockCorr(obj.sel, wm.name = "trajectory_wm", bind.name = "gene_name", bind.assay = "RNA")
+obj.sel <- RunSDT(obj.sel, wm.name = "trajectory_wm", bind.name = "gene_name", bind.assay = "RNA")
 
 FbtPlot(obj.sel, val = "gene_name.padj", assay = c("exon", "junction"), shape.by = "assay", color.by = "assay")
 
-Meta(obj.sel, assay = "exon") %>% filter(gene_name.padj <1e-10) %>% knitr::kable()
-Meta(obj.sel, assay = "junction") %>% filter(gene_name.padj <1e-10) %>% knitr::kable()
+Meta(obj.sel, assay = "exon") %>% filter(gene_name.padj <1e-8) %>% knitr::kable()
+Meta(obj.sel, assay = "junction") %>% filter(gene_name.padj <1e-8) %>% knitr::kable()
 
 FeaturePlot(obj.sel, features = c("3:52413996-52414048/+/PHF7", "3:52414048-52414496/+/PHF7", "PHF7"), ncol=3, order=TRUE)
 ```
@@ -157,14 +157,14 @@ DefaultAssay(obj.sel) <- "exon"
 obj.sel <- RunAutoCorr(obj.sel)
 ```
 
-Now we have two weight matrices. If no name is specified in RunBlockCorr(), the first matrix will always be used by default, so we need to explicitly specify "pca_wm" to avoid misusing the weight matrix here.
+Now we have two weight matrices. If no name is specified in RunSDT(), the first matrix will always be used by default, so we need to explicitly specify "pca_wm" to avoid misusing the weight matrix here.
 
 ```{r}
 grep("_wm", names(obj.sel), value=TRUE)
-obj.sel <- RunBlockCorr(obj.sel, bind.name = "gene_name", bind.assay = "RNA", wm.name = "pca_wm", prefix="all")
+obj.sel <- RunSDT(obj.sel, bind.name = "gene_name", bind.assay = "RNA", wm.name = "pca_wm", prefix="all")
 DefaultAssay(obj.sel) <- "junction"
 obj.sel <- RunAutoCorr(obj.sel)
-obj.sel <- RunBlockCorr(obj.sel, bind.name = "gene_name", bind.assay = "RNA", wm.name = "pca_wm", prefix="all")
+obj.sel <- RunSDT(obj.sel, bind.name = "gene_name", bind.assay = "RNA", wm.name = "pca_wm", prefix="all")
 ```
 
 ***By comparing the use of cell trajectory ordering with the PCA space, we found that using the PCA approach can detect more alternatively expressed genes. This is because forcing all cells into a 1D trajectory ordering preserves only the rank of each cell, but loses much of the neighborhood information about cells in the broader context. Since cell trajectories are typically constructed based on cell–cell distances in high-dimensional space, regardless of the algorithm used to build the trajectory, I personally recommend using the cell space directly rather than relying solely on 1D cell ordering, unless you have specific reasons or detailed knowledge.***
@@ -203,11 +203,11 @@ obj.sel[['ccc']] <- CreateDimReducObject(embeddings = ccc, assay = "RNA")
 
 DefaultAssay(obj.sel) <- "exon"
 obj.sel <- RunAutoCorr(obj.sel, reduction = "ccc", wm.name = "ccc_wm", dims=1:2)
-obj.sel <- RunBlockCorr(obj.sel, wm.name = "ccc_wm", bind.name = "gene_name", bind.assay = "RNA", prefix = "ccc")
+obj.sel <- RunSDT(obj.sel, wm.name = "ccc_wm", bind.name = "gene_name", bind.assay = "RNA", prefix = "ccc")
 
 DefaultAssay(obj.sel) <- "junction"
 obj.sel <- RunAutoCorr(obj.sel, reduction = "ccc", wm.name = "ccc_wm", dims=1:2)
-obj.sel <- RunBlockCorr(obj.sel, wm.name = "ccc_wm", bind.name = "gene_name", bind.assay = "RNA", prefix = "ccc")
+obj.sel <- RunSDT(obj.sel, wm.name = "ccc_wm", bind.name = "gene_name", bind.assay = "RNA", prefix = "ccc")
 FbtPlot(obj.sel, val = "ccc.padj", assay = c("exon", "junction"), shape.by = "assay", color.by = "assay")
 
 Meta(obj.sel, assay = "exon") %>% filter(ccc.padj<1e-30) %>% knitr::kable()

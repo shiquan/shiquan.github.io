@@ -200,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dST_selector.html" class="sidebar-item-text sidebar-link">
+  <a href="./selector.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Select cells from reduction maps</span></a>
   </div>
 </li>
@@ -464,12 +464,12 @@ This message will be shown once per session</code></pre>
 <pre><code>Run autocorrelation test for 72346 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 9.621753 secs</code></pre>
+<pre><code>Runtime : 9.748158 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>58448 autocorrelated features.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj.sel, <span class="at">wm.name =</span> <span class="st">"trajectory_wm"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj.sel, <span class="at">wm.name =</span> <span class="st">"trajectory_wm"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon.</code></pre>
 </div>
@@ -483,7 +483,7 @@ This message will be shown once per session</code></pre>
 <pre><code>Processing 58448 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 14246 binding features.</code></pre>
+<pre><code>Processing 12417 binding features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieve binding data from assay RNA.</code></pre>
@@ -495,7 +495,7 @@ This message will be shown once per session</code></pre>
 <pre><code>Using 7 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 11.97247 mins.</code></pre>
+<pre><code>Runtime : 6.944135 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj.sel) <span class="ot">&lt;-</span> <span class="st">"junction"</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj.sel)</span>
@@ -511,12 +511,12 @@ This message will be shown once per session</code></pre>
 <pre><code>Run autocorrelation test for 7583 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.558353 secs</code></pre>
+<pre><code>Runtime : 1.508061 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>6466 autocorrelated features.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj.sel, <span class="at">wm.name =</span> <span class="st">"trajectory_wm"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj.sel, <span class="at">wm.name =</span> <span class="st">"trajectory_wm"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay junction.</code></pre>
 </div>
@@ -530,7 +530,7 @@ This message will be shown once per session</code></pre>
 <pre><code>Processing 6466 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 3811 binding features.</code></pre>
+<pre><code>Processing 3403 binding features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieve binding data from assay RNA.</code></pre>
@@ -542,7 +542,7 @@ This message will be shown once per session</code></pre>
 <pre><code>Using 7 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.419886 mins.</code></pre>
+<pre><code>Runtime : 46.74309 secs.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj.sel, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exon"</span>, <span class="st">"junction"</span>), <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">color.by =</span> <span class="st">"assay"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -552,22 +552,23 @@ This message will be shown once per session</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Meta</span>(obj.sel, <span class="at">assay =</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj <span class="sc">&lt;</span><span class="fl">1e-10</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Meta</span>(obj.sel, <span class="at">assay =</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj <span class="sc">&lt;</span><span class="fl">1e-8</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 21%">
+<col style="width: 19%">
 <col style="width: 2%">
+<col style="width: 5%">
+<col style="width: 5%">
 <col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 7%">
 <col style="width: 4%">
-<col style="width: 8%">
-<col style="width: 6%">
-<col style="width: 11%">
 <col style="width: 7%">
-<col style="width: 9%">
-<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 10%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 8%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -580,6 +581,7 @@ This message will be shown once per session</code></pre>
 <th style="text-align: right;">moransi.pval</th>
 <th style="text-align: right;">moransi</th>
 <th style="text-align: left;">autocorr.variable</th>
+<th style="text-align: right;">gene_name.D</th>
 <th style="text-align: right;">gene_name.t</th>
 <th style="text-align: right;">gene_name.pval</th>
 <th style="text-align: right;">gene_name.padj</th>
@@ -587,16 +589,77 @@ This message will be shown once per session</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: left;">1:211398036-211399150/+/LINC00467</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">211398036</td>
+<td style="text-align: right;">211399150</td>
+<td style="text-align: left;">LINC00467</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0816324</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.6269152</td>
+<td style="text-align: right;">7.875978</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">1:211398036-211399220/+/LINC00467</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: right;">211398036</td>
 <td style="text-align: right;">211399220</td>
 <td style="text-align: left;">LINC00467</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0797745</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">8.960026</td>
+<td style="text-align: right;">0.6330680</td>
+<td style="text-align: right;">8.161452</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1:211398036-211399145/+/LINC00467</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">211398036</td>
+<td style="text-align: right;">211399145</td>
+<td style="text-align: left;">LINC00467</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0804612</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.6270202</td>
+<td style="text-align: right;">7.833554</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10:84371014-84372469/+/CCSER2</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: right;">84371014</td>
+<td style="text-align: right;">84372469</td>
+<td style="text-align: left;">CCSER2</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0.0000466</td>
+<td style="text-align: right;">0.0459559</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.6213102</td>
+<td style="text-align: right;">8.800596</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3:52414496-52414844/+/PHF7</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">52414496</td>
+<td style="text-align: right;">52414844</td>
+<td style="text-align: left;">PHF7</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.1310723</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.6558172</td>
+<td style="text-align: right;">7.956239</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -607,10 +670,11 @@ This message will be shown once per session</code></pre>
 <td style="text-align: right;">4985075</td>
 <td style="text-align: left;">RBAK-RBAKDN</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.1330786</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">9.834596</td>
+<td style="text-align: right;">0.6593649</td>
+<td style="text-align: right;">8.421093</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -621,10 +685,11 @@ This message will be shown once per session</code></pre>
 <td style="text-align: right;">74197050</td>
 <td style="text-align: left;">EIF4H</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.1397753</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">13.460503</td>
+<td style="text-align: right;">0.7475285</td>
+<td style="text-align: right;">14.535688</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -635,10 +700,11 @@ This message will be shown once per session</code></pre>
 <td style="text-align: right;">96645936</td>
 <td style="text-align: left;">SEM1</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">1.45e-05</td>
+<td style="text-align: right;">0.0000145</td>
 <td style="text-align: right;">0.0494136</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">9.409201</td>
+<td style="text-align: right;">0.6470772</td>
+<td style="text-align: right;">10.301505</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -649,10 +715,11 @@ This message will be shown once per session</code></pre>
 <td style="text-align: right;">96645932</td>
 <td style="text-align: left;">SEM1</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.00e+00</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0720516</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">9.437117</td>
+<td style="text-align: right;">0.6593465</td>
+<td style="text-align: right;">10.585368</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -663,10 +730,11 @@ This message will be shown once per session</code></pre>
 <td style="text-align: right;">96645932</td>
 <td style="text-align: left;">SEM1</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.00e+00</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0748368</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">9.336731</td>
+<td style="text-align: right;">0.6561704</td>
+<td style="text-align: right;">10.424636</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -677,46 +745,109 @@ This message will be shown once per session</code></pre>
 <td style="text-align: right;">96645936</td>
 <td style="text-align: left;">SEM1</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">0.00e+00</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0796474</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">9.965071</td>
+<td style="text-align: right;">0.6639002</td>
+<td style="text-align: right;">10.867209</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">7:96645724-96645932/-/SEM1</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">96645724</td>
+<td style="text-align: right;">96645932</td>
+<td style="text-align: left;">SEM1</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0.0002720</td>
+<td style="text-align: right;">0.0407584</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.6266415</td>
+<td style="text-align: right;">9.058837</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">7:127591409-127591951/+/FSCN3</td>
 <td style="text-align: left;">7</td>
 <td style="text-align: right;">127591409</td>
 <td style="text-align: right;">127591951</td>
 <td style="text-align: left;">FSCN3</td>
 <td style="text-align: left;">+</td>
-<td style="text-align: right;">0.00e+00</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.2950965</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">14.584563</td>
+<td style="text-align: right;">0.8446530</td>
+<td style="text-align: right;">13.659938</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9:128500067-128501292/+/ODF2</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: right;">128500067</td>
+<td style="text-align: right;">128501292</td>
+<td style="text-align: left;">ODF2</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0.0023921</td>
+<td style="text-align: right;">0.0331474</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.6216168</td>
+<td style="text-align: right;">8.123203</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9:128500067-128501260/+/ODF2</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: right;">128500067</td>
+<td style="text-align: right;">128501260</td>
+<td style="text-align: left;">ODF2</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0.0023921</td>
+<td style="text-align: right;">0.0331474</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.6216168</td>
+<td style="text-align: right;">8.123203</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9:128500067-128500960/+/ODF2</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: right;">128500067</td>
+<td style="text-align: right;">128500960</td>
+<td style="text-align: left;">ODF2</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0.0020902</td>
+<td style="text-align: right;">0.0336515</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.6187131</td>
+<td style="text-align: right;">7.971053</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Meta</span>(obj.sel, <span class="at">assay =</span> <span class="st">"junction"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj <span class="sc">&lt;</span><span class="fl">1e-10</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Meta</span>(obj.sel, <span class="at">assay =</span> <span class="st">"junction"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj <span class="sc">&lt;</span><span class="fl">1e-8</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 18%">
+<col style="width: 16%">
 <col style="width: 2%">
-<col style="width: 6%">
-<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 5%">
 <col style="width: 6%">
 <col style="width: 4%">
 <col style="width: 8%">
-<col style="width: 6%">
-<col style="width: 12%">
-<col style="width: 8%">
-<col style="width: 10%">
-<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 11%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 9%">
+<col style="width: 9%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -729,6 +860,7 @@ This message will be shown once per session</code></pre>
 <th style="text-align: right;">moransi.pval</th>
 <th style="text-align: right;">moransi</th>
 <th style="text-align: left;">autocorr.variable</th>
+<th style="text-align: right;">gene_name.D</th>
 <th style="text-align: right;">gene_name.t</th>
 <th style="text-align: right;">gene_name.pval</th>
 <th style="text-align: right;">gene_name.padj</th>
@@ -745,7 +877,8 @@ This message will be shown once per session</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.133177</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">9.968743</td>
+<td style="text-align: right;">0.6908519</td>
+<td style="text-align: right;">8.943853</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -783,19 +916,19 @@ assay instead</code></pre>
 <pre><code>Run autocorrelation test for 72346 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 20.68586 secs</code></pre>
+<pre><code>Runtime : 20.01246 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>70882 autocorrelated features.</code></pre>
 </div>
 </div>
-<p>Now we have two weight matrices. If no name is specified in RunBlockCorr(), the first matrix will always be used by default, so we need to explicitly specify “pca_wm” to avoid misusing the weight matrix here.</p>
+<p>Now we have two weight matrices. If no name is specified in RunSDT(), the first matrix will always be used by default, so we need to explicitly specify “pca_wm” to avoid misusing the weight matrix here.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"_wm"</span>, <span class="fu">names</span>(obj.sel), <span class="at">value=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "trajectory_wm" "pca_wm"       </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj.sel, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">wm.name =</span> <span class="st">"pca_wm"</span>, <span class="at">prefix=</span><span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj.sel, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">wm.name =</span> <span class="st">"pca_wm"</span>, <span class="at">prefix=</span><span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon.</code></pre>
 </div>
@@ -809,7 +942,7 @@ assay instead</code></pre>
 <pre><code>Processing 70882 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 14246 binding features.</code></pre>
+<pre><code>Processing 14088 binding features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieve binding data from assay RNA.</code></pre>
@@ -821,7 +954,7 @@ assay instead</code></pre>
 <pre><code>Using 7 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 28.21338 mins.</code></pre>
+<pre><code>Runtime : 11.06989 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj.sel) <span class="ot">&lt;-</span> <span class="st">"junction"</span></span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj.sel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -832,12 +965,12 @@ assay instead</code></pre>
 <pre><code>Run autocorrelation test for 7583 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 2.483815 secs</code></pre>
+<pre><code>Runtime : 2.407756 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>7545 autocorrelated features.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj.sel, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">wm.name =</span> <span class="st">"pca_wm"</span>, <span class="at">prefix=</span><span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj.sel, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">wm.name =</span> <span class="st">"pca_wm"</span>, <span class="at">prefix=</span><span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay junction.</code></pre>
 </div>
@@ -851,7 +984,7 @@ assay instead</code></pre>
 <pre><code>Processing 7545 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 3811 binding features.</code></pre>
+<pre><code>Processing 3800 binding features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieve binding data from assay RNA.</code></pre>
@@ -863,7 +996,7 @@ assay instead</code></pre>
 <pre><code>Using 7 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 3.167435 mins.</code></pre>
+<pre><code>Runtime : 1.231873 mins.</code></pre>
 </div>
 </div>
 <p><strong><em>By comparing the use of cell trajectory ordering with the PCA space, we found that using the PCA approach can detect more alternatively expressed genes. This is because forcing all cells into a 1D trajectory ordering preserves only the rank of each cell, but loses much of the neighborhood information about cells in the broader context. Since cell trajectories are typically constructed based on cell–cell distances in high-dimensional space, regardless of the algorithm used to build the trajectory, I personally recommend using the cell space directly rather than relying solely on 1D cell ordering, unless you have specific reasons or detailed knowledge.</em></strong></p>
@@ -880,18 +1013,20 @@ assay instead</code></pre>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 2%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 8%">
+<col style="width: 17%">
+<col style="width: 1%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 7%">
 <col style="width: 3%">
-<col style="width: 6%">
 <col style="width: 5%">
-<col style="width: 9%">
+<col style="width: 4%">
+<col style="width: 8%">
+<col style="width: 5%">
+<col style="width: 5%">
 <col style="width: 6%">
-<col style="width: 7%">
-<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 4%">
 <col style="width: 4%">
 <col style="width: 4%">
 <col style="width: 4%">
@@ -907,9 +1042,11 @@ assay instead</code></pre>
 <th style="text-align: right;">moransi.pval</th>
 <th style="text-align: right;">moransi</th>
 <th style="text-align: left;">autocorr.variable</th>
+<th style="text-align: right;">gene_name.D</th>
 <th style="text-align: right;">gene_name.t</th>
 <th style="text-align: right;">gene_name.pval</th>
 <th style="text-align: right;">gene_name.padj</th>
+<th style="text-align: right;">all.D</th>
 <th style="text-align: right;">all.t</th>
 <th style="text-align: right;">all.pval</th>
 <th style="text-align: right;">all.padj</th>
@@ -926,61 +1063,31 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.5365729</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">-0.7992579</td>
-<td style="text-align: right;">0.7869728</td>
+<td style="text-align: right;">0.5138080</td>
+<td style="text-align: right;">-0.6083112</td>
+<td style="text-align: right;">0.7278129</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">13.21821</td>
+<td style="text-align: right;">0.5050367</td>
+<td style="text-align: right;">15.15135</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">1:211398036-211399150/+/LINC00467</td>
+<td style="text-align: left;">1:25901407-25901682/-/STMN1</td>
 <td style="text-align: left;">1</td>
-<td style="text-align: right;">211398036</td>
-<td style="text-align: right;">211399150</td>
-<td style="text-align: left;">LINC00467</td>
-<td style="text-align: left;">+</td>
+<td style="text-align: right;">25901407</td>
+<td style="text-align: right;">25901682</td>
+<td style="text-align: left;">STMN1</td>
+<td style="text-align: left;">-</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0471558</td>
+<td style="text-align: right;">0.4763702</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">8.6032147</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">14.10142</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">1:211398036-211399220/+/LINC00467</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">211398036</td>
-<td style="text-align: right;">211399220</td>
-<td style="text-align: left;">LINC00467</td>
-<td style="text-align: left;">+</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0489784</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">8.9600263</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">14.49493</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">1:211398036-211399145/+/LINC00467</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">211398036</td>
-<td style="text-align: right;">211399145</td>
-<td style="text-align: left;">LINC00467</td>
-<td style="text-align: left;">+</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0474023</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">8.6223275</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">14.15347</td>
+<td style="text-align: right;">0.4974101</td>
+<td style="text-align: right;">-1.2050008</td>
+<td style="text-align: right;">0.8844622</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.4729623</td>
+<td style="text-align: right;">14.75713</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -994,10 +1101,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1066201</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">-4.7022753</td>
-<td style="text-align: right;">0.9999958</td>
+<td style="text-align: right;">0.4263039</td>
+<td style="text-align: right;">-5.3421718</td>
+<td style="text-align: right;">0.9999997</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">14.75014</td>
+<td style="text-align: right;">0.4608809</td>
+<td style="text-align: right;">15.76613</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1011,10 +1120,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1499542</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">-2.8217189</td>
-<td style="text-align: right;">0.9971134</td>
+<td style="text-align: right;">0.4614148</td>
+<td style="text-align: right;">-2.8587774</td>
+<td style="text-align: right;">0.9974071</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">16.89717</td>
+<td style="text-align: right;">0.5291103</td>
+<td style="text-align: right;">17.48624</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1028,10 +1139,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1448451</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">-2.4163719</td>
-<td style="text-align: right;">0.9912460</td>
+<td style="text-align: right;">0.4657325</td>
+<td style="text-align: right;">-2.5138832</td>
+<td style="text-align: right;">0.9932233</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">16.16669</td>
+<td style="text-align: right;">0.5180136</td>
+<td style="text-align: right;">17.42260</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1045,10 +1158,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1290502</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">-2.2955697</td>
-<td style="text-align: right;">0.9880950</td>
+<td style="text-align: right;">0.4635919</td>
+<td style="text-align: right;">-2.2568029</td>
+<td style="text-align: right;">0.9868908</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">15.76749</td>
+<td style="text-align: right;">0.4924957</td>
+<td style="text-align: right;">15.99049</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1062,10 +1177,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.2795176</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">6.3537107</td>
+<td style="text-align: right;">0.6571513</td>
+<td style="text-align: right;">6.5368376</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000079</td>
-<td style="text-align: right;">18.49192</td>
+<td style="text-align: right;">0.0000038</td>
+<td style="text-align: right;">0.6140893</td>
+<td style="text-align: right;">20.52634</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1079,10 +1196,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.2965156</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">6.4506658</td>
+<td style="text-align: right;">0.6671544</td>
+<td style="text-align: right;">6.6315722</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000055</td>
-<td style="text-align: right;">19.27363</td>
+<td style="text-align: right;">0.0000026</td>
+<td style="text-align: right;">0.6322654</td>
+<td style="text-align: right;">20.79021</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1096,10 +1215,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.2963525</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">6.4103138</td>
+<td style="text-align: right;">0.6664554</td>
+<td style="text-align: right;">6.6308385</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000063</td>
-<td style="text-align: right;">19.36009</td>
+<td style="text-align: right;">0.0000026</td>
+<td style="text-align: right;">0.6310836</td>
+<td style="text-align: right;">20.75944</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1113,44 +1234,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0694474</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">7.9171110</td>
+<td style="text-align: right;">0.6213102</td>
+<td style="text-align: right;">8.8005958</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">14.02871</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">11:10798992-10799113/-/EIF4G2</td>
-<td style="text-align: left;">11</td>
-<td style="text-align: right;">10798992</td>
-<td style="text-align: right;">10799113</td>
-<td style="text-align: left;">EIF4G2</td>
-<td style="text-align: left;">-</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0653547</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">3.7486258</td>
-<td style="text-align: right;">0.0001496</td>
-<td style="text-align: right;">0.1987880</td>
-<td style="text-align: right;">13.16633</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">13:25349562-25349963/+/NUP58</td>
-<td style="text-align: left;">13</td>
-<td style="text-align: right;">25349562</td>
-<td style="text-align: right;">25349963</td>
-<td style="text-align: left;">NUP58</td>
-<td style="text-align: left;">+</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0673922</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">-4.2250674</td>
-<td style="text-align: right;">0.9999734</td>
-<td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">13.61898</td>
+<td style="text-align: right;">0.4298537</td>
+<td style="text-align: right;">14.91362</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1164,10 +1253,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1353060</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">3.6943987</td>
-<td style="text-align: right;">0.0001806</td>
-<td style="text-align: right;">0.2346310</td>
-<td style="text-align: right;">17.72233</td>
+<td style="text-align: right;">0.5669509</td>
+<td style="text-align: right;">3.8114291</td>
+<td style="text-align: right;">0.0001201</td>
+<td style="text-align: right;">0.1754453</td>
+<td style="text-align: right;">0.5305367</td>
+<td style="text-align: right;">17.51706</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1181,10 +1272,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1352448</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">3.7576058</td>
-<td style="text-align: right;">0.0001450</td>
-<td style="text-align: right;">0.1971341</td>
-<td style="text-align: right;">17.78757</td>
+<td style="text-align: right;">0.5677941</td>
+<td style="text-align: right;">3.8753581</td>
+<td style="text-align: right;">0.0000957</td>
+<td style="text-align: right;">0.1434632</td>
+<td style="text-align: right;">0.5308687</td>
+<td style="text-align: right;">17.44830</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1198,14 +1291,35 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1415461</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">2.5101809</td>
-<td style="text-align: right;">0.0068438</td>
+<td style="text-align: right;">0.5294575</td>
+<td style="text-align: right;">2.4872262</td>
+<td style="text-align: right;">0.0072731</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">14.95305</td>
+<td style="text-align: right;">0.4809282</td>
+<td style="text-align: right;">15.51713</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">15:80129600-80131293/+/ZFAND6</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: right;">80129600</td>
+<td style="text-align: right;">80131293</td>
+<td style="text-align: left;">ZFAND6</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1130790</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5055989</td>
+<td style="text-align: right;">1.6040236</td>
+<td style="text-align: right;">0.0559472</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.4281787</td>
+<td style="text-align: right;">16.85202</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">15:80137480-80137678/+/ZFAND6</td>
 <td style="text-align: left;">15</td>
 <td style="text-align: right;">80137480</td>
@@ -1215,10 +1329,31 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1506118</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">2.7766824</td>
-<td style="text-align: right;">0.0032843</td>
+<td style="text-align: right;">0.5313132</td>
+<td style="text-align: right;">2.8853403</td>
+<td style="text-align: right;">0.0023996</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">13.45450</td>
+<td style="text-align: right;">0.4767508</td>
+<td style="text-align: right;">15.08482</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">15:80137480-80137811/+/ZFAND6</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: right;">80137480</td>
+<td style="text-align: right;">80137811</td>
+<td style="text-align: left;">ZFAND6</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1501969</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5089926</td>
+<td style="text-align: right;">1.1308509</td>
+<td style="text-align: right;">0.1304250</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.4761354</td>
+<td style="text-align: right;">14.67508</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1232,10 +1367,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1565362</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">5.1270712</td>
-<td style="text-align: right;">0.0000007</td>
-<td style="text-align: right;">0.0014728</td>
-<td style="text-align: right;">14.18799</td>
+<td style="text-align: right;">0.5540380</td>
+<td style="text-align: right;">4.4186253</td>
+<td style="text-align: right;">0.0000127</td>
+<td style="text-align: right;">0.0218663</td>
+<td style="text-align: right;">0.4252987</td>
+<td style="text-align: right;">14.58586</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1249,10 +1386,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1760430</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">4.8653746</td>
-<td style="text-align: right;">0.0000022</td>
-<td style="text-align: right;">0.0042026</td>
-<td style="text-align: right;">14.42375</td>
+<td style="text-align: right;">0.5573449</td>
+<td style="text-align: right;">4.7002546</td>
+<td style="text-align: right;">0.0000042</td>
+<td style="text-align: right;">0.0074443</td>
+<td style="text-align: right;">0.4450364</td>
+<td style="text-align: right;">16.37583</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1266,10 +1405,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0589847</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">7.0735110</td>
+<td style="text-align: right;">0.6035363</td>
+<td style="text-align: right;">7.2019361</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000003</td>
-<td style="text-align: right;">14.17253</td>
+<td style="text-align: right;">0.0000002</td>
+<td style="text-align: right;">0.4505080</td>
+<td style="text-align: right;">14.75010</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1283,10 +1424,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.6555098</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">-2.6202842</td>
-<td style="text-align: right;">0.9949154</td>
+<td style="text-align: right;">0.4775407</td>
+<td style="text-align: right;">-2.4017911</td>
+<td style="text-align: right;">0.9909098</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">14.34747</td>
+<td style="text-align: right;">0.4657620</td>
+<td style="text-align: right;">14.05098</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1300,10 +1443,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.6255431</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">-2.5937958</td>
-<td style="text-align: right;">0.9945343</td>
+<td style="text-align: right;">0.4735932</td>
+<td style="text-align: right;">-2.5603642</td>
+<td style="text-align: right;">0.9940165</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">13.51358</td>
+<td style="text-align: right;">0.4537018</td>
+<td style="text-align: right;">13.30349</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1317,10 +1462,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1523974</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">-1.2576225</td>
-<td style="text-align: right;">0.8942566</td>
+<td style="text-align: right;">0.4596537</td>
+<td style="text-align: right;">-1.4446807</td>
+<td style="text-align: right;">0.9241474</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">15.59748</td>
+<td style="text-align: right;">0.4633808</td>
+<td style="text-align: right;">13.58817</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1334,10 +1481,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1626891</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">2.9991263</td>
-<td style="text-align: right;">0.0017122</td>
+<td style="text-align: right;">0.5976995</td>
+<td style="text-align: right;">2.9204659</td>
+<td style="text-align: right;">0.0021642</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">14.51277</td>
+<td style="text-align: right;">0.5137507</td>
+<td style="text-align: right;">16.14814</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1351,10 +1500,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1629240</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">2.9661873</td>
-<td style="text-align: right;">0.0018897</td>
+<td style="text-align: right;">0.5960931</td>
+<td style="text-align: right;">2.8858653</td>
+<td style="text-align: right;">0.0023959</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">14.35161</td>
+<td style="text-align: right;">0.5137443</td>
+<td style="text-align: right;">16.25708</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1368,44 +1519,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.2033912</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">2.5249051</td>
-<td style="text-align: right;">0.0065805</td>
+<td style="text-align: right;">0.5729379</td>
+<td style="text-align: right;">2.4115739</td>
+<td style="text-align: right;">0.0088634</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">13.48824</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">19:18309678-18309861/-/LSM4</td>
-<td style="text-align: left;">19</td>
-<td style="text-align: right;">18309678</td>
-<td style="text-align: right;">18309861</td>
-<td style="text-align: left;">LSM4</td>
-<td style="text-align: left;">-</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1256588</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">3.9306248</td>
-<td style="text-align: right;">0.0000785</td>
-<td style="text-align: right;">0.1119750</td>
-<td style="text-align: right;">13.31364</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">19:23357696-23362725/-/ZNF91</td>
-<td style="text-align: left;">19</td>
-<td style="text-align: right;">23357696</td>
-<td style="text-align: right;">23362725</td>
-<td style="text-align: left;">ZNF91</td>
-<td style="text-align: left;">-</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0885371</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">3.2359176</td>
-<td style="text-align: right;">0.0008247</td>
-<td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">13.77934</td>
+<td style="text-align: right;">0.4885709</td>
+<td style="text-align: right;">14.70143</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1419,61 +1538,31 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1129809</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">7.0808615</td>
+<td style="text-align: right;">0.6125111</td>
+<td style="text-align: right;">6.8532884</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000003</td>
-<td style="text-align: right;">17.34218</td>
+<td style="text-align: right;">0.0000010</td>
+<td style="text-align: right;">0.4952707</td>
+<td style="text-align: right;">15.55161</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">2:61143545-61143945/-/C2orf74-AS1</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">61143545</td>
-<td style="text-align: right;">61143945</td>
-<td style="text-align: left;">C2orf74-AS1</td>
-<td style="text-align: left;">-</td>
+<td style="text-align: left;">20:35774488-35775058/+/PHF20</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: right;">35774488</td>
+<td style="text-align: right;">35775058</td>
+<td style="text-align: left;">PHF20</td>
+<td style="text-align: left;">+</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0887566</td>
+<td style="text-align: right;">0.0693745</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">5.9691076</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000389</td>
-<td style="text-align: right;">14.61573</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2:61143543-61144266/-/C2orf74-AS1</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">61143543</td>
-<td style="text-align: right;">61144266</td>
-<td style="text-align: left;">C2orf74-AS1</td>
-<td style="text-align: left;">-</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0886694</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">5.9873356</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000386</td>
-<td style="text-align: right;">14.66861</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2:61143549-61143945/-/C2orf74-AS1</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">61143549</td>
-<td style="text-align: right;">61143945</td>
-<td style="text-align: left;">C2orf74-AS1</td>
-<td style="text-align: left;">-</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0887566</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">5.9691076</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000389</td>
-<td style="text-align: right;">14.61573</td>
+<td style="text-align: right;">0.5246998</td>
+<td style="text-align: right;">3.7053294</td>
+<td style="text-align: right;">0.0001739</td>
+<td style="text-align: right;">0.2479685</td>
+<td style="text-align: right;">0.4130324</td>
+<td style="text-align: right;">15.00582</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1487,10 +1576,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1241484</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">1.1387188</td>
-<td style="text-align: right;">0.1287842</td>
+<td style="text-align: right;">0.4985161</td>
+<td style="text-align: right;">1.2424687</td>
+<td style="text-align: right;">0.1084993</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">14.02988</td>
+<td style="text-align: right;">0.4331207</td>
+<td style="text-align: right;">14.18691</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1504,10 +1595,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1563919</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">2.0895937</td>
-<td style="text-align: right;">0.0196089</td>
+<td style="text-align: right;">0.5202833</td>
+<td style="text-align: right;">1.9727128</td>
+<td style="text-align: right;">0.0256586</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">16.35988</td>
+<td style="text-align: right;">0.4716648</td>
+<td style="text-align: right;">14.73913</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1521,10 +1614,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1772089</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">2.5267252</td>
-<td style="text-align: right;">0.0065486</td>
+<td style="text-align: right;">0.5317377</td>
+<td style="text-align: right;">2.4737189</td>
+<td style="text-align: right;">0.0075368</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">17.32798</td>
+<td style="text-align: right;">0.5021152</td>
+<td style="text-align: right;">16.29195</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1538,10 +1633,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1777901</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">2.6478939</td>
-<td style="text-align: right;">0.0047130</td>
+<td style="text-align: right;">0.5333368</td>
+<td style="text-align: right;">2.5716212</td>
+<td style="text-align: right;">0.0058044</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">17.54029</td>
+<td style="text-align: right;">0.5041374</td>
+<td style="text-align: right;">16.46894</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1555,10 +1652,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1410946</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">7.4297447</td>
+<td style="text-align: right;">0.6335731</td>
+<td style="text-align: right;">6.2777400</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000001</td>
-<td style="text-align: right;">15.73955</td>
+<td style="text-align: right;">0.0000122</td>
+<td style="text-align: right;">0.4988230</td>
+<td style="text-align: right;">14.70155</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1572,10 +1671,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1455321</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">8.1524615</td>
+<td style="text-align: right;">0.6558172</td>
+<td style="text-align: right;">7.9562386</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">15.76698</td>
+<td style="text-align: right;">0.5357904</td>
+<td style="text-align: right;">17.07624</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1589,31 +1690,16 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1095984</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">4.7385760</td>
-<td style="text-align: right;">0.0000036</td>
-<td style="text-align: right;">0.0065834</td>
-<td style="text-align: right;">14.79149</td>
+<td style="text-align: right;">0.5522362</td>
+<td style="text-align: right;">4.8399018</td>
+<td style="text-align: right;">0.0000024</td>
+<td style="text-align: right;">0.0045116</td>
+<td style="text-align: right;">0.4643932</td>
+<td style="text-align: right;">14.33751</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">5:28810550-28810903/+/LINC02109</td>
-<td style="text-align: left;">5</td>
-<td style="text-align: right;">28810550</td>
-<td style="text-align: right;">28810903</td>
-<td style="text-align: left;">LINC02109</td>
-<td style="text-align: left;">+</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0895162</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">3.2672818</td>
-<td style="text-align: right;">0.0007465</td>
-<td style="text-align: right;">0.9283249</td>
-<td style="text-align: right;">13.27736</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">7:2234198-2235564/-/ENSG00000286192</td>
 <td style="text-align: left;">7</td>
 <td style="text-align: right;">2234198</td>
@@ -1623,27 +1709,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1514527</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">2.4989783</td>
-<td style="text-align: right;">0.0070504</td>
+<td style="text-align: right;">0.5234723</td>
+<td style="text-align: right;">2.4383464</td>
+<td style="text-align: right;">0.0082683</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">14.05543</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">7:4983718-4983773/+/RBAK-RBAKDN</td>
-<td style="text-align: left;">7</td>
-<td style="text-align: right;">4983718</td>
-<td style="text-align: right;">4983773</td>
-<td style="text-align: left;">RBAK-RBAKDN</td>
-<td style="text-align: left;">+</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0914201</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">6.7731463</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000013</td>
-<td style="text-align: right;">13.46936</td>
+<td style="text-align: right;">0.4600698</td>
+<td style="text-align: right;">15.10529</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1657,14 +1728,35 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1729539</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">9.8345955</td>
+<td style="text-align: right;">0.6593649</td>
+<td style="text-align: right;">8.4210932</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">22.70183</td>
+<td style="text-align: right;">0.5476979</td>
+<td style="text-align: right;">19.67029</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">7:5779985-5780292/-/RNF216</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">5779985</td>
+<td style="text-align: right;">5780292</td>
+<td style="text-align: left;">RNF216</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0640424</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5246596</td>
+<td style="text-align: right;">3.5873547</td>
+<td style="text-align: right;">0.0002606</td>
+<td style="text-align: right;">0.3384448</td>
+<td style="text-align: right;">0.4067393</td>
+<td style="text-align: right;">14.01626</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">7:74196642-74197050/+/EIF4H</td>
 <td style="text-align: left;">7</td>
 <td style="text-align: right;">74196642</td>
@@ -1674,27 +1766,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1499599</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">13.4605033</td>
+<td style="text-align: right;">0.7475285</td>
+<td style="text-align: right;">14.5356884</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">24.10042</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">7:92244902-92245171/-/ENSG00000285953</td>
-<td style="text-align: left;">7</td>
-<td style="text-align: right;">92244902</td>
-<td style="text-align: right;">92245171</td>
-<td style="text-align: left;">ENSG00000285953</td>
-<td style="text-align: left;">-</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1247589</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">3.0311662</td>
-<td style="text-align: right;">0.0015545</td>
-<td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">13.36004</td>
+<td style="text-align: right;">0.6529201</td>
+<td style="text-align: right;">26.76167</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1708,10 +1785,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.2155620</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">4.7410539</td>
-<td style="text-align: right;">0.0000036</td>
-<td style="text-align: right;">0.0065834</td>
-<td style="text-align: right;">17.06790</td>
+<td style="text-align: right;">0.5857502</td>
+<td style="text-align: right;">4.7302274</td>
+<td style="text-align: right;">0.0000037</td>
+<td style="text-align: right;">0.0068079</td>
+<td style="text-align: right;">0.5361302</td>
+<td style="text-align: right;">16.49559</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1725,10 +1804,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1772488</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">4.0354096</td>
-<td style="text-align: right;">0.0000537</td>
-<td style="text-align: right;">0.0785030</td>
-<td style="text-align: right;">15.03518</td>
+<td style="text-align: right;">0.5634043</td>
+<td style="text-align: right;">3.8898895</td>
+<td style="text-align: right;">0.0000909</td>
+<td style="text-align: right;">0.1398010</td>
+<td style="text-align: right;">0.4787132</td>
+<td style="text-align: right;">13.47767</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1742,10 +1823,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0720968</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">9.4092010</td>
+<td style="text-align: right;">0.6470772</td>
+<td style="text-align: right;">10.3015054</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">17.10629</td>
+<td style="text-align: right;">0.5103109</td>
+<td style="text-align: right;">17.74491</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1759,10 +1842,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0827188</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">9.4371173</td>
+<td style="text-align: right;">0.6593465</td>
+<td style="text-align: right;">10.5853680</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">16.84536</td>
+<td style="text-align: right;">0.5265752</td>
+<td style="text-align: right;">18.97728</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1776,10 +1861,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0817727</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">9.3367314</td>
+<td style="text-align: right;">0.6561704</td>
+<td style="text-align: right;">10.4246355</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">16.81729</td>
+<td style="text-align: right;">0.5217723</td>
+<td style="text-align: right;">18.72397</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1793,10 +1880,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0857761</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">9.9650711</td>
+<td style="text-align: right;">0.6639002</td>
+<td style="text-align: right;">10.8672094</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">17.34514</td>
+<td style="text-align: right;">0.5333738</td>
+<td style="text-align: right;">19.05890</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1810,10 +1899,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0615317</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">8.1064788</td>
+<td style="text-align: right;">0.6266415</td>
+<td style="text-align: right;">9.0588370</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">14.73627</td>
+<td style="text-align: right;">0.4757020</td>
+<td style="text-align: right;">16.33801</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1827,10 +1918,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.3332084</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">14.5845629</td>
+<td style="text-align: right;">0.8446530</td>
+<td style="text-align: right;">13.6599377</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">30.00146</td>
+<td style="text-align: right;">0.8517817</td>
+<td style="text-align: right;">28.91322</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1844,48 +1937,35 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1575763</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">2.6305174</td>
-<td style="text-align: right;">0.0049439</td>
+<td style="text-align: right;">0.5652140</td>
+<td style="text-align: right;">2.8498588</td>
+<td style="text-align: right;">0.0026610</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">16.45881</td>
+<td style="text-align: right;">0.5134903</td>
+<td style="text-align: right;">15.38145</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">8:124579578-124580637/+/NDUFB9</td>
-<td style="text-align: left;">8</td>
-<td style="text-align: right;">124579578</td>
-<td style="text-align: right;">124580637</td>
-<td style="text-align: left;">NDUFB9</td>
+<td style="text-align: left;">9:79571773-79572835/+/TLE4</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: right;">79571773</td>
+<td style="text-align: right;">79572835</td>
+<td style="text-align: left;">TLE4</td>
 <td style="text-align: left;">+</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1533252</td>
+<td style="text-align: right;">0.3314505</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">2.1165144</td>
-<td style="text-align: right;">0.0184042</td>
+<td style="text-align: right;">0.4805687</td>
+<td style="text-align: right;">-1.5151168</td>
+<td style="text-align: right;">0.9335354</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">13.22148</td>
+<td style="text-align: right;">0.4487088</td>
+<td style="text-align: right;">14.19573</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">8:124579578-124580648/+/NDUFB9</td>
-<td style="text-align: left;">8</td>
-<td style="text-align: right;">124579578</td>
-<td style="text-align: right;">124580648</td>
-<td style="text-align: left;">NDUFB9</td>
-<td style="text-align: left;">+</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1536218</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">2.1284192</td>
-<td style="text-align: right;">0.0178922</td>
-<td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">13.25118</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">9:79571941-79572835/+/TLE4</td>
 <td style="text-align: left;">9</td>
 <td style="text-align: right;">79571941</td>
@@ -1895,14 +1975,16 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.3425540</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">1.6940251</td>
-<td style="text-align: right;">0.0467022</td>
+<td style="text-align: right;">0.5324464</td>
+<td style="text-align: right;">1.8857681</td>
+<td style="text-align: right;">0.0311289</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">14.59999</td>
+<td style="text-align: right;">0.4993045</td>
+<td style="text-align: right;">16.19725</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">9:79571965-79572835/+/TLE4</td>
 <td style="text-align: left;">9</td>
 <td style="text-align: right;">79571965</td>
@@ -1912,14 +1994,16 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.3129983</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">1.3884364</td>
-<td style="text-align: right;">0.0840602</td>
+<td style="text-align: right;">0.5223707</td>
+<td style="text-align: right;">1.5287304</td>
+<td style="text-align: right;">0.0647601</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">13.50719</td>
+<td style="text-align: right;">0.4732105</td>
+<td style="text-align: right;">15.54075</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">9:124858458-124858537/-/RPL35</td>
 <td style="text-align: left;">9</td>
 <td style="text-align: right;">124858458</td>
@@ -1929,14 +2013,16 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.3502975</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">3.0339673</td>
-<td style="text-align: right;">0.0015414</td>
+<td style="text-align: right;">0.5369936</td>
+<td style="text-align: right;">2.1858733</td>
+<td style="text-align: right;">0.0155911</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">16.62285</td>
+<td style="text-align: right;">0.4623329</td>
+<td style="text-align: right;">13.77950</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">9:128500067-128501292/+/ODF2</td>
 <td style="text-align: left;">9</td>
 <td style="text-align: right;">128500067</td>
@@ -1946,14 +2032,16 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0466525</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">8.7278912</td>
+<td style="text-align: right;">0.6216168</td>
+<td style="text-align: right;">8.1232027</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">15.07683</td>
+<td style="text-align: right;">0.4261405</td>
+<td style="text-align: right;">13.24331</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">9:128500067-128501260/+/ODF2</td>
 <td style="text-align: left;">9</td>
 <td style="text-align: right;">128500067</td>
@@ -1963,27 +2051,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0466525</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">8.7278912</td>
+<td style="text-align: right;">0.6216168</td>
+<td style="text-align: right;">8.1232027</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">15.07683</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">9:128500067-128500960/+/ODF2</td>
-<td style="text-align: left;">9</td>
-<td style="text-align: right;">128500067</td>
-<td style="text-align: right;">128500960</td>
-<td style="text-align: left;">ODF2</td>
-<td style="text-align: left;">+</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0458747</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">8.6377721</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">14.81459</td>
+<td style="text-align: right;">0.4261405</td>
+<td style="text-align: right;">13.24331</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1994,18 +2067,20 @@ assay instead</code></pre>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 17%">
-<col style="width: 2%">
+<col style="width: 15%">
+<col style="width: 1%">
+<col style="width: 4%">
+<col style="width: 4%">
 <col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 6%">
 <col style="width: 3%">
-<col style="width: 7%">
-<col style="width: 5%">
-<col style="width: 9%">
 <col style="width: 6%">
+<col style="width: 4%">
 <col style="width: 8%">
-<col style="width: 8%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 4%">
 <col style="width: 4%">
 <col style="width: 4%">
 <col style="width: 4%">
@@ -2021,9 +2096,11 @@ assay instead</code></pre>
 <th style="text-align: right;">moransi.pval</th>
 <th style="text-align: right;">moransi</th>
 <th style="text-align: left;">autocorr.variable</th>
+<th style="text-align: right;">gene_name.D</th>
 <th style="text-align: right;">gene_name.t</th>
 <th style="text-align: right;">gene_name.pval</th>
 <th style="text-align: right;">gene_name.padj</th>
+<th style="text-align: right;">all.D</th>
 <th style="text-align: right;">all.t</th>
 <th style="text-align: right;">all.pval</th>
 <th style="text-align: right;">all.padj</th>
@@ -2040,27 +2117,31 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1372512</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">-3.314295</td>
-<td style="text-align: right;">0.9993578</td>
+<td style="text-align: right;">0.4599386</td>
+<td style="text-align: right;">-3.751276</td>
+<td style="text-align: right;">0.9998517</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">16.00218</td>
+<td style="text-align: right;">0.4784554</td>
+<td style="text-align: right;">15.26365</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">19:18307555-18309678/-/LSM4</td>
-<td style="text-align: left;">19</td>
-<td style="text-align: right;">18307555</td>
-<td style="text-align: right;">18309678</td>
-<td style="text-align: left;">LSM4</td>
-<td style="text-align: left;">-</td>
+<td style="text-align: left;">15:80131293-80137480/+/ZFAND6</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: right;">80131293</td>
+<td style="text-align: right;">80137480</td>
+<td style="text-align: left;">ZFAND6</td>
+<td style="text-align: left;">+</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.1389093</td>
+<td style="text-align: right;">0.1457399</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">3.939400</td>
-<td style="text-align: right;">0.0000761</td>
-<td style="text-align: right;">0.0820182</td>
-<td style="text-align: right;">13.71596</td>
+<td style="text-align: right;">0.5318035</td>
+<td style="text-align: right;">3.241519</td>
+<td style="text-align: right;">0.0008102</td>
+<td style="text-align: right;">0.7483565</td>
+<td style="text-align: right;">0.4457714</td>
+<td style="text-align: right;">15.09220</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -2074,10 +2155,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1611300</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">3.981837</td>
-<td style="text-align: right;">0.0000653</td>
-<td style="text-align: right;">0.0820182</td>
-<td style="text-align: right;">17.02165</td>
+<td style="text-align: right;">0.5440651</td>
+<td style="text-align: right;">3.856204</td>
+<td style="text-align: right;">0.0001025</td>
+<td style="text-align: right;">0.1325229</td>
+<td style="text-align: right;">0.4670253</td>
+<td style="text-align: right;">13.95661</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -2091,10 +2174,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1512534</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">8.193898</td>
+<td style="text-align: right;">0.6429861</td>
+<td style="text-align: right;">7.607239</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">17.45568</td>
+<td style="text-align: right;">0.5163198</td>
+<td style="text-align: right;">16.13420</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -2108,10 +2193,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1885870</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">9.968743</td>
+<td style="text-align: right;">0.6908519</td>
+<td style="text-align: right;">8.943853</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">18.29820</td>
+<td style="text-align: right;">0.5930035</td>
+<td style="text-align: right;">18.84522</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -2125,10 +2212,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1228286</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">7.639434</td>
+<td style="text-align: right;">0.6280600</td>
+<td style="text-align: right;">7.217475</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">15.63948</td>
+<td style="text-align: right;">0.0000001</td>
+<td style="text-align: right;">0.4648469</td>
+<td style="text-align: right;">14.47706</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -2142,10 +2231,12 @@ assay instead</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.3729386</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">2.641968</td>
-<td style="text-align: right;">0.0047906</td>
+<td style="text-align: right;">0.5382251</td>
+<td style="text-align: right;">1.941759</td>
+<td style="text-align: right;">0.0275044</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">16.15946</td>
+<td style="text-align: right;">0.4623314</td>
+<td style="text-align: right;">13.51239</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -2210,12 +2301,12 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Run autocorrelation test for 72346 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 17.12698 secs</code></pre>
+<pre><code>Runtime : 15.69235 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>60820 autocorrelated features.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj.sel, <span class="at">wm.name =</span> <span class="st">"ccc_wm"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">prefix =</span> <span class="st">"ccc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj.sel, <span class="at">wm.name =</span> <span class="st">"ccc_wm"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">prefix =</span> <span class="st">"ccc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon.</code></pre>
 </div>
@@ -2229,7 +2320,7 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Processing 60820 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 14246 binding features.</code></pre>
+<pre><code>Processing 12689 binding features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieve binding data from assay RNA.</code></pre>
@@ -2241,7 +2332,7 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Using 7 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 18.68082 mins.</code></pre>
+<pre><code>Runtime : 8.745614 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj.sel) <span class="ot">&lt;-</span> <span class="st">"junction"</span></span>
 <span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj.sel, <span class="at">reduction =</span> <span class="st">"ccc"</span>, <span class="at">wm.name =</span> <span class="st">"ccc_wm"</span>, <span class="at">dims=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2252,12 +2343,12 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Run autocorrelation test for 7583 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.842182 secs</code></pre>
+<pre><code>Runtime : 1.545865 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>6884 autocorrelated features.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj.sel, <span class="at">wm.name =</span> <span class="st">"ccc_wm"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">prefix =</span> <span class="st">"ccc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj.sel, <span class="at">wm.name =</span> <span class="st">"ccc_wm"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">prefix =</span> <span class="st">"ccc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay junction.</code></pre>
 </div>
@@ -2271,7 +2362,7 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Processing 6884 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 3811 binding features.</code></pre>
+<pre><code>Processing 3549 binding features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieve binding data from assay RNA.</code></pre>
@@ -2283,7 +2374,7 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Using 7 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 2.118045 mins.</code></pre>
+<pre><code>Runtime : 53.14298 secs.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj.sel, <span class="at">val =</span> <span class="st">"ccc.padj"</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exon"</span>, <span class="st">"junction"</span>), <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">color.by =</span> <span class="st">"assay"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -2297,24 +2388,27 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 14%">
+<col style="width: 12%">
 <col style="width: 1%">
 <col style="width: 4%">
 <col style="width: 4%">
 <col style="width: 4%">
-<col style="width: 3%">
+<col style="width: 2%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 6%">
 <col style="width: 6%">
 <col style="width: 4%">
-<col style="width: 8%">
-<col style="width: 5%">
-<col style="width: 7%">
-<col style="width: 7%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
 <col style="width: 4%">
-<col style="width: 4%">
-<col style="width: 4%">
-<col style="width: 4%">
-<col style="width: 4%">
-<col style="width: 4%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2327,12 +2421,15 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <th style="text-align: right;">moransi.pval</th>
 <th style="text-align: right;">moransi</th>
 <th style="text-align: left;">autocorr.variable</th>
+<th style="text-align: right;">gene_name.D</th>
 <th style="text-align: right;">gene_name.t</th>
 <th style="text-align: right;">gene_name.pval</th>
 <th style="text-align: right;">gene_name.padj</th>
+<th style="text-align: right;">all.D</th>
 <th style="text-align: right;">all.t</th>
 <th style="text-align: right;">all.pval</th>
 <th style="text-align: right;">all.padj</th>
+<th style="text-align: right;">ccc.D</th>
 <th style="text-align: right;">ccc.t</th>
 <th style="text-align: right;">ccc.pval</th>
 <th style="text-align: right;">ccc.padj</th>
@@ -2349,13 +2446,16 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1660249</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">6.353711</td>
+<td style="text-align: right;">0.6571513</td>
+<td style="text-align: right;">6.536838</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">3.8e-06</td>
+<td style="text-align: right;">0.6140893</td>
+<td style="text-align: right;">20.52634</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">7.9e-06</td>
-<td style="text-align: right;">18.49192</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">21.95846</td>
+<td style="text-align: right;">0.6498339</td>
+<td style="text-align: right;">21.80302</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -2369,13 +2469,16 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1783511</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">6.450666</td>
+<td style="text-align: right;">0.6671544</td>
+<td style="text-align: right;">6.631572</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">2.6e-06</td>
+<td style="text-align: right;">0.6322654</td>
+<td style="text-align: right;">20.79021</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">5.5e-06</td>
-<td style="text-align: right;">19.27363</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">23.25739</td>
+<td style="text-align: right;">0.6774472</td>
+<td style="text-align: right;">23.44110</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -2389,13 +2492,62 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1765705</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">6.410314</td>
+<td style="text-align: right;">0.6664554</td>
+<td style="text-align: right;">6.630839</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">2.6e-06</td>
+<td style="text-align: right;">0.6310836</td>
+<td style="text-align: right;">20.75944</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">6.3e-06</td>
-<td style="text-align: right;">19.36009</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.6755427</td>
+<td style="text-align: right;">23.55242</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">23.14168</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3:45011235-45011471/+/EXOSC7</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">45011235</td>
+<td style="text-align: right;">45011471</td>
+<td style="text-align: left;">EXOSC7</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1252058</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5317377</td>
+<td style="text-align: right;">2.473719</td>
+<td style="text-align: right;">0.0075368</td>
+<td style="text-align: right;">1.0e+00</td>
+<td style="text-align: right;">0.5021152</td>
+<td style="text-align: right;">16.29195</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.5183262</td>
+<td style="text-align: right;">19.60756</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3:45011235-45011470/+/EXOSC7</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">45011235</td>
+<td style="text-align: right;">45011470</td>
+<td style="text-align: left;">EXOSC7</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1252657</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5333368</td>
+<td style="text-align: right;">2.571621</td>
+<td style="text-align: right;">0.0058044</td>
+<td style="text-align: right;">1.0e+00</td>
+<td style="text-align: right;">0.5041374</td>
+<td style="text-align: right;">16.46894</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.5193649</td>
+<td style="text-align: right;">19.73390</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -2409,13 +2561,16 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0903061</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">13.460503</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.7475285</td>
+<td style="text-align: right;">14.535688</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">24.10042</td>
+<td style="text-align: right;">0.6529201</td>
+<td style="text-align: right;">26.76167</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">21.33564</td>
+<td style="text-align: right;">0.6038284</td>
+<td style="text-align: right;">19.55842</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -2429,13 +2584,16 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1644589</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">14.584563</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.8446530</td>
+<td style="text-align: right;">13.659938</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0e+00</td>
-<td style="text-align: right;">30.00146</td>
+<td style="text-align: right;">0.8517817</td>
+<td style="text-align: right;">28.91322</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">24.91348</td>
+<td style="text-align: right;">0.8107162</td>
+<td style="text-align: right;">23.39077</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -2462,8 +2620,8 @@ assay instead</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./Homo_sapiens.GRCh38.114.chr.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2025-06-13 23:16:23] GTF loading..
-[2025-06-13 23:16:51] Load 78686 genes.</code></pre>
+<pre><code>[2025-06-19 18:42:26] GTF loading..
+[2025-06-19 18:42:52] Load 78686 genes.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>bamfiles <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">rep1 =</span> <span class="st">"./donor1_rep1.bam"</span>, <span class="at">rep2 =</span> <span class="st">"./donor1_rep2.bam"</span>)</span>
 <span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>cell.list <span class="ot">&lt;-</span> <span class="fu">split</span>(obj.sel<span class="sc">$</span>Phase, obj.sel<span class="sc">$</span>replicate)</span>
@@ -2500,9 +2658,9 @@ assay instead</code></pre>
  [9] "ParseExonName.exon"           "NormalizeData.junction"      
 [11] "ParseExonName.junction"       "RunAutoCorr.exon.pca"        
 [13] "RunAutoCorr.junction.pca"     "RunAutoCorr.exon.ccc"        
-[15] "SetAutoCorrFeatures.exon"     "RunBlockCorr.exon"           
+[15] "SetAutoCorrFeatures.exon"     "RunSDT.exon"                 
 [17] "RunAutoCorr.junction.ccc"     "SetAutoCorrFeatures.junction"
-[19] "RunBlockCorr.junction"       </code></pre>
+[19] "RunSDT.junction"             </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2525,7 +2683,7 @@ attached base packages:
 
 other attached packages:
 [1] princurve_2.1.6    future_1.49.0      dplyr_1.1.4        Seurat_5.3.0      
-[5] SeuratObject_5.1.0 sp_2.2-0           ggplot2_3.5.2      Yano_1.1          
+[5] SeuratObject_5.1.0 sp_2.2-0           ggplot2_3.5.2      Yano_1.2          
 
 loaded via a namespace (and not attached):
   [1] deldir_2.0-4           pbapply_1.7-2          gridExtra_2.3         

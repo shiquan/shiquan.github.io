@@ -57,7 +57,7 @@ obj <- RunAutoCorr(obj)
 In the alternative splicing analysis, we use mode 1 (the default mode). However, for allele-specific gene expression, we switch to mode 2 to compare the expression of an SNV with other SNVs at the same location. Since no binding assay is specified, the records at the same locus are first aggregated, and then the test feature is subtracted from the aggregated data (mode 2).
 
 ```{r fig.width=12, fig.height=5, fig.align='center'}
-obj <- RunBlockCorr(object = obj, bind.name = "locus", mode = 2)
+obj <- RunSDT(object = obj, bind.name = "locus", mode = 2)
 
 sel.chrs <- c(1:21, "X")
 FbtPlot(obj, val = "locus.padj", remove.chr = TRUE, sel.chrs = sel.chrs)

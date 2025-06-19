@@ -201,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dST_selector.html" class="sidebar-item-text sidebar-link">
+  <a href="./selector.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Select cells from reduction maps</span></a>
   </div>
 </li>
@@ -390,7 +390,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Loading required package: Yano</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ────────────────────────────────────────────── Yano 1.1 ──
+<pre><code>── Attaching packages ────────────────────────────────────────────── Yano 1.2 ──
 ✔ dplyr   1.1.4     ✔ Seurat  5.3.0
 ✔ ggplot2 3.5.2     </code></pre>
 </div>
@@ -496,25 +496,25 @@ Number of edges: 388091
 Running Louvain algorithm...
 Maximum modularity in 10 random starts: 0.9314
 Number of communities: 16
-Elapsed time: 2 seconds</code></pre>
+Elapsed time: 0 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>object &lt;- RunUMAP(object, dims = 1:20)
-23:23:39 UMAP embedding parameters a = 0.9922 b = 1.112
-23:23:39 Read 12148 rows and found 20 numeric columns
-23:23:39 Using Annoy for neighbor search, n_neighbors = 30
-23:23:39 Building Annoy index with metric = cosine, n_trees = 50
+18:44:07 UMAP embedding parameters a = 0.9922 b = 1.112
+18:44:07 Read 12148 rows and found 20 numeric columns
+18:44:07 Using Annoy for neighbor search, n_neighbors = 30
+18:44:07 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-23:23:42 Writing NN index file to temp file /var/folders/38/qfwf72jx3413kwjx7lgqv3xr0000gn/T//RtmpCwA74Z/filef58e3550ded6
-23:23:42 Searching Annoy index using 1 thread, search_k = 3000
-23:23:48 Annoy recall = 100%
-23:23:50 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-23:23:52 Initializing from normalized Laplacian + noise (using RSpectra)
-23:23:54 Commencing optimization for 200 epochs, with 500558 positive edges
-23:23:54 Using rng type: pcg
-23:24:09 Optimization finished</code></pre>
+18:44:08 Writing NN index file to temp file /var/folders/38/qfwf72jx3413kwjx7lgqv3xr0000gn/T//RtmpEUPj90/fileebda3ccfdeb6
+18:44:08 Searching Annoy index using 1 thread, search_k = 3000
+18:44:10 Annoy recall = 100%
+18:44:10 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+18:44:10 Initializing from normalized Laplacian + noise (using RSpectra)
+18:44:10 Commencing optimization for 200 epochs, with 500558 positive edges
+18:44:10 Using rng type: pcg
+18:44:15 Optimization finished</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj, <span class="at">group.by =</span> <span class="st">"orig.ident"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj)</span>
@@ -555,20 +555,20 @@ See help("Deprecated") and help("Matrix-deprecated").</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay : exon
 Run autocorrelation test for 80178 features.
-Runtime : 8.81576 mins
+Runtime : 1.401125 mins
 38771 autocorrelated features.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon.
 Working on binding assay RNA.
 Use predefined weight matrix "pca_wm".
 Processing 38771 features.
-Processing 18748 binding features.
+Processing 15688 binding features.
 Retrieve binding data from assay RNA.
 Use "data" layer for test features and binding features.
 Using 7 threads.
-Runtime : 2.249563 hours.</code></pre>
+Runtime : 46.19085 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -582,6 +582,7 @@ Runtime : 2.249563 hours.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                   chr     start       end gene_name strand
 chr11:30106785-30109152/-/Sptbn1 chr11  30106785  30109152    Sptbn1      -
+chr11:53541475-53541898/+/Sept8  chr11  53541475  53541898     Sept8      +
 chr11:53548291-53549565/+/Sept8  chr11  53548291  53549565     Sept8      +
 chr12:111806315-111806775/+/Klc1 chr12 111806315 111806775      Klc1      +
 chr12:111806315-111806727/+/Klc1 chr12 111806315 111806727      Klc1      +
@@ -591,6 +592,7 @@ chr17:25717528-25717581/+/Gng13  chr17  25717528  25717581     Gng13      +
 chrX:163926903-163929546/+/Ap1s2  chrX 163926903 163929546     Ap1s2      +
                                  moransi.pval    moransi autocorr.variable
 chr11:30106785-30109152/-/Sptbn1            0 0.15179115              TRUE
+chr11:53541475-53541898/+/Sept8             0 0.42948807              TRUE
 chr11:53548291-53549565/+/Sept8             0 0.43155054              TRUE
 chr12:111806315-111806775/+/Klc1            0 0.10015685              TRUE
 chr12:111806315-111806727/+/Klc1            0 0.09999613              TRUE
@@ -598,15 +600,26 @@ chr12:111806315-111806711/+/Klc1            0 0.09420489              TRUE
 chr12:111806315-111806726/+/Klc1            0 0.09698562              TRUE
 chr17:25717528-25717581/+/Gng13             0 0.16339114              TRUE
 chrX:163926903-163929546/+/Ap1s2            0 0.14487043              TRUE
-                                 gene_name.t gene_name.pval gene_name.padj
-chr11:30106785-30109152/-/Sptbn1    37.43293   1.516099e-60   5.782097e-56
-chr11:53548291-53549565/+/Sept8     24.71707   1.916837e-44   1.044348e-40
-chr12:111806315-111806775/+/Klc1    29.48552   3.974229e-51   5.682701e-47
-chr12:111806315-111806727/+/Klc1    29.44657   4.470109e-51   5.682701e-47
-chr12:111806315-111806711/+/Klc1    28.69248   4.465602e-50   4.257728e-46
-chr12:111806315-111806726/+/Klc1    28.27741   1.617798e-49   1.233992e-45
-chr17:25717528-25717581/+/Gng13     22.75571   2.042604e-41   9.737603e-38
-chrX:163926903-163929546/+/Ap1s2    25.79267   4.953734e-46   3.148759e-42</code></pre>
+                                 gene_name.D gene_name.t gene_name.pval
+chr11:30106785-30109152/-/Sptbn1   0.5431758    41.69822   6.540913e-65
+chr11:53541475-53541898/+/Sept8    0.4012683    23.73151   6.051818e-43
+chr11:53548291-53549565/+/Sept8    0.5052005    24.55383   3.372164e-44
+chr12:111806315-111806775/+/Klc1   0.5119727    29.18103   9.998987e-51
+chr12:111806315-111806727/+/Klc1   0.5120357    29.13800   1.139864e-50
+chr12:111806315-111806711/+/Klc1   0.5014652    27.94927   4.523333e-49
+chr12:111806315-111806726/+/Klc1   0.5051431    28.70477   4.299571e-50
+chr17:25717528-25717581/+/Gng13    0.4801212    23.85028   3.970901e-43
+chrX:163926903-163929546/+/Ap1s2   0.3755946    24.33287   7.275788e-44
+                                 gene_name.padj
+chr11:30106785-30109152/-/Sptbn1   2.494573e-60
+chr11:53541475-53541898/+/Sept8    2.564492e-39
+chr11:53548291-53549565/+/Sept8    2.143460e-40
+chr12:111806315-111806775/+/Klc1   1.449072e-46
+chr12:111806315-111806727/+/Klc1   1.449072e-46
+chr12:111806315-111806711/+/Klc1   3.450217e-45
+chr12:111806315-111806726/+/Klc1   4.099426e-46
+chr17:25717528-25717581/+/Gng13    1.893028e-39
+chrX:163926903-163929546/+/Ap1s2   3.964057e-40</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -626,8 +639,8 @@ chrX:163926903-163929546/+/Ap1s2    25.79267   4.953734e-46   3.148759e-42</code
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./visium/gencode.vM10.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2025-06-03 01:54:20] GTF loading..
-[2025-06-03 01:54:37] Load 48440 genes.</code></pre>
+<pre><code>[2025-06-19 19:32:59] GTF loading..
+[2025-06-19 19:33:10] Load 48440 genes.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>bamfiles <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec1_ant =</span> <span class="st">"./visium/section1/Anterior/V1_Mouse_Brain_Sagittal_Anterior_possorted_genome_bam.bam"</span>,</span>
@@ -692,7 +705,7 @@ chrX:163926903-163929546/+/Ap1s2    25.79267   4.953734e-46   3.148759e-42</code
 <pre><code>Run autocorrelation test for 61463 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 7.325192 secs</code></pre>
+<pre><code>Runtime : 5.028779 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>18989 autocorrelated features.</code></pre>
@@ -701,7 +714,7 @@ chrX:163926903-163929546/+/Ap1s2    25.79267   4.953734e-46   3.148759e-42</code
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "pca_wm"     "spatial_wm"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">wm.name =</span> <span class="st">"spatial_wm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">wm.name =</span> <span class="st">"spatial_wm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon.</code></pre>
 </div>
@@ -715,7 +728,7 @@ chrX:163926903-163929546/+/Ap1s2    25.79267   4.953734e-46   3.148759e-42</code
 <pre><code>Processing 18989 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 18748 binding features.</code></pre>
+<pre><code>Processing 9703 binding features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieve binding data from assay RNA.</code></pre>
@@ -727,7 +740,7 @@ chrX:163926903-163929546/+/Ap1s2    25.79267   4.953734e-46   3.148759e-42</code
 <pre><code>Using 7 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.594298 mins.</code></pre>
+<pre><code>Runtime : 1.898239 mins.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -741,19 +754,32 @@ chrX:163926903-163929546/+/Ap1s2    25.79267   4.953734e-46   3.148759e-42</code
 <div class="cell-output cell-output-stdout">
 <pre><code>                                    chr     start       end gene_name strand
 chr11:30106785-30109152/-/Sptbn1  chr11  30106785  30109152    Sptbn1      -
-chr18:82554320-82558703/+/Mbp     chr18  82554320  82558703       Mbp      +
 chr9:112065091-112066022/-/Arpp21  chr9 112065091 112066022    Arpp21      -
 chr9:112065234-112066022/-/Arpp21  chr9 112065234 112066022    Arpp21      -
-                                   moransi.pval    moransi autocorr.variable
-chr11:30106785-30109152/-/Sptbn1   3.164907e-34 0.13395992              TRUE
-chr18:82554320-82558703/+/Mbp      2.705616e-15 0.08657166              TRUE
-chr9:112065091-112066022/-/Arpp21 5.137313e-287 0.40232379              TRUE
-chr9:112065234-112066022/-/Arpp21 6.239928e-279 0.39656057              TRUE
-                                  gene_name.t gene_name.pval gene_name.padj
-chr11:30106785-30109152/-/Sptbn1     8.659096   4.555108e-14   8.575446e-10
-chr18:82554320-82558703/+/Mbp        8.368805   1.933296e-13   1.819811e-09
-chr9:112065091-112066022/-/Arpp21    7.419374   2.056473e-11   9.678793e-08
-chr9:112065234-112066022/-/Arpp21    7.475056   1.569355e-11   9.678793e-08</code></pre>
+chr9:112065236-112066022/-/Arpp21  chr9 112065236 112066022    Arpp21      -
+chr9:112065258-112066022/-/Arpp21  chr9 112065258 112066022    Arpp21      -
+chr9:112065260-112066022/-/Arpp21  chr9 112065260 112066022    Arpp21      -
+                                   moransi.pval   moransi autocorr.variable
+chr11:30106785-30109152/-/Sptbn1   3.164907e-34 0.1339599              TRUE
+chr9:112065091-112066022/-/Arpp21 5.137313e-287 0.4023238              TRUE
+chr9:112065234-112066022/-/Arpp21 6.239928e-279 0.3965606              TRUE
+chr9:112065236-112066022/-/Arpp21 5.664356e-273 0.3922582              TRUE
+chr9:112065258-112066022/-/Arpp21 3.542830e-232 0.3614440              TRUE
+chr9:112065260-112066022/-/Arpp21 8.989289e-216 0.3482880              TRUE
+                                  gene_name.D gene_name.t gene_name.pval
+chr11:30106785-30109152/-/Sptbn1    0.5977287   10.055834   4.132305e-17
+chr9:112065091-112066022/-/Arpp21   0.7330594    8.225065   3.944917e-13
+chr9:112065234-112066022/-/Arpp21   0.7307121    8.262398   3.278468e-13
+chr9:112065236-112066022/-/Arpp21   0.7282957    8.192431   4.637061e-13
+chr9:112065258-112066022/-/Arpp21   0.7102768    7.987021   1.279463e-12
+chr9:112065260-112066022/-/Arpp21   0.7059475    7.723662   4.666766e-12
+                                  gene_name.padj
+chr11:30106785-30109152/-/Sptbn1    7.779477e-13
+chr9:112065091-112066022/-/Arpp21   2.182433e-09
+chr9:112065234-112066022/-/Arpp21   2.182433e-09
+chr9:112065236-112066022/-/Arpp21   2.182433e-09
+chr9:112065258-112066022/-/Arpp21   4.817436e-09
+chr9:112065260-112066022/-/Arpp21   1.464276e-08</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SpatialFeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr11:30106785-30109152/-/Sptbn1"</span>,<span class="st">"Sptbn1"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">

@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Spatial dissimilarity analysis in single cells">
 
-<title>Yano</title>
+<title>gtf2db</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,60 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-de84f8d6bb715db06a919283c2d1e787.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-9a023c9ade86a60361e96e3e3f11bc54.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2cae7a44443c7384b30cd79a64306367.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-2d6ecf2d45d93a56a874280a57c27dd9.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de84f8d6bb715db06a919283c2d1e787.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-9a023c9ade86a60361e96e3e3f11bc54.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2cae7a44443c7384b30cd79a64306367.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-2d6ecf2d45d93a56a874280a57c27dd9.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,10 +69,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -115,19 +80,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
           <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Overview</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./fastq.html"> 
+    <a class="nav-link" href="../fastq.html"> 
 <span class="menu-text">FASTQ+</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./PISA.html"> 
+    <a class="nav-link" href="../PISA.html"> 
 <span class="menu-text">PISA</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./Yano.html" aria-current="page"> 
+    <a class="nav-link" href="../Yano.html"> 
 <span class="menu-text">Yano</span></a>
   </li>  
 </ul>
@@ -152,251 +117,155 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Workflows &amp; Short cases</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../workflow1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">From FASTQ to counts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../anno.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Annotate various features</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../selector.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Select cells from reduction maps</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Yano_AS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Alternative splicing analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Yano_ASE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Allele-specific gene expression analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Yano_anno.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Annotating genetic variants</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Visium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysis multiple Visium samples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Yano_trajectory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cell trajectory analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#install" id="toc-install" class="nav-link" data-scroll-target="#install">INSTALL</a></li>
-  <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">Get started</a></li>
-  <li><a href="#short-cases" id="toc-short-cases" class="nav-link" data-scroll-target="#short-cases">Short cases</a></li>
-  <li><a href="#changelog" id="toc-changelog" class="nav-link" data-scroll-target="#changelog">Changelog</a></li>
-  <li><a href="#issues-or-questions" id="toc-issues-or-questions" class="nav-link" data-scroll-target="#issues-or-questions">Issues or questions</a></li>
+  <li><a href="#gtf2db" id="toc-gtf2db" class="nav-link active" data-scroll-target="#gtf2db">gtf2db</a>
+  <ul class="collapse">
+  <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
+  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
+  <li><a href="#value" id="toc-value" class="nav-link" data-scroll-target="#value">Value</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Yano</h1>
-</div>
-
-<div>
-  <div class="description">
-    Spatial dissimilarity analysis in single cells
-  </div>
-</div>
+<main class="content column-body" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
-<div class="quarto-title-meta column-page-left">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
-
-
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Yano represents an R/C toolkit designed for conducting spatial dissimilarity analysis on single-cell RNA sequencing data. This method revolves around the core concept of examining the distinct expression patterns of a given feature (e.g.&nbsp;exon, snp allele) in relation to its associated binding feature (typically a gene or another allele at the same genomic locus) within the context of cell lineage (1D), spatial position (2D), or the multi-dimensional PCA space. The discernible differences in feature expression patterns and their binding features provide insights into a range of biological phenomena, including alternative splicing, cis-antisense RNA regulation, allele-specific gene expression, and more.</p>
-<p>Yano is seamlessly integrated with Seurat, building upon the Seurat object’s framework. Users can perform conventional cell clustering analyses using the state-of-the-art Seurat pipeline and then incorporate exon, SNP counts as new “assays” within the Seurat objects. Subsequently, Yano facilitates the assessment of spatial dissimilarity between these two assays. For more details about the method, please refer to our manuscript.</p>
+<section id="gtf2db" class="level1">
+<h1>gtf2db</h1>
+<p><a href="https://github.com/shiquan/Yano/tree/master/R/gtf2db.R#L7"><strong>Source code</strong></a></p>
+<section id="description" class="level2">
+<h2 class="anchored" data-anchor-id="description">Description</h2>
+<p>Generate GTF object from gtf file.</p>
 </section>
-<section id="install" class="level2">
-<h2 class="anchored" data-anchor-id="install">INSTALL</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"BiocManager"</span>)) <span class="fu">install.packages</span>(<span class="st">'BiocManager'</span>) </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"shiquan/Yano"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong><em>Notice:</em></strong> Multithread mode is disabled on macOS by default due to the lack of OpenMP support. However, <code>data.table</code> provides a useful tutorial on how to enable OpenMP on macOS. For more information, please refer to this guide: <a href="https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos">https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos</a>.</p>
+<section id="usage" class="level2">
+<h2 class="anchored" data-anchor-id="usage">Usage</h2>
+<pre><code class="language-R">gtf2db(filename = NULL, use_utr = FALSE)
+</code></pre>
 </section>
-<section id="get-started" class="level2">
-<h2 class="anchored" data-anchor-id="get-started">Get started</h2>
-<p>A typical workflow with Yano starts by using a built-in dataset.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Yano)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"glbt_small"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(glbt_small) <span class="ot">&lt;-</span> <span class="st">"RNA"</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(glbt_small) <span class="sc">%&gt;%</span> <span class="fu">RunUMAP</span>(<span class="at">dim =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(glbt_small, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">label.size =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Yano_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(glbt_small) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(glbt_small)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Meta</span>(glbt_small) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>data frame with 0 columns and 6 rows</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(glbt_small)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Meta</span>(glbt_small) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                    chr     start       end gene_name strand
-chr1:154169305-154169383/-/TPM3    chr1 154169305 154169383      TPM3      -
-chr11:35197162-35197793/+/CD44    chr11  35197162  35197793      CD44      +
-chr11:75421727-75422280/+/RPS3    chr11  75421727  75422280      RPS3      +
-chr11:123060825-123061329/-/HSPA8 chr11 123060825 123061329     HSPA8      -
-chr11:123061588-123061833/-/HSPA8 chr11 123061588 123061833     HSPA8      -
-chr11:123061869-123062022/-/HSPA8 chr11 123061869 123062022     HSPA8      -</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"_wm$"</span>,<span class="fu">names</span>(glbt_small), <span class="at">value=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>character(0)</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(glbt_small)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"_wm$"</span>,<span class="fu">names</span>(glbt_small), <span class="at">value=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "pca_wm"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform spatial dissimilarity test</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>glbt_small <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(glbt_small, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Meta</span>(glbt_small) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                    chr     start       end gene_name strand
-chr1:154169305-154169383/-/TPM3    chr1 154169305 154169383      TPM3      -
-chr11:35197162-35197793/+/CD44    chr11  35197162  35197793      CD44      +
-chr11:75421727-75422280/+/RPS3    chr11  75421727  75422280      RPS3      +
-chr11:123060825-123061329/-/HSPA8 chr11 123060825 123061329     HSPA8      -
-chr11:123061588-123061833/-/HSPA8 chr11 123061588 123061833     HSPA8      -
-chr11:123061869-123062022/-/HSPA8 chr11 123061869 123062022     HSPA8      -
-                                   moransi.pval    moransi autocorr.variable
-chr1:154169305-154169383/-/TPM3   2.144774e-108 0.09755130              TRUE
-chr11:35197162-35197793/+/CD44     0.000000e+00 0.25567539              TRUE
-chr11:75421727-75422280/+/RPS3     4.383662e-38 0.05692911              TRUE
-chr11:123060825-123061329/-/HSPA8  1.099236e-63 0.07462144              TRUE
-chr11:123061588-123061833/-/HSPA8 7.645339e-158 0.11891356              TRUE
-chr11:123061869-123062022/-/HSPA8 1.466907e-150 0.11541286              TRUE
-                                  gene_name.D gene_name.t gene_name.pval
-chr1:154169305-154169383/-/TPM3     0.3436496   8.4268520   1.448736e-13
-chr11:35197162-35197793/+/CD44      0.1966297   0.8886768   1.881655e-01
-chr11:75421727-75422280/+/RPS3      0.3486643   8.1503513   5.710819e-13
-chr11:123060825-123061329/-/HSPA8   0.2446247   3.7857530   1.314186e-04
-chr11:123061588-123061833/-/HSPA8   0.3633522   8.8646031   1.631423e-14
-chr11:123061869-123062022/-/HSPA8   0.3320379   8.4846775   1.086526e-13
-                                  gene_name.padj
-chr1:154169305-154169383/-/TPM3     5.695820e-12
-chr11:35197162-35197793/+/CD44      1.000000e+00
-chr11:75421727-75422280/+/RPS3      2.132991e-11
-chr11:123060825-123061329/-/HSPA8   3.067802e-03
-chr11:123061588-123061833/-/HSPA8   8.124484e-13
-chr11:123061869-123062022/-/HSPA8   4.774324e-12</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Manhattan plot for spatial dissimilarity test result</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(glbt_small, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Yano_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(glbt_small, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr19:16095264-16095454/+/TPM4"</span>, <span class="st">"TPM4"</span>), <span class="at">order=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Yano_files/figure-html/unnamed-chunk-1-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Track plot for gene coverage at different cell types</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[2025-06-19 19:37:59] GTF loading..
-[2025-06-19 19:38:20] Load 62700 genes.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile=</span><span class="st">"./Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span>db, <span class="at">gene =</span> <span class="st">"TPM4"</span>, <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(glbt_small), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">16095264</span>,<span class="dv">16095454</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Yano_files/figure-html/unnamed-chunk-1-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>See short cases for more details.</p>
+<section id="arguments" class="level2">
+<h2 class="anchored" data-anchor-id="arguments">Arguments</h2>
+<table>
+<tbody><tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="filename">filename</code>
+</td>
+<td>
+Path to gtf file.
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="use_utr">use_utr</code>
+</td>
+<td>
+Load CDS records or not. Default is FALSE.
+</td>
+</tr>
+</tbody></table>
 </section>
-<section id="short-cases" class="level2">
-<h2 class="anchored" data-anchor-id="short-cases">Short cases</h2>
-<ul>
-<li><a href="./Yano_AS.html">Alternative splicing analysis for scRNA-seq</a></li>
-<li><a href="./Yano_ASE.html">Allele-specific gene expression analysis for scRNA-seq</a></li>
-<li><a href="./Yano_anno.html">Annotating and prioritizing genetic variants for scRNA-seq</a></li>
-<li><a href="./Visium.html">Perform alternative splicing analysis for multiple Visium samples</a></li>
-<li><a href="./selector.html">Select cells from reduction maps</a></li>
-<li><a href="./Yano_trajectory.html">Perform alternative splicing analysis for cell trajectory and user-defined embeddings</a></li>
-</ul>
-</section>
-<section id="changelog" class="level2">
-<h2 class="anchored" data-anchor-id="changelog">Changelog</h2>
-<details>
-<summary>
-1.2 2025/06/18
-</summary>
-<ul>
-<li>Rename RunBlockCorr to RunSDT.</li>
-<li>Reimplement core algorithm with sparse matrix structure. Highly improved speed (&gt;3x).</li>
-</ul>
-</details>
-<details>
-<summary>
-1.1 2025/06/02
-</summary>
-<p>Simplified parameters for RunCorrBlock() to streamlines the function and makes it more concise. In addition, new selector functions, *Selector(), introduced.</p>
-</details>
-<details>
-<summary>
-1.0 2025/02/19
-</summary>
-<p>First stable release.</p>
-</details>
-<details>
-<summary>
-0.0.0.9999 2023/03/22
-</summary>
-<p>Init version.</p>
-</details>
-</section>
-<section id="issues-or-questions" class="level2">
-<h2 class="anchored" data-anchor-id="issues-or-questions">Issues or questions</h2>
-<ul>
-<li><a href="https://github.com/shiquan/Yano/issues">https://github.com/shiquan/Yano/issues</a></li>
-<li><a href="https://github.com/shiquan/Yano/discussions">https://github.com/shiquan/Yano/discussions</a></li>
-</ul>
-<!--
-## Functions
-
-Function(s) | Description
-|---|---|
-|[annoBED](Yano/annoBED.md)|Annotate BED with preload GTF.|
-|[annoVAR](Yano/annoVAR.md)|Annotate genetic variants with preload GTF and/or VCF databases.|
-|[AutoCorrFeatures](Yano/AutoCorrFeatures.md)|Select spatial autocorrelated features.|
-|[FbtPlot](Yano/FbtPlot.md)|Generate a mahattan plot for features.|
-|[FindAltExp](Yano/FindAltExp.md)|Find group specific alternative expressed features.|
-|[FindAllAltExp](Yano/FindAllAltExp.md)|Find alternative expressed features for all groups.|
-|[GetWeights](Yano/GetWeights.md)|Get weight matrix.|
-|[gtf2db](Yano/gtf2db.md)|Load GTF database into memory.|
-|[mergeMatrix](Yano/mergeMatrix-SMatrix-method.md)|Merge two or more count matrix into one.|
-|[ParseBED](Yano/ParseBED.md)|Parse chromsome name, locations and strand from BED names.|
-|[ParseExonName](Yano/ParseExonName.md)|Parse chromsome name, locations, strand and gene name from Exon/Junction names.|
-|[ParseVarName](Yano/ParseVarName.md)|Parse chromsome name, locations and strand from genetic variant names.|
-|[PSIPlot](Yano/PSIPlot.md)|Plot Percent Spliced-IN value on a reduction map.|
-|[RatioPlot](Yano/RatioPlot.md)|Plot ratio of feature and binding feature expression on a reduction map.|
-|[ReadPISA](Yano/ReadPISA.md)|Load raw matrix which generated by PISA.|
-|[RunAutoCorr](Yano/RunAutoCorr.md)|Perform spatial autocorrelation test for features.|
-|[RunSDT](Yano/RunBlockCorr.md)|Perform spatial dissimilarity test for features.|
-|[RunDEXSeq](Yano/RunDEXSeq.md)|Run alternative expression analysis with DEXSeq.|
-|[QuickRecipe](Yano/QuickRecipe-Seurat-method.md)|Run Seurat pipeline.|
-|[SetAutoCorrFeatures](Yano/SetAutoCorrFeatures.md)|Setup spatial autocorrelated features.|
-|[TrackPlot](Yano/TrackPlot.md)|Generate tracks plot from BAM(s).|
-|[varanno](Yano/varanno.md)|Low level version of annoVAR, need specify chr, position manually.|
-
--->
+<section id="value" class="level2">
+<h2 class="anchored" data-anchor-id="value">Value</h2>
+<p>A point to GTF struct.</p>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->

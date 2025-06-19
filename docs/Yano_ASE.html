@@ -201,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dST_selector.html" class="sidebar-item-text sidebar-link">
+  <a href="./selector.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Select cells from reduction maps</span></a>
   </div>
 </li>
@@ -284,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Loading required package: Yano</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ────────────────────────────────────────────── Yano 1.1 ──
+<pre><code>── Attaching packages ────────────────────────────────────────────── Yano 1.2 ──
 ✔ dplyr   1.1.4     ✔ Seurat  5.3.0
 ✔ ggplot2 3.5.2     </code></pre>
 </div>
@@ -339,8 +339,8 @@ Centering and scaling data matrix</code></pre>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># you can skip to read GTF again if you already load it</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2025-06-02 15:40:10] GTF loading..
-[2025-06-02 15:41:03] Load 62700 genes.</code></pre>
+<pre><code>[2025-06-19 18:09:11] GTF loading..
+[2025-06-19 18:09:32] Load 62700 genes.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At this moment the meta infomation for genetic variant assay is still empty</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -452,7 +452,7 @@ Centering and scaling data matrix</code></pre>
 </div>
 <p>In the alternative splicing analysis, we use mode 1 (the default mode). However, for allele-specific gene expression, we switch to mode 2 to compare the expression of an SNV with other SNVs at the same location. Since no binding assay is specified, the records at the same locus are first aggregated, and then the test feature is subtracted from the aggregated data (mode 2).</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunBlockCorr</span>(<span class="at">object =</span> obj, <span class="at">bind.name =</span> <span class="st">"locus"</span>, <span class="at">mode =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(<span class="at">object =</span> obj, <span class="at">bind.name =</span> <span class="st">"locus"</span>, <span class="at">mode =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay var.</code></pre>
 </div>
@@ -466,7 +466,7 @@ Centering and scaling data matrix</code></pre>
 <pre><code>No bind.assay specified, update min.features.per.block to 2.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 7849 binding features.</code></pre>
+<pre><code>Processing 4016 binding features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Use "counts" layer for test features.</code></pre>
@@ -478,7 +478,7 @@ Centering and scaling data matrix</code></pre>
 <pre><code>Using 7 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 3.222085 mins.</code></pre>
+<pre><code>Runtime : 19.56211 secs.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -494,21 +494,22 @@ Centering and scaling data matrix</code></pre>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 12%">
+<col style="width: 11%">
 <col style="width: 3%">
 <col style="width: 5%">
 <col style="width: 2%">
 <col style="width: 2%">
 <col style="width: 4%">
-<col style="width: 11%">
-<col style="width: 6%">
-<col style="width: 3%">
-<col style="width: 8%">
-<col style="width: 6%">
-<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 9%">
 <col style="width: 5%">
 <col style="width: 7%">
-<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 6%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -524,6 +525,7 @@ Centering and scaling data matrix</code></pre>
 <th style="text-align: right;">moransi.pval</th>
 <th style="text-align: right;">moransi</th>
 <th style="text-align: left;">autocorr.variable</th>
+<th style="text-align: right;">locus.D</th>
 <th style="text-align: right;">locus.t</th>
 <th style="text-align: right;">locus.pval</th>
 <th style="text-align: right;">locus.padj</th>
@@ -531,6 +533,60 @@ Centering and scaling data matrix</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: left;">chr1:87328836C&gt;G/+</td>
+<td style="text-align: left;">chr1</td>
+<td style="text-align: right;">87328836</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr1:87328836/+</td>
+<td style="text-align: left;">LMO4</td>
+<td style="text-align: left;">upstream</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.3119438</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4014965</td>
+<td style="text-align: right;">9.116663</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr10:3136689C&gt;T/+</td>
+<td style="text-align: left;">chr10</td>
+<td style="text-align: right;">3136689</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">T</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr10:3136689/+</td>
+<td style="text-align: left;">PFKP</td>
+<td style="text-align: left;">utr5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1016939</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3286975</td>
+<td style="text-align: right;">9.346388</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chr10:12250345A&gt;G/+</td>
+<td style="text-align: left;">chr10</td>
+<td style="text-align: right;">12250345</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr10:12250345/+</td>
+<td style="text-align: left;">CDC123</td>
+<td style="text-align: left;">utr5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0443176</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3683718</td>
+<td style="text-align: right;">9.684959</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">chr10:17237326C&gt;T/+</td>
 <td style="text-align: left;">chr10</td>
 <td style="text-align: right;">17237326</td>
@@ -543,11 +599,12 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.6896495</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">31.57543</td>
+<td style="text-align: right;">1.5378650</td>
+<td style="text-align: right;">30.294583</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">chr10:17237326C=/+</td>
 <td style="text-align: left;">chr10</td>
 <td style="text-align: right;">17237326</td>
@@ -560,11 +617,12 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.5869554</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">26.79126</td>
+<td style="text-align: right;">1.0154665</td>
+<td style="text-align: right;">30.549615</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">chr10:62069780C&gt;T/+</td>
 <td style="text-align: left;">chr10</td>
 <td style="text-align: right;">62069780</td>
@@ -577,11 +635,12 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1124084</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">11.73388</td>
+<td style="text-align: right;">0.4595768</td>
+<td style="text-align: right;">11.547842</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">chr10:62069780C=/+</td>
 <td style="text-align: left;">chr10</td>
 <td style="text-align: right;">62069780</td>
@@ -594,11 +653,12 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1011137</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">12.13146</td>
+<td style="text-align: right;">0.4199300</td>
+<td style="text-align: right;">9.887218</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">chr10:71816550C=/-</td>
 <td style="text-align: left;">chr10</td>
 <td style="text-align: right;">71816550</td>
@@ -611,11 +671,12 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.2927699</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">16.47985</td>
+<td style="text-align: right;">0.5403844</td>
+<td style="text-align: right;">15.283752</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">chr2:74969604A&gt;G/+</td>
 <td style="text-align: left;">chr2</td>
 <td style="text-align: right;">74969604</td>
@@ -628,7 +689,26 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.1265709</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">20.64066</td>
+<td style="text-align: right;">0.5748608</td>
+<td style="text-align: right;">19.894070</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chr6:30009771C&gt;G/+</td>
+<td style="text-align: left;">chr6</td>
+<td style="text-align: right;">30009771</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chr6:30009771/+</td>
+<td style="text-align: left;">ENSG00000290574</td>
+<td style="text-align: left;">utr5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0613360</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.3620673</td>
+<td style="text-align: right;">8.586900</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -645,7 +725,26 @@ Centering and scaling data matrix</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.2901833</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">8.79429</td>
+<td style="text-align: right;">0.5884890</td>
+<td style="text-align: right;">8.919961</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chrM:8860A&gt;G/+</td>
+<td style="text-align: left;">chrM</td>
+<td style="text-align: right;">8860</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">chrM:8860/+</td>
+<td style="text-align: left;">MT-ATP6</td>
+<td style="text-align: left;">exon</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1594867</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4702824</td>
+<td style="text-align: right;">10.359465</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -698,7 +797,7 @@ assay instead</code></pre>
  [7] "RunUMAP.RNA.pca"          "NormalizeData.var"       
  [9] "ParseVarName.var"         "annoVAR.var"             
 [11] "RunAutoCorr.var.pca"      "SetAutoCorrFeatures.var" 
-[13] "RunBlockCorr.var"        </code></pre>
+[13] "RunSDT.var"              </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -721,7 +820,7 @@ attached base packages:
 
 other attached packages:
 [1] future_1.49.0      dplyr_1.1.4        Seurat_5.3.0       SeuratObject_5.1.0
-[5] sp_2.2-0           ggplot2_3.5.2      Yano_1.1          
+[5] sp_2.2-0           ggplot2_3.5.2      Yano_1.2          
 
 loaded via a namespace (and not attached):
   [1] deldir_2.0-4           pbapply_1.7-2          gridExtra_2.3         

@@ -182,7 +182,8 @@ DefaultAssay(obj) <- "exon"
 obj <- NormalizeData(obj)
 obj <- ParseExonName(obj)
 obj <- RunAutoCorr(obj)
-obj <- RunBlockCorr(obj, bind.name = "gene_name", bind.assay = "RNA")
+
+obj <- RunSDT(obj, bind.name = "gene_name", bind.assay = "RNA")
 
 FbtPlot(obj, val = "gene_name.padj")
 
@@ -227,7 +228,7 @@ obj <- subset(obj, orig.ident == "sec1_ant")
 obj <- RunAutoCorr(obj, image = "slice1")
 grep("_wm", names(obj), value=TRUE)
 
-obj <- RunBlockCorr(obj, bind.name = "gene_name", bind.assay = "RNA", wm.name = "spatial_wm")
+obj <- RunSDT(obj, bind.name = "gene_name", bind.assay = "RNA", wm.name = "spatial_wm")
 FbtPlot(obj, val = "gene_name.padj")
 Meta(obj) %>% filter(gene_name.padj<1e-7)
 SpatialFeaturePlot(obj, features = c("chr11:30106785-30109152/-/Sptbn1","Sptbn1"))
