@@ -87,7 +87,7 @@ FeaturePlot(obj, features = c("chr15:43801711-43804427/+/SERF2", "SERF2"), ncol=
 require(RColorBrewer)
 FeaturePlot(obj, features = c("chr15:43801711-43804427/+/SERF2", "SERF2"), ncol=2, order = TRUE, pt.size=1) & scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
 ```
-We can also map the ratio of exon expression to gene expression on the UMAP. The `RatioPlot` function is designed for this purpose. As observed, the gene SERF2 is relatively low expressed in groups 0, 5, and 9, while the ratio of the exon chr15:43801711-43804427/+/SERF2 is higher in these groups.
+We can also map the ratio of exon expression to gene expression on the UMAP. The `RatioPlot` function is designed for this purpose. As observed, the gene SERF2 is relatively low expressed in some cell groups, while the ratio of the exon chr15:43801711-43804427/+/SERF2 is higher in these groups.
 ```{r}
 RatioPlot(obj, features = c("chr15:43801711-43804427/+/SERF2"), assay = 'exon', bind.assay = 'RNA', bind.name = "gene_name", order = TRUE, pt.size=1) 
 ```
