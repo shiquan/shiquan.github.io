@@ -92,7 +92,7 @@ We can also map the ratio of exon expression to gene expression on the UMAP. The
 RatioPlot(obj, features = c("chr15:43801711-43804427/+/SERF2"), assay = 'exon', bind.assay = 'RNA', bind.name = "gene_name", order = TRUE, pt.size=1) 
 ```
 
-In the feature plot and ratio plot above, the exon appears to lack a strong expression pattern across cell groups, whereas the gene SERF2 seems to be highly expressed in many groups, except for groups 0, 5 and 9. This inconsistent expression pattern between the exon and its corresponding gene may suggest differential exon usage. To explore the coverage details of both the exon and the gene body, we will generate a track plot next.
+In the feature plot and ratio plot above, the exon appears to lack a strong expression pattern across cell groups, whereas the gene SERF2 seems to be highly expressed in many groups, but with few exception. This inconsistent expression pattern between the exon and its corresponding gene may suggest differential exon usage. To explore the coverage details of both the exon and the gene body, we will generate a track plot next.
 
 In our package, retrieving gene locations requires loading a GTF file instead of relying on current Bioconductor databases, such as `org.Hs.eg.db`. This is due to the varying versions of gene annotations provided by different institutes, which can introduce inconsistencies. To avoid potential bias during preprocessing and postprocessing, we strongly recommend using the same GTF file consistently throughout your project. The Yano package includes the `gtf2db` function, which enables you to load a GTF file into memory for further analysis.
 ```{r}
@@ -152,11 +152,11 @@ We then visualize the track plot for this gene, including junction reads by sett
 ```{r message=FALSE, fig.width=12, fig.height=8}
 TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "MYL6", cell.group = Idents(obj), junc = TRUE, highlights = list(c(56160320,56161387),c(56161387,56161465)))
 ```
-You might be wondering why the exon chr12:56161387-56161465/+/MYL6 appears highly expressed in cell group 2 in the track plot, where the overlapping peak is clearly higher than in other groups, but its expression level in the feature plot is not as high as expected.
+You might be wondering why the exon chr12:56161387-56161465/+/MYL6 appears highly expressed in cell group 3 in the track plot, where the overlapping peak is clearly higher than in other groups, but its expression level in the feature plot is not as high as expected.
 
 This discrepancy arises because the exon is overlapping with other exons from different transcripts. We only count reads that are fully contained within the exon as part of the exon’s expression. Therefore, reads that partially overlap with this exon are not included in the count. 
 
-In contrast, the overlapping exon chr12:56161387-56161575/+/MYL6 shows higher expression in group 2 compared to other groups. It's important to note that if a read is fully contained within two or more overlapping exons, PISA will count it for all relevant exons. Check PISA's manual for details.
+In contrast, the overlapping exon chr12:56161387-56161575/+/MYL6 shows higher expression in group 3 compared to other groups. It's important to note that if a read is fully contained within two or more overlapping exons, PISA will count it for all relevant exons. Check PISA's manual for details.
 
 ```{r fig.width=10, fig.height=5}
 p1 <- DimPlot(obj, label=TRUE, label.size = 5, label.box = TRUE)
