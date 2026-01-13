@@ -3,7 +3,8 @@ title: Spatial dissimilarity analysis for single-cell trajectories and supervise
 format:
   html:
     code-overflow: wrap
-    page-navigation: false
+    page-navigation: true
+    navbar: false
 ---
 In the previous vignette, we performed cell clustering using unsupervised methods. Typically, a PCA or integrated space (e.g., Harmony) is generated during this process, and we then calculate the cell weight matrix directly from the cell embedding space. This approach is convenient for running the pipeline, and provide the general result in all cell population. Furthermore, for specific signaling or biological pathways, it is often more informative to focus on a 'supervised' cell ordering. This vignette demonstrates how to perform spatial dissimilarity test in low-dimensional spaces, such as cell trajectory.
 
