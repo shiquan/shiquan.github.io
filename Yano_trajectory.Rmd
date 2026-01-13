@@ -154,39 +154,12 @@ obj.sel <- RunSDT(obj.sel, wm.name = "trajectory_wm", bind.name = "gene_name", b
 
 FbtPlot(obj.sel, val = "gene_name.padj", assay = c("exon", "junction"), shape.by = "assay", color.by = "assay")
 
-Meta(obj.sel, assay = "exon") %>% filter(gene_name.padj <1e-8) %>% knitr::kable()
-Meta(obj.sel, assay = "junction") %>% filter(gene_name.padj <1e-8) %>% knitr::kable()
+Meta(obj.sel, assay = "exon") %>% filter(gene_name.padj <1e-20) %>% knitr::kable()
+Meta(obj.sel, assay = "junction") %>% filter(gene_name.padj <1e-20) %>% knitr::kable()
 
 FeaturePlot(obj.sel, features = c("3:52413996-52414048/+/PHF7", "3:52414048-52414496/+/PHF7", "PHF7"), ncol=3, order=TRUE)
 ```
 
-# Perform alternative splicing analysis for all cell space
-
-To use all cell space, we do not need to specify a name for the weight matrix here, because it will default to using the PCA reduction map to generate the weight matrix. The resulting matrix will be named "*reduction*_wm".
-
-```{r}
-DefaultAssay(obj.sel) <- "exon"
-obj.sel <- RunAutoCorr(obj.sel)
-```
-
-Now we have two weight matrices. If no name is specified in RunSDT(), the first matrix will always be used by default, so we need to explicitly specify "pca_wm" to avoid misusing the weight matrix here.
-
-```{r}
-grep("_wm", names(obj.sel), value=TRUE)
-obj.sel <- RunSDT(obj.sel, bind.name = "gene_name", bind.assay = "RNA", wm.name = "pca_wm", prefix="all")
-DefaultAssay(obj.sel) <- "junction"
-obj.sel <- RunAutoCorr(obj.sel)
-obj.sel <- RunSDT(obj.sel, bind.name = "gene_name", bind.assay = "RNA", wm.name = "pca_wm", prefix="all")
-```
-
-***By comparing the use of cell trajectory ordering with the PCA space, we found that using the PCA approach can detect more alternatively expressed genes. This is because forcing all cells into a 1D trajectory ordering preserves only the rank of each cell, but loses much of the neighborhood information about cells in the broader context. Since cell trajectories are typically constructed based on cell–cell distances in high-dimensional space, regardless of the algorithm used to build the trajectory, I personally recommend using the cell space directly rather than relying solely on 1D cell ordering, unless you have specific reasons or detailed knowledge.***
-
-```{r fig.width=12, fig.height=5}
-FbtPlot(obj.sel, val = "all.padj", assay = c("exon", "junction"), shape.by = "assay", color.by = "assay")
-
-Meta(obj.sel, assay = "exon") %>% filter(all.padj <1e-20) %>% knitr::kable()
-Meta(obj.sel, assay = "junction") %>% filter(all.padj <1e-20) %>% knitr::kable()
-```
 # Perform alternative splicing on a supervised two dimension space
 
 We can also perform the analysis using a supervised two-dimensional cell space. As an example, we utilize Seurat’s built-in cell cycle scoring scheme for demonstration purposes.
