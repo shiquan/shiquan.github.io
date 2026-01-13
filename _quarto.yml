@@ -28,8 +28,6 @@ website:
           - text: Discussions
             href: https://github.com/shiquan/Yano/discussions
   sidebar:
-    collapse-level: 0
-    hidden: true
     contents:
       - section: "Workflows & Short cases"
         contents:
@@ -49,7 +47,9 @@ website:
             href: Visium.Rmd
           - text: "Cell trajectory analysis"
             href: Yano_trajectory.Rmd
-
+    type: none
+    page-navigation: true
+    
 format:
   html:
     theme:
