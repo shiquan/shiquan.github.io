@@ -77,7 +77,7 @@ obj.sel <- readRDS("./select.rds")
 ```
 
 ```{r message=FALSE}
-DimPlot(obj, label = TRUE, label.size = 5)
+DimPlot(obj, label = TRUE, label.size = 5, group.by = 'seurat_clusters')
 FeaturePlot(obj, features = c("CD14", "VIM", "VWF", "ACTA2", "DLK1", "DAZL", "MAGEA4", "UTF1", "ID4", "FGFR3", "KIT", "DMRT1", "DMRTB1", "STRA8", "SYCP3", "SPO11", "MLH3", "ZPBP", "TNP1", "PRM2"), ncol=5, order=TRUE) & NoAxes() & NoLegend()
 ```
 
