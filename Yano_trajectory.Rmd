@@ -3,6 +3,7 @@ title: Spatial dissimilarity analysis for single-cell trajectories and supervise
 format:
   html:
     code-overflow: wrap
+    page-navigation: false
 ---
 In the previous vignette, we performed cell clustering using unsupervised methods. Typically, a PCA or integrated space (e.g., Harmony) is generated during this process, and we then calculate the cell weight matrix directly from the cell embedding space. This approach is convenient for running the pipeline, and provide the general result in all cell population. Furthermore, for specific signaling or biological pathways, it is often more informative to focus on a 'supervised' cell ordering. This vignette demonstrates how to perform spatial dissimilarity test in low-dimensional spaces, such as cell trajectory.
 
@@ -68,7 +69,6 @@ obj <- QuickRecipe(exp, min.features = 800, min.cells = 100, resolution=0.2)
 rm(exp1, exp2, exp)
 
 obj$replicate <- gsub("d1-(.*)-.*-1", "\\1", colnames(obj))
-DimPlot(obj, label = TRUE, label.size = 5)
 ```
 
 ```{r include=FALSE}
@@ -77,6 +77,7 @@ obj.sel <- readRDS("./select.rds")
 ```
 
 ```{r message=FALSE}
+DimPlot(obj, label = TRUE, label.size = 5)
 FeaturePlot(obj, features = c("CD14", "VIM", "VWF", "ACTA2", "DLK1", "DAZL", "MAGEA4", "UTF1", "ID4", "FGFR3", "KIT", "DMRT1", "DMRTB1", "STRA8", "SYCP3", "SPO11", "MLH3", "ZPBP", "TNP1", "PRM2"), ncol=5, order=TRUE) & NoAxes() & NoLegend()
 ```
 
@@ -90,7 +91,6 @@ obj <- RenameIdents(obj, new.cluster.ids)
 DimPlot(obj, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
 ```
 
-
 # Cell development trajetory construction
 
 We now select germline cells from the dataset and construct the cell development trajectory using a principal curve. Although there are many well-documented methods for constructing linear trajectories, here we use a straightforward and perhaps the simplest approach purely for demonstration purposes.
@@ -98,7 +98,7 @@ We now select germline cells from the dataset and construct the cell development
 sel <- DimSelector(obj)
 obj.sel <- obj[,sel]
 ```
-![](trajectory.gif){width=50%}
+![](trajectory.gif){width=80%}
 
 ```{r}
 require(princurve)
