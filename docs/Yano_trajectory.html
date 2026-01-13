@@ -575,7 +575,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Run autocorrelation test for 72346 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 7.314785 secs</code></pre>
+<pre><code>Runtime : 6.974156 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>69085 autocorrelated features.</code></pre>
@@ -606,7 +606,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Using 63 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.683022 mins.</code></pre>
+<pre><code>Runtime : 1.670689 mins.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj.sel) <span class="ot">&lt;-</span> <span class="st">"junction"</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj.sel)</span>
@@ -622,7 +622,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Run autocorrelation test for 7583 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.660668 secs</code></pre>
+<pre><code>Runtime : 1.475635 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>7350 autocorrelated features.</code></pre>
@@ -653,7 +653,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Using 63 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 12.33269 secs.</code></pre>
+<pre><code>Runtime : 11.66088 secs.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj.sel, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exon"</span>, <span class="st">"junction"</span>), <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">color.by =</span> <span class="st">"assay"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -1622,7 +1622,7 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Run autocorrelation test for 72346 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 6.902253 secs</code></pre>
+<pre><code>Runtime : 6.63399 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>60820 autocorrelated features.</code></pre>
@@ -1653,7 +1653,7 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Using 63 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.726396 mins.</code></pre>
+<pre><code>Runtime : 1.741174 mins.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj.sel) <span class="ot">&lt;-</span> <span class="st">"junction"</span></span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj.sel, <span class="at">reduction =</span> <span class="st">"ccc"</span>, <span class="at">wm.name =</span> <span class="st">"ccc_wm"</span>, <span class="at">dims=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1664,7 +1664,7 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Run autocorrelation test for 7583 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 0.9851208 secs</code></pre>
+<pre><code>Runtime : 1.160071 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>6884 autocorrelated features.</code></pre>
@@ -1695,7 +1695,7 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Using 63 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 13.20835 secs.</code></pre>
+<pre><code>Runtime : 13.25241 secs.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj.sel, <span class="at">val =</span> <span class="st">"ccc.padj"</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exon"</span>, <span class="st">"junction"</span>), <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">color.by =</span> <span class="st">"assay"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -1705,7 +1705,7 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Meta</span>(obj.sel, <span class="at">assay =</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(ccc.padj<span class="sc">&lt;</span><span class="fl">1e-30</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Meta</span>(obj.sel, <span class="at">assay =</span> <span class="st">"exon"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(ccc.padj<span class="sc">&lt;</span><span class="fl">1e-20</span>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -1749,6 +1749,120 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 </tr>
 </thead>
 <tbody>
+<tr class="odd">
+<td style="text-align: left;">1:25901491-25901682/-/STMN1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">25901491</td>
+<td style="text-align: right;">25901682</td>
+<td style="text-align: left;">STMN1</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.2592003</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4875836</td>
+<td style="text-align: right;">-13.44987</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.5602556</td>
+<td style="text-align: right;">-16.40334</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1:25901491-25903813/-/STMN1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">25901491</td>
+<td style="text-align: right;">25903813</td>
+<td style="text-align: left;">STMN1</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.2343074</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4457354</td>
+<td style="text-align: right;">-11.16865</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.5061099</td>
+<td style="text-align: right;">-14.26580</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1:25901407-25901682/-/STMN1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">25901407</td>
+<td style="text-align: right;">25901682</td>
+<td style="text-align: left;">STMN1</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.2388886</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4547891</td>
+<td style="text-align: right;">-12.03411</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.5283271</td>
+<td style="text-align: right;">-15.30160</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1:244855424-244855608/-/HNRNPU</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">244855424</td>
+<td style="text-align: right;">244855608</td>
+<td style="text-align: left;">HNRNPU</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0937798</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5567881</td>
+<td style="text-align: right;">-17.70738</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4673836</td>
+<td style="text-align: right;">-16.04567</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1:244855424-244855597/-/HNRNPU</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">244855424</td>
+<td style="text-align: right;">244855597</td>
+<td style="text-align: left;">HNRNPU</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0857365</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5457566</td>
+<td style="text-align: right;">-17.56482</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4564055</td>
+<td style="text-align: right;">-15.10291</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1:244855424-244856096/-/HNRNPU</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">244855424</td>
+<td style="text-align: right;">244856096</td>
+<td style="text-align: left;">HNRNPU</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0765028</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5213700</td>
+<td style="text-align: right;">-15.91052</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4391646</td>
+<td style="text-align: right;">-13.97852</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
 <tr class="odd">
 <td style="text-align: left;">10:35179134-35179769/+/CREM</td>
 <td style="text-align: left;">10</td>
@@ -1807,6 +1921,291 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">10:84371014-84372469/+/CCSER2</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: right;">84371014</td>
+<td style="text-align: right;">84372469</td>
+<td style="text-align: left;">CCSER2</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0594155</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4468654</td>
+<td style="text-align: right;">-14.86723</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4585923</td>
+<td style="text-align: right;">-14.81453</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">13:27622875-27623449/+/POLR1D</td>
+<td style="text-align: left;">13</td>
+<td style="text-align: right;">27622875</td>
+<td style="text-align: right;">27623449</td>
+<td style="text-align: left;">POLR1D</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0598261</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5752052</td>
+<td style="text-align: right;">-20.01386</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4878107</td>
+<td style="text-align: right;">-16.08500</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">13:27622841-27623452/+/POLR1D</td>
+<td style="text-align: left;">13</td>
+<td style="text-align: right;">27622841</td>
+<td style="text-align: right;">27623452</td>
+<td style="text-align: left;">POLR1D</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0607210</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5757230</td>
+<td style="text-align: right;">-20.01509</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4907475</td>
+<td style="text-align: right;">-16.05780</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">16:2339109-2339331/+/ABCA17P</td>
+<td style="text-align: left;">16</td>
+<td style="text-align: right;">2339109</td>
+<td style="text-align: right;">2339331</td>
+<td style="text-align: left;">ABCA17P</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1429115</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4280415</td>
+<td style="text-align: right;">-10.76855</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4717340</td>
+<td style="text-align: right;">-14.11718</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">16:2339134-2339331/+/ABCA17P</td>
+<td style="text-align: left;">16</td>
+<td style="text-align: right;">2339134</td>
+<td style="text-align: right;">2339331</td>
+<td style="text-align: left;">ABCA17P</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1426901</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4276837</td>
+<td style="text-align: right;">-10.72453</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4711779</td>
+<td style="text-align: right;">-14.10577</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">16:2339148-2339331/+/ABCA17P</td>
+<td style="text-align: left;">16</td>
+<td style="text-align: right;">2339148</td>
+<td style="text-align: right;">2339331</td>
+<td style="text-align: left;">ABCA17P</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1368220</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4215381</td>
+<td style="text-align: right;">-10.28641</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4609753</td>
+<td style="text-align: right;">-13.52468</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">17:82615718-82616025/-/WDR45B</td>
+<td style="text-align: left;">17</td>
+<td style="text-align: right;">82615718</td>
+<td style="text-align: right;">82616025</td>
+<td style="text-align: left;">WDR45B</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0909939</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4688950</td>
+<td style="text-align: right;">-12.66565</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4319879</td>
+<td style="text-align: right;">-13.40948</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">19:18309678-18309861/-/LSM4</td>
+<td style="text-align: left;">19</td>
+<td style="text-align: right;">18309678</td>
+<td style="text-align: right;">18309861</td>
+<td style="text-align: left;">LSM4</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0546675</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4482825</td>
+<td style="text-align: right;">-11.99663</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4223033</td>
+<td style="text-align: right;">-13.73961</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2:61141592-61143945/-/C2orf74-AS1</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">61141592</td>
+<td style="text-align: right;">61143945</td>
+<td style="text-align: left;">C2orf74-AS1</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0591727</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4696162</td>
+<td style="text-align: right;">-14.44069</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4668556</td>
+<td style="text-align: right;">-14.73877</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3:45007420-45007575/+/EXOSC7</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">45007420</td>
+<td style="text-align: right;">45007575</td>
+<td style="text-align: left;">EXOSC7</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0823747</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4371707</td>
+<td style="text-align: right;">-12.97422</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4515346</td>
+<td style="text-align: right;">-15.65360</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3:45011235-45011393/+/EXOSC7</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">45011235</td>
+<td style="text-align: right;">45011393</td>
+<td style="text-align: left;">EXOSC7</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1112395</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4829170</td>
+<td style="text-align: right;">-13.95754</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4840870</td>
+<td style="text-align: right;">-16.13686</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3:45011235-45011471/+/EXOSC7</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">45011235</td>
+<td style="text-align: right;">45011471</td>
+<td style="text-align: left;">EXOSC7</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1252058</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5113871</td>
+<td style="text-align: right;">-16.34435</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.5108256</td>
+<td style="text-align: right;">-17.36734</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3:45011235-45011470/+/EXOSC7</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">45011235</td>
+<td style="text-align: right;">45011470</td>
+<td style="text-align: left;">EXOSC7</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1252657</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5140713</td>
+<td style="text-align: right;">-16.28410</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.5118174</td>
+<td style="text-align: right;">-17.48107</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3:52413996-52414048/+/PHF7</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">52413996</td>
+<td style="text-align: right;">52414048</td>
+<td style="text-align: left;">PHF7</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0524255</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4977642</td>
+<td style="text-align: right;">-15.63829</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4422534</td>
+<td style="text-align: right;">-13.37508</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3:52414496-52414844/+/PHF7</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">52414496</td>
+<td style="text-align: right;">52414844</td>
+<td style="text-align: left;">PHF7</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0540186</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5230850</td>
+<td style="text-align: right;">-16.66897</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4517128</td>
+<td style="text-align: right;">-13.90113</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">5:28810519-28810897/+/LINC02109</td>
 <td style="text-align: left;">5</td>
 <td style="text-align: right;">28810519</td>
@@ -1822,6 +2221,101 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.4759568</td>
 <td style="text-align: right;">-18.84992</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5:28810550-28810903/+/LINC02109</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: right;">28810550</td>
+<td style="text-align: right;">28810903</td>
+<td style="text-align: left;">LINC02109</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0617533</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4277398</td>
+<td style="text-align: right;">-13.60694</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4310997</td>
+<td style="text-align: right;">-15.10262</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7:2234198-2235564/-/ENSG00000286192</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">2234198</td>
+<td style="text-align: right;">2235564</td>
+<td style="text-align: left;">ENSG00000286192</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0787671</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4940253</td>
+<td style="text-align: right;">-16.14086</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4761691</td>
+<td style="text-align: right;">-15.18710</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">7:4984910-4985075/+/RBAK-RBAKDN</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">4984910</td>
+<td style="text-align: right;">4985075</td>
+<td style="text-align: left;">RBAK-RBAKDN</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1160535</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5337896</td>
+<td style="text-align: right;">-15.86273</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4766789</td>
+<td style="text-align: right;">-15.72301</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7:74196642-74197050/+/EIF4H</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">74196642</td>
+<td style="text-align: right;">74197050</td>
+<td style="text-align: left;">EIF4H</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0903061</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.6534230</td>
+<td style="text-align: right;">-23.13141</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.6032309</td>
+<td style="text-align: right;">-18.34546</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">7:92244902-92245171/-/ENSG00000285953</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">92244902</td>
+<td style="text-align: right;">92245171</td>
+<td style="text-align: left;">ENSG00000285953</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1042464</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4200898</td>
+<td style="text-align: right;">-11.20610</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4562026</td>
+<td style="text-align: right;">-13.53605</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -1864,6 +2358,101 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">7:96645724-96645936/-/SEM1</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">96645724</td>
+<td style="text-align: right;">96645936</td>
+<td style="text-align: left;">SEM1</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0471675</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5223758</td>
+<td style="text-align: right;">-15.36340</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4780894</td>
+<td style="text-align: right;">-15.70585</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">7:96645390-96645932/-/SEM1</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">96645390</td>
+<td style="text-align: right;">96645932</td>
+<td style="text-align: left;">SEM1</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0432399</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5432079</td>
+<td style="text-align: right;">-17.49861</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4599265</td>
+<td style="text-align: right;">-13.31408</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7:96645391-96645932/-/SEM1</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">96645391</td>
+<td style="text-align: right;">96645932</td>
+<td style="text-align: left;">SEM1</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0433677</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5377379</td>
+<td style="text-align: right;">-16.90471</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4571655</td>
+<td style="text-align: right;">-13.36001</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">7:96645588-96645936/-/SEM1</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">96645588</td>
+<td style="text-align: right;">96645936</td>
+<td style="text-align: left;">SEM1</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0459219</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.5478922</td>
+<td style="text-align: right;">-16.87904</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4659247</td>
+<td style="text-align: right;">-14.00998</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7:96645724-96645932/-/SEM1</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">96645724</td>
+<td style="text-align: right;">96645932</td>
+<td style="text-align: left;">SEM1</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0411809</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">0.4919617</td>
+<td style="text-align: right;">-15.49754</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4415798</td>
+<td style="text-align: right;">-13.24398</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">7:127591409-127591951/+/FSCN3</td>
 <td style="text-align: left;">7</td>
 <td style="text-align: right;">127591409</td>
@@ -1905,9 +2494,9 @@ assay instead</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./Homo_sapiens.GRCh38.114.chr.gtf.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2026-01-13 17:11:50] GTF loading..
-[2026-01-13 17:12:45] Load 78686 genes.
-[2026-01-13 17:12:45] Load time : 54.692 sec</code></pre>
+<pre><code>[2026-01-13 17:34:49] GTF loading..
+[2026-01-13 17:35:42] Load 78686 genes.
+[2026-01-13 17:35:42] Load time : 52.392 sec</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>bamfiles <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">rep1 =</span> <span class="st">"./donor1_rep1.bam"</span>, <span class="at">rep2 =</span> <span class="st">"./donor1_rep2.bam"</span>)</span>
 <span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>cell.list <span class="ot">&lt;-</span> <span class="fu">split</span>(obj.sel<span class="sc">$</span>Phase, obj.sel<span class="sc">$</span>replicate)</span>

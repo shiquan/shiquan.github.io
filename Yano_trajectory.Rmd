@@ -196,7 +196,7 @@ obj.sel <- RunAutoCorr(obj.sel, reduction = "ccc", wm.name = "ccc_wm", dims=1:2)
 obj.sel <- RunSDT(obj.sel, wm.name = "ccc_wm", bind.name = "gene_name", bind.assay = "RNA", prefix = "ccc")
 FbtPlot(obj.sel, val = "ccc.padj", assay = c("exon", "junction"), shape.by = "assay", color.by = "assay")
 
-Meta(obj.sel, assay = "exon") %>% filter(ccc.padj<1e-30) %>% knitr::kable()
+Meta(obj.sel, assay = "exon") %>% filter(ccc.padj<1e-20) %>% knitr::kable()
 
 FeaturePlot(obj.sel, reduction =  "ccc", features = c("7:74196642-74197050/+/EIF4H", "EIF4H"), order = TRUE)
 ```
