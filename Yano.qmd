@@ -8,7 +8,7 @@ sidebar: false
 
 Yano represents an R/C toolkit designed for conducting spatial dissimilarity analysis on single-cell RNA sequencing data. This method revolves around the core concept of examining the distinct expression patterns of a given feature (e.g. exon, snp allele) in relation to its associated binding feature (typically a gene or another allele at the same genomic locus) within the context of cell lineage (1D), spatial position (2D), or the multi-dimensional PCA space. The discernible differences in feature expression patterns and their binding features provide insights into a range of biological phenomena, including alternative splicing, cis-antisense RNA regulation, allele-specific gene expression, and more.
 
-Yano is seamlessly integrated with Seurat, building upon the Seurat object's framework. Users can perform conventional cell clustering analyses using the state-of-the-art Seurat pipeline and then incorporate exon, SNP counts as new "assays" within the Seurat objects. Subsequently, Yano facilitates the assessment of spatial dissimilarity between these two assays. For more details about the method, please refer to our manuscript.
+Yano is seamlessly integrated with Seurat, building upon the Seurat object's framework. Users can perform conventional cell clustering analyses using the state-of-the-art Seurat pipeline and then incorporate exon, SNP counts as new "assays" within the Seurat objects. Subsequently, Yano facilitates the assessment of spatial dissimilarity between these two assays. For more details about the method, please refer to our [manuscript](https://doi.org/10.1016/j.crmeth.2025.101141).
 
 ## INSTALL
 
@@ -16,11 +16,11 @@ Yano is seamlessly integrated with Seurat, building upon the Seurat object's fra
 if (!require("BiocManager")) install.packages('BiocManager') 
 BiocManager::install("shiquan/Yano")
 ```
-***Notice:*** Multithread mode is disabled on macOS by default due to the lack of OpenMP support. However, `data.table` provides a useful tutorial on how to enable OpenMP on macOS. For more information, please refer to this guide: [https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos](https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos).
+***Notice:*** Multithread mode is disabled on macOS by default due to the lack of OpenMP support. The R package `data.table` provides a useful tutorial on how to enable OpenMP on macOS. Please refer to this guide: [https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos](https://github.com/Rdatatable/data.table/wiki/Installation#enable-openmp-for-macos) for more info.
 
 ## Get started
 
-A typical workflow with Yano starts by using a built-in dataset.
+To fast hand-on the Yano workflow, you could get started with the built-in dataset.
 
 ```{r message=FALSE, warning=FALSE, fig.align='center', fig.width=10, fig.height=5}
 require(Yano)

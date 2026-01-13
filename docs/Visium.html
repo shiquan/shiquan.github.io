@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,8 +21,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -65,17 +66,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <link href="./Yano_trajectory.html" rel="next">
 <link href="./Yano_anno.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-de84f8d6bb715db06a919283c2d1e787.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-9a023c9ade86a60361e96e3e3f11bc54.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-597958c53c93a607afca12fd375c57ed.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-7ac2f9da8c2617a4fdd15004b4601015.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-597958c53c93a607afca12fd375c57ed.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2cae7a44443c7384b30cd79a64306367.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-2d6ecf2d45d93a56a874280a57c27dd9.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-359c8607919eecb446bd360b82f92eee.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-6893e1c0f356f3ff25b33dc2bef6ed3e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-359c8607919eecb446bd360b82f92eee.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -108,7 +113,169 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -161,21 +328,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workflow1.html">Workflows &amp; Short cases</a></li><li class="breadcrumb-item"><a href="./Visium.html">Analysis multiple Visium samples</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
     </div>
   </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
@@ -257,6 +416,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
+
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workflow1.html">Workflows &amp; Short cases</a></li><li class="breadcrumb-item"><a href="./Visium.html">Analysis multiple Visium samples</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Perform alternative splicing analysis for multiple Visium samples</h1>
@@ -285,7 +445,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://www.10xgenomics.com/datasets/mouse-brain-serial-section-2-sagittal-anterior-1-standard-1-1-0">Section 2, sagittal anterior</a></p>
 <p><a href="https://www.10xgenomics.com/datasets/mouse-brain-serial-section-2-sagittal-posterior-1-standard-1-1-0">Section 2, sagittal posterior</a></p>
 <p>The following commands run on a terminal.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create directory for each section and slice</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create directory for each section and slice</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> visium/section1/Posterior</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> visium/section1/Anterior</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> visium/section2/Posterior</span>
@@ -379,22 +539,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> count <span class="at">-tag</span> CB <span class="at">-umi</span> UB <span class="at">-anno-tag</span> ER <span class="at">-outdir</span> exclude anno.bam</span>
 <span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="co"># Now go back to work directory</span></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../../..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../../..</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="preprocess-all-four-slices-and-intergrate-them-into-one-object" class="level2">
 <h2 class="anchored" data-anchor-id="preprocess-all-four-slices-and-intergrate-them-into-one-object">1. Preprocess all four slices and intergrate them into one object</h2>
 <p>This section will perform Seurat pipeline for all the sections. A Seurat workflow for one section can be found here https://satijalab.org/seurat/articles/spatial_vignette. The difference between this workflow with Seurat’s is we use counts generated from PISA, while Seurat use counts generated with CellRanger’s pipeline. For the details of different between PISA and CellRanger, please see our <a href="https://shiquan.github.io/PISA.html#difference-in-alignment-annotation-between-pisa-and-cellranger">manual</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Yano)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Yano)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: Yano</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching packages ────────────────────────────────────────────── Yano 1.2 ──
 ✔ dplyr   1.1.4     ✔ Seurat  5.3.0
-✔ ggplot2 3.5.2     </code></pre>
+✔ ggplot2 4.0.0     </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>exp<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section1/Anterior/exp/"</span>, <span class="at">prefix =</span> <span class="st">"sec1_ant_"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>exp<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section1/Anterior/exp/"</span>, <span class="at">prefix =</span> <span class="st">"sec1_ant_"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">Read10X_Image</span>(<span class="st">"./visium/section1/Anterior/spatial/"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>new.names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"sec1_ant_"</span>,<span class="fu">Cells</span>(image<span class="fl">.1</span>))</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">RenameCells</span>(image<span class="fl">.1</span>, <span class="at">new.names =</span> new.names)</span>
@@ -431,7 +591,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge all processed Seurat object</span></span>
 <span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">merge</span>(obj<span class="fl">.1</span>, <span class="at">y =</span> <span class="fu">list</span>(obj<span class="fl">.2</span>, obj<span class="fl">.3</span>, obj<span class="fl">.4</span>))</span>
 <span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Set default assay to RNA
 object &lt;- NormalizeData(object, normalization.method = "LogNormalize", scale.factor = 10000)
@@ -491,34 +651,34 @@ object &lt;- FindClusters(object, resolution = 0.5)</code></pre>
 <pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
 
 Number of nodes: 12148
-Number of edges: 388091
+Number of edges: 388028
 
 Running Louvain algorithm...
-Maximum modularity in 10 random starts: 0.9314
+Maximum modularity in 10 random starts: 0.9315
 Number of communities: 16
-Elapsed time: 0 seconds</code></pre>
+Elapsed time: 1 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>object &lt;- RunUMAP(object, dims = 1:20)
-18:44:07 UMAP embedding parameters a = 0.9922 b = 1.112
-18:44:07 Read 12148 rows and found 20 numeric columns
-18:44:07 Using Annoy for neighbor search, n_neighbors = 30
-18:44:07 Building Annoy index with metric = cosine, n_trees = 50
+11:32:53 UMAP embedding parameters a = 0.9922 b = 1.112
+11:32:53 Read 12148 rows and found 20 numeric columns
+11:32:53 Using Annoy for neighbor search, n_neighbors = 30
+11:32:53 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-18:44:08 Writing NN index file to temp file /var/folders/38/qfwf72jx3413kwjx7lgqv3xr0000gn/T//RtmpEUPj90/fileebda3ccfdeb6
-18:44:08 Searching Annoy index using 1 thread, search_k = 3000
-18:44:10 Annoy recall = 100%
-18:44:10 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-18:44:10 Initializing from normalized Laplacian + noise (using RSpectra)
-18:44:10 Commencing optimization for 200 epochs, with 500558 positive edges
-18:44:10 Using rng type: pcg
-18:44:15 Optimization finished</code></pre>
+11:32:55 Writing NN index file to temp file /local/tmp/RtmpAXcTKu/file440e062945fff
+11:32:55 Searching Annoy index using 1 thread, search_k = 3000
+11:32:58 Annoy recall = 100%
+11:32:59 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+11:33:00 Initializing from normalized Laplacian + noise (using RSpectra)
+11:33:00 Commencing optimization for 200 epochs, with 500526 positive edges
+11:33:00 Using rng type: pcg
+11:33:06 Optimization finished</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj, <span class="at">group.by =</span> <span class="st">"orig.ident"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj, <span class="at">group.by =</span> <span class="st">"orig.ident"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -526,7 +686,7 @@ Elapsed time: 0 seconds</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SpatialPlot</span>(obj, <span class="at">pt.size.factor =</span> <span class="dv">2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SpatialPlot</span>(obj, <span class="at">pt.size.factor =</span> <span class="dv">2</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -534,43 +694,43 @@ Elapsed time: 0 seconds</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>exon<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section1/Anterior/exon/"</span>, <span class="at">prefix =</span> <span class="st">"sec1_ant_"</span>, <span class="at">cells =</span> <span class="fu">Cells</span>(obj))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>exon<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section1/Anterior/exon/"</span>, <span class="at">prefix =</span> <span class="st">"sec1_ant_"</span>, <span class="at">cells =</span> <span class="fu">Cells</span>(obj))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>exon<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section1/Posterior/exon/"</span>, <span class="at">prefix =</span> <span class="st">"sec1_pos_"</span>, <span class="at">cells =</span> <span class="fu">Cells</span>(obj))</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>exon<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section2/Anterior/exon/"</span>, <span class="at">prefix =</span> <span class="st">"sec2_ant_"</span>, <span class="at">cells =</span> <span class="fu">Cells</span>(obj))</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>exon<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section2/Posterior/exon/"</span>, <span class="at">prefix =</span> <span class="st">"sec2_pos_"</span>, <span class="at">cells =</span> <span class="fu">Cells</span>(obj))</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>exon <span class="ot">&lt;-</span> <span class="fu">mergeMatrix</span>(exon<span class="fl">.1</span>, exon<span class="fl">.2</span>, exon<span class="fl">.3</span>, exon<span class="fl">.4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>exon <span class="ot">&lt;-</span> <span class="fu">mergeMatrix</span>(exon<span class="fl">.1</span>, exon<span class="fl">.2</span>, exon<span class="fl">.3</span>, exon<span class="fl">.4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>'as(&lt;dgTMatrix&gt;, "dgCMatrix")' is deprecated.
 Use 'as(., "CsparseMatrix")' instead.
 See help("Deprecated") and help("Matrix-deprecated").</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(exon[, <span class="fu">Cells</span>(obj)], <span class="at">min.cells =</span> <span class="dv">20</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(exon[, <span class="fu">Cells</span>(obj)], <span class="at">min.cells =</span> <span class="dv">20</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay : exon
 Run autocorrelation test for 80178 features.
-Runtime : 1.401125 mins
-38771 autocorrelated features.</code></pre>
+Runtime : 32.21539 secs
+38784 autocorrelated features.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon.
 Working on binding assay RNA.
 Use predefined weight matrix "pca_wm".
-Processing 38771 features.
-Processing 15688 binding features.
+Processing 38784 features.
+Processing 15696 binding features.
 Retrieve binding data from assay RNA.
 Use "data" layer for test features and binding features.
-Using 7 threads.
-Runtime : 46.19085 mins.</code></pre>
+Using 63 threads.
+Runtime : 10.70084 mins.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -578,52 +738,116 @@ Runtime : 46.19085 mins.</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.pval<span class="sc">&lt;</span><span class="fl">1e-40</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.pval<span class="sc">&lt;</span><span class="fl">1e-40</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                   chr     start       end gene_name strand
 chr11:30106785-30109152/-/Sptbn1 chr11  30106785  30109152    Sptbn1      -
 chr11:53541475-53541898/+/Sept8  chr11  53541475  53541898     Sept8      +
+chr11:53541475-53541847/+/Sept8  chr11  53541475  53541847     Sept8      +
 chr11:53548291-53549565/+/Sept8  chr11  53548291  53549565     Sept8      +
+chr11:53541210-53544095/+/Sept8  chr11  53541210  53544095     Sept8      +
+chr11:53541030-53544096/+/Sept8  chr11  53541030  53544096     Sept8      +
 chr12:111806315-111806775/+/Klc1 chr12 111806315 111806775      Klc1      +
 chr12:111806315-111806727/+/Klc1 chr12 111806315 111806727      Klc1      +
 chr12:111806315-111806711/+/Klc1 chr12 111806315 111806711      Klc1      +
 chr12:111806315-111806726/+/Klc1 chr12 111806315 111806726      Klc1      +
+chr13:59128168-59133970/+/Ntrk2  chr13  59128168  59133970     Ntrk2      +
+chr14:20507671-20508721/-/Ppp3cb chr14  20507671  20508721    Ppp3cb      -
 chr17:25717528-25717581/+/Gng13  chr17  25717528  25717581     Gng13      +
+chr4:117154638-117155181/-/Rps8   chr4 117154638 117155181      Rps8      -
+chr4:117154391-117154813/-/Rps8   chr4 117154391 117154813      Rps8      -
+chr4:117154510-117154813/-/Rps8   chr4 117154510 117154813      Rps8      -
+chr4:117155008-117155107/-/Rps8   chr4 117155008 117155107      Rps8      -
+chr4:117155008-117155677/-/Rps8   chr4 117155008 117155677      Rps8      -
+chr5:121205406-121205663/+/Rpl6   chr5 121205406 121205663      Rpl6      +
+chr5:121205406-121206202/+/Rpl6   chr5 121205406 121206202      Rpl6      +
+chr7:27180169-27180279/-/Gm21983  chr7  27180169  27180279   Gm21983      -
+chr7:27180700-27180833/-/Gm21983  chr7  27180700  27180833   Gm21983      -
+chr7:45131188-45131566/-/Flt3l    chr7  45131188  45131566     Flt3l      -
+chr7:45131188-45131431/-/Flt3l    chr7  45131188  45131431     Flt3l      -
 chrX:163926903-163929546/+/Ap1s2  chrX 163926903 163929546     Ap1s2      +
-                                 moransi.pval    moransi autocorr.variable
-chr11:30106785-30109152/-/Sptbn1            0 0.15179115              TRUE
-chr11:53541475-53541898/+/Sept8             0 0.42948807              TRUE
-chr11:53548291-53549565/+/Sept8             0 0.43155054              TRUE
-chr12:111806315-111806775/+/Klc1            0 0.10015685              TRUE
-chr12:111806315-111806727/+/Klc1            0 0.09999613              TRUE
-chr12:111806315-111806711/+/Klc1            0 0.09420489              TRUE
-chr12:111806315-111806726/+/Klc1            0 0.09698562              TRUE
-chr17:25717528-25717581/+/Gng13             0 0.16339114              TRUE
-chrX:163926903-163929546/+/Ap1s2            0 0.14487043              TRUE
+                                  moransi.pval    moransi autocorr.variable
+chr11:30106785-30109152/-/Sptbn1  0.000000e+00 0.15168101              TRUE
+chr11:53541475-53541898/+/Sept8   0.000000e+00 0.42945787              TRUE
+chr11:53541475-53541847/+/Sept8   0.000000e+00 0.35888116              TRUE
+chr11:53548291-53549565/+/Sept8   0.000000e+00 0.43158740              TRUE
+chr11:53541210-53544095/+/Sept8   0.000000e+00 0.40952155              TRUE
+chr11:53541030-53544096/+/Sept8   0.000000e+00 0.40944155              TRUE
+chr12:111806315-111806775/+/Klc1  0.000000e+00 0.10015770              TRUE
+chr12:111806315-111806727/+/Klc1  0.000000e+00 0.09999863              TRUE
+chr12:111806315-111806711/+/Klc1  0.000000e+00 0.09420650              TRUE
+chr12:111806315-111806726/+/Klc1  0.000000e+00 0.09698996              TRUE
+chr13:59128168-59133970/+/Ntrk2   0.000000e+00 0.32438027              TRUE
+chr14:20507671-20508721/-/Ppp3cb  0.000000e+00 0.06726973              TRUE
+chr17:25717528-25717581/+/Gng13   0.000000e+00 0.16337588              TRUE
+chr4:117154638-117155181/-/Rps8   0.000000e+00 0.21340388              TRUE
+chr4:117154391-117154813/-/Rps8   0.000000e+00 0.29275023              TRUE
+chr4:117154510-117154813/-/Rps8   0.000000e+00 0.29520866              TRUE
+chr4:117155008-117155107/-/Rps8   0.000000e+00 0.21347766              TRUE
+chr4:117155008-117155677/-/Rps8   0.000000e+00 0.20857395              TRUE
+chr5:121205406-121205663/+/Rpl6  1.476043e-309 0.06564243              TRUE
+chr5:121205406-121206202/+/Rpl6  1.483145e-315 0.06627969              TRUE
+chr7:27180169-27180279/-/Gm21983  0.000000e+00 0.11385203              TRUE
+chr7:27180700-27180833/-/Gm21983  0.000000e+00 0.13438134              TRUE
+chr7:45131188-45131566/-/Flt3l   1.183112e-115 0.03978920              TRUE
+chr7:45131188-45131431/-/Flt3l    9.910321e-99 0.03667860              TRUE
+chrX:163926903-163929546/+/Ap1s2  0.000000e+00 0.14474266              TRUE
                                  gene_name.D gene_name.t gene_name.pval
-chr11:30106785-30109152/-/Sptbn1   0.5431758    41.69822   6.540913e-65
-chr11:53541475-53541898/+/Sept8    0.4012683    23.73151   6.051818e-43
-chr11:53548291-53549565/+/Sept8    0.5052005    24.55383   3.372164e-44
-chr12:111806315-111806775/+/Klc1   0.5119727    29.18103   9.998987e-51
-chr12:111806315-111806727/+/Klc1   0.5120357    29.13800   1.139864e-50
-chr12:111806315-111806711/+/Klc1   0.5014652    27.94927   4.523333e-49
-chr12:111806315-111806726/+/Klc1   0.5051431    28.70477   4.299571e-50
-chr17:25717528-25717581/+/Gng13    0.4801212    23.85028   3.970901e-43
-chrX:163926903-163929546/+/Ap1s2   0.3755946    24.33287   7.275788e-44
+chr11:30106785-30109152/-/Sptbn1   0.4746839   -43.89401   5.263807e-67
+chr11:53541475-53541898/+/Sept8    0.4048398   -25.74381   5.834218e-46
+chr11:53541475-53541847/+/Sept8    0.3656638   -22.48278   5.567885e-41
+chr11:53548291-53549565/+/Sept8    0.4780168   -26.93290   1.160903e-47
+chr11:53541210-53544095/+/Sept8    0.3912296   -24.47323   4.461505e-44
+chr11:53541030-53544096/+/Sept8    0.3913941   -24.46688   4.561207e-44
+chr12:111806315-111806775/+/Klc1   0.4504790   -34.17159   6.621251e-57
+chr12:111806315-111806727/+/Klc1   0.4505177   -34.03884   9.447059e-57
+chr12:111806315-111806711/+/Klc1   0.4413015   -32.84301   2.449418e-55
+chr12:111806315-111806726/+/Klc1   0.4444515   -33.46269   4.478730e-56
+chr13:59128168-59133970/+/Ntrk2    0.4148224   -24.83806   1.263263e-44
+chr14:20507671-20508721/-/Ppp3cb   0.3496615   -22.53752   4.550498e-41
+chr17:25717528-25717581/+/Gng13    0.4628582   -28.12830   2.578332e-49
+chr4:117154638-117155181/-/Rps8    0.2055551   -22.67264   2.769229e-41
+chr4:117154391-117154813/-/Rps8    0.2711817   -34.15592   6.904540e-57
+chr4:117154510-117154813/-/Rps8    0.2710378   -34.78865   1.288374e-57
+chr4:117155008-117155107/-/Rps8    0.2653470   -30.72746   9.963707e-53
+chr4:117155008-117155677/-/Rps8    0.2590419   -28.16428   2.303631e-49
+chr5:121205406-121205663/+/Rpl6    0.2384405   -23.27607   3.087837e-42
+chr5:121205406-121206202/+/Rpl6    0.2388061   -24.60967   2.778846e-44
+chr7:27180169-27180279/-/Gm21983   0.3214447   -22.61010   3.484121e-41
+chr7:27180700-27180833/-/Gm21983   0.3414768   -22.39562   7.682987e-41
+chr7:45131188-45131566/-/Flt3l     0.2651879   -22.54243   4.469064e-41
+chr7:45131188-45131431/-/Flt3l     0.2518174   -22.66769   2.820021e-41
+chrX:163926903-163929546/+/Ap1s2   0.3696098   -24.50636   3.976343e-44
                                  gene_name.padj
-chr11:30106785-30109152/-/Sptbn1   2.494573e-60
-chr11:53541475-53541898/+/Sept8    2.564492e-39
-chr11:53548291-53549565/+/Sept8    2.143460e-40
-chr12:111806315-111806775/+/Klc1   1.449072e-46
-chr12:111806315-111806727/+/Klc1   1.449072e-46
-chr12:111806315-111806711/+/Klc1   3.450217e-45
-chr12:111806315-111806726/+/Klc1   4.099426e-46
-chr17:25717528-25717581/+/Gng13    1.893028e-39
-chrX:163926903-163929546/+/Ap1s2   3.964057e-40</code></pre>
+chr11:30106785-30109152/-/Sptbn1   2.008300e-62
+chr11:53541475-53541898/+/Sept8    1.854941e-42
+chr11:53541475-53541847/+/Sept8    8.851314e-38
+chr11:53548291-53549565/+/Sept8    4.026538e-44
+chr11:53541210-53544095/+/Sept8    1.023669e-40
+chr11:53541030-53544096/+/Sept8    1.023669e-40
+chr12:111806315-111806775/+/Klc1   6.585722e-53
+chr12:111806315-111806727/+/Klc1   7.208673e-53
+chr12:111806315-111806711/+/Klc1   1.335038e-51
+chr12:111806315-111806726/+/Klc1   2.847950e-52
+chr13:59128168-59133970/+/Ntrk2    3.707483e-41
+chr14:20507671-20508721/-/Ppp3cb   7.548485e-38
+chr17:25717528-25717581/+/Gng13    9.837110e-46
+chr4:117154638-117155181/-/Rps8    5.379613e-38
+chr4:117154391-117154813/-/Rps8    6.585722e-53
+chr4:117154510-117154813/-/Rps8    2.457766e-53
+chr4:117155008-117155107/-/Rps8    4.751816e-49
+chr4:117155008-117155677/-/Rps8    9.765604e-46
+chr5:121205406-121205663/+/Rpl6    6.545014e-39
+chr5:121205406-121206202/+/Rpl6    7.572952e-41
+chr7:27180169-27180279/-/Gm21983   6.329984e-38
+chr7:27180700-27180833/-/Gm21983   1.172516e-37
+chr7:45131188-45131566/-/Flt3l     7.548485e-38
+chr7:45131188-45131431/-/Flt3l     5.379613e-38
+chrX:163926903-163929546/+/Ap1s2   1.011396e-40</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SpatialPlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr11:53548291-53549565/+/Sept8"</span>,<span class="st">"Sept8"</span>), <span class="at">pt.size.factor =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SpatialPlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr11:53548291-53549565/+/Sept8"</span>,<span class="st">"Sept8"</span>), <span class="at">pt.size.factor =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -637,12 +861,13 @@ chrX:163926903-163929546/+/Ap1s2   3.964057e-40</code></pre>
 <h2 class="anchored" data-anchor-id="visualize-genome-tracks-of-multiple-samples">2. Visualize genome tracks of multiple samples</h2>
 <p>Since the spot/cell names have already been renamed in the Seurat object, we need to define a binding list that maps the new cell names to their original names, which will be used for reading sequences from the BAM files. In this vignette, we use four BAM files, requiring us to define four corresponding cell vectors. Each vector contains group factor values, where the names of the values correspond to the original cell names in the BAM file.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./visium/gencode.vM10.annotation.gtf.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./visium/gencode.vM10.annotation.gtf.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2025-06-19 19:32:59] GTF loading..
-[2025-06-19 19:33:10] Load 48440 genes.</code></pre>
+<pre><code>[2026-01-13 11:46:47] GTF loading..
+[2026-01-13 11:47:09] Load 48440 genes.
+[2026-01-13 11:47:09] Load time : 22.599 sec</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>bamfiles <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>bamfiles <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec1_ant =</span> <span class="st">"./visium/section1/Anterior/V1_Mouse_Brain_Sagittal_Anterior_possorted_genome_bam.bam"</span>,</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec1_pos =</span> <span class="st">"./visium/section1/Posterior/V1_Mouse_Brain_Sagittal_Posterior_possorted_genome_bam.bam"</span>,</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec2_ant =</span> <span class="st">"./visium/section2/Anterior/V1_Mouse_Brain_Sagittal_Anterior_Section_2_possorted_genome_bam.bam"</span>,</span>
@@ -650,7 +875,7 @@ chrX:163926903-163929546/+/Ap1s2   3.964057e-40</code></pre>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>cell.list <span class="ot">&lt;-</span> <span class="fu">split</span>(obj<span class="sc">$</span>seurat_clusters, obj<span class="sc">$</span>orig.ident)</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cell.list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cell.list)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 4
  $ sec1_ant: Factor w/ 16 levels "0","1","2","3",..: 10 10 10 5 5 5 5 10 5 10 ...
@@ -662,12 +887,12 @@ chrX:163926903-163929546/+/Ap1s2   3.964057e-40</code></pre>
  $ sec2_pos: Factor w/ 16 levels "0","1","2","3",..: 10 10 10 10 10 10 10 10 10 10 ...
   ..- attr(*, "names")= chr [1:3288] "sec2_pos_TCCGCAGCCACCTAGC-1" "sec2_pos_GGTCCTTCATACGACT-1" "sec2_pos_GTGCCTAGCTATGCTT-1" "sec2_pos_GCGAGAAACGGGAGTT-1" ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cell.list1 <span class="ot">&lt;-</span> <span class="fu">lapply</span>(cell.list, <span class="cf">function</span>(x) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cell.list1 <span class="ot">&lt;-</span> <span class="fu">lapply</span>(cell.list, <span class="cf">function</span>(x) {</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  nm <span class="ot">&lt;-</span> <span class="fu">names</span>(x)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(x) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">".*_(.*)"</span>,<span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>,nm)</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  x</span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cell.list1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cell.list1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 4
  $ sec1_ant: Factor w/ 16 levels "0","1","2","3",..: 10 10 10 5 5 5 5 10 5 10 ...
@@ -679,7 +904,13 @@ chrX:163926903-163929546/+/Ap1s2   3.964057e-40</code></pre>
  $ sec2_pos: Factor w/ 16 levels "0","1","2","3",..: 10 10 10 10 10 10 10 10 10 10 ...
   ..- attr(*, "names")= chr [1:3288] "TCCGCAGCCACCTAGC-1" "GGTCCTTCATACGACT-1" "GTGCCTAGCTATGCTT-1" "GCGAGAAACGGGAGTT-1" ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> bamfiles, <span class="at">cell.group =</span> cell.list1, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"Sept8"</span>, <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">53548291</span>,<span class="dv">53549565</span>), <span class="at">junc=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> bamfiles, <span class="at">cell.group =</span> cell.list1, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"Sept8"</span>, <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">53548291</span>,<span class="dv">53549565</span>), <span class="at">junc=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+ℹ The deprecated feature was likely used in the Yano package.
+  Please report the issue to the authors.</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -693,28 +924,25 @@ chrX:163926903-163929546/+/Ap1s2   3.964057e-40</code></pre>
 <h2 class="anchored" data-anchor-id="optional-build-cell-cell-weight-matrix-by-spatial-coordinates">Optional: Build cell-cell weight matrix by spatial coordinates</h2>
 <p>We previously used PCA to construct the cell weight matrix, but for spatial transcriptomics data, it is also possible to use the spatial coordinates, the real spot-to-spot distances, to build the weight matrix. Here, we demonstrate how to do this. Note that if we use spatial coordinates, the analysis can only be performed within a single slice.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">subset</span>(obj, orig.ident <span class="sc">==</span> <span class="st">"sec1_ant"</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj, <span class="at">image =</span> <span class="st">"slice1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">subset</span>(obj, orig.ident <span class="sc">==</span> <span class="st">"sec1_ant"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj, <span class="at">image =</span> <span class="st">"slice1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay : exon</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Set prune distance to 237.901240013582</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Run autocorrelation test for 61463 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 5.028779 secs</code></pre>
+<pre><code>Runtime : 7.174465 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>18989 autocorrelated features.</code></pre>
+<pre><code>24719 autocorrelated features.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"_wm"</span>, <span class="fu">names</span>(obj), <span class="at">value=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"_wm"</span>, <span class="fu">names</span>(obj), <span class="at">value=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "pca_wm"     "spatial_wm"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">wm.name =</span> <span class="st">"spatial_wm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">wm.name =</span> <span class="st">"spatial_wm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon.</code></pre>
 </div>
@@ -725,10 +953,10 @@ chrX:163926903-163929546/+/Ap1s2   3.964057e-40</code></pre>
 <pre><code>Use predefined weight matrix "spatial_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 18989 features.</code></pre>
+<pre><code>Processing 24719 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 9703 binding features.</code></pre>
+<pre><code>Processing 11939 binding features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieve binding data from assay RNA.</code></pre>
@@ -737,12 +965,12 @@ chrX:163926903-163929546/+/Ap1s2   3.964057e-40</code></pre>
 <pre><code>Use "data" layer for test features and binding features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Using 7 threads.</code></pre>
+<pre><code>Using 63 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.898239 mins.</code></pre>
+<pre><code>Runtime : 57.1062 secs.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -750,38 +978,150 @@ chrX:163926903-163929546/+/Ap1s2   3.964057e-40</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Meta</span>(obj) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">1e-7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Meta</span>(obj) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">1e-7</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                                    chr     start       end gene_name strand
-chr11:30106785-30109152/-/Sptbn1  chr11  30106785  30109152    Sptbn1      -
-chr9:112065091-112066022/-/Arpp21  chr9 112065091 112066022    Arpp21      -
-chr9:112065234-112066022/-/Arpp21  chr9 112065234 112066022    Arpp21      -
-chr9:112065236-112066022/-/Arpp21  chr9 112065236 112066022    Arpp21      -
-chr9:112065258-112066022/-/Arpp21  chr9 112065258 112066022    Arpp21      -
-chr9:112065260-112066022/-/Arpp21  chr9 112065260 112066022    Arpp21      -
-                                   moransi.pval   moransi autocorr.variable
-chr11:30106785-30109152/-/Sptbn1   3.164907e-34 0.1339599              TRUE
-chr9:112065091-112066022/-/Arpp21 5.137313e-287 0.4023238              TRUE
-chr9:112065234-112066022/-/Arpp21 6.239928e-279 0.3965606              TRUE
-chr9:112065236-112066022/-/Arpp21 5.664356e-273 0.3922582              TRUE
-chr9:112065258-112066022/-/Arpp21 3.542830e-232 0.3614440              TRUE
-chr9:112065260-112066022/-/Arpp21 8.989289e-216 0.3482880              TRUE
-                                  gene_name.D gene_name.t gene_name.pval
-chr11:30106785-30109152/-/Sptbn1    0.5977287   10.055834   4.132305e-17
-chr9:112065091-112066022/-/Arpp21   0.7330594    8.225065   3.944917e-13
-chr9:112065234-112066022/-/Arpp21   0.7307121    8.262398   3.278468e-13
-chr9:112065236-112066022/-/Arpp21   0.7282957    8.192431   4.637061e-13
-chr9:112065258-112066022/-/Arpp21   0.7102768    7.987021   1.279463e-12
-chr9:112065260-112066022/-/Arpp21   0.7059475    7.723662   4.666766e-12
-                                  gene_name.padj
-chr11:30106785-30109152/-/Sptbn1    7.779477e-13
-chr9:112065091-112066022/-/Arpp21   2.182433e-09
-chr9:112065234-112066022/-/Arpp21   2.182433e-09
-chr9:112065236-112066022/-/Arpp21   2.182433e-09
-chr9:112065258-112066022/-/Arpp21   4.817436e-09
-chr9:112065260-112066022/-/Arpp21   1.464276e-08</code></pre>
+<pre><code>                                       chr     start       end gene_name strand
+chr1:52185280-52187794/-/Gls          chr1  52185280  52187794       Gls      -
+chr1:52185280-52187853/-/Gls          chr1  52185280  52187853       Gls      -
+chr1:52184104-52187794/-/Gls          chr1  52184104  52187794       Gls      -
+chr11:30106785-30109152/-/Sptbn1     chr11  30106785  30109152    Sptbn1      -
+chr11:53541475-53541898/+/Sept8      chr11  53541475  53541898     Sept8      +
+chr11:53541475-53541847/+/Sept8      chr11  53541475  53541847     Sept8      +
+chr11:53541210-53544095/+/Sept8      chr11  53541210  53544095     Sept8      +
+chr11:53541030-53544096/+/Sept8      chr11  53541030  53544096     Sept8      +
+chr12:110694571-110694704/-/Hsp90aa1 chr12 110694571 110694704  Hsp90aa1      -
+chr12:110695052-110695672/-/Hsp90aa1 chr12 110695052 110695672  Hsp90aa1      -
+chr12:110695052-110695418/-/Hsp90aa1 chr12 110695052 110695418  Hsp90aa1      -
+chr12:111806315-111806775/+/Klc1     chr12 111806315 111806775      Klc1      +
+chr12:111806315-111806727/+/Klc1     chr12 111806315 111806727      Klc1      +
+chr12:111806315-111806711/+/Klc1     chr12 111806315 111806711      Klc1      +
+chr12:111806315-111806726/+/Klc1     chr12 111806315 111806726      Klc1      +
+chr13:59128168-59133970/+/Ntrk2      chr13  59128168  59133970     Ntrk2      +
+chr17:25717171-25717277/+/Gng13      chr17  25717171  25717277     Gng13      +
+chr18:82554320-82558703/+/Mbp        chr18  82554320  82558703       Mbp      +
+chr4:117154638-117155181/-/Rps8       chr4 117154638 117155181      Rps8      -
+chr4:117154391-117154813/-/Rps8       chr4 117154391 117154813      Rps8      -
+chr4:117154510-117154813/-/Rps8       chr4 117154510 117154813      Rps8      -
+chr4:117155008-117155107/-/Rps8       chr4 117155008 117155107      Rps8      -
+chr4:117155008-117155677/-/Rps8       chr4 117155008 117155677      Rps8      -
+chr5:121205406-121205663/+/Rpl6       chr5 121205406 121205663      Rpl6      +
+chr5:121205406-121206202/+/Rpl6       chr5 121205406 121206202      Rpl6      +
+chr7:27180169-27180279/-/Gm21983      chr7  27180169  27180279   Gm21983      -
+chr7:27180700-27180833/-/Gm21983      chr7  27180700  27180833   Gm21983      -
+chr9:110002746-110005739/+/Map4       chr9 110002746 110005739      Map4      +
+chr9:112065091-112066022/-/Arpp21     chr9 112065091 112066022    Arpp21      -
+chr9:112065234-112066022/-/Arpp21     chr9 112065234 112066022    Arpp21      -
+chr9:112065236-112066022/-/Arpp21     chr9 112065236 112066022    Arpp21      -
+chr9:112065258-112066022/-/Arpp21     chr9 112065258 112066022    Arpp21      -
+chr9:112065260-112066022/-/Arpp21     chr9 112065260 112066022    Arpp21      -
+chrX:163926903-163929546/+/Ap1s2      chrX 163926903 163929546     Ap1s2      +
+                                      moransi.pval    moransi autocorr.variable
+chr1:52185280-52187794/-/Gls          1.759373e-73 0.08241938              TRUE
+chr1:52185280-52187853/-/Gls          1.759373e-73 0.08241938              TRUE
+chr1:52184104-52187794/-/Gls          5.677815e-72 0.08153967              TRUE
+chr11:30106785-30109152/-/Sptbn1     1.293841e-144 0.11606393              TRUE
+chr11:53541475-53541898/+/Sept8       0.000000e+00 0.25578027              TRUE
+chr11:53541475-53541847/+/Sept8       0.000000e+00 0.20574744              TRUE
+chr11:53541210-53544095/+/Sept8       0.000000e+00 0.23378647              TRUE
+chr11:53541030-53544096/+/Sept8       0.000000e+00 0.23302513              TRUE
+chr12:110694571-110694704/-/Hsp90aa1  1.684319e-64 0.07702785              TRUE
+chr12:110695052-110695672/-/Hsp90aa1  1.026764e-27 0.04921850              TRUE
+chr12:110695052-110695418/-/Hsp90aa1  1.064431e-27 0.04920388              TRUE
+chr12:111806315-111806775/+/Klc1     5.543179e-147 0.11743184              TRUE
+chr12:111806315-111806727/+/Klc1     5.543179e-147 0.11743184              TRUE
+chr12:111806315-111806711/+/Klc1     8.111418e-124 0.10755171              TRUE
+chr12:111806315-111806726/+/Klc1     8.174470e-139 0.11405064              TRUE
+chr13:59128168-59133970/+/Ntrk2       0.000000e+00 0.19944747              TRUE
+chr17:25717171-25717277/+/Gng13       0.000000e+00 0.60886221              TRUE
+chr18:82554320-82558703/+/Mbp         9.819595e-61 0.07467050              TRUE
+chr4:117154638-117155181/-/Rps8      1.775230e-126 0.10901219              TRUE
+chr4:117154391-117154813/-/Rps8       0.000000e+00 0.19312419              TRUE
+chr4:117154510-117154813/-/Rps8       0.000000e+00 0.19613218              TRUE
+chr4:117155008-117155107/-/Rps8      7.775499e-217 0.14340253              TRUE
+chr4:117155008-117155677/-/Rps8      9.007297e-189 0.13366355              TRUE
+chr5:121205406-121205663/+/Rpl6       3.032098e-26 0.04778297              TRUE
+chr5:121205406-121206202/+/Rpl6       3.216519e-20 0.04139101              TRUE
+chr7:27180169-27180279/-/Gm21983     3.607826e-103 0.09645775              TRUE
+chr7:27180700-27180833/-/Gm21983      1.557775e-93 0.09175777              TRUE
+chr9:110002746-110005739/+/Map4      6.176938e-170 0.12673618              TRUE
+chr9:112065091-112066022/-/Arpp21     0.000000e+00 0.32750418              TRUE
+chr9:112065234-112066022/-/Arpp21     0.000000e+00 0.32297350              TRUE
+chr9:112065236-112066022/-/Arpp21     0.000000e+00 0.31877689              TRUE
+chr9:112065258-112066022/-/Arpp21     0.000000e+00 0.29303887              TRUE
+chr9:112065260-112066022/-/Arpp21     0.000000e+00 0.28285319              TRUE
+chrX:163926903-163929546/+/Ap1s2     7.149270e-184 0.13075323              TRUE
+                                     gene_name.D gene_name.t gene_name.pval
+chr1:52185280-52187794/-/Gls           0.4415595  -11.571196   2.132104e-20
+chr1:52185280-52187853/-/Gls           0.4415595  -11.571196   2.132104e-20
+chr1:52184104-52187794/-/Gls           0.4389918  -11.317335   7.515704e-20
+chr11:30106785-30109152/-/Sptbn1       0.5170538  -15.465186   1.849599e-28
+chr11:53541475-53541898/+/Sept8        0.5552903  -16.768546   5.498385e-31
+chr11:53541475-53541847/+/Sept8        0.4895025  -13.696448   6.935828e-25
+chr11:53541210-53544095/+/Sept8        0.5664315  -15.338576   3.292058e-28
+chr11:53541030-53544096/+/Sept8        0.5655160  -15.307810   3.788281e-28
+chr12:110694571-110694704/-/Hsp90aa1   0.3559919   -7.960209   1.460203e-12
+chr12:110695052-110695672/-/Hsp90aa1   0.3317801   -7.297043   3.717589e-11
+chr12:110695052-110695418/-/Hsp90aa1   0.3314020   -7.256058   4.530629e-11
+chr12:111806315-111806775/+/Klc1       0.3873376   -8.104568   7.161860e-13
+chr12:111806315-111806727/+/Klc1       0.3873376   -8.104568   7.161860e-13
+chr12:111806315-111806711/+/Klc1       0.3778733   -7.870674   2.268674e-12
+chr12:111806315-111806726/+/Klc1       0.3845407   -8.088734   7.744781e-13
+chr13:59128168-59133970/+/Ntrk2        0.5708956  -14.080468   1.126009e-25
+chr17:25717171-25717277/+/Gng13        0.4011771  -10.140008   2.707892e-17
+chr18:82554320-82558703/+/Mbp          0.4639377  -11.527162   2.652058e-20
+chr4:117154638-117155181/-/Rps8        0.3240657   -7.999458   1.203363e-12
+chr4:117154391-117154813/-/Rps8        0.4531328  -15.308221   3.781168e-28
+chr4:117154510-117154813/-/Rps8        0.4578271  -15.145173   7.972794e-28
+chr4:117155008-117155107/-/Rps8        0.4243686  -11.013851   3.406994e-19
+chr4:117155008-117155677/-/Rps8        0.4250164  -11.663271   1.351536e-20
+chr5:121205406-121205663/+/Rpl6        0.3615475   -9.350328   1.429720e-15
+chr5:121205406-121206202/+/Rpl6        0.3455003   -9.048994   6.480993e-15
+chr7:27180169-27180279/-/Gm21983       0.3671992  -11.847585   5.436635e-21
+chr7:27180700-27180833/-/Gm21983       0.3659280  -11.991137   2.679701e-21
+chr9:110002746-110005739/+/Map4        0.3873008   -7.945269   1.571713e-12
+chr9:112065091-112066022/-/Arpp21      0.6792671  -19.263507   1.457216e-35
+chr9:112065234-112066022/-/Arpp21      0.6754240  -19.562920   4.335075e-36
+chr9:112065236-112066022/-/Arpp21      0.6712918  -18.906531   6.274137e-35
+chr9:112065258-112066022/-/Arpp21      0.6466405  -17.904344   4.115950e-33
+chr9:112065260-112066022/-/Arpp21      0.6396993  -17.605042   1.471454e-32
+chrX:163926903-163929546/+/Ap1s2       0.3519107   -8.200468   4.456125e-13
+                                     gene_name.padj
+chr1:52185280-52187794/-/Gls           2.899543e-17
+chr1:52185280-52187853/-/Gls           2.899543e-17
+chr1:52184104-52187794/-/Gls           9.198846e-17
+chr11:30106785-30109152/-/Sptbn1       6.468047e-25
+chr11:53541475-53541898/+/Sept8        2.243250e-27
+chr11:53541475-53541847/+/Sept8        1.306016e-21
+chr11:53541210-53544095/+/Sept8        9.273334e-25
+chr11:53541030-53544096/+/Sept8        9.273334e-25
+chr12:110694571-110694704/-/Hsp90aa1   1.191477e-09
+chr12:110695052-110695672/-/Hsp90aa1   2.757662e-08
+chr12:110695052-110695418/-/Hsp90aa1   3.261920e-08
+chr12:111806315-111806775/+/Klc1       6.493155e-10
+chr12:111806315-111806727/+/Klc1       6.493155e-10
+chr12:111806315-111806711/+/Klc1       1.735465e-09
+chr12:111806315-111806726/+/Klc1       6.770875e-10
+chr13:59128168-59133970/+/Ntrk2        2.296965e-22
+chr17:25717171-25717277/+/Gng13        3.013023e-14
+chr18:82554320-82558703/+/Mbp          3.416828e-17
+chr4:117154638-117155181/-/Rps8        1.015763e-09
+chr4:117154391-117154813/-/Rps8        9.273334e-25
+chr4:117154510-117154813/-/Rps8        1.774237e-24
+chr4:117155008-117155107/-/Rps8        3.971420e-16
+chr4:117155008-117155677/-/Rps8        2.067766e-17
+chr5:121205406-121205663/+/Rpl6        1.521657e-12
+chr5:121205406-121206202/+/Rpl6        6.610342e-12
+chr7:27180169-27180279/-/Gm21983       8.872226e-18
+chr7:27180700-27180833/-/Gm21983       4.685458e-18
+chr9:110002746-110005739/+/Map4        1.241096e-09
+chr9:112065091-112066022/-/Arpp21      1.783559e-31
+chr9:112065234-112066022/-/Arpp21      1.061183e-31
+chr9:112065236-112066022/-/Arpp21      5.119486e-31
+chr9:112065258-112066022/-/Arpp21      2.518859e-29
+chr9:112065260-112066022/-/Arpp21      7.203946e-29
+chrX:163926903-163929546/+/Ap1s2       4.363259e-10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SpatialFeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr11:30106785-30109152/-/Sptbn1"</span>,<span class="st">"Sptbn1"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SpatialFeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr11:30106785-30109152/-/Sptbn1"</span>,<span class="st">"Sptbn1"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -796,380 +1136,256 @@ chr9:112065260-112066022/-/Arpp21   1.464276e-08</code></pre>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
     }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
-      }
-    }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-      }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
-        }
-      });
-    }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
       return false;
     }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -1177,185 +1393,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
       <a href="./Yano_anno.html" class="pagination-link" aria-label="Annotating genetic variants">

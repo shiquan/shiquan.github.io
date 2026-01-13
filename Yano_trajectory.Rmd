@@ -62,8 +62,8 @@ exp2 <- ReadPISA("exp2/", prefix = "d1-rep2-")
 
 exp <- mergeMatrix(exp1, exp2)
 
-obj <- QuickRecipe(exp, min.features = 800, min.cells = 100, resolution=0.2)
-rm(exp1, exp2, exp)
+obj <- QuickRecipe(exp, min.features = 800, min.cells = 100, resolution=0.3)
+#rm(exp1, exp2, exp)
 
 obj$replicate <- gsub("d1-(.*)-.*-1", "\\1", colnames(obj))
 DimPlot(obj, label = TRUE, label.size = 5)
@@ -72,6 +72,7 @@ FeaturePlot(obj, features = c("CD14", "VIM", "VWF", "ACTA2", "DLK1", "DAZL", "MA
 
 new.cluster.ids <- c("Sperm", "Early primary S'cytes", "Leydig cells", "Round S'tids", "Differentiating S'gonia", "Elongated S'tids", "Endothelial cells", "SSCs", "Myoid cells", "Sertoli cells", "Macrophages", "Later primary S'cytes", "Sertoli-like")
 names(new.cluster.ids) <- levels(obj)
+
 obj <- RenameIdents(obj, new.cluster.ids)
 DimPlot(obj, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
 ```
@@ -86,17 +87,18 @@ obj.sel <- obj[,sel]
 ![](trajectory.gif){width=50%}
 
 ```{r include=FALSE}
-obj.sel <- readRDS("./select.rds")
+obj.sel <- readRDS("select.rds")
 ```
 ```{r}
 require(princurve)
 emb <- Embeddings(obj.sel, 'umap')
 emb0 <- as.data.frame(emb)
-emb0$idents <- Idents(obj)[rownames(emb0)]
+emb0$idents <- Idents(obj.sel)
 emb0 %>% group_by(idents) %>% summarize(x=median(umap_1),y=median(umap_2)) -> emb1
 emb2 <- as.matrix(emb1[,c("x","y")])
 rownames(emb2) <- emb1$idents
 emb2 <- emb2[c("SSCs", "Differentiating S'gonia", "Early primary S'cytes", "Later primary S'cytes", "Round S'tids", "Elongated S'tids", "Sperm"),]
+
 pc <- princurve::principal_curve(x = emb, start = emb2)
 s <- as.data.frame(pc$s)
 colnames(s) <- c("x", "y")

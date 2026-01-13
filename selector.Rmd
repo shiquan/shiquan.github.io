@@ -14,7 +14,7 @@ We use demo data from SeuratData for simplity.
 require(Yano)
 require(SeuratData)
 
-#InstallData("stxBrain")
+InstallData("stxBrain")
 
 brain <- LoadData("stxBrain", type = "anterior1")
 brain <- SCTransform(brain, assay = "Spatial", verbose = FALSE)

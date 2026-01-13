@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,8 +21,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -63,17 +64,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-de84f8d6bb715db06a919283c2d1e787.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-9a023c9ade86a60361e96e3e3f11bc54.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-597958c53c93a607afca12fd375c57ed.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-7ac2f9da8c2617a4fdd15004b4601015.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-597958c53c93a607afca12fd375c57ed.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2cae7a44443c7384b30cd79a64306367.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-2d6ecf2d45d93a56a874280a57c27dd9.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-359c8607919eecb446bd360b82f92eee.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-6893e1c0f356f3ff25b33dc2bef6ed3e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-359c8607919eecb446bd360b82f92eee.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -116,7 +121,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -136,7 +141,169 @@ window.Quarto = {
 <link rel="stylesheet" href="index.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -236,6 +403,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
 
+
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">PISA User Guide</h1>
@@ -257,34 +425,34 @@ window.Quarto = {
 
 <section id="synopsis" class="level2">
 <h2 class="anchored" data-anchor-id="synopsis">Synopsis</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> <span class="pp">[</span><span class="ss">tool</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">options</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">input</span><span class="pp">-</span><span class="ss">file</span><span class="pp">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PISA</span> <span class="pp">[</span><span class="ss">tool</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">options</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">input</span><span class="pp">-</span><span class="ss">file</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="install" class="level2">
 <h2 class="anchored" data-anchor-id="install">Install</h2>
 <p>PISA source code can be downloaded at <a href="https://github.com/shiquan/PISA/releases" class="uri">https://github.com/shiquan/PISA/releases</a>, or the development version from <a href="https://github.com/shiquan/PISA/" class="uri">https://github.com/shiquan/PISA/</a>. To compile PISA from sources run <strong>make</strong> in the source directory.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git clone https://github.com/shiquan/PISA</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git clone https://github.com/shiquan/PISA</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd PISA</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> make</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> make</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="get-started" class="level2">
 <h2 class="anchored" data-anchor-id="get-started">Get Started</h2>
 <p>The code snippet below demonstrates how to use the PISA tools to process test data and generate various feature counts. You can find the test data in the PISA/demo directory. This example provides a practical approach to familiarize yourself with the functionality of PISA and to validate its operations with provided sample data.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>$ cd demo</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>$ cd demo</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>$ ls</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>aln.sam.gz  barcodes.txt  demo_1.fq.gz  demo_2.fq.gz  demo.gtf.gz  peaks.bed  README.md  var.vcf.gz</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>$ zcat demo_1.fq.gz|head -n 4</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>@A00984:220:HNJ7KDRXX:1:1118:2510:4586</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>@A00984<span class="sc">:220:</span>HNJ7KDRXX<span class="sc">:1:</span>1118<span class="sc">:2510:</span>4586</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>AAGCATCCACACAGAGCACCCCGTTCTT</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>+</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>FFFFFFFFFFFFFFFFFFFFFFFFFFFF</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>$ zcat demo_2.fq.gz|head -n 4</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>@A00984:220:HNJ7KDRXX:1:1118:2510:4586</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>@A00984<span class="sc">:220:</span>HNJ7KDRXX<span class="sc">:1:</span>1118<span class="sc">:2510:</span>4586</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>FFFFF<span class="sc">:FFFFFF:</span>FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF<span class="sc">:FFF:</span>FFFFFFFFFFFFFFFFFFFF:FFFFFFF</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu"># Convert raw FASTQ to FASTQ+ format</span></span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>$ PISA parse -rule 'CR,R1:1-16,barcodes.txt,CB,1;UR,R1:17-28;R1,R2' demo_1.fq.gz demo_2.fq.gz -1 demo.fq</span>
@@ -295,14 +463,14 @@ window.Quarto = {
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">2022-04-22 12:21:35</span><span class="co">]</span> Real time: 0.003 sec; CPU: 0.009 sec; Peak RSS: 0.010 GB.</span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>$ head -n 4 demo.fq</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>@A00984:220:HNJ7KDRXX:1:1118:2510:4586|||CR:Z:AAGCATCCACACAGAG|||CB:Z:AAGCATCCACACAGAG|||UR:Z:CACCCCGTTCTT</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>@A00984<span class="sc">:220:</span>HNJ7KDRXX<span class="sc">:1:</span>1118<span class="sc">:2510:</span>4586|||CR<span class="sc">:Z:</span>AAGCATCCACACAGAG|||CB<span class="sc">:Z:</span>AAGCATCCACACAGAG|||UR<span class="sc">:Z:</span>CACCCCGTTCTT</span>
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC</span>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>FFFFF<span class="sc">:FFFFFF:</span>FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF<span class="sc">:FFF:</span>FFFFFFFFFFFFFFFFFFFF:FFFFFFF</span>
 <span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="fu"># Alignment results of FASTQ+ </span></span>
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>$ samtools view aln.sam.gz|head -n 1</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>A00984:220:HNJ7KDRXX:1:1118:2510:4586|||CR:Z:AAGCATCCACACAGAG|||CB:Z:AAGCATCCACACAGAG|||UR:Z:CACCCCGTTCTT   0   chr11   35139165    255 26S65M  *   0   0   GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF NH:i:1  HI:i:1  AS:i:61 nM:i:1</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>A00984<span class="sc">:220:</span>HNJ7KDRXX<span class="sc">:1:</span>1118<span class="sc">:2510:</span>4586|||CR<span class="sc">:Z:</span>AAGCATCCACACAGAG|||CB<span class="sc">:Z:</span>AAGCATCCACACAGAG|||UR<span class="sc">:Z:</span>CACCCCGTTCTT   0   chr11   35139165    255 26S65M  *   0   0   GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC FFFFF<span class="sc">:FFFFFF:</span>FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF<span class="sc">:FFF:</span>FFFFFFFFFFFFFFFFFFFF:FFFFFFF NH<span class="sc">:i:</span>1  HI<span class="sc">:i:</span>1  AS<span class="sc">:i:</span>61 nM<span class="sc">:i:</span>1</span>
 <span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="fu"># Convert format alignment records from SAM to BAM</span></span>
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>$ PISA sam2bam aln.sam.gz -o aln.bam</span>
@@ -314,7 +482,7 @@ window.Quarto = {
 <span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">2022-04-22 12:26:31</span><span class="co">]</span> Real time: 0.005 sec; CPU: 0.009 sec; Peak RSS: 0.010 GB.</span>
 <span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>$ samtools view aln.bam|head -n 1</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>A00984:220:HNJ7KDRXX:1:1118:2510:4586   0   chr11   35139165    255 26S65M  *   0   0   GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF NH:i:1  HI:i:1  AS:i:61 nM:i:1  CR:Z:AAGCATCCACACAGAG   CB:Z:AAGCATCCACACAGAG   UR:Z:CACCCCGTTCTT</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>A00984<span class="sc">:220:</span>HNJ7KDRXX<span class="sc">:1:</span>1118<span class="sc">:2510:</span>4586   0   chr11   35139165    255 26S65M  *   0   0   GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC FFFFF<span class="sc">:FFFFFF:</span>FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF<span class="sc">:FFF:</span>FFFFFFFFFFFFFFFFFFFF:FFFFFFF NH<span class="sc">:i:</span>1  HI<span class="sc">:i:</span>1  AS<span class="sc">:i:</span>61 nM<span class="sc">:i:</span>1  CR<span class="sc">:Z:</span>AAGCATCCACACAGAG   CB<span class="sc">:Z:</span>AAGCATCCACACAGAG   UR<span class="sc">:Z:</span>CACCCCGTTCTT</span>
 <span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="fu"># Annotate gene names for BAM</span></span>
 <span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>$ PISA anno -gtf ./demo.gtf.gz aln.bam -o anno_gtf.bam</span>
@@ -337,7 +505,7 @@ window.Quarto = {
 <span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">2022-04-22 12:36:21</span><span class="co">]</span> Real time: 0.077 sec; CPU: 0.085 sec</span>
 <span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>$ samtools view corr.bam|head -n 1</span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>A00984:220:HNJ7KDRXX:1:1118:2510:4586   0   chr11   35139165    255 26S65M  *   0   0   GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF NH:i:1  HI:i:1  AS:i:61 nM:i:1  CR:Z:AAGCATCCACACAGAG   CB:Z:AAGCATCCACACAGAG   UR:Z:CACCCCGTTCTT   RE:A:E  GX:Z:ENSG00000026508.18 GN:Z:CD44   TX:Z:ENST00000263398.10,ENST00000428726.7,ENST00000526025.2 UB:Z:CACCCCGTTCTT</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>A00984<span class="sc">:220:</span>HNJ7KDRXX<span class="sc">:1:</span>1118<span class="sc">:2510:</span>4586   0   chr11   35139165    255 26S65M  *   0   0   GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC FFFFF<span class="sc">:FFFFFF:</span>FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF<span class="sc">:FFF:</span>FFFFFFFFFFFFFFFFFFFF:FFFFFFF NH<span class="sc">:i:</span>1  HI<span class="sc">:i:</span>1  AS<span class="sc">:i:</span>61 nM<span class="sc">:i:</span>1  CR<span class="sc">:Z:</span>AAGCATCCACACAGAG   CB<span class="sc">:Z:</span>AAGCATCCACACAGAG   UR<span class="sc">:Z:</span>CACCCCGTTCTT   RE<span class="sc">:A:</span>E  GX<span class="sc">:Z:</span>ENSG00000026508.18 GN<span class="sc">:Z:</span>CD44   TX<span class="sc">:Z:</span>ENST00000263398.10,ENST00000428726.7,ENST00000526025.2 UB<span class="sc">:Z:</span>CACCCCGTTCTT</span>
 <span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count gene X cell features</span></span>
 <span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>$ mkdir exp</span>
@@ -356,8 +524,8 @@ window.Quarto = {
 <span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">2022-04-22 12:43:01</span><span class="co">]</span> Real time: 0.027 sec; CPU: 0.090 sec; Speed : 9085 records/sec; Peak RSS: 0.034 GB.</span>
 <span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>$ samtools view anno_vcf_bed.bam|grep "VR:Z"|grep "PK:Z"|head -n 1</span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>A00984:220:HNJ7KDRXX:1:2266:27597:30843 0   chr11   35229688    255 91M *   0   0   CCCAGGGTTAATAGGGCCTGGTCCCTGGGAGGAAATTTGAATGGGTCCATTTTGCCCTTCCATAGCCTAATCCCGGGGCATTGTTTTCCAC</span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>FFFF,FFFFFFFFFF,FFFFFFF:,:FFFFFF,FF:FFFFFFFFFFF:,,:F:F:F,F:F:F,FFFF,F:FFFF,FF,FF:FFFFFFF:F: NH:i:1  HI:i:1  AS:i:85 nM:i:2  CR:Z:ATTGTTCCAAGTCCCG   CB:Z:ATTGTTCCAAGTCCCG   UR:Z:TCTTTAAGTCAG   RE:A:E  GX:Z:ENSG00000026508.18 GN:Z:CD44   TX:Z:ENST00000263398.10,ENST00000428726.7,ENST00000425428.6,ENST00000433892.6,ENST00000525469.1 UB:Z:TCTTTAAGTCAG   PK:Z:demo_peak_14a;demo_peak_14b    VR:Z:chr11:35229771C&gt;T</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>A00984<span class="sc">:220:</span>HNJ7KDRXX<span class="sc">:1:</span>2266<span class="sc">:27597:</span>30843 0   chr11   35229688    255 91M *   0   0   CCCAGGGTTAATAGGGCCTGGTCCCTGGGAGGAAATTTGAATGGGTCCATTTTGCCCTTCCATAGCCTAATCCCGGGGCATTGTTTTCCAC</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>FFFF,FFFFFFFFFF,FFFFFFF:,:FFFFFF,FF<span class="sc">:FFFFFFFFFFF:</span>,,<span class="sc">:F:</span>F:F,F<span class="sc">:F:</span>F,FFFF,F:FFFF,FF,FF<span class="sc">:FFFFFFF:</span>F: NH<span class="sc">:i:</span>1  HI<span class="sc">:i:</span>1  AS<span class="sc">:i:</span>85 nM<span class="sc">:i:</span>2  CR<span class="sc">:Z:</span>ATTGTTCCAAGTCCCG   CB<span class="sc">:Z:</span>ATTGTTCCAAGTCCCG   UR<span class="sc">:Z:</span>TCTTTAAGTCAG   RE<span class="sc">:A:</span>E  GX<span class="sc">:Z:</span>ENSG00000026508.18 GN<span class="sc">:Z:</span>CD44   TX<span class="sc">:Z:</span>ENST00000263398.10,ENST00000428726.7,ENST00000425428.6,ENST00000433892.6,ENST00000525469.1 UB<span class="sc">:Z:</span>TCTTTAAGTCAG   PK<span class="sc">:Z:</span>demo_peak_14a;demo_peak_14b    VR<span class="sc">:Z:</span>chr11:35229771C&gt;T</span>
 <span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summarize the reads, UMIs, genes, peaks, and variants per cell</span></span>
 <span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>$ PISA attrcnt -cb CB -tags UB,GN,PK,VR anno_vcf_bed.bam -dedup |head -n 5</span>
@@ -405,10 +573,10 @@ window.Quarto = {
 <span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>$ PISA bam2fq -tags CB,GN picked.bam -o pick.fq</span>
 <span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a>$ head -n 4 pick.fq </span>
-<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>@A00984:220:HNJ7KDRXX:1:1118:2510:4586|||CB:Z:AAGCATCCACACAGAG|||GN:Z:CD44</span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>@A00984<span class="sc">:220:</span>HNJ7KDRXX<span class="sc">:1:</span>1118<span class="sc">:2510:</span>4586|||CB<span class="sc">:Z:</span>AAGCATCCACACAGAG|||GN<span class="sc">:Z:</span>CD44</span>
 <span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC</span>
 <span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF</span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>FFFFF<span class="sc">:FFFFFF:</span>FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF<span class="sc">:FFF:</span>FFFFFFFFFFFFFFFFFFFF:FFFFFFF</span>
 <span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sort FASTQ+ reads by CB and GN</span></span>
 <span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>$ PISA fsort -tags CB,GN pick.fq -o fsort.fq.gz</span>
@@ -418,14 +586,14 @@ window.Quarto = {
 <span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">2022-04-22 13:22:50</span><span class="co">]</span> Real time: 0.021 sec; CPU: 0.020 sec</span>
 <span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a>$ zcat fsort.fq.gz|head -n 8</span>
-<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>@A00984:220:HNJ7KDRXX:1:1118:2510:4586|||CB:Z:AAGCATCCACACAGAG|||GN:Z:CD44</span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>@A00984<span class="sc">:220:</span>HNJ7KDRXX<span class="sc">:1:</span>1118<span class="sc">:2510:</span>4586|||CB<span class="sc">:Z:</span>AAGCATCCACACAGAG|||GN<span class="sc">:Z:</span>CD44</span>
 <span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a>GCAGTGGTATCAACGCAGAGTACATGGGGAGCCTCATTGCCCAGCGGACCCCAGCCTCTGCCAGGTTCGGTCCGCCATCCTCGTCCCGTCC</span>
 <span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>FFFFF:FFFFFF:FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFF:FFFFFFF</span>
-<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a>@A00984:220:HNJ7KDRXX:1:2143:21640:21496|||CB:Z:AAGCATCCACACAGAG|||GN:Z:CD44</span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>FFFFF<span class="sc">:FFFFFF:</span>FFFFFFFFFF,FFFFFFFFF:FFFFFFFFF,FFFF:FFF,FFFFF<span class="sc">:FFF:</span>FFFFFFFFFFFFFFFFFFFF:FFFFFFF</span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a>@A00984<span class="sc">:220:</span>HNJ7KDRXX<span class="sc">:1:</span>2143<span class="sc">:21640:</span>21496|||CB<span class="sc">:Z:</span>AAGCATCCACACAGAG|||GN<span class="sc">:Z:</span>CD44</span>
 <span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a>CCTGCCCCGCGCCCAGAGATCCTCCAGCTCCTTTCGCCCGCGCCCTACGTTCGCTCCGGACACCATGGACAAGTATTGGTGGAACACAGCC</span>
 <span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>,,FFFFFFFF,F,,:F,F,F:FFF,FFFFFF,F::F,FF,F:FF:,,FF:FFF,:FFFF:FFF,::FFFF,F:F,FFFF,,F,FFF,F,::</span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>,,FFFFFFFF,F,,:F,F,F:FFF,FFFFFF,F::F,FF,F<span class="sc">:FF:</span>,,FF:FFF,<span class="sc">:FFFF:</span>FFF,::FFFF,F:F,FFFF,,F,FFF,F,::</span>
 <span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a><span class="fu"># Assembly reads mapped to CD44 of the same cell into contigs</span></span>
 <span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a><span class="fu"># This step requires Trinity software and seqtk already installed in your environment</span></span>
@@ -433,13 +601,13 @@ window.Quarto = {
 <span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">2022-04-22 13:24:21</span><span class="co">]</span> Real time: 5.607 sec; CPU: 0.010 sec; Peak RSS: 0.010 GB.</span>
 <span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a>$ seqtk seq assem.fa -l 100 |head </span>
-<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;Z_AAGCATCCACACAGAG_Z_CD44_1|||CB:Z:AAGCATCCACACAGAG|||GN:Z:CD44 len=439 path=</span><span class="co">[</span><span class="ot">0:0-438</span><span class="co">]</span></span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;Z_AAGCATCCACACAGAG_Z_CD44_1</span><span class="pp">|||</span><span class="at">CB</span><span class="sc">:Z:</span><span class="at">AAGCATCCACACAGAG</span><span class="pp">|||</span><span class="at">GN</span><span class="sc">:Z:</span><span class="at">CD44 len=439 path=</span><span class="co">[</span><span class="ot">0:0-438</span><span class="co">]</span></span>
 <span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a><span class="at">GAAATTAGGGCCCAATTAATAATCAGCAAGAATTTGATCGTTCCAGTTCCCACTTGGAGGCCTTTCATCCCTCGGGTGTGCTATGGATGGCTTCTAACAA</span></span>
 <span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a><span class="at">AAACTACACATATGTATTCCTGATCGCCAACCTTTCCCCCACCAGCTAAGGACATTTCCCAGGGTTAATAGGGCCTGGTCCCTGGGAGGAAATTTGAATG</span></span>
 <span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a><span class="at">GGTCCATTTTGCCCTTCCATAGCCTAATCCCTGGGCATTGTTTTCCACTGAGGTTGGGGGTTGGGGTGTACTAGTTACACATCTTCAACAGACCCCCTCT</span></span>
 <span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a><span class="at">AGAAATTTTTCAGATGCTTCTGGGAGACACCCAAAGGGTGAAGCTATTTATCTGTAGTAAACTATTTATCTGTGTTTTTGAAATATTAAACCCTGGATCA</span></span>
 <span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a><span class="at">GTCCTTTGATCAGTATAATTTTTTAAAGTTACTTTGTCA</span></span>
-<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;Z_AAGCATCCACACAGAG_Z_CD44_2|||CB:Z:AAGCATCCACACAGAG|||GN:Z:CD44 len=384 path=</span><span class="co">[</span><span class="ot">0:0-383</span><span class="co">]</span></span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;Z_AAGCATCCACACAGAG_Z_CD44_2</span><span class="pp">|||</span><span class="at">CB</span><span class="sc">:Z:</span><span class="at">AAGCATCCACACAGAG</span><span class="pp">|||</span><span class="at">GN</span><span class="sc">:Z:</span><span class="at">CD44 len=384 path=</span><span class="co">[</span><span class="ot">0:0-383</span><span class="co">]</span></span>
 <span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a><span class="at">CCTGGTAGAATTGGCTTTTCTAGCAGAACCTTTCCAAAAGTTTTATATTGAGATTCATAACAACACCAAGAATTGATTTTGTAGCCAACATTCATTCAAT</span></span>
 <span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a><span class="at">ACTGTTATATCAGAGGAGTAGGAGAGAGGAAACATTTGACTTATCTGGAAAAGCAAAATGTACTTAAGAATAAGAATAACATGGTCCATTCACCTTTATG</span></span>
 <span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a><span class="at">TTATAGATATGTCTTTGTGTAAATCATTTGTTTTGAGTTTTCAAAGAATAGCCCATTGTTCATTCTTGTGCTGTACAATGACCACTGTTATTGTTACTTT</span></span>
@@ -471,7 +639,7 @@ window.Quarto = {
 <span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a>AAACTACACATATGTATTCCTGATCGCCAACCTTTCCCCCACCAGCTAAGGACATTTCCCAGGGTTAATAGGGCCTGGTCCCTGGGAGGAAATTTGAATG</span>
 <span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a>GGTCCATTTTGCCCTTCCATAGCCTAATCCCTGGGCATTGTTTTCCACTGAGGTTGGGGGTTGGGGTGTACTAGTTACACATCTTCAACAGACCCCCTCT</span>
 <span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a>AGAAATTTTTCAGATGCTTCTGGGAGACACCCAAAGGGTGAAGCTATTTATCTGTAGTAAACTATTTATCTGTGTTTTTGAAATATTAAACCCTGGATCA</span>
-<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a>GTCCTTTGATCAGTATAATTTTTTAAAGTTACTTTGTCA *   NM:i:1  ms:i:436    AS:i:436    nn:i:0  tp:A:P  cm:i:137    s1:i:430    s2:i:0  de:f:0.0023 rl:i:0  CB:Z:AAGCATCCACACAGAG   GN:Z:CD44</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a>GTCCTTTGATCAGTATAATTTTTTAAAGTTACTTTGTCA *   NM<span class="sc">:i:</span>1  ms<span class="sc">:i:</span>436    AS<span class="sc">:i:</span>436    nn<span class="sc">:i:</span>0  tp<span class="sc">:A:</span>P  cm<span class="sc">:i:</span>137    s1<span class="sc">:i:</span>430    s2<span class="sc">:i:</span>0  de<span class="sc">:f:</span>0.0023 rl<span class="sc">:i:</span>0  CB<span class="sc">:Z:</span>AAGCATCCACACAGAG   GN<span class="sc">:Z:</span>CD44</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="list-of-commands" class="level2">
 <h2 class="anchored" data-anchor-id="list-of-commands">List of commands</h2>
@@ -648,7 +816,7 @@ Summary report in csv format.
 <section id="parse" class="level3">
 <h3 class="anchored" data-anchor-id="parse">parse</h3>
 <p>The parse tool is specifically designed to convert FASTQ files into the extended FASTQ+ format. It utilizes the -rule option to define the library structure, accommodating various sequencing setups. For ease of use, this tool has included predefined common library structures in the release; these can be applied using the -x option. This tool is optimized for speed and supports the correction of barcodes that have up to one mismatch.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Parse cell barcode and UMI string from raw FASTQ.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Parse cell barcode and UMI string from raw FASTQ.</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>$ PISA parse -rule CB,R1:1-10,whitelist.txt,CB,1;R1,R1:11-60;R2,R2 -report fastq.csv lane1_1.fq.gz,lane02_1.fq.gz lane1_2.fq.gz,lane2_2.fq.gz</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -683,7 +851,7 @@ Summary report in csv format.
 <span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="fu"># CR,R1:1-10,bc1.txt,CB,1;CR,R1:11-20,bc2.txt,CB,1 - This cell barcode consist of two segments, first segment start</span></span>
 <span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="fu">#   from 1 to 10 in read 1, and whitelist is bc1.txt, and second segment start from 11 to 20, and whitelist is bc2.txt.</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="fu">#   These two segments will be combined after correction, because the corrected tag are the same.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="fu">#   These two segments will be combined after correction, because the corrected tag are the same.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Option -report can specify a quality control report in CSV format. Here is the explanation of each term in this file.</p>
 <div class="center">
 <table class="caption-top table">
@@ -721,7 +889,7 @@ Summary report in csv format.
 <section id="fsort" class="level3">
 <h3 class="anchored" data-anchor-id="fsort">fsort</h3>
 <p>The fsort tool is engineered to order FASTQ+ records based on specified tags, which can be defined using the -tags option. This tool efficiently handles file sorting: for files smaller than 1 gigabyte, it performs the sort directly. However, for larger FASTQ files, where caching the entire file in memory is impractical, fsort employs a different strategy. It splits the large file into smaller segments, sorts each segment individually, and then merges the sorted segments. This method ensures efficient handling of large datasets while maintaining the integrity and order of the FASTQ+ records.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sort reads by tags.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sort reads by tags.</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>$ PISA fsort -tags CB,UR -list cell_barcodes_top10K.txt -@ 5 -o sorted.fq.gz in.fq</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -731,12 +899,12 @@ Summary report in csv format.
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a> -o       <span class="co">[</span><span class="ot">fq.gz</span><span class="co">]</span>    bgzipped output fastq file.</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a> -m       <span class="co">[</span><span class="ot">mem</span><span class="co">]</span>      Memory per thread. <span class="co">[</span><span class="ot">1G</span><span class="co">]</span></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a> -p                  Input fastq is smart pairing.</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a> -T       <span class="co">[</span><span class="ot">prefix</span><span class="co">]</span>   Write temporary files to PREFIX.nnnn.tmp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a> -T       <span class="co">[</span><span class="ot">prefix</span><span class="co">]</span>   Write temporary files to PREFIX.nnnn.tmp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="stream" class="level3">
 <h3 class="anchored" data-anchor-id="stream">stream</h3>
 <p>The stream tool is designed as a framework to process FASTQ+ files, where each FASTQ+ block—defined by having identical tags and grouped together in the file—is handled individually. The -script option allows users to specify a custom bash script that processes each block. This user-defined script reads a ‘small’ FASTQ+ file, generating FASTQ or FASTA output that is then sent to stdout. The stream tool captures this output via a pipe and updates the tags to ensure that each block of reads retains its original tags. Finally, it consolidates all outputs into a single file. In essence, this tool efficiently divides and processes each FASTQ+ block through a user-defined method, then seamlessly merges the results.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Perform user-defined script for each FASTQ+ block.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Perform user-defined script for each FASTQ+ block.</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>$ PISA stream -script run.sh reads.fq.gz</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -749,35 +917,35 @@ Summary report in csv format.
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a> -tmpdir</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a> -t                  Threads.</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a> -o       <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     Path to output file.</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a> -nw                 Disable warning messages.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a> -nw                 Disable warning messages.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="write-a-script-for-pisa-stream" class="level4">
 <h4 class="anchored" data-anchor-id="write-a-script-for-pisa-stream">Write a script for PISA stream</h4>
 <p>The PISA stream tool generates a temporary file named _block.fq for each block of reads, storing this file in a designated temporary directory. The path to this file is set in the environment variable ${FQ} for accessibility by subprocesses. Additionally, to ensure the uniqueness of each block, an alias named the ‘unique block index’ is exported to the environment as ${UBI}.</p>
 <p>The following example script demonstrates how to convert FASTQ+ to FASTA and rename the sequence ID. It is crucial for users to ensure that the script’s final output (either FASTQ+ or FASTA) is directed to stdout. All other script steps should avoid producing output to stdout or stderr, except for the last step. This precaution is necessary because PISA captures the script’s output through a pipe, and any unintended characters could disrupt the data format. Scripts can be written in a bash file or specified inline within the command.</p>
 <div class="framed">
-<div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>$ cat run.sh</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>seqtk rename ${FQ} &gt; test.fa; seqtk rename test.fa ${UBI}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>$ cat run.sh</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>seqtk rename ${FQ} &gt; test.fa; seqtk rename test.fa ${UBI}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
 <section id="addtags" class="level3">
 <h3 class="anchored" data-anchor-id="addtags">addtags</h3>
 <p>The addtags tool is designed to put the new tags or update tags for FASTQ+ or BAM files.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Just add tags to reads.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Just add tags to reads.</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>$ PISA addtags -str CB:Z:CELL1,LB:Z:PoII2 -o out.bam in.bam</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>$ PISA addtags -str CB:Z:CELL1,LB:Z:PoII2 -o out.fastq in.fastq</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>$ PISA addtags -str CB<span class="sc">:Z:</span>CELL1,LB<span class="sc">:Z:</span>PoII2 -o out.bam in.bam</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>$ PISA addtags -str CB<span class="sc">:Z:</span>CELL1,LB<span class="sc">:Z:</span>PoII2 -o out.fastq in.fastq</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>Options:</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>-o    <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Output file, bam or fastq, depends on input format</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>-str  <span class="co">[</span><span class="ot">string</span><span class="co">]</span>  TAGs.</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>-@    <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Threads to pack file.</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>-mapq <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Mapping quality score to filter mapped reads.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>-mapq <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Mapping quality score to filter mapped reads.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="sam2bam" class="level3">
 <h3 class="anchored" data-anchor-id="sam2bam">sam2bam</h3>
 <p>After alignment, the sequence ID from the FASTQ+ records is retained in the RNAME field of the SAM file. Given that the RNAME field is limited to 254 characters, we also restrict the sequence ID and any optional tag fields in FASTQ+ to this length to ensure compatibility. The sam2bam tool processes these details by parsing the tags from the RNAME and appending them to the end of the SAM optional fields.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Parse FASTQ+ read name and convert SAM to BAM.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Parse FASTQ+ read name and convert SAM to BAM.</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>$ PISA sam2bam -report alignment.csv -@ 5 -adjust-mapq -gtf genes.gtf -o aln.bam in.sam<span class="co">[</span><span class="ot">.gz</span><span class="co">]</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -793,11 +961,11 @@ Summary report in csv format.
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Reads map to multiple loci usually be marked as low quality and filtered at downstream analysis.</span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  But for RNAseq library, if reads map to an exonic locus but also align to 1 or more non-exonic loci,</span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  the exonic locus can be prioritized as primary alignments, and mapping quality adjusts to 255. Tag</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  MM:i:1 will also be added for this record. Following options used to adjust mapping quality.</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  MM<span class="sc">:i:</span>1 will also be added for this record. Following options used to adjust mapping quality.</span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Input SAM need be sorted by read name, and aligner should output all hits of a read in this SAM.</span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a> -adjust-mapq         Enable adjusts mapping quality score.</span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a> -gtf     <span class="co">[</span><span class="ot">GTF</span><span class="co">]</span>       GTF annotation file. This file is required to check the exonic regions.</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a> -qual    <span class="co">[</span><span class="ot">255</span><span class="co">]</span>       Updated quality score.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a> -qual    <span class="co">[</span><span class="ot">255</span><span class="co">]</span>       Updated quality score.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Option -t is to set the threads to parse the SAM records. The -@ option is to set the threads to compress alignments in BGZF format. The default compress level of BGZF is 6 in the htslib, but here PISA has reset this value to 2 to decrease the CPU times. It’s not a good design to have both -t and -@, but will require a lot work to redesign the multithreads strategy, I have put this work in my todo list.</p>
 <p>Option -report can specify a quality control report in CSV format. Here is the explanation of each term in this file.</p>
 <div class="center">
@@ -839,7 +1007,7 @@ Summary report in csv format.
 <section id="mapq-adjust-method" class="level4">
 <h4 class="anchored" data-anchor-id="mapq-adjust-method">MapQ adjust method</h4>
 <p>For RNA libraries, if a read from cDNA maps to an exonic locus but also maps to one or more non-exonic regions, the exonic locus can be prioritized as primary alignments, and mapping quality adjusts to 255. In the below records below, read DP8400008965TLL1C001R0102043364 mapped to three loci, and the aligner random pick one as the primary alignment and others as secondary. Each of these alignments has low mapping quality (MAPQ == 2, is usually filtered at downstream analysis). Our adjustment method will check if only one of these alignments overlaps with exonic regions. In our example, the last alignment overlapped with gene EEF1A1, and the other two hit intergenic regions. After adjustment, the last record has been flagged as a primary hit, and the mapping quality adjusted to 255, and other alignments of the same read are updated as secondary, MAPQ adjust to 0. MM:i:1 tag also is added to the primary record after adjustment. Option -adjust-mapq is reimplemented to mirror the 10X CellRanger’s MAPQ adjustment method (<a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview#alignment" class="uri">https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview#alignment</a>).</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">#  Output by aligner:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">#  Output by aligner:</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>DP8400008965TLL1C001R0102043364 0   9   133020979   2   100M    *   0   0   GTTAATGATAACAATGCATCGTAAAACCTTCAGAAGGAAAGGAGAATGTTTTGTGGACCACTTTGGTTTTCTTGTTTGCGTGTGGCAGTTTTAAGTTTTT    ...</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>DP8400008965TLL1C001R0102043364 272 7   22510408    2   100M    *   0   0   AAAAACTTAAAACTGCCACACGCAAACAAGAAAACCAAAGTGGTCCACAAAACATTCTCCTTTCCTTCTGAAGGTTTTACGATGCATTGTTATCATTAAC    ...</span>
@@ -849,16 +1017,16 @@ Summary report in csv format.
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>DP8400008965TLL1C001R0102043364 256 9   133020979   0   100M    *   0   0   *   ...</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>DP8400008965TLL1C001R0102043364 272 7   22510408    0   100M    *   0   0   *   ...</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>DP8400008965TLL1C001R0102043364 16  6   73517606    255 100M    *   0   0   AAAAACTTAAAACTGCCACACGCAAACAAGAAAACCAAAGTGGTCCACAAAACATTCTCCTTTCCTTCTGAAGGTTTTACGATGCATTGTTATCATTAAC    ... MM:i:1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>DP8400008965TLL1C001R0102043364 16  6   73517606    255 100M    *   0   0   AAAAACTTAAAACTGCCACACGCAAACAAGAAAACCAAAGTGGTCCACAAAACATTCTCCTTTCCTTCTGAAGGTTTTACGATGCATTGTTATCATTAAC    ... MM<span class="sc">:i:</span>1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>An example list here to show how to enable mapq adjuestment.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>PISA sam2bam -report alignment.csv -o out.bam -adjust-mapq -gtf hg38.gtf in.sam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>PISA sam2bam -report alignment.csv -o out.bam -adjust-mapq -gtf hg38.gtf in.sam</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="rmdup" class="level3">
 <h3 class="anchored" data-anchor-id="rmdup">rmdup</h3>
 <p>To effectively manage PCR duplication in single-cell experiments, it is essential to consider both cell and molecular barcodes. During the feature counting stage facilitated by PISA count, deduplication is efficiently handled by relying solely on unique UMIs. This reliance makes traditional PCR deduplication unnecessary for libraries that use UMIs. Nonetheless, producing a deduplicated BAM file remains beneficial for other analytical processes, such as variant calling, or simply to reduce file size.</p>
 <p>The rmdup tool is specifically designed to remove duplicate reads that share identical barcodes, such as UMIs and cell barcodes. This selective deduplication approach ensures that only truly redundant data is removed, thus preserving the integrity and completeness of the dataset for comprehensive downstream analyses.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Deduplicate PCR reads with same barcodes.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Deduplicate PCR reads with same barcodes.</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>$ PISA rmdup -tags CB,UR -o rmdup.bam in.bam</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -868,20 +1036,20 @@ Summary report in csv format.
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>   -o     <span class="co">[</span><span class="ot">BAM</span><span class="co">]</span>        Output bam.</span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>   -q     <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>        Map Quality Score cutoff.</span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>   -k                  Keep duplicates, make flag instead of remove them.</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>   -nw                 Disable warnings.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>   -nw                 Disable warnings.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In this version, PISA rmdup only supports single-end reads. For paired-end reads, such as scATAC data, PCR deduplication can be performed by the PISA bam2frag tool.</p>
 </section>
 <section id="pick" class="level3">
 <h3 class="anchored" data-anchor-id="pick">pick</h3>
 <p>The PISA pick tool is designed to select alignments with predefined tags and candidate values.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>$ PISA pick -tags CB,GN -list cell_barcodes.txt in.bam</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>$ PISA pick -tags CB,GN -list cell_barcodes.txt in.bam</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>Options :</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a> -tags    <span class="co">[</span><span class="ot">TAGS</span><span class="co">]</span>       Barcode tags.</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a> -list    <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>       Barcode white list, tag values in related column will be apply.</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a> -o       <span class="co">[</span><span class="ot">BAM</span><span class="co">]</span>        Output file.</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a> -q       <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>        Map Quality Score cutoff.</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a> -@       <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>        Threads to unpack BAM.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a> -@       <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>        Threads to unpack BAM.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Depending on the number of tags specified by the user, the candidate list for tags can consist of either a single column or multiple columns. If multiple tags are specified but only one column is present in the list, the program will primarily compare the value of the first tag in the alignments with the list.</p>
 </section>
 <section id="anno" class="level3">
@@ -894,7 +1062,7 @@ Summary report in csv format.
 <figcaption>Figure 1: Read types.</figcaption>
 </figure>
 </div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># annotate strand-specific reads</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>$ PISA anno -gtf genes.gtf -o anno.bam in.bam</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -912,17 +1080,17 @@ Summary report in csv format.
 <span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>$ PISA anno -bed peak.bed -o anno.bam in.bam</span>
 <span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="fu"># annotate genetic variants (both reference allele and alternative allele) </span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>$ PISA anno  -vcf in.vcf.gz -ref-alt -o anno.bam in.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>$ PISA anno  -vcf in.vcf.gz -ref-alt -o anno.bam in.bam</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Besides these annotation methods, PISA anno also supports a -chr-species method. This method requires a binding list for chromosome and related label relationships. The software will check the chromosome and add the related tag for each chromosome. This method, combined with PISA attrcnt can help to summarize the mixed two cell lines from different species.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># A binding list is tab-separated two columns txt file.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># A binding list is tab-separated two columns txt file.</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>$ cat binding_list.txt</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>GRCh38_chr1    Human</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>GRCh38_chr21   Human</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>mm10_chr21     Mouse</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>$ PISA anno -chr-species binding.txt -btag SP -o anno_species.bam sorted.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>$ PISA anno -chr-species binding.txt -btag SP -o anno_species.bam sorted.bam</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The full options and descriptions list below.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Annotate SAM/BAM records with overlapped function regions. Such as gene, transcript etc.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Annotate SAM/BAM records with overlapped function regions. Such as gene, transcript etc.</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>$ PISA anno -bed peak.bed -tag PK -vcf in.vcf.gz -vtag VF -vcf-ss -ref-alt -o anno.bam in.bam</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>$ PISA anno -gtf genes.gtf -o anno.bam in.bam</span>
@@ -980,18 +1148,18 @@ Summary report in csv format.
 <span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>   FL : Flatten exon name. Only generate it with -flatten.</span>
 <span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>The following tags set with -psi.</span>
 <span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>   ER : Excluded exons.</span>
-<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>PSI = EX/(EX+ER); EX is the exon tag, which indicate include reads in exon.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>PSI = EX/(EX+ER); EX is the exon tag, which indicate include reads in exon.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="corr" class="level3">
 <h3 class="anchored" data-anchor-id="corr">corr</h3>
 <p>The diversity of UMIs of each gene in one cell is used to evaluate the gene expression level, but the error of UMI comes from sequencing or PCR may introduce bias. PISA corr is designed to correct the UMI or barcode sequence based on Hamming distance. In default, two groups of UMI from the same gene of one cell with Hamming distance equal to 1, will be considered to originate from the same transcript. The group with high frequency will be selected as a real one, and another one will be corrected to the high one.</p>
 <p>Because PISA corr does not require a sorted BAM, this tool will first build a correction list by caching all the raw UMIs and barcodes and then correct them in memory. After these steps, this tool will reread the file and update these records by order. This design can avoid potential bias for the same gene from different chromosomes (i.e., the HLA genes in alternative locus). However, this design also required a lot of memory for a big BAM.</p>
 <p>CellRanger also introduces an algorithm to correct reads with the same UMI of one cell but mapping to more than one gene (<a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview" class="uri">https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview</a>). PISA implements this method but does not enable it in default. The -cr option can be used by users to enable this function. The reason for not enable it by default is PISA corr not only is used to correct UMIs, but also can be used to correct any other types of barcodes. The following example shows how to use PISA corr to correct cell barcodes for reads in the same gene.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>// Reads with same gene tag (GN) and UMI (UB) will be grouped and calculate the Hamming distance between each other. </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>// Reads with same gene tag (GN) and UMI (UB) will be grouped and calculate the Hamming distance between each other. </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>// Only if Hamming distance == 1 will be corrected.</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>PISA corr -tag CR -new-tag CB -tags-block GN,UB -o cell_barcode_corrected.bam in.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>PISA corr -tag CR -new-tag CB -tags-block GN,UB -o cell_barcode_corrected.bam in.bam</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Full options of PISA corr list below.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Correct similar barcodes (hamming distance == 1).</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Correct similar barcodes (hamming distance == 1).</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>$ PISA corr -tag UR -new-tag UB -tags-block CB,GN -@ 5 -o corr.bam in.bam</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1013,12 +1181,12 @@ Summary report in csv format.
 <span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a> // Same with above. Besides, if two or more groups of reads have same CB and UB but different GN, the GN with the most supporting reads</span>
 <span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a> // is kept for UMI counting, and the other read groups are discarded. In case of a tie for maximal read support, all read groups are</span>
 <span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a> // discarded, as the gene cannot be confidently assigned (Cell Ranger method).</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>$ PISA corr -cr -tag UR -new-tag UB -tags-block CB,GN in.bam -o corr.bam </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>$ PISA corr -cr -tag UR -new-tag UB -tags-block CB,GN in.bam -o corr.bam </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="attrcnt" class="level3">
 <h3 class="anchored" data-anchor-id="attrcnt">attrcnt</h3>
 <p>PISA attrcnt is used to summarize the meta information of the library. We start introduce this tool with few examples.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count reads per cell, -cb option is required to specify cell barcode tag</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count reads per cell, -cb option is required to specify cell barcode tag</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>$ PISA attrcnt -cb CB in.bam</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>// the summary information output in tsv format</span>
@@ -1066,9 +1234,9 @@ Summary report in csv format.
 <span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>GGTACACCACAGTAGTTACG-1  12  10  0</span>
 <span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>GCGCGCCGAGGGACACTCTT-1  1   1   0</span>
 <span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a>CTCTAAGCATCGAGGTTAAC-1  162 138 50</span>
-<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a>TTCGTAGCACCGATACTAGC-1  51  48  46</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a>TTCGTAGCACCGATACTAGC-1  51  48  46</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Full list of options list below.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count the frequency of tag values.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count the frequency of tag values.</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>$ PISA attrcnt -cb CB -tags UR,GN -dedup -all-tags in.bam</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1084,12 +1252,12 @@ Summary report in csv format.
 <span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a> -no-header           Ignore header in the output.</span>
 <span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a> -@        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Thread to unpack bam.</span>
 <span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a> -ttag     <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>      Region type tag. <span class="co">[</span><span class="ot">RE</span><span class="co">]</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a> -ttype               Region type used to count. Set <span class="in">`E,S`</span> to count exon enclosed reads. Set <span class="in">`N,C`</span> to count intron overlapped reads.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a> -ttype               Region type used to count. Set <span class="in">`E,S`</span> to count exon enclosed reads. Set <span class="in">`N,C`</span> to count intron overlapped reads.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="extract" class="level3">
 <h3 class="anchored" data-anchor-id="extract">extract</h3>
 <p>PISA extract is designed to extract the values of tags from BAM records and generate a tab-separated file.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Extract tag values from alignments.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Extract tag values from alignments.</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>$ PISA extract -tags CB,UR,GN -o tags.tsv in.bam</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1098,12 +1266,12 @@ Summary report in csv format.
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a> -o        <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     Output file. tsv format</span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a> -n                   Print read name.</span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a> -q                   Map Quality Score threshold.</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a> -all                 Only export if all tags have value.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a> -all                 Only export if all tags have value.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="count" class="level3">
 <h3 class="anchored" data-anchor-id="count">count</h3>
 <p>The PISA count tool is designed to generate a counts matrix for various features or tags, traditionally outputting a gene-by-cell digit matrix. Starting with version 0.4, this tool now supports the MEX format output, which is highly recommended for use in downstream analyses due to its superior performance. It’s important to note that MEX format consists of three files, so you should use the -outdir option to specify the directory where the output files will be saved.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count reads or fragments matrix for single-cell datasets.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count reads or fragments matrix for single-cell datasets.</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>$ PISA count -cb CB -anno-tag GN -umi UB -outdir exp aln.bam</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>$ PISA count <span class="co">[</span><span class="ot">options</span><span class="co">]</span> aln1.bam,aln2.bam</span>
@@ -1137,21 +1305,21 @@ Summary report in csv format.
 <span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>   to one of region types(E/S/C/N) or combination to count reads mapped to these functional regions only.</span>
 <span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>If you want count from more than one bam file, there are two ways to set the parameter. By seperating bam files with ',' or by</span>
 <span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>   setting -sample-list option.</span>
-<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>If -velo set, spliced and unspliced folders will be created at outdir.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>If -velo set, spliced and unspliced folders will be created at outdir.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="for-smartseq-user" class="level4">
 <h4 class="anchored" data-anchor-id="for-smartseq-user">For Smartseq user</h4>
 <p>PISA count also support counting gene expression from multiple bam files.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>$ PISA count -file-barcode             // use alias name for each bam file as cell barcode. If this flag is not set -cb must be specified.</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>$ PISA count -file-barcode             // use alias name for each bam file as cell barcode. If this flag is not set -cb must be specified.</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>-tags CB                   // Cell barcode</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>-sample-list bam_list.txt // bam file path and alias name</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>-outdir exp/ -anno-tag GN </span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># The `-sample-list' specify multiply files, each BAM path per line.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># The `-sample-list' specify multiply files, each BAM path per line.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="description-of-mex-file" class="level4">
 <h4 class="anchored" data-anchor-id="description-of-mex-file">Description of MEX file</h4>
 <p>The Market Exchange (MEX) format (<a href="https://math.nist.gov/MatrixMarket/formats.html" class="uri">https://math.nist.gov/MatrixMarket/formats.html</a>) is designed for representing the sparse matrix. The -outdir option specifies the output directory for one MEX fold. The MEX format consists of three files, one is cell barcodes, one is feature names (genes or peak names), and the third one defines the expression or signal values.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>$ ls</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>$ ls</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>barcodes.tsv.gz  features.tsv.gz  matrix.mtx.gz</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>$ zcat barcodes.tsv.gz|head</span>
@@ -1188,14 +1356,14 @@ Summary report in csv format.
 <span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>1   4   1</span>
 <span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>1   5   2</span>
 <span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>1   6   1</span>
-<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>1   7   2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>1   7   2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The MEX file can be read by R package Yano::ReadPISA.</p>
 </section>
 </section>
 <section id="bam2fq" class="level3">
 <h3 class="anchored" data-anchor-id="bam2fq">bam2fq</h3>
 <p>PISA bam2fq is designed to convert alignment records to FATSQ+ records. Option -tags specify which tags will be kept in the FASTQ+. Full options list below.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Convert BAM into fastq.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Convert BAM into fastq.</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>$ PISA bam2fq -tags CB,UB,GN -o out.fq aln.bam</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>Options :</span>
@@ -1203,13 +1371,13 @@ Summary report in csv format.
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a> -f                   Filter records if specified tags not all exist.</span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a> -fa                  Output fasta instead of fastq.</span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a> -o        <span class="co">[</span><span class="ot">fastq</span><span class="co">]</span>    Output file.</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a> -@        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Threads to unpack BAM.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a> -@        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Threads to unpack BAM.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="bam2frag" class="level3">
 <h3 class="anchored" data-anchor-id="bam2frag">bam2frag</h3>
 <p>The fragment file is a five columns tab-separated flat file which is designed for scATAC-seq. The first column is the chromosome name, the second column is the start location of this fragment (0 based), and the third column is the end position in 1 based of this fragment. The fourth column is the cell barcode of this fragment and the last column is how many duplicates of this fragment.</p>
 <p>PISA bam2frag requires the input BAM file to be sorted by coordinate. This tool will check the cell barcode and the fragment position for each paired reads, duplicates in one cell will only keep one record, and the numeber of copies for this fragment will be updated in column four.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Convert sam record to fragment file.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Convert sam record to fragment file.</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>$ PISA bam2frag -cb CB -list cell_barcodes.txt -o out.tsv.gz in.bam</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1223,12 +1391,12 @@ Summary report in csv format.
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a> -black-region <span class="co">[</span><span class="ot">BED</span><span class="co">]</span> Skip convert fragments overlapped with black regions.</span>
 <span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a> -stat    <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Transposition events per cell.</span>
 <span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a> -@       <span class="co">[</span><span class="ot">4</span><span class="co">]</span>       Thread to unpack and pack files.<span class="co">[</span><span class="ot">4</span><span class="co">]</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a> -disable-offset    Disable Tn5 offset for each fragment.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a> -disable-offset    Disable Tn5 offset for each fragment.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="depth" class="level3">
 <h3 class="anchored" data-anchor-id="depth">depth</h3>
 <p>PISA depth generates coverage information for each position of the predefined region(s). The significant difference between PISA depth and samtools depth (<a href="http://www.htslib.org/doc/samtools-depth.html" class="uri">http://www.htslib.org/doc/samtools-depth.html</a>) is that PISA depth use UMI rather than reads. Besides, PISA depth is strand sensitive, and can produce results for target cells.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count coverage depth or unique UMIs for genome locations.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count coverage depth or unique UMIs for genome locations.</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>Usage : PISA depth <span class="co">[</span><span class="ot">options</span><span class="co">]</span> sorted.bam <span class="co">[</span><span class="ot">region</span><span class="co">]</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1246,13 +1414,13 @@ Summary report in csv format.
 <span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>Notice :</span>
 <span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Require sorted and indexed BAM as input.</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Compare with `samtools depth', PISA depth considers UMIs and strand of reads.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Compare with `samtools depth', PISA depth considers UMIs and strand of reads.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="callept" class="level3">
 <h3 class="anchored" data-anchor-id="callept">callept</h3>
 <p>The term ‘EPT’ stands for Expressed Peak Tag. EPTs can be identified by PISA within aligned reads from RNA libraries. Once identified, the relationship between each EPT and its corresponding gene can be annotated and analyzed using the Yano package. This analysis helps in understanding the functional implications of EPTs in gene expression regulation.</p>
 <p>The callept tool is designed to call expressed peak tags (EPTs) for indexed BAM files. The peaks are defined with UMI depth &gt;= cutoff.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>$ PISA cellept -o epts.bed sorted.bam</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>$ PISA cellept -o epts.bed sorted.bam</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>$ PISA cellept -tag CB -list cells.txt -umi UB -o epts.bed sorted.bam</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>Options :</span>
@@ -1270,12 +1438,12 @@ Summary report in csv format.
 <span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>Notice :</span>
 <span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Requires sorted and indexed BAM as input.</span>
 <span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Compares with <span class="in">`MACS2`</span> and other peak callers, PISA callept considers UMIs and strand of reads.</span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>For paired reads, strand of read 2 will be reversed to revert fragment strand.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>For paired reads, strand of read 2 will be reversed to revert fragment strand.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="count2" class="level3">
 <h3 class="anchored" data-anchor-id="count2">count2</h3>
 <p>PISA count generates the MEX format matrix for fragments per peak.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count fragments per peak per cell matrix.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count fragments per peak per cell matrix.</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>$ PISA count2 -bed peaks.bed -t 10 -list barcodes.txt -outdir exp fragments.tsv.gz</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1283,12 +1451,12 @@ Summary report in csv format.
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a> -list     <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     Barcode white list, used as column names at matrix. If not set, all barcodes will be count.</span>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a> -outdir   <span class="co">[</span><span class="ot">DIR</span><span class="co">]</span>      Output matrix in MEX format into this fold.</span>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a> -prefix   <span class="co">[</span><span class="ot">STR</span><span class="co">]</span>      Prefix of output files.</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a> -t        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Threads.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a> -t        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Threads.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="mergebed" class="level3">
 <h3 class="anchored" data-anchor-id="mergebed">mergebed</h3>
 <p>Merge overlapped regions by strand and name.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>$ PISA mergebed -o merged.bed sample1.bed sample2.bed</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>$ PISA mergebed -o merged.bed sample1.bed sample2.bed</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>$ PISA mergebed -up 500 -down 500 -o flank.bed peaks.bed</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>Options:</span>
@@ -1301,12 +1469,12 @@ Summary report in csv format.
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>Notice :</span>
 <span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>This tool accepts 3 columns or 6 columns bed file(s), strand (+/-) is set in column 6.</span>
 <span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>By default, merging is done with respect to strandness unless -s is set.</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>-up/-down is set respect to strandness, so upstream of plus strand is downstream of minus strand.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>-up/-down is set respect to strandness, so upstream of plus strand is downstream of minus strand.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="annobed" class="level3">
 <h3 class="anchored" data-anchor-id="annobed">annobed</h3>
 <p>Annotate the type of region and output in a BED like file. The region type can be defined into.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>$ PISA annobed -gtf genes.gtf -o anno.bed in.bed</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>$ PISA annobed -gtf genes.gtf -o anno.bed in.bed</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>Options:</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>-gtf    <span class="co">[</span><span class="ot">GTF</span><span class="co">]</span>     GTF database.</span>
@@ -1323,12 +1491,12 @@ Summary report in csv format.
 <span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>Notice :</span>
 <span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>This tool accepts 3 columns or 6 columns bed file(s), strand (+/-) is set in column 6.</span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>By default, annotation is done with respect to strandness unless -s is set.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>By default, annotation is done with respect to strandness unless -s is set.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="flatten" class="level3">
 <h3 class="anchored" data-anchor-id="flatten">flatten</h3>
 <p>Convert overlapped into flatten records. If strand exist, the flatten records will be strand sensitive.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>$ PISA flatten -o flatten.bed overlapped.bed</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>$ PISA flatten -o flatten.bed overlapped.bed</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>Options:</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>-o    <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Output bed file.</span>
@@ -1339,28 +1507,28 @@ Summary report in csv format.
 <span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>flattening of regions:</span>
 <span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>reg1 ======</span>
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>reg2       =====</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>reg3            ======</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>reg3            ======</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="gtffmt" class="level3">
 <h3 class="anchored" data-anchor-id="gtffmt">gtffmt</h3>
 <p>Format and reorder GTF records.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>$ PISA gtffmt in.gtf</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>$ PISA gtffmt in.gtf</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>Options:</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a> -o      <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Output GTF file</span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a> -f                Only export gene, transcript, exon and CDS records.</span>
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a> -key    <span class="co">[</span><span class="ot">all</span><span class="co">]</span>     Export selected keys in optional fields.</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a> -report <span class="co">[</span><span class="ot">stderr</span><span class="co">]</span>  Summary report file.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a> -report <span class="co">[</span><span class="ot">stderr</span><span class="co">]</span>  Summary report file.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="gtf2bed" class="level3">
 <h3 class="anchored" data-anchor-id="gtf2bed">gtf2bed</h3>
 <p>Convert GTF file to BED format.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>$ PISA gtf2bed -o merged.bed in.gtf.gz</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>$ PISA gtf2bed -o merged.bed in.gtf.gz</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>Options:</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  -o    <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>                          Output bed file.</span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  -type <span class="co">[</span><span class="ot">gene|transcript|exon</span><span class="co">]</span>          Covert to bed.</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  -name <span class="co">[</span><span class="ot">none|gene|transcript|exon</span><span class="co">]</span>     Set name for bed.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  -name <span class="co">[</span><span class="ot">none|gene|transcript|exon</span><span class="co">]</span>     Set name for bed.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="deprecated-commands" class="level2">
@@ -1368,7 +1536,7 @@ Summary report in csv format.
 <section id="parse0" class="level3">
 <h3 class="anchored" data-anchor-id="parse0">parse0</h3>
 <p>Since v1.0, the old parse tool has been replaced by parse2, and renamed to parse0 for backup purposes. Due to its lower performance compared to parse, parse0 will be deleted from v2 onwards. The parse0 tool requires a configuration file to describe the library structure, including cell barcode locations, UMI locations, and tag names. Additionally, it generates various quality control reports and outputs cell barcode distributions to stdout. Below is the complete options list and a general workflow for filtering and counting reads.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>$ PISA parse -config read_struct.json -report fastq.csv -cbdis cell_dist.tsv \</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>$ PISA parse -config read_struct.json -report fastq.csv -cbdis cell_dist.tsv \</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>          -1 out.fq lane1_1.fq.gz,lane02_1.fq.gz  lane1_2.fq.gz,lane2_2.fq.gz</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>Options :</span>
@@ -1381,10 +1549,10 @@ Summary report in csv format.
 <span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a> -q       <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Drop reads if average sequencing quality below this value.</span>
 <span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a> -dropN             Drop reads if N base in sequence or barcode.</span>
 <span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a> -report  <span class="co">[</span><span class="ot">csv</span><span class="co">]</span>     Summary report.</span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a> -t       <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Threads. <span class="co">[</span><span class="ot">4</span><span class="co">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a> -t       <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Threads. <span class="co">[</span><span class="ot">4</span><span class="co">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>-config requires a JSON file to tell software the locations of cell barcodes and/or UMIs. An example configured file can be found at demo/demo.json.</p>
 <div class="framed">
-<div class="sourceCode" id="cb36"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    "cell barcode tag":"CB",  </span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    "cell barcode":[</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>        {</span>
@@ -1398,7 +1566,7 @@ Summary report in csv format.
 <span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    "read 1":{</span>
 <span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>        "location":"R2:1-91",</span>
 <span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Option -report can specify a quality control report in CSV format. Here is the explanation of each term in this file.</p>
 <div class="center">
@@ -1458,7 +1626,7 @@ Summary report in csv format.
 </table>
 </div>
 <p>Here is an example to parse barcodes and reads with a predefined configure JSON file, the test files can be found at demo directory.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>$ PISA parse0 -config demo/demo.json -report demo/parse.csv demo/demo_1.fq.gz demo/demo_2.fq.gz &gt; demo/demo.fq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>$ PISA parse0 -config demo/demo.json -report demo/parse.csv demo/demo_1.fq.gz demo/demo_2.fq.gz &gt; demo/demo.fq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="difference-in-alignment-annotation-between-pisa-and-cellranger" class="level2">
@@ -1705,380 +1873,256 @@ v0.3 2020/03/26
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
     }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
-      }
-    }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-      }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
-        }
-      });
-    }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
       return false;
     }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -2086,185 +2130,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 </div> <!-- /content -->
 
 
