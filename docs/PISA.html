@@ -1308,9 +1308,9 @@ Summary report in csv format.
 <span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>If -velo set, spliced and unspliced folders will be created at outdir.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="for-smartseq-user" class="level4">
 <h4 class="anchored" data-anchor-id="for-smartseq-user">For Smartseq user</h4>
-<p>PISA count also support counting gene expression from multiple bam files.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>$ PISA count -file-barcode             // use alias name for each bam file as cell barcode. If this flag is not set -cb must be specified.</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>-tags CB                   // Cell barcode</span>
+<p>PISA count also support counting gene expression from multiple bam files. Please make sure there is a tag to represent cell id in each bam file. If not set, try to run <code>PISA addtags -str CB:Z:CELLID ...</code> first.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>$ PISA count </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>-tags CB                  // Cell barcode</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>-sample-list bam_list.txt // bam file path and alias name</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>-outdir exp/ -anno-tag GN </span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
@@ -1637,6 +1637,12 @@ Summary report in csv format.
 </section>
 <section id="changelog" class="level2">
 <h2 class="anchored" data-anchor-id="changelog">Changelog</h2>
+<details>
+<summary>
+v1.7 2026/04/15
+</summary>
+<p>Fix malformed tag structure when raw tag and corrected tag share the same name. Thanks <span class="citation" data-cites="PollyTikhonova">@PollyTikhonova</span> report this issue.</p>
+</details>
 <details>
 <summary>
 v1.6 2025/05/29

@@ -544,11 +544,11 @@ Notice :
 
 #### For Smartseq user
 
-PISA count also support counting gene expression from multiple bam files.
+PISA count also support counting gene expression from multiple bam files. Please make sure there is a tag to represent cell id in each bam file. If not set, try to run `PISA addtags -str CB:Z:CELLID ...` first.
 
 ```markdown
-$ PISA count -file-barcode             // use alias name for each bam file as cell barcode. If this flag is not set -cb must be specified.
--tags CB                   // Cell barcode
+$ PISA count 
+-tags CB                  // Cell barcode
 -sample-list bam_list.txt // bam file path and alias name
 -outdir exp/ -anno-tag GN 
 

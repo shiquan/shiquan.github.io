@@ -280,6 +280,15 @@ For more information on CellRanger's counting strategy, you can refer to the off
 ## Changelog
 <details>
 
+<summary>v1.7 2026/04/15</summary>
+
+Fix malformed tag structure when raw tag and corrected tag share the same name. Thanks @PollyTikhonova report this issue.
+
+</details>
+
+
+<details>
+
 <summary>v1.6 2025/05/29</summary>
 
 * Fix a bug if gene_name or gene_id is empty in GTF, annotation may case segmental fault.
