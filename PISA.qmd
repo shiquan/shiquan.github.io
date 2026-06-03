@@ -280,6 +280,14 @@ For more information on CellRanger's counting strategy, you can refer to the off
 ## Changelog
 <details>
 
+<summary>v1.8 2026/06/03</summary>
+
+Bug fixes, code hardening, and build system improvements assisted by Claude Code+DeepSeek-v4-pro
+
+</details>
+
+<details>
+
 <summary>v1.7 2026/04/15</summary>
 
 Fix malformed tag structure when raw tag and corrected tag share the same name. Thanks @PollyTikhonova report this issue.
