@@ -144,3 +144,6 @@ If you have any questions regarding this workflows, please feel free to report t
 
 If you have any ideas or suggestions regarding PISA annotation, please refer to the [Yano discussion forum](https://github.com/shiquan/Yano/discussions). Since PISA is commonly used alongside Yano, it may not be necessary to host separate forums for each.
 
+
+<div id="page-nav-container"></div>
+<script src="navigation.js"></script>

@@ -1,5 +1,80 @@
+# Quarto
 /.quarto/
-.Rproj.user
 /_site/
-
 **/*.quarto_ipynb
+
+# R
+.Rproj.user
+**/.Rhistory
+**/.RData
+**/.Ruserdata
+*.Rproj
+
+# macOS
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Thumbs.db
+Thumbs.db
+**/Thumbs.db
+ehthumbs.db
+
+# Large genomic data files
+*.fa
+*.fa.fai
+*.bam
+*.bam.bai
+*.sam
+*.vcf.gz
+*.vcf.gz.csi
+*.vcf.gz.tbi
+*.gtf.gz
+*.gtf
+*.rds
+*.Rds
+*.fq
+*.fq.gz
+*.fastq
+*.fastq.gz
+
+# Data directories
+exclude/
+exon/
+exp/
+junction/
+var/
+visium/
+workflow/
+humantestis/
+raw_gene_expression/
+
+# Data CSV files (alignment reports, QC, etc.)
+alignment_report.csv
+fastq_qc.csv
+anno.csv
+
+# Specific large data files (in case patterns above don't match)
+GRCh38.p13.genome.fa
+GRCh38.p13.genome.fa.fai
+Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam
+Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam.bai
+aln.bam
+aln.sam
+anno.bam
+clinvar.vcf.gz
+clinvar.vcf.gz.csi
+gencode.v44.annotation.gtf.gz
+glioblastoma5k.rds
+hg38.110.ncbiRefSeq.gtf.gz
+object.rds
+reads.fq
+var.vcf.gz
+xenium.rds
+
+# Misplaced rendered files (should not be at repo root)
+/_commands.html
+/_commands_files/

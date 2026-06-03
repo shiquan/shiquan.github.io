@@ -1,4 +1,11 @@
 /*-- scss:defaults --*/
+
+// Import Lato font for consistency with dark theme
+$web-font-path: "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" !default;
+@if $web-font-path {
+  @import url($web-font-path);
+}
+
 $link-color: #00009E;
 $text-muted: #6a737b;
 

@@ -16,7 +16,8 @@
   margin-left: .1em;
 }
 
-.navbar .bi-github
+.navbar .bi-github {
+  font-size: 1.2em;
 }
 @media (min-width: 991.98px) {
 #quarto-header {

@@ -100,3 +100,6 @@ If you have any questions regarding this vignette, the usage of Yano or suggesti
 ```{r}
 sessionInfo()
 ```
+
+<div id="page-nav-container"></div>
+<script src="navigation.js"></script>

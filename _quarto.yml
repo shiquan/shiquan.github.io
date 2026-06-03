@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - "navigation.js"
 website:
   page-navigation: true
   back-to-top-navigation: true
@@ -19,7 +21,7 @@ website:
         text: PISA
       - href: Yano.qmd
         text: Yano
-    tools: 
+    tools:
       - icon: github
         text: GitHub
         menu:
@@ -27,29 +29,8 @@ website:
             href: https://github.com/shiquan
           - text: Discussions
             href: https://github.com/shiquan/Yano/discussions
-  sidebar:
-    contents:
-      - section: "Workflows & Short cases"
-        contents:
-          - text: "From FASTQ to counts"
-            href: workflow1.Rmd
-          - text: "Annotate various features"
-            href: anno.Rmd
-          - text: "Select cells from reduction maps"
-            href: selector.Rmd
-          - text: "Alternative splicing analysis"
-            href: Yano_AS.Rmd
-          - text: "Allele-specific gene expression analysis"
-            href: Yano_ASE.Rmd
-          - text: "Annotating genetic variants"
-            href: Yano_anno.Rmd
-          - text: "Analysis multiple Visium samples"
-            href: Visium.Rmd
-          - text: "Cell trajectory analysis"
-            href: Yano_trajectory.Rmd
-    type: none
-    page-navigation: true
-    
+  sidebar: false
+
 format:
   html:
     theme:

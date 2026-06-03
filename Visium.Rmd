@@ -234,3 +234,6 @@ Meta(obj) %>% filter(gene_name.padj<1e-7)
 SpatialFeaturePlot(obj, features = c("chr11:30106785-30109152/-/Sptbn1","Sptbn1"))
 ```
 
+
+<div id="page-nav-container"></div>
+<script src="navigation.js"></script>
