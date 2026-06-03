@@ -78,3 +78,4 @@ xenium.rds
 # Misplaced rendered files (should not be at repo root)
 /_commands.html
 /_commands_files/
+/_freeze/
