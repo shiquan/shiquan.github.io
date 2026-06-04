@@ -141,9 +141,9 @@ obj[['junction']][[]] %>% filter(gene_name.padj<1e-5)
 # Because both exon and junction are compared with gene, so it's reasonable to combine these two assays in one plot
 FbtPlot(obj, val="gene_name.padj", assay = c("exon", "junction"), col.by = "assay", shape.by = "assay", pt.size = 2, remove.chr = TRUE, sel.chrs = sel.chrs, cols = c("red", "blue"))
 
-# We can find there is an exon and a junction at chromosome 12 with very low p value (<1e-8), let's see which gene they are located
-obj[['exon']][[]] %>% filter(chr == "chr12" & gene_name.pval < 1e-8) %>% DT::datatable()
-obj[['junction']][[]] %>% filter(chr == "chr12" & gene_name.pval < 1e-8) %>% DT::datatable()
+# We can find there is an exon and a junction at chromosome 12 with very low p value (<1e-5), let's see which gene they are located
+obj[['exon']][[]] %>% filter(chr == "chr12" & gene_name.pval < 1e-5) %>% DT::datatable()
+obj[['junction']][[]] %>% filter(chr == "chr12" & gene_name.pval < 1e-5) %>% DT::datatable()
 
 FeaturePlot(obj, features = c("chr12:56161387-56161465/+/MYL6","chr12:56160320-56161387/+/MYL6", "MYL6"), order = TRUE, pt.size = 2, ncol=3) & scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
 
@@ -172,8 +172,8 @@ p1 + p2
 The spatial dissimilarity test identifies alternatively spliced exons and junctions across all cells, but does not pinpoint which cell groups drive the signal. To address this, we extract scaled expression for the selected exons and their host genes, then perform co-clustering. The heatmap below uses [ComplexHeatmap](https://jokergoo.github.io/ComplexHeatmap-reference/book/index.html) to visualize the distribution across cell groups.
 
 ```{r message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-obj[['exon']][[]] %>% filter(gene_name.padj<1e-8) %>% rownames -> exons
-obj[['exon']][[]] %>% filter(gene_name.padj<1e-8) %>% pull(gene_name) -> bind.genes
+obj[['exon']][[]] %>% filter(gene_name.padj<1e-5) %>% rownames -> exons
+obj[['exon']][[]] %>% filter(gene_name.padj<1e-5) %>% pull(gene_name) -> bind.genes
 DefaultAssay(obj) <- "RNA"
 obj <- ScaleData(obj, features = unique(bind.genes))
 DefaultAssay(obj) <- "exon"
