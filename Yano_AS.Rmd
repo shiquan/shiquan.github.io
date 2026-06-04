@@ -16,6 +16,7 @@ require(Yano)
 require(Seurat)
 require(dplyr)
 require(ggplot2)
+require(Matrix)
 ```
 
 ```{r warning=FALSE}
@@ -174,8 +175,8 @@ p1 + p2
 The spatial dissimilarity test method prioritizes alternatively spliced exons and junctions across all cells but does not identify which specific cell groups exhibit these splicing events. To address this, let's manually extract the scaled expression data for the selected alternatively spliced exons and their corresponding genes, then perform a co-clustering analysis. A comprehensive heatmap will be generated using the [ComplexHeatmap](https://jokergoo.github.io/ComplexHeatmap-reference/book/index.html) package, providing a visual representation of the exon and gene distribution across cell groups.
 
 ```{r message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-obj[['exon']][[]] %>% filter(gene_name.padj<0.001) %>% rownames -> exons
-obj[['exon']][[]] %>% filter(gene_name.padj<0.001) %>% pull(gene_name) -> bind.genes
+obj[['exon']][[]] %>% filter(gene_name.padj<1e-8) %>% rownames -> exons
+obj[['exon']][[]] %>% filter(gene_name.padj<1e-8) %>% pull(gene_name) -> bind.genes
 DefaultAssay(obj) <- "RNA"
 obj <- ScaleData(obj, features = unique(bind.genes))
 DefaultAssay(obj) <- "exon"
@@ -199,7 +200,7 @@ idx <- hc$labels[hc$order]
 ha <- HeatmapAnnotation(group=idents, border = TRUE)
 ht1 <- Heatmap(dat1[idx, order.cells], cluster_rows = FALSE, cluster_columns = FALSE, show_column_names = FALSE, border = TRUE,  top_annotation = ha, name = "exon", column_title = "exon")
 ht2 <- Heatmap(dat2[idx, order.cells], cluster_rows = FALSE, cluster_columns = FALSE, show_column_names = FALSE, border = TRUE,  top_annotation = ha, name = "gene", column_title = "gene", row_names_max_width = max_text_width(rownames(dat2), gp = gpar(fontsize = 12)))
-
+dat
 ht <- ht1 + ht2
 draw(ht, heatmap_legend_side = "left",  annotation_legend_side = "left")
 ```
