@@ -440,19 +440,19 @@ chr11:123060825-123061329/-/HSPA8  1.099318e-63 0.07462142              TRUE
 chr11:123061588-123061833/-/HSPA8 7.646557e-158 0.11891354              TRUE
 chr11:123061869-123062022/-/HSPA8 1.467547e-150 0.11541279              TRUE
                                   gene_name.D gene_name.t gene_name.pval
-chr1:154169305-154169383/-/TPM3     0.3410795  -13.362721   3.412136e-24
-chr11:35197162-35197793/+/CD44      0.2529072   -4.658903   4.957250e-06
-chr11:75421727-75422280/+/RPS3      0.3043498   -9.546643   5.334719e-16
-chr11:123060825-123061329/-/HSPA8   0.2790286  -11.129009   1.918785e-19
-chr11:123061588-123061833/-/HSPA8   0.3523409  -18.537513   2.885384e-34
-chr11:123061869-123062022/-/HSPA8   0.3431089  -14.119163   9.383985e-26
+chr1:154169305-154169383/-/TPM3     0.3298889  -8.8300031   1.939628e-14
+chr11:35197162-35197793/+/CD44      0.1582675  -0.8945946   1.865868e-01
+chr11:75421727-75422280/+/RPS3      0.2748901  -9.4219413   9.979379e-16
+chr11:123060825-123061329/-/HSPA8   0.2343256  -8.3896002   1.743493e-13
+chr11:123061588-123061833/-/HSPA8   0.3323525 -16.1348177   9.062215e-30
+chr11:123061869-123062022/-/HSPA8   0.3224089 -11.4810464   3.333490e-20
                                   gene_name.padj
-chr1:154169305-154169383/-/TPM3     1.593041e-22
-chr11:35197162-35197793/+/CD44      1.757099e-05
-chr11:75421727-75422280/+/RPS3      1.660431e-14
-chr11:123060825-123061329/-/HSPA8   7.166663e-18
-chr11:123061588-123061833/-/HSPA8   1.657986e-32
-chr11:123061869-123062022/-/HSPA8   4.673225e-24</code></pre>
+chr1:154169305-154169383/-/TPM3     6.585918e-13
+chr11:35197162-35197793/+/CD44      1.000000e+00
+chr11:75421727-75422280/+/RPS3      3.727298e-14
+chr11:123060825-123061329/-/HSPA8   5.662563e-12
+chr11:123061588-123061833/-/HSPA8   1.105028e-27
+chr11:123061869-123062022/-/HSPA8   1.660078e-18</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Manhattan plot for spatial dissimilarity test result</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(glbt_small, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -474,9 +474,9 @@ chr11:123061869-123062022/-/HSPA8   4.673225e-24</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Track plot for gene coverage at different cell types</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2026-06-04 12:36:45] GTF loading..
-[2026-06-04 12:37:15] Load 62700 genes.
-[2026-06-04 12:37:15] Load time : 30.085 sec</code></pre>
+<pre><code>[2026-06-04 16:08:45] GTF loading..
+[2026-06-04 16:09:15] Load 62700 genes.
+[2026-06-04 16:09:15] Load time : 29.450 sec</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile=</span><span class="st">"./Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span>db, <span class="at">gene =</span> <span class="st">"TPM4"</span>, <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(glbt_small), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">16095264</span>,<span class="dv">16095454</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
