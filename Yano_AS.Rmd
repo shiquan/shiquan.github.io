@@ -4,7 +4,7 @@ format:
   html:
     code-overflow: wrap
 ---
-This vignette uses gene, exon, and junction expression files generated from the [Annotate Various Features for Alignment](anno.Rmd). While current state-of-the-art scRNA-seq methods tend to be biased towards the 3' or 5' ends of transcripts, it is still possible to obtain coverage information for a subset of exons. Despite the sparsity of gene and exon expression in single cells, our spatial dissimilarity test leverages the spatial distribution properties of features. This means that even features with low overall expression but strong spatial expression patterns across cells can still be highlighted. By performing a spatial dissimilarity test between exon/junction and gene expression, we can predict potential alternative splicing events.
+This vignette uses gene, exon, and junction expression files generated from the [Annotate Various Features for Alignment](anno.Rmd). While current state-of-the-art scRNA-seq methods tend to be biased towards the 3' or 5' ends of transcripts, it is still possible to obtain coverage information for a subset of exons. Despite the sparsity of gene and exon expression in single cells, our spatial dissimilarity test leverages the spatial distribution properties of features. This means that **even features with low overall expression but strong spatial expression patterns across cells** can still be highlighted. By performing a spatial dissimilarity test between exon/junction and gene expression, we can predict potential alternative splicing events.
 
 ## 0. Prerequisite
 - Make sure you have installed the R environment and `Yano` package before proceeding with the testing.
@@ -13,13 +13,19 @@ This vignette uses gene, exon, and junction expression files generated from the 
 Load Yano will automatically load Seurat.
 ```{r warning=FALSE}
 require(Yano)
+require(Seurat)
+require(dplyr)
+require(ggplot2)
 ```
 
 ```{r warning=FALSE}
 # Read raw gene expression matrix
 exp <- ReadPISA("./exp/")
 ```
-In this section, we will perform the standard Seurat analysis pipeline. Since the spatial dissimilarity test is not rely on cell clustering so changing the resolution or other parameters for `FindClusters` and `RunUMAP` will not impact the outcome of the spatial dissimilarity test.
+In this section, we will perform the standard Seurat analysis pipeline. 
+
+
+*Note:* Since the spatial dissimilarity test is not rely on cell clustering so changing the resolution or other parameters for `FindClusters` and `RunUMAP` will not impact the outcome of the spatial dissimilarity test.
 ```{r warning=FALSE}
 # Create Seurat object and filter droplets with fewer than 1000 genes
 obj <- CreateSeuratObject(exp, min.features = 1000, min.cells = 10)

@@ -23,6 +23,7 @@ BiocManager::install("shiquan/Yano")
 To fast hand-on the Yano workflow, you could get started with the built-in dataset.
 
 ```{r message=FALSE, warning=FALSE, fig.align='center', fig.width=10, fig.height=5}
+require(Seurat)
 require(Yano)
 data("glbt_small")
 DefaultAssay(glbt_small) <- "RNA"

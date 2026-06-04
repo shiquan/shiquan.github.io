@@ -12,6 +12,7 @@ We use demo data from SeuratData for simplity.
 
 ```{r message=FALSE, warning=FALSE}
 require(Yano)
+require(Seurat)
 require(SeuratData)
 
 InstallData("stxBrain")
