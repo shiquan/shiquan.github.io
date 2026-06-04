@@ -12,6 +12,9 @@ This vignette uses gene and single nucleotide variant (SNV) expression files gen
 We begin by performing cell clustering based on gene expression, which is identical to the first step outlined in the [Alternative splicing analysis for scRNA-seq](Yano_AS.Rmd). If you're continuing from the previous vignette, you are free to skip this section.
 
 ```{r warning=FALSE, fig.align='center'}
+require(Seurat)
+require(ggplot2)
+require(dplyr)
 require(Yano)
 
 exp <- ReadPISA("./exp/")

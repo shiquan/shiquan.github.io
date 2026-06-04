@@ -22,6 +22,9 @@ samtools faidx GRCh38.p13.genome.fa
 ```
 
 ```{r}
+require(Seurat)
+require(ggplot2)
+require(dplyr)
 require(Yano)
 obj <- readRDS("glioblastoma5k.rds")
 

@@ -57,6 +57,9 @@ knitr::opts_knit$set(root.dir = './humantestis/')
 # Cell clustering and annotation
 
 ```{r message=FALSE}
+require(Seurat)
+require(ggplot2)
+require(dplyr)
 require(Yano)
 ```
 
