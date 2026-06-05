@@ -56,7 +56,7 @@ obj[['exon']] <- CreateAssayObject(exon[, colnames(obj)], min.cells=20)
 # Switch work assay to exon
 DefaultAssay(obj) <- "exon"
 # Empty info for exon features
-head(obj[['exon']][[]]) %>% DT::datatable()
+head(obj[['exon']][[]]) 
 
 obj <- ParseExonName(obj)
 # Gene name and location are parsed from exon name
@@ -142,8 +142,8 @@ obj[['junction']][[]] %>% filter(gene_name.padj<1e-5)
 FbtPlot(obj, val="gene_name.padj", assay = c("exon", "junction"), col.by = "assay", shape.by = "assay", pt.size = 2, remove.chr = TRUE, sel.chrs = sel.chrs, cols = c("red", "blue"))
 
 # We can find there is an exon and a junction at chromosome 12 with very low p value (<1e-5), let's see which gene they are located
-obj[['exon']][[]] %>% filter(chr == "chr12" & gene_name.pval < 1e-5) %>% DT::datatable()
-obj[['junction']][[]] %>% filter(chr == "chr12" & gene_name.pval < 1e-5) %>% DT::datatable()
+obj[['exon']][[]] %>% filter(chr == "chr12" & gene_name.padj < 1e-5) %>% DT::datatable()
+obj[['junction']][[]] %>% filter(chr == "chr12" & gene_name.padj < 1e-5) %>% DT::datatable()
 
 FeaturePlot(obj, features = c("chr12:56161387-56161465/+/MYL6","chr12:56160320-56161387/+/MYL6", "MYL6"), order = TRUE, pt.size = 2, ncol=3) & scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
 
