@@ -39,11 +39,12 @@ format:
     code-copy: true
     css: styles.css
     toc: true
+    toc-location: body
     code-overflow: wrap
     code-block-background: true
     code-block-border-left: true
     page-layout: full
-    fontsize: 1.05em
+    fontsize: 0.875em
     highlight-style: github
 engine: knitr
 editor: visual

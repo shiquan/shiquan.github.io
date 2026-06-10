@@ -76,9 +76,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-597958c53c93a607afca12fd375c57ed.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a66674eeb6395f67826e14d9260ae7e4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-6893e1c0f356f3ff25b33dc2bef6ed3e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-a66674eeb6395f67826e14d9260ae7e4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-756d0560751ba3f620309bdd40527566.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-d21111987e9cbb147ea0ddfb4f5bc632.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-756d0560751ba3f620309bdd40527566.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -323,23 +323,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#prepare-the-data." id="toc-prepare-the-data." class="nav-link active" data-scroll-target="#prepare-the-data.">Prepare the data.</a></li>
-  <li><a href="#select-spots-from-spatial-plot" id="toc-select-spots-from-spatial-plot" class="nav-link" data-scroll-target="#select-spots-from-spatial-plot">Select spots from spatial plot</a></li>
-  <li><a href="#select-cells-from-dimension-reduction-plot" id="toc-select-cells-from-dimension-reduction-plot" class="nav-link" data-scroll-target="#select-cells-from-dimension-reduction-plot">Select cells from dimension reduction plot</a></li>
-  <li><a href="#select-cells-based-on-a-feature-expression" id="toc-select-cells-based-on-a-feature-expression" class="nav-link" data-scroll-target="#select-cells-based-on-a-feature-expression">Select cells based on a feature expression</a></li>
-  <li><a href="#select-cells-from-image-based-spatial-data" id="toc-select-cells-from-image-based-spatial-data" class="nav-link" data-scroll-target="#select-cells-from-image-based-spatial-data">Select cells from Image-based spatial data</a></li>
-  <li><a href="#generate-2d-concave-hull-of-selected-region" id="toc-generate-2d-concave-hull-of-selected-region" class="nav-link" data-scroll-target="#generate-2d-concave-hull-of-selected-region">Generate 2D concave hull of selected region</a></li>
-  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions?</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -349,7 +336,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta column-page">
 
     
   
@@ -360,7 +347,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#prepare-the-data." id="toc-prepare-the-data.">Prepare the data.</a></li>
+  <li><a href="#select-spots-from-spatial-plot" id="toc-select-spots-from-spatial-plot">Select spots from spatial plot</a></li>
+  <li><a href="#select-cells-from-dimension-reduction-plot" id="toc-select-cells-from-dimension-reduction-plot">Select cells from dimension reduction plot</a></li>
+  <li><a href="#select-cells-based-on-a-feature-expression" id="toc-select-cells-based-on-a-feature-expression">Select cells based on a feature expression</a></li>
+  <li><a href="#select-cells-from-image-based-spatial-data" id="toc-select-cells-from-image-based-spatial-data">Select cells from Image-based spatial data</a></li>
+  <li><a href="#generate-2d-concave-hull-of-selected-region" id="toc-generate-2d-concave-hull-of-selected-region">Generate 2D concave hull of selected region</a></li>
+  <li><a href="#questions" id="toc-questions">Questions?</a></li>
+  </ul>
+</nav>
 <p>This vignette demonstrates how to use Yano buildin functions to interactively select or pick cells/spots from a plot using your mouse and keyboard. While tools like CellxGene are widely used for this purpose, to the best of our knowledge, an efficient solution for performing this task within the R environment is still lacking. Here, we introduce a lightweight, fast and native implementation of a cell selector to address this gap.</p>
 <section id="prepare-the-data." class="level2">
 <h2 class="anchored" data-anchor-id="prepare-the-data.">Prepare the data.</h2>

@@ -76,9 +76,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-597958c53c93a607afca12fd375c57ed.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a66674eeb6395f67826e14d9260ae7e4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-6893e1c0f356f3ff25b33dc2bef6ed3e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-a66674eeb6395f67826e14d9260ae7e4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-756d0560751ba3f620309bdd40527566.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-d21111987e9cbb147ea0ddfb4f5bc632.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-756d0560751ba3f620309bdd40527566.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -333,23 +333,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite">0. Prerequisite</a></li>
-  <li><a href="#perform-cell-clustering-with-seurat" id="toc-perform-cell-clustering-with-seurat" class="nav-link" data-scroll-target="#perform-cell-clustering-with-seurat">1. Perform cell clustering with Seurat</a></li>
-  <li><a href="#perform-alternative-splicing-with-exon-assay" id="toc-perform-alternative-splicing-with-exon-assay" class="nav-link" data-scroll-target="#perform-alternative-splicing-with-exon-assay">2. Perform alternative splicing with exon assay</a></li>
-  <li><a href="#load-junction-assay" id="toc-load-junction-assay" class="nav-link" data-scroll-target="#load-junction-assay">3. Load junction assay</a></li>
-  <li><a href="#heatmap-analysis-for-highlight-group-specific-alternative-splicing" id="toc-heatmap-analysis-for-highlight-group-specific-alternative-splicing" class="nav-link" data-scroll-target="#heatmap-analysis-for-highlight-group-specific-alternative-splicing">4. Heatmap analysis for highlight group specific alternative splicing</a></li>
-  <li><a href="#test-between-exon-and-exon-skipped-reads" id="toc-test-between-exon-and-exon-skipped-reads" class="nav-link" data-scroll-target="#test-between-exon-and-exon-skipped-reads">5. Test between exon and exon skipped reads</a></li>
-  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions?</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -359,7 +346,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta column-page">
 
     
   
@@ -370,7 +357,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#prerequisite" id="toc-prerequisite">0. Prerequisite</a></li>
+  <li><a href="#perform-cell-clustering-with-seurat" id="toc-perform-cell-clustering-with-seurat">1. Perform cell clustering with Seurat</a></li>
+  <li><a href="#perform-alternative-splicing-with-exon-assay" id="toc-perform-alternative-splicing-with-exon-assay">2. Perform alternative splicing with exon assay</a></li>
+  <li><a href="#load-junction-assay" id="toc-load-junction-assay">3. Load junction assay</a></li>
+  <li><a href="#heatmap-analysis-for-highlight-group-specific-alternative-splicing" id="toc-heatmap-analysis-for-highlight-group-specific-alternative-splicing">4. Heatmap analysis for highlight group specific alternative splicing</a></li>
+  <li><a href="#test-between-exon-and-exon-skipped-reads" id="toc-test-between-exon-and-exon-skipped-reads">5. Test between exon and exon skipped reads</a></li>
+  <li><a href="#questions" id="toc-questions">Questions?</a></li>
+  </ul>
+</nav>
 <p>This vignette demonstrates alternative splicing analysis using gene, exon, and junction expression matrices generated by <a href="./anno.html">PISA</a>. Although most scRNA-seq protocols are 3’ or 5’ biased, partial exon coverage can still be captured. The spatial dissimilarity test in Yano exploits the <strong>spatial distribution of features</strong>, so <strong>even lowly expressed features with strong spatial patterns</strong> can be detected. By comparing exon/junction expression against their host gene’s expression in spatial context, potential alternative splicing events are identified.</p>
 <section id="prerequisite" class="level2">
 <h2 class="anchored" data-anchor-id="prerequisite">0. Prerequisite</h2>

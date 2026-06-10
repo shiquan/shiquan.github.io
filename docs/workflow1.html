@@ -77,9 +77,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-597958c53c93a607afca12fd375c57ed.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a66674eeb6395f67826e14d9260ae7e4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-6893e1c0f356f3ff25b33dc2bef6ed3e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-a66674eeb6395f67826e14d9260ae7e4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-756d0560751ba3f620309bdd40527566.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-d21111987e9cbb147ea0ddfb4f5bc632.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-756d0560751ba3f620309bdd40527566.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -324,30 +324,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#prepare-the-raw-data-and-reference" id="toc-prepare-the-raw-data-and-reference" class="nav-link active" data-scroll-target="#prepare-the-raw-data-and-reference">Prepare the raw data and reference</a></li>
-  <li><a href="#the-third-party-programs-we-will-use" id="toc-the-third-party-programs-we-will-use" class="nav-link" data-scroll-target="#the-third-party-programs-we-will-use">The third-party programs we will use</a></li>
-  <li><a href="#step-by-step-tutorial" id="toc-step-by-step-tutorial" class="nav-link" data-scroll-target="#step-by-step-tutorial">Step by step tutorial</a>
-  <ul class="collapse">
-  <li><a href="#parse-cell-barcode-and-umi" id="toc-parse-cell-barcode-and-umi" class="nav-link" data-scroll-target="#parse-cell-barcode-and-umi">1. Parse cell barcode and UMI</a></li>
-  <li><a href="#align-reads-with-minimap2" id="toc-align-reads-with-minimap2" class="nav-link" data-scroll-target="#align-reads-with-minimap2">2. Align reads with minimap2</a></li>
-  <li><a href="#convert-sam-to-bam" id="toc-convert-sam-to-bam" class="nav-link" data-scroll-target="#convert-sam-to-bam">3. Convert SAM to BAM</a></li>
-  <li><a href="#gene-annotations" id="toc-gene-annotations" class="nav-link" data-scroll-target="#gene-annotations">4. Gene annotations</a></li>
-  <li><a href="#sort-bam-by-genomics-coordinate-optional" id="toc-sort-bam-by-genomics-coordinate-optional" class="nav-link" data-scroll-target="#sort-bam-by-genomics-coordinate-optional">5. Sort BAM by genomics coordinate (Optional)</a></li>
-  <li><a href="#umis-correction-for-one-cell-in-one-gene" id="toc-umis-correction-for-one-cell-in-one-gene" class="nav-link" data-scroll-target="#umis-correction-for-one-cell-in-one-gene">6. UMIs correction for one cell in one gene</a></li>
-  <li><a href="#generate-cell-x-gene-expression-matrix" id="toc-generate-cell-x-gene-expression-matrix" class="nav-link" data-scroll-target="#generate-cell-x-gene-expression-matrix">7. Generate Cell X Gene expression matrix</a></li>
-  <li><a href="#cell-selection-with-dropletutils" id="toc-cell-selection-with-dropletutils" class="nav-link" data-scroll-target="#cell-selection-with-dropletutils">8. Cell selection with DropletUtils</a></li>
-  </ul></li>
-  <li><a href="#useful-resorces" id="toc-useful-resorces" class="nav-link" data-scroll-target="#useful-resorces">Useful resorces</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -357,7 +337,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta column-page">
 
     
     <div>
@@ -374,7 +354,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#prepare-the-raw-data-and-reference" id="toc-prepare-the-raw-data-and-reference">Prepare the raw data and reference</a></li>
+  <li><a href="#the-third-party-programs-we-will-use" id="toc-the-third-party-programs-we-will-use">The third-party programs we will use</a></li>
+  <li><a href="#step-by-step-tutorial" id="toc-step-by-step-tutorial">Step by step tutorial</a>
+  <ul>
+  <li><a href="#parse-cell-barcode-and-umi" id="toc-parse-cell-barcode-and-umi">1. Parse cell barcode and UMI</a></li>
+  <li><a href="#align-reads-with-minimap2" id="toc-align-reads-with-minimap2">2. Align reads with minimap2</a></li>
+  <li><a href="#convert-sam-to-bam" id="toc-convert-sam-to-bam">3. Convert SAM to BAM</a></li>
+  <li><a href="#gene-annotations" id="toc-gene-annotations">4. Gene annotations</a></li>
+  <li><a href="#sort-bam-by-genomics-coordinate-optional" id="toc-sort-bam-by-genomics-coordinate-optional">5. Sort BAM by genomics coordinate (Optional)</a></li>
+  <li><a href="#umis-correction-for-one-cell-in-one-gene" id="toc-umis-correction-for-one-cell-in-one-gene">6. UMIs correction for one cell in one gene</a></li>
+  <li><a href="#generate-cell-x-gene-expression-matrix" id="toc-generate-cell-x-gene-expression-matrix">7. Generate Cell X Gene expression matrix</a></li>
+  <li><a href="#cell-selection-with-dropletutils" id="toc-cell-selection-with-dropletutils">8. Cell selection with DropletUtils</a></li>
+  </ul></li>
+  <li><a href="#useful-resorces" id="toc-useful-resorces">Useful resorces</a></li>
+  </ul>
+</nav>
 <p>The following vignette demonstrates how to parse raw FASTQ files to FASTQ+ format and perform alignment, feature annotation, and counting using PISA. For simplification, we use minimap2 to align reads in this example, but other tools such as STAR can also be used.</p>
 <section id="prepare-the-raw-data-and-reference" class="level2">
 <h2 class="anchored" data-anchor-id="prepare-the-raw-data-and-reference">Prepare the raw data and reference</h2>
