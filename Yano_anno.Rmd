@@ -74,7 +74,7 @@ head(df)
 # We note that there are several pathogenic variants detected
 table(df[['CLNSIG']])
 
-df %>% filter(CLNSIG %in% c('Pathogenic', 'Pathogenic/Likely_pathogenic', 'Pathogenic|risk_factor'))
+df %>% filter(CLNSIG %in% c('Pathogenic', 'Pathogenic/Likely_pathogenic', 'Pathogenic|risk_factor')) %>% DT::datatable()
 ```
 
 In the selected SNVs, we found some reference alleles are highlighted, such as chr15:92992967C=/+. These reference alleles are more likely to be benign alleles. Let's query the original record in the ClinVar database to check what the exact situation is.

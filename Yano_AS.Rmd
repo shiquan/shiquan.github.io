@@ -56,7 +56,7 @@ obj[['exon']] <- CreateAssayObject(exon[, colnames(obj)], min.cells=20)
 # Switch work assay to exon
 DefaultAssay(obj) <- "exon"
 # Empty info for exon features
-head(obj[['exon']][[]]) 
+head(obj[['exon']][[]])
 
 obj <- ParseExonName(obj)
 # Gene name and location are parsed from exon name
@@ -136,7 +136,7 @@ obj <- RunSDT(obj, bind.name = "gene_name", bind.assay = "RNA", perm=20)
 
 FbtPlot(obj, val="gene_name.padj", remove.chr=TRUE, sel.chrs = sel.chrs)
 
-obj[['junction']][[]] %>% filter(gene_name.padj<1e-5)
+obj[['junction']][[]] %>% filter(gene_name.padj<1e-5) %>% DT::datatable()
 
 # Because both exon and junction are compared with gene, so it's reasonable to combine these two assays in one plot
 FbtPlot(obj, val="gene_name.padj", assay = c("exon", "junction"), col.by = "assay", shape.by = "assay", pt.size = 2, remove.chr = TRUE, sel.chrs = sel.chrs, cols = c("red", "blue"))

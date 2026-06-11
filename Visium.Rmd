@@ -189,7 +189,7 @@ obj <- RunSDT(obj, bind.name = "gene_name", bind.assay = "RNA")
 
 FbtPlot(obj, val = "gene_name.padj")
 
-obj[['exon']][[]] %>% filter(gene_name.padj<1e-5)
+obj[['exon']][[]] %>% filter(gene_name.padj<1e-10) %>% DT::datatable()
 ```
 ```{r warning=FALSE, fig.width=15, fig.height=8}
 SpatialPlot(obj, features = c("chr11:53548291-53549565/+/Sept8","Sept8"), pt.size.factor = 2)
@@ -234,10 +234,10 @@ grep("_wm", names(obj), value=TRUE)
 
 obj <- RunSDT(obj, bind.name = "gene_name", bind.assay = "RNA", wm.name = "spatial_wm")
 FbtPlot(obj, val = "gene_name.padj")
-Meta(obj) %>% filter(gene_name.padj<1e-7)
+Meta(obj) %>% filter(gene_name.padj<1e-10) %>% DT::datatable()
 
 # SpatialFeaturePlot can display the results on any individual slice
-SpatialFeaturePlot(obj, features = c("chr11:30106785-30109152/-/Sptbn1","Sptbn1"))
+SpatialFeaturePlot(obj, features = c("chr11:30106785-30109152/-/Sptbn1","Sptbn1"), images = c("slice1", "slice2", "slice3", "slice4"))
 ```
 
 

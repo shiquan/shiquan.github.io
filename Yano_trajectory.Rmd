@@ -158,8 +158,8 @@ obj.sel <- RunSDT(obj.sel, wm.name = "trajectory_wm", bind.name = "gene_name", b
 
 FbtPlot(obj.sel, val = "gene_name.padj", assay = c("exon", "junction"), shape.by = "assay", color.by = "assay")
 
-Meta(obj.sel, assay = "exon") %>% filter(gene_name.padj <1e-20) %>% knitr::kable()
-Meta(obj.sel, assay = "junction") %>% filter(gene_name.padj <1e-20) %>% knitr::kable()
+Meta(obj.sel, assay = "exon") %>% filter(gene_name.padj <1e-20) %>% DT::datatable()
+Meta(obj.sel, assay = "junction") %>% filter(gene_name.padj <1e-20) %>% DT::datatable()
 
 FeaturePlot(obj.sel, features = c("3:52413996-52414048/+/PHF7", "3:52414048-52414496/+/PHF7", "PHF7"), ncol=3, order=TRUE)
 ```
@@ -199,7 +199,7 @@ obj.sel <- RunAutoCorr(obj.sel, reduction = "ccc", wm.name = "ccc_wm", dims=1:2)
 obj.sel <- RunSDT(obj.sel, wm.name = "ccc_wm", bind.name = "gene_name", bind.assay = "RNA", prefix = "ccc")
 FbtPlot(obj.sel, val = "ccc.padj", assay = c("exon", "junction"), shape.by = "assay", color.by = "assay")
 
-Meta(obj.sel, assay = "exon") %>% filter(ccc.padj<1e-20) %>% knitr::kable()
+Meta(obj.sel, assay = "exon") %>% filter(ccc.padj<1e-20) %>% DT::datatable()
 
 FeaturePlot(obj.sel, reduction =  "ccc", features = c("7:74196642-74197050/+/EIF4H", "EIF4H"), order = TRUE)
 ```
