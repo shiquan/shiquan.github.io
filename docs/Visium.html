@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+
 <title>Perform alternative splicing analysis for multiple Visium samples</title>
 <style>
 code{white-space: pre-wrap;}
@@ -56,14 +57,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
+
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Yano_trajectory.html" rel="next">
-<link href="./Yano_anno.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -76,9 +76,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-597958c53c93a607afca12fd375c57ed.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-359c8607919eecb446bd360b82f92eee.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-6893e1c0f356f3ff25b33dc2bef6ed3e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-359c8607919eecb446bd360b82f92eee.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-756d0560751ba3f620309bdd40527566.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-d21111987e9cbb147ea0ddfb4f5bc632.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-756d0560751ba3f620309bdd40527566.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -107,10 +107,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -317,108 +318,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workflow1.html">Workflows &amp; Short cases</a></li><li class="breadcrumb-item"><a href="./Visium.html">Analysis multiple Visium samples</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Workflows &amp; Short cases</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./workflow1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From FASTQ to counts</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./anno.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Annotate various features</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./selector.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Select cells from reduction maps</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Yano_AS.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Alternative splicing analysis</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Yano_ASE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Allele-specific gene expression analysis</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Yano_anno.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Annotating genetic variants</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Visium.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Analysis multiple Visium samples</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Yano_trajectory.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cell trajectory analysis</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#prepare-the-data." id="toc-prepare-the-data." class="nav-link active" data-scroll-target="#prepare-the-data.">0. Prepare the data.</a></li>
-  <li><a href="#preprocess-all-four-slices-and-intergrate-them-into-one-object" id="toc-preprocess-all-four-slices-and-intergrate-them-into-one-object" class="nav-link" data-scroll-target="#preprocess-all-four-slices-and-intergrate-them-into-one-object">1. Preprocess all four slices and intergrate them into one object</a></li>
-  <li><a href="#visualize-genome-tracks-of-multiple-samples" id="toc-visualize-genome-tracks-of-multiple-samples" class="nav-link" data-scroll-target="#visualize-genome-tracks-of-multiple-samples">2. Visualize genome tracks of multiple samples</a></li>
-  <li><a href="#optional-build-cell-cell-weight-matrix-by-spatial-coordinates" id="toc-optional-build-cell-cell-weight-matrix-by-spatial-coordinates" class="nav-link" data-scroll-target="#optional-build-cell-cell-weight-matrix-by-spatial-coordinates">Optional: Build cell-cell weight matrix by spatial coordinates</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workflow1.html">Workflows &amp; Short cases</a></li><li class="breadcrumb-item"><a href="./Visium.html">Analysis multiple Visium samples</a></li></ol></nav>
+
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Perform alternative splicing analysis for multiple Visium samples</h1>
 </div>
 
-<div class="quarto-title-meta column-body">
+
+
+<div class="quarto-title-meta column-page">
 
     
   
@@ -426,8 +344,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
 
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#prepare-the-data." id="toc-prepare-the-data.">0. Prepare the data.</a></li>
+  <li><a href="#preprocess-all-four-slices-and-intergrate-them-into-one-object" id="toc-preprocess-all-four-slices-and-intergrate-them-into-one-object">1. Preprocess all four slices and intergrate them into one object</a></li>
+  <li><a href="#visualize-genome-tracks-of-multiple-samples" id="toc-visualize-genome-tracks-of-multiple-samples">2. Visualize genome tracks of multiple samples</a></li>
+  <li><a href="#optional-build-cell-cell-weight-matrix-by-spatial-coordinates" id="toc-optional-build-cell-cell-weight-matrix-by-spatial-coordinates">Optional: Build cell-cell weight matrix by spatial coordinates</a></li>
+  </ul>
+</nav>
 <p>This vignette demonstrates how to analyze alternative splicing across multiple Visium samples. The procedure for spatial transcriptomics follows the same principles as scRNA-seq but requires careful handling of imaging data and spatial coordinates for accurate visualization. Additionally, this example illustrates how to visualize genome tracks from multiple BAM files.</p>
 <section id="prepare-the-data." class="level2">
 <h2 class="anchored" data-anchor-id="prepare-the-data.">0. Prepare the data.</h2>
@@ -537,69 +466,129 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="preprocess-all-four-slices-and-intergrate-them-into-one-object">1. Preprocess all four slices and intergrate them into one object</h2>
 <p>This section will perform Seurat pipeline for all the sections. A Seurat workflow for one section can be found here https://satijalab.org/seurat/articles/spatial_vignette. The difference between this workflow with Seurat’s is we use counts generated from PISA, while Seurat use counts generated with CellRanger’s pipeline. For the details of different between PISA and CellRanger, please see our <a href="https://shiquan.github.io/PISA.html#difference-in-alignment-annotation-between-pisa-and-cellranger">manual</a>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Yano)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Seurat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Seurat</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: SeuratObject</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: sp</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'SeuratObject'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, t</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(dplyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: dplyr</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Yano)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: Yano</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>exp<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section1/Anterior/exp/"</span>, <span class="at">prefix =</span> <span class="st">"sec1_ant_"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">Read10X_Image</span>(<span class="st">"./visium/section1/Anterior/spatial/"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>new.names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"sec1_ant_"</span>,<span class="fu">Cells</span>(image<span class="fl">.1</span>))</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">RenameCells</span>(image<span class="fl">.1</span>, <span class="at">new.names =</span> new.names)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="do">## QuickRecipe() is actually an integration function of Seurat workflow</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(exp<span class="fl">.1</span>[, <span class="fu">Cells</span>(image<span class="fl">.1</span>)], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.1</span>[[<span class="st">'slice1'</span>]] <span class="ot">&lt;-</span> image<span class="fl">.1</span>[<span class="fu">colnames</span>(obj<span class="fl">.1</span>),]</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.1</span><span class="sc">$</span>orig.ident <span class="ot">&lt;-</span> <span class="st">"sec1_ant"</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>exp<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section1/Posterior/exp/"</span>, <span class="at">prefix =</span> <span class="st">"sec1_pos_"</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Read10X_Image</span>(<span class="st">"./visium/section1/Posterior/spatial/"</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>new.names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"sec1_pos_"</span>,<span class="fu">Cells</span>(image<span class="fl">.2</span>))</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">RenameCells</span>(image<span class="fl">.2</span>, <span class="at">new.names =</span> new.names)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(exp<span class="fl">.2</span>[,<span class="fu">Cells</span>(image<span class="fl">.2</span>)], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.2</span>[[<span class="st">'slice2'</span>]] <span class="ot">&lt;-</span> image<span class="fl">.2</span>[<span class="fu">colnames</span>(obj<span class="fl">.2</span>),]</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.2</span><span class="sc">$</span>orig.ident <span class="ot">&lt;-</span> <span class="st">"sec1_pos"</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>exp<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section2/Anterior/exp/"</span>, <span class="at">prefix=</span><span class="st">"sec2_ant_"</span>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">Read10X_Image</span>(<span class="st">"./visium/section2/Anterior/spatial/"</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>new.names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"sec2_ant_"</span>,<span class="fu">Cells</span>(image<span class="fl">.3</span>))</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">RenameCells</span>(image<span class="fl">.3</span>, <span class="at">new.names =</span> new.names)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(exp<span class="fl">.3</span>[, <span class="fu">Cells</span>(image<span class="fl">.3</span>)], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.3</span>[[<span class="st">'slice3'</span>]] <span class="ot">&lt;-</span> image<span class="fl">.3</span>[<span class="fu">colnames</span>(obj<span class="fl">.3</span>),]</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.3</span><span class="sc">$</span>orig.ident <span class="ot">&lt;-</span> <span class="st">"sec2_ant"</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>exp<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section2/Posterior/exp/"</span>, <span class="at">prefix=</span><span class="st">"sec2_pos_"</span>)</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">Read10X_Image</span>(<span class="st">"./visium/section2/Posterior/spatial/"</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>new.names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"sec2_pos_"</span>,<span class="fu">Cells</span>(image<span class="fl">.4</span>))</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">RenameCells</span>(image<span class="fl">.4</span>, <span class="at">new.names =</span> new.names)</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(exp<span class="fl">.4</span>[, <span class="fu">Cells</span>(image<span class="fl">.4</span>)], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.4</span>[[<span class="st">'slice4'</span>]] <span class="ot">&lt;-</span> image<span class="fl">.4</span>[<span class="fu">colnames</span>(obj<span class="fl">.4</span>),]</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.4</span><span class="sc">$</span>orig.ident <span class="ot">&lt;-</span> <span class="st">"sec2_pos"</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge all processed Seurat object</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">merge</span>(obj<span class="fl">.1</span>, <span class="at">y =</span> <span class="fu">list</span>(obj<span class="fl">.2</span>, obj<span class="fl">.3</span>, obj<span class="fl">.4</span>))</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ────────────────────────────────────────────── Yano 1.2 ──
-✔ dplyr   1.1.4     ✔ Seurat  5.3.0
-✔ ggplot2 4.0.0     </code></pre>
+<pre><code>Set default assay to RNA</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>exp<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section1/Anterior/exp/"</span>, <span class="at">prefix =</span> <span class="st">"sec1_ant_"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">Read10X_Image</span>(<span class="st">"./visium/section1/Anterior/spatial/"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>new.names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"sec1_ant_"</span>,<span class="fu">Cells</span>(image<span class="fl">.1</span>))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">RenameCells</span>(image<span class="fl">.1</span>, <span class="at">new.names =</span> new.names)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">## QuickRecipe() is actually an integration function of Seurat workflow</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(exp<span class="fl">.1</span>[, <span class="fu">Cells</span>(image<span class="fl">.1</span>)], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.1</span>[[<span class="st">'slice1'</span>]] <span class="ot">&lt;-</span> image<span class="fl">.1</span>[<span class="fu">colnames</span>(obj<span class="fl">.1</span>),]</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.1</span><span class="sc">$</span>orig.ident <span class="ot">&lt;-</span> <span class="st">"sec1_ant"</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>exp<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section1/Posterior/exp/"</span>, <span class="at">prefix =</span> <span class="st">"sec1_pos_"</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Read10X_Image</span>(<span class="st">"./visium/section1/Posterior/spatial/"</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>new.names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"sec1_pos_"</span>,<span class="fu">Cells</span>(image<span class="fl">.2</span>))</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">RenameCells</span>(image<span class="fl">.2</span>, <span class="at">new.names =</span> new.names)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(exp<span class="fl">.2</span>[,<span class="fu">Cells</span>(image<span class="fl">.2</span>)], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.2</span>[[<span class="st">'slice2'</span>]] <span class="ot">&lt;-</span> image<span class="fl">.2</span>[<span class="fu">colnames</span>(obj<span class="fl">.2</span>),]</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.2</span><span class="sc">$</span>orig.ident <span class="ot">&lt;-</span> <span class="st">"sec1_pos"</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>exp<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section2/Anterior/exp/"</span>, <span class="at">prefix=</span><span class="st">"sec2_ant_"</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">Read10X_Image</span>(<span class="st">"./visium/section2/Anterior/spatial/"</span>)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>new.names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"sec2_ant_"</span>,<span class="fu">Cells</span>(image<span class="fl">.3</span>))</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">RenameCells</span>(image<span class="fl">.3</span>, <span class="at">new.names =</span> new.names)</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(exp<span class="fl">.3</span>[, <span class="fu">Cells</span>(image<span class="fl">.3</span>)], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.3</span>[[<span class="st">'slice3'</span>]] <span class="ot">&lt;-</span> image<span class="fl">.3</span>[<span class="fu">colnames</span>(obj<span class="fl">.3</span>),]</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.3</span><span class="sc">$</span>orig.ident <span class="ot">&lt;-</span> <span class="st">"sec2_ant"</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>exp<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section2/Posterior/exp/"</span>, <span class="at">prefix=</span><span class="st">"sec2_pos_"</span>)</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">Read10X_Image</span>(<span class="st">"./visium/section2/Posterior/spatial/"</span>)</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>new.names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"sec2_pos_"</span>,<span class="fu">Cells</span>(image<span class="fl">.4</span>))</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>image<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">RenameCells</span>(image<span class="fl">.4</span>, <span class="at">new.names =</span> new.names)</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(exp<span class="fl">.4</span>[, <span class="fu">Cells</span>(image<span class="fl">.4</span>)], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.4</span>[[<span class="st">'slice4'</span>]] <span class="ot">&lt;-</span> image<span class="fl">.4</span>[<span class="fu">colnames</span>(obj<span class="fl">.4</span>),]</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>obj<span class="fl">.4</span><span class="sc">$</span>orig.ident <span class="ot">&lt;-</span> <span class="st">"sec2_pos"</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge all processed Seurat object</span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">merge</span>(obj<span class="fl">.1</span>, <span class="at">y =</span> <span class="fu">list</span>(obj<span class="fl">.2</span>, obj<span class="fl">.3</span>, obj<span class="fl">.4</span>))</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">QuickRecipe</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Set default assay to RNA
-object &lt;- NormalizeData(object, normalization.method = "LogNormalize", scale.factor = 10000)
-Normalizing layer: counts.1
-Normalizing layer: counts.2
-Normalizing layer: counts.3
-Normalizing layer: counts.4
-object &lt;- FindVariableFeatures(object, selection.method = "vst", nfeatures = 3000)
-Finding variable features for layer counts.1
-Finding variable features for layer counts.2
-Finding variable features for layer counts.3
-Finding variable features for layer counts.4
-object &lt;- ScaleData(object, features =  @features)
-Centering and scaling data matrix
-object &lt;- RunPCA(object, features = @features
-PC_ 1 
+<pre><code>object &lt;- NormalizeData(object, normalization.method = "LogNormalize", scale.factor = 10000)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Normalizing layer: counts.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Normalizing layer: counts.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Normalizing layer: counts.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Normalizing layer: counts.4</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>object &lt;- FindVariableFeatures(object, selection.method = "vst", nfeatures = 3000)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Finding variable features for layer counts.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Finding variable features for layer counts.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Finding variable features for layer counts.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Finding variable features for layer counts.4</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>object &lt;- ScaleData(object, features =  @features)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Centering and scaling data matrix</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>object &lt;- RunPCA(object, features = @features</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>PC_ 1 
 Positive:  Trf, Apod, Plekhb1, Mbp, Cnp, Plp1, Mobp, Car2, Mag, Dbi 
        Cryab, Mog, Cldn11, Bcas1, Sept4, Mal, Ndrg1, Ptgds, Gatm, Ermn 
        Qdpr, Ppp1r14a, Sparc, Gsn, Ugt8a, Gfap, Fa2h, Gm20425, Pllp, Tmem88b 
@@ -633,11 +622,19 @@ Positive:  Itpr1, Itpka, Zbtb18, Cplx2, Adcy1, Rnf112, Nptx1, Lmo4, Hpca, Neurod
        Atp1a1, Dgkz, Lzts3, Mmp17, Ppp1r1b, Neurl1a, Slc8a2, Gas7, Slc13a4, Fam212b 
 Negative:  Slc6a11, Gng4, Nrip3, Scg2, Ptpro, Sp8, Dlx1, Hap1, Cdhr1, Th 
        Doc2g, Zcchc12, Pcbp3, Pbx3, Scgn, Dcx, Tshz1, Tuba1a, A230065H16Rik, Tubb3 
-       Cacng5, Pcp4l1, Cpne4, Lgr5, Lgr6, Sp9, Dlx2, Tmem130, Adamts19, Tubb2a 
-object &lt;- FindNeighbors(object, dims = 1:20)
-Computing nearest neighbor graph
-Computing SNN
-object &lt;- FindClusters(object, resolution = 0.5)</code></pre>
+       Cacng5, Pcp4l1, Cpne4, Lgr5, Lgr6, Sp9, Dlx2, Tmem130, Adamts19, Tubb2a </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>object &lt;- FindNeighbors(object, dims = 1:20)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Computing nearest neighbor graph</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Computing SNN</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>object &lt;- FindClusters(object, resolution = 0.5)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
@@ -648,29 +645,43 @@ Number of edges: 388028
 Running Louvain algorithm...
 Maximum modularity in 10 random starts: 0.9315
 Number of communities: 16
-Elapsed time: 1 seconds</code></pre>
+Elapsed time: 0 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>object &lt;- RunUMAP(object, dims = 1:20)
-14:56:12 UMAP embedding parameters a = 0.9922 b = 1.112
-14:56:12 Read 12148 rows and found 20 numeric columns
-14:56:12 Using Annoy for neighbor search, n_neighbors = 30
-14:56:12 Building Annoy index with metric = cosine, n_trees = 50
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-14:56:13 Writing NN index file to temp file /local/tmp/RtmpTOUqEJ/file45e9830efc0
-14:56:13 Searching Annoy index using 1 thread, search_k = 3000
-14:56:17 Annoy recall = 100%
-14:56:17 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-14:56:18 Initializing from normalized Laplacian + noise (using RSpectra)
-14:56:19 Commencing optimization for 200 epochs, with 500526 positive edges
-14:56:19 Using rng type: pcg
-14:56:24 Optimization finished</code></pre>
+<pre><code>object &lt;- RunUMAP(object, dims = 1:20)</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj, <span class="at">group.by =</span> <span class="st">"orig.ident"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>12:41:21 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>12:41:21 Read 12148 rows and found 20 numeric columns</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>12:41:21 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>12:41:21 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[----|----|----|----|----|----|----|----|----|----|</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>**************************************************|
+12:41:25 Writing NN index file to temp file /local/tmp/RtmpgqlVsz/file1ba80134fa451b
+12:41:25 Searching Annoy index using 1 thread, search_k = 3000
+12:41:44 Annoy recall = 100%
+12:41:44 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+12:41:45 Initializing from normalized Laplacian + noise (using RSpectra)
+12:41:58 Commencing optimization for 200 epochs, with 500526 positive edges
+12:41:58 Using rng type: pcg
+12:42:13 Optimization finished</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj, <span class="at">group.by =</span> <span class="st">"orig.ident"</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -678,7 +689,7 @@ Elapsed time: 1 seconds</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SpatialPlot</span>(obj, <span class="at">pt.size.factor =</span> <span class="dv">2</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SpatialPlot</span>(obj, <span class="at">pt.size.factor =</span> <span class="dv">2</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -686,31 +697,31 @@ Elapsed time: 1 seconds</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>exon<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section1/Anterior/exon/"</span>, <span class="at">prefix =</span> <span class="st">"sec1_ant_"</span>, <span class="at">cells =</span> <span class="fu">Cells</span>(obj))</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>exon<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section1/Posterior/exon/"</span>, <span class="at">prefix =</span> <span class="st">"sec1_pos_"</span>, <span class="at">cells =</span> <span class="fu">Cells</span>(obj))</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>exon<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section2/Anterior/exon/"</span>, <span class="at">prefix =</span> <span class="st">"sec2_ant_"</span>, <span class="at">cells =</span> <span class="fu">Cells</span>(obj))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>exon<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section2/Posterior/exon/"</span>, <span class="at">prefix =</span> <span class="st">"sec2_pos_"</span>, <span class="at">cells =</span> <span class="fu">Cells</span>(obj))</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>exon <span class="ot">&lt;-</span> <span class="fu">mergeMatrix</span>(exon<span class="fl">.1</span>, exon<span class="fl">.2</span>, exon<span class="fl">.3</span>, exon<span class="fl">.4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>exon<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section1/Anterior/exon/"</span>, <span class="at">prefix =</span> <span class="st">"sec1_ant_"</span>, <span class="at">cells =</span> <span class="fu">Cells</span>(obj))</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>exon<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section1/Posterior/exon/"</span>, <span class="at">prefix =</span> <span class="st">"sec1_pos_"</span>, <span class="at">cells =</span> <span class="fu">Cells</span>(obj))</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>exon<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section2/Anterior/exon/"</span>, <span class="at">prefix =</span> <span class="st">"sec2_ant_"</span>, <span class="at">cells =</span> <span class="fu">Cells</span>(obj))</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>exon<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./visium/section2/Posterior/exon/"</span>, <span class="at">prefix =</span> <span class="st">"sec2_pos_"</span>, <span class="at">cells =</span> <span class="fu">Cells</span>(obj))</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>exon <span class="ot">&lt;-</span> <span class="fu">mergeMatrix</span>(exon<span class="fl">.1</span>, exon<span class="fl">.2</span>, exon<span class="fl">.3</span>, exon<span class="fl">.4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>'as(&lt;dgTMatrix&gt;, "dgCMatrix")' is deprecated.
 Use 'as(., "CsparseMatrix")' instead.
 See help("Deprecated") and help("Matrix-deprecated").</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(exon[, <span class="fu">Cells</span>(obj)], <span class="at">min.cells =</span> <span class="dv">20</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(exon[, <span class="fu">Cells</span>(obj)], <span class="at">min.cells =</span> <span class="dv">20</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay : exon
 Run autocorrelation test for 80178 features.
-Runtime : 32.13648 secs
+Runtime : 21.09427 secs
 38784 autocorrelated features.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon.
 Working on binding assay RNA.
@@ -719,10 +730,10 @@ Processing 38784 features.
 Processing 15696 binding features.
 Retrieve binding data from assay RNA.
 Use "data" layer for test features and binding features.
-Using 63 threads.
-Runtime : 11.01335 mins.</code></pre>
+Using 95 threads.
+Runtime : 2.735093 mins.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -730,116 +741,580 @@ Runtime : 11.01335 mins.</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.pval<span class="sc">&lt;</span><span class="fl">1e-40</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">1e-5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                                   chr     start       end gene_name strand
-chr11:30106785-30109152/-/Sptbn1 chr11  30106785  30109152    Sptbn1      -
-chr11:53541475-53541898/+/Sept8  chr11  53541475  53541898     Sept8      +
-chr11:53541475-53541847/+/Sept8  chr11  53541475  53541847     Sept8      +
-chr11:53548291-53549565/+/Sept8  chr11  53548291  53549565     Sept8      +
-chr11:53541210-53544095/+/Sept8  chr11  53541210  53544095     Sept8      +
-chr11:53541030-53544096/+/Sept8  chr11  53541030  53544096     Sept8      +
-chr12:111806315-111806775/+/Klc1 chr12 111806315 111806775      Klc1      +
-chr12:111806315-111806727/+/Klc1 chr12 111806315 111806727      Klc1      +
-chr12:111806315-111806711/+/Klc1 chr12 111806315 111806711      Klc1      +
-chr12:111806315-111806726/+/Klc1 chr12 111806315 111806726      Klc1      +
-chr13:59128168-59133970/+/Ntrk2  chr13  59128168  59133970     Ntrk2      +
-chr14:20507671-20508721/-/Ppp3cb chr14  20507671  20508721    Ppp3cb      -
-chr17:25717528-25717581/+/Gng13  chr17  25717528  25717581     Gng13      +
-chr4:117154638-117155181/-/Rps8   chr4 117154638 117155181      Rps8      -
-chr4:117154391-117154813/-/Rps8   chr4 117154391 117154813      Rps8      -
-chr4:117154510-117154813/-/Rps8   chr4 117154510 117154813      Rps8      -
-chr4:117155008-117155107/-/Rps8   chr4 117155008 117155107      Rps8      -
-chr4:117155008-117155677/-/Rps8   chr4 117155008 117155677      Rps8      -
-chr5:121205406-121205663/+/Rpl6   chr5 121205406 121205663      Rpl6      +
-chr5:121205406-121206202/+/Rpl6   chr5 121205406 121206202      Rpl6      +
-chr7:27180169-27180279/-/Gm21983  chr7  27180169  27180279   Gm21983      -
-chr7:27180700-27180833/-/Gm21983  chr7  27180700  27180833   Gm21983      -
-chr7:45131188-45131566/-/Flt3l    chr7  45131188  45131566     Flt3l      -
-chr7:45131188-45131431/-/Flt3l    chr7  45131188  45131431     Flt3l      -
-chrX:163926903-163929546/+/Ap1s2  chrX 163926903 163929546     Ap1s2      +
-                                  moransi.pval    moransi autocorr.variable
-chr11:30106785-30109152/-/Sptbn1  0.000000e+00 0.15168101              TRUE
-chr11:53541475-53541898/+/Sept8   0.000000e+00 0.42945787              TRUE
-chr11:53541475-53541847/+/Sept8   0.000000e+00 0.35888116              TRUE
-chr11:53548291-53549565/+/Sept8   0.000000e+00 0.43158740              TRUE
-chr11:53541210-53544095/+/Sept8   0.000000e+00 0.40952155              TRUE
-chr11:53541030-53544096/+/Sept8   0.000000e+00 0.40944155              TRUE
-chr12:111806315-111806775/+/Klc1  0.000000e+00 0.10015770              TRUE
-chr12:111806315-111806727/+/Klc1  0.000000e+00 0.09999863              TRUE
-chr12:111806315-111806711/+/Klc1  0.000000e+00 0.09420650              TRUE
-chr12:111806315-111806726/+/Klc1  0.000000e+00 0.09698996              TRUE
-chr13:59128168-59133970/+/Ntrk2   0.000000e+00 0.32438027              TRUE
-chr14:20507671-20508721/-/Ppp3cb  0.000000e+00 0.06726973              TRUE
-chr17:25717528-25717581/+/Gng13   0.000000e+00 0.16337588              TRUE
-chr4:117154638-117155181/-/Rps8   0.000000e+00 0.21340388              TRUE
-chr4:117154391-117154813/-/Rps8   0.000000e+00 0.29275023              TRUE
-chr4:117154510-117154813/-/Rps8   0.000000e+00 0.29520866              TRUE
-chr4:117155008-117155107/-/Rps8   0.000000e+00 0.21347766              TRUE
-chr4:117155008-117155677/-/Rps8   0.000000e+00 0.20857395              TRUE
-chr5:121205406-121205663/+/Rpl6  1.476043e-309 0.06564243              TRUE
-chr5:121205406-121206202/+/Rpl6  1.483145e-315 0.06627969              TRUE
-chr7:27180169-27180279/-/Gm21983  0.000000e+00 0.11385203              TRUE
-chr7:27180700-27180833/-/Gm21983  0.000000e+00 0.13438134              TRUE
-chr7:45131188-45131566/-/Flt3l   1.183112e-115 0.03978920              TRUE
-chr7:45131188-45131431/-/Flt3l    9.910321e-99 0.03667860              TRUE
-chrX:163926903-163929546/+/Ap1s2  0.000000e+00 0.14474266              TRUE
-                                 gene_name.D gene_name.t gene_name.pval
-chr11:30106785-30109152/-/Sptbn1   0.4746839   -43.89401   5.263807e-67
-chr11:53541475-53541898/+/Sept8    0.4048398   -25.74381   5.834218e-46
-chr11:53541475-53541847/+/Sept8    0.3656638   -22.48278   5.567885e-41
-chr11:53548291-53549565/+/Sept8    0.4780168   -26.93290   1.160903e-47
-chr11:53541210-53544095/+/Sept8    0.3912296   -24.47323   4.461505e-44
-chr11:53541030-53544096/+/Sept8    0.3913941   -24.46688   4.561207e-44
-chr12:111806315-111806775/+/Klc1   0.4504790   -34.17159   6.621251e-57
-chr12:111806315-111806727/+/Klc1   0.4505177   -34.03884   9.447059e-57
-chr12:111806315-111806711/+/Klc1   0.4413015   -32.84301   2.449418e-55
-chr12:111806315-111806726/+/Klc1   0.4444515   -33.46269   4.478730e-56
-chr13:59128168-59133970/+/Ntrk2    0.4148224   -24.83806   1.263263e-44
-chr14:20507671-20508721/-/Ppp3cb   0.3496615   -22.53752   4.550498e-41
-chr17:25717528-25717581/+/Gng13    0.4628582   -28.12830   2.578332e-49
-chr4:117154638-117155181/-/Rps8    0.2055551   -22.67264   2.769229e-41
-chr4:117154391-117154813/-/Rps8    0.2711817   -34.15592   6.904540e-57
-chr4:117154510-117154813/-/Rps8    0.2710378   -34.78865   1.288374e-57
-chr4:117155008-117155107/-/Rps8    0.2653470   -30.72746   9.963707e-53
-chr4:117155008-117155677/-/Rps8    0.2590419   -28.16428   2.303631e-49
-chr5:121205406-121205663/+/Rpl6    0.2384405   -23.27607   3.087837e-42
-chr5:121205406-121206202/+/Rpl6    0.2388061   -24.60967   2.778846e-44
-chr7:27180169-27180279/-/Gm21983   0.3214447   -22.61010   3.484121e-41
-chr7:27180700-27180833/-/Gm21983   0.3414768   -22.39562   7.682987e-41
-chr7:45131188-45131566/-/Flt3l     0.2651879   -22.54243   4.469064e-41
-chr7:45131188-45131431/-/Flt3l     0.2518174   -22.66769   2.820021e-41
-chrX:163926903-163929546/+/Ap1s2   0.3696098   -24.50636   3.976343e-44
-                                 gene_name.padj
-chr11:30106785-30109152/-/Sptbn1   2.008300e-62
-chr11:53541475-53541898/+/Sept8    1.854941e-42
-chr11:53541475-53541847/+/Sept8    8.851314e-38
-chr11:53548291-53549565/+/Sept8    4.026538e-44
-chr11:53541210-53544095/+/Sept8    1.023669e-40
-chr11:53541030-53544096/+/Sept8    1.023669e-40
-chr12:111806315-111806775/+/Klc1   6.585722e-53
-chr12:111806315-111806727/+/Klc1   7.208673e-53
-chr12:111806315-111806711/+/Klc1   1.335038e-51
-chr12:111806315-111806726/+/Klc1   2.847950e-52
-chr13:59128168-59133970/+/Ntrk2    3.707483e-41
-chr14:20507671-20508721/-/Ppp3cb   7.548485e-38
-chr17:25717528-25717581/+/Gng13    9.837110e-46
-chr4:117154638-117155181/-/Rps8    5.379613e-38
-chr4:117154391-117154813/-/Rps8    6.585722e-53
-chr4:117154510-117154813/-/Rps8    2.457766e-53
-chr4:117155008-117155107/-/Rps8    4.751816e-49
-chr4:117155008-117155677/-/Rps8    9.765604e-46
-chr5:121205406-121205663/+/Rpl6    6.545014e-39
-chr5:121205406-121206202/+/Rpl6    7.572952e-41
-chr7:27180169-27180279/-/Gm21983   6.329984e-38
-chr7:27180700-27180833/-/Gm21983   1.172516e-37
-chr7:45131188-45131566/-/Flt3l     7.548485e-38
-chr7:45131188-45131431/-/Flt3l     5.379613e-38
-chrX:163926903-163929546/+/Ap1s2   1.011396e-40</code></pre>
+<pre><code>                                       chr     start       end gene_name strand
+chr1:52185280-52187794/-/Gls          chr1  52185280  52187794       Gls      -
+chr1:52185280-52187853/-/Gls          chr1  52185280  52187853       Gls      -
+chr1:52184104-52187794/-/Gls          chr1  52184104  52187794       Gls      -
+chr1:81297962-81298934/+/Nyap2        chr1  81297962  81298934     Nyap2      +
+chr1:81297962-81300096/+/Nyap2        chr1  81297962  81300096     Nyap2      +
+chr1:161037124-161037164/+/Gas5       chr1 161037124 161037164      Gas5      +
+chr1:162006122-162006445/-/Dnm3       chr1 162006122 162006445      Dnm3      -
+chr10:5336949-5339385/-/Syne1        chr10   5336949   5339385     Syne1      -
+chr10:81390789-81391560/+/Dohh       chr10  81390789  81391560      Dohh      +
+chr10:128913593-128913936/-/Rdh5     chr10 128913593 128913936      Rdh5      -
+chr11:29706410-29708770/+/Rtn4       chr11  29706410  29708770      Rtn4      +
+chr11:30106785-30109152/-/Sptbn1     chr11  30106785  30109152    Sptbn1      -
+chr11:53541475-53541898/+/Sept8      chr11  53541475  53541898     Sept8      +
+chr11:53541475-53541847/+/Sept8      chr11  53541475  53541847     Sept8      +
+chr11:53548291-53549565/+/Sept8      chr11  53548291  53549565     Sept8      +
+chr11:53541210-53544095/+/Sept8      chr11  53541210  53544095     Sept8      +
+chr11:53541030-53544096/+/Sept8      chr11  53541030  53544096     Sept8      +
+chr11:67683338-67684974/+/Gas7       chr11  67683338  67684974      Gas7      +
+chr11:68906586-68906989/+/Rpl26      chr11  68906586  68906989     Rpl26      +
+chr11:76211049-76214827/+/Fam57a     chr11  76211049  76214827    Fam57a      +
+chr11:118132019-118132375/-/Cyth1    chr11 118132019 118132375     Cyth1      -
+chr12:76596130-76597801/-/Sptb       chr12  76596130  76597801      Sptb      -
+chr12:100203575-100203718/+/Calm1    chr12 100203575 100203718     Calm1      +
+chr12:100205613-100205719/+/Calm1    chr12 100205613 100205719     Calm1      +
+chr12:100206098-100206233/+/Calm1    chr12 100206098 100206233     Calm1      +
+chr12:100205403-100205719/+/Calm1    chr12 100205403 100205719     Calm1      +
+chr12:100206400-100206495/+/Calm1    chr12 100206400 100206495     Calm1      +
+chr12:110694023-110694343/-/Hsp90aa1 chr12 110694023 110694343  Hsp90aa1      -
+chr12:110694175-110694343/-/Hsp90aa1 chr12 110694175 110694343  Hsp90aa1      -
+chr12:110694571-110694704/-/Hsp90aa1 chr12 110694571 110694704  Hsp90aa1      -
+chr12:110695052-110695672/-/Hsp90aa1 chr12 110695052 110695672  Hsp90aa1      -
+chr12:110695052-110695418/-/Hsp90aa1 chr12 110695052 110695418  Hsp90aa1      -
+chr12:111806315-111806775/+/Klc1     chr12 111806315 111806775      Klc1      +
+chr12:111806315-111806727/+/Klc1     chr12 111806315 111806727      Klc1      +
+chr12:111806315-111806711/+/Klc1     chr12 111806315 111806711      Klc1      +
+chr12:111806315-111806726/+/Klc1     chr12 111806315 111806726      Klc1      +
+chr13:43398376-43398658/+/Nol7       chr13  43398376  43398658      Nol7      +
+chr13:59128168-59133970/+/Ntrk2      chr13  59128168  59133970     Ntrk2      +
+chr13:86046601-86046774/-/Cox7c      chr13  86046601  86046774     Cox7c      -
+chr14:20507671-20508721/-/Ppp3cb     chr14  20507671  20508721    Ppp3cb      -
+chr15:80113166-80113441/+/Syngr1     chr15  80113166  80113441    Syngr1      +
+chr16:26722356-26725264/+/Il1rap     chr16  26722356  26725264    Il1rap      +
+chr16:26723221-26724353/+/Il1rap     chr16  26723221  26724353    Il1rap      +
+chr16:26727516-26730117/+/Il1rap     chr16  26727516  26730117    Il1rap      +
+chr16:55966275-55966438/+/Rpl24      chr16  55966275  55966438     Rpl24      +
+chr16:55966547-55966622/+/Rpl24      chr16  55966547  55966622     Rpl24      +
+chr16:91651630-91651796/+/Son        chr16  91651630  91651796       Son      +
+chr16:91654611-91660580/+/Son        chr16  91654611  91660580       Son      +
+chr17:23808354-23808518/+/Srrm2      chr17  23808354  23808518     Srrm2      +
+chr17:25717528-25717581/+/Gng13      chr17  25717528  25717581     Gng13      +
+chr17:26279961-26280720/+/Luc7l      chr17  26279961  26280720     Luc7l      +
+chr17:26279961-26280723/+/Luc7l      chr17  26279961  26280723     Luc7l      +
+chr17:26279961-26280719/+/Luc7l      chr17  26279961  26280719     Luc7l      +
+chr17:33685267-33685401/-/Hnrnpm     chr17  33685267  33685401    Hnrnpm      -
+chr17:33685267-33685392/-/Hnrnpm     chr17  33685267  33685392    Hnrnpm      -
+chr17:45570258-45570566/-/Hsp90ab1   chr17  45570258  45570566  Hsp90ab1      -
+chr17:45570666-45570799/-/Hsp90ab1   chr17  45570666  45570799  Hsp90ab1      -
+chr17:45570445-45570799/-/Hsp90ab1   chr17  45570445  45570799  Hsp90ab1      -
+chr17:45571018-45571177/-/Hsp90ab1   chr17  45571018  45571177  Hsp90ab1      -
+chr18:34349635-34349803/-/Reep5      chr18  34349635  34349803     Reep5      -
+chr18:82554320-82558703/+/Mbp        chr18  82554320  82558703       Mbp      +
+chr18:60593973-60596488/-/Synpo      chr18  60593973  60596488     Synpo      -
+chr18:60593982-60596488/-/Synpo      chr18  60593982  60596488     Synpo      -
+chr18:60593990-60596488/-/Synpo      chr18  60593990  60596488     Synpo      -
+chr18:60593991-60596488/-/Synpo      chr18  60593991  60596488     Synpo      -
+chr19:6057888-6058001/+/Fau          chr19   6057888   6058001       Fau      +
+chr19:6058243-6058325/+/Fau          chr19   6058243   6058325       Fau      +
+chr19:6058246-6058325/+/Fau          chr19   6058246   6058325       Fau      +
+chr19:7217399-7217616/-/Cox8a        chr19   7217399   7217616     Cox8a      -
+chr2:121457646-121457701/+/Serf2      chr2 121457646 121457701     Serf2      +
+chr2:121457992-121458043/+/Serf2      chr2 121457992 121458043     Serf2      +
+chr2:121458149-121458311/+/Serf2      chr2 121458149 121458311     Serf2      +
+chr2:121458149-121458313/+/Serf2      chr2 121458149 121458313     Serf2      +
+chr3:55466573-55471318/+/Dclk1        chr3  55466573  55471318     Dclk1      +
+chr3:55466573-55471316/+/Dclk1        chr3  55466573  55471316     Dclk1      +
+chr3:88617249-88617501/+/Arhgef2      chr3  88617249  88617501   Arhgef2      +
+chr4:43531519-43532085/-/Tln1         chr4  43531519  43532085      Tln1      -
+chr4:117154638-117154813/-/Rps8       chr4 117154638 117154813      Rps8      -
+chr4:117154638-117155181/-/Rps8       chr4 117154638 117155181      Rps8      -
+chr4:117154391-117154813/-/Rps8       chr4 117154391 117154813      Rps8      -
+chr4:117154510-117154813/-/Rps8       chr4 117154510 117154813      Rps8      -
+chr4:117154686-117155107/-/Rps8       chr4 117154686 117155107      Rps8      -
+chr4:117155008-117155107/-/Rps8       chr4 117155008 117155107      Rps8      -
+chr4:117155008-117155677/-/Rps8       chr4 117155008 117155677      Rps8      -
+chr4:117155571-117155677/-/Rps8       chr4 117155571 117155677      Rps8      -
+chr4:117869260-117869828/-/B4galt2    chr4 117869260 117869828   B4galt2      -
+chr4:129607456-129608117/+/Tmem234    chr4 129607456 129608117   Tmem234      +
+chr4:129607456-129607877/+/Tmem234    chr4 129607456 129607877   Tmem234      +
+chr4:137319696-137321192/-/Cdc42      chr4 137319696 137321192     Cdc42      -
+chr4:137321762-137322619/-/Cdc42      chr4 137321762 137322619     Cdc42      -
+chr4:139288861-139288973/+/Capzb      chr4 139288861 139288973     Capzb      +
+chr4:151790574-151792502/-/Camta1     chr4 151790574 151792502    Camta1      -
+chr4:151792230-151792502/-/Camta1     chr4 151792230 151792502    Camta1      -
+chr5:88649832-88651392/+/Rufy3        chr5  88649832  88651392     Rufy3      +
+chr5:118077052-118077704/-/Fbxw8      chr5 118077052 118077704     Fbxw8      -
+chr5:121204481-121204552/+/Rpl6       chr5 121204481 121204552      Rpl6      +
+chr5:121205406-121205663/+/Rpl6       chr5 121205406 121205663      Rpl6      +
+chr5:121204521-121204552/+/Rpl6       chr5 121204521 121204552      Rpl6      +
+chr5:121205406-121206202/+/Rpl6       chr5 121205406 121206202      Rpl6      +
+chr5:121205409-121205663/+/Rpl6       chr5 121205409 121205663      Rpl6      +
+chr5:142903501-142903941/-/Actb       chr5 142903501 142903941      Actb      -
+chr5:142904067-142904248/-/Actb       chr5 142904067 142904248      Actb      -
+chr5:146834448-146834509/+/Rpl21      chr5 146834448 146834509     Rpl21      +
+chr7:3645268-3649600/+/Cnot3          chr7   3645268   3649600     Cnot3      +
+chr7:27180169-27180279/-/Gm21983      chr7  27180169  27180279   Gm21983      -
+chr7:27180700-27180833/-/Gm21983      chr7  27180700  27180833   Gm21983      -
+chr7:27180922-27181086/-/Gm21983      chr7  27180922  27181086   Gm21983      -
+chr7:30306806-30307304/+/Clip3        chr7  30306806  30307304     Clip3      +
+chr7:78587376-78587841/-/Ntrk3        chr7  78587376  78587841     Ntrk3      -
+chr7:45131188-45131566/-/Flt3l        chr7  45131188  45131566     Flt3l      -
+chr7:45131188-45131431/-/Flt3l        chr7  45131188  45131431     Flt3l      -
+chr7:45131189-45131431/-/Flt3l        chr7  45131189  45131431     Flt3l      -
+chr7:45131402-45131757/-/Flt3l        chr7  45131402  45131757     Flt3l      -
+chr8:70145811-70145890/+/Borcs8       chr8  70145811  70145890    Borcs8      +
+chr8:70147090-70147256/+/Borcs8       chr8  70147090  70147256    Borcs8      +
+chr8:70147090-70147261/+/Borcs8       chr8  70147090  70147261    Borcs8      +
+chr8:70147090-70147319/+/Borcs8       chr8  70147090  70147319    Borcs8      +
+chr8:70513396-70514168/-/Kxd1         chr8  70513396  70514168      Kxd1      -
+chr8:70510338-70510379/-/Uba52        chr8  70510338  70510379     Uba52      -
+chr8:70510338-70510581/-/Uba52        chr8  70510338  70510581     Uba52      -
+chr8:105894667-105894908/+/Edc4       chr8 105894667 105894908      Edc4      +
+chr8:123102845-123102986/+/Rpl13      chr8 123102845 123102986     Rpl13      +
+chr8:123103183-123103641/+/Rpl13      chr8 123103183 123103641     Rpl13      +
+chr9:49502136-49505563/-/Ncam1        chr9  49502136  49505563     Ncam1      -
+chr9:49517278-49517582/-/Ncam1        chr9  49517278  49517582     Ncam1      -
+chr9:67029664-67029742/-/Tpm1         chr9  67029664  67029742      Tpm1      -
+chr9:75573816-75574123/-/Tmod2        chr9  75573816  75574123     Tmod2      -
+chr9:110002746-110005739/+/Map4       chr9 110002746 110005739      Map4      +
+chr9:112065091-112066022/-/Arpp21     chr9 112065091 112066022    Arpp21      -
+chr9:112065234-112066022/-/Arpp21     chr9 112065234 112066022    Arpp21      -
+chr9:112065236-112066022/-/Arpp21     chr9 112065236 112066022    Arpp21      -
+chr9:112065258-112066022/-/Arpp21     chr9 112065258 112066022    Arpp21      -
+chr9:112065260-112066022/-/Arpp21     chr9 112065260 112066022    Arpp21      -
+chr9:120572096-120572197/+/Rpl14      chr9 120572096 120572197     Rpl14      +
+chr9:120572768-120572862/+/Rpl14      chr9 120572768 120572862     Rpl14      +
+chrX:20859979-20860519/+/Araf         chrX  20859979  20860519      Araf      +
+chrX:20859979-20860497/+/Araf         chrX  20859979  20860497      Araf      +
+chrX:36913446-36916545/-/Sept6        chrX  36913446  36916545     Sept6      -
+chrX:38401357-38402281/-/Lamp2        chrX  38401357  38402281     Lamp2      -
+chrX:152193866-152194601/+/Iqsec2     chrX 152193866 152194601    Iqsec2      +
+chrX:163926903-163929546/+/Ap1s2      chrX 163926903 163929546     Ap1s2      +
+                                      moransi.pval     moransi
+chr1:52185280-52187794/-/Gls          0.000000e+00 0.090010728
+chr1:52185280-52187853/-/Gls          0.000000e+00 0.090010728
+chr1:52184104-52187794/-/Gls          0.000000e+00 0.089275662
+chr1:81297962-81298934/+/Nyap2        2.963868e-39 0.022440734
+chr1:81297962-81300096/+/Nyap2        2.576662e-43 0.023660850
+chr1:161037124-161037164/+/Gas5       0.000000e+00 0.205545033
+chr1:162006122-162006445/-/Dnm3      3.567957e-215 0.054540982
+chr10:5336949-5339385/-/Syne1         0.000000e+00 0.339468192
+chr10:81390789-81391560/+/Dohh       1.604769e-232 0.056754936
+chr10:128913593-128913936/-/Rdh5      0.000000e+00 0.226003264
+chr11:29706410-29708770/+/Rtn4        1.894868e-48 0.025352035
+chr11:30106785-30109152/-/Sptbn1      0.000000e+00 0.151681010
+chr11:53541475-53541898/+/Sept8       0.000000e+00 0.429457873
+chr11:53541475-53541847/+/Sept8       0.000000e+00 0.358881160
+chr11:53548291-53549565/+/Sept8       0.000000e+00 0.431587400
+chr11:53541210-53544095/+/Sept8       0.000000e+00 0.409521545
+chr11:53541030-53544096/+/Sept8       0.000000e+00 0.409441548
+chr11:67683338-67684974/+/Gas7        0.000000e+00 0.143554995
+chr11:68906586-68906989/+/Rpl26       2.990303e-09 0.010049431
+chr11:76211049-76214827/+/Fam57a      2.763259e-57 0.027699592
+chr11:118132019-118132375/-/Cyth1    5.033793e-263 0.060283833
+chr12:76596130-76597801/-/Sptb        8.329680e-29 0.019143271
+chr12:100203575-100203718/+/Calm1     0.000000e+00 0.072385944
+chr12:100205613-100205719/+/Calm1     0.000000e+00 0.228037373
+chr12:100206098-100206233/+/Calm1     0.000000e+00 0.361379930
+chr12:100205403-100205719/+/Calm1     0.000000e+00 0.202488223
+chr12:100206400-100206495/+/Calm1     0.000000e+00 0.227525741
+chr12:110694023-110694343/-/Hsp90aa1  0.000000e+00 0.085901171
+chr12:110694175-110694343/-/Hsp90aa1  0.000000e+00 0.074298857
+chr12:110694571-110694704/-/Hsp90aa1  0.000000e+00 0.075192873
+chr12:110695052-110695672/-/Hsp90aa1 7.653470e-104 0.037687419
+chr12:110695052-110695418/-/Hsp90aa1 5.774966e-103 0.037524117
+chr12:111806315-111806775/+/Klc1      0.000000e+00 0.100157697
+chr12:111806315-111806727/+/Klc1      0.000000e+00 0.099998628
+chr12:111806315-111806711/+/Klc1      0.000000e+00 0.094206502
+chr12:111806315-111806726/+/Klc1      0.000000e+00 0.096989963
+chr13:43398376-43398658/+/Nol7        1.158337e-12 0.012171637
+chr13:59128168-59133970/+/Ntrk2       0.000000e+00 0.324380272
+chr13:86046601-86046774/-/Cox7c      4.149410e-319 0.066672932
+chr14:20507671-20508721/-/Ppp3cb      0.000000e+00 0.067269732
+chr15:80113166-80113441/+/Syngr1      4.225999e-24 0.017496588
+chr16:26722356-26725264/+/Il1rap     1.414937e-239 0.057554727
+chr16:26723221-26724353/+/Il1rap     1.317577e-193 0.051651623
+chr16:26727516-26730117/+/Il1rap      0.000000e+00 0.072541278
+chr16:55966275-55966438/+/Rpl24       1.413180e-22 0.016884109
+chr16:55966547-55966622/+/Rpl24       1.666153e-36 0.021882480
+chr16:91651630-91651796/+/Son         5.297344e-25 0.017852177
+chr16:91654611-91660580/+/Son         7.385103e-19 0.015281010
+chr17:23808354-23808518/+/Srrm2       9.404987e-16 0.013793497
+chr17:25717528-25717581/+/Gng13       0.000000e+00 0.163375877
+chr17:26279961-26280720/+/Luc7l       1.869598e-22 0.016821452
+chr17:26279961-26280723/+/Luc7l       1.516499e-22 0.016858870
+chr17:26279961-26280719/+/Luc7l       2.385031e-24 0.017583072
+chr17:33685267-33685401/-/Hnrnpm      3.047094e-14 0.012354551
+chr17:33685267-33685392/-/Hnrnpm      1.234830e-27 0.016937613
+chr17:45570258-45570566/-/Hsp90ab1    5.003661e-52 0.026367885
+chr17:45570666-45570799/-/Hsp90ab1    1.657156e-57 0.027780243
+chr17:45570445-45570799/-/Hsp90ab1    1.045641e-17 0.014743682
+chr17:45571018-45571177/-/Hsp90ab1    2.730012e-14 0.013048381
+chr18:34349635-34349803/-/Reep5       0.000000e+00 0.124007307
+chr18:82554320-82558703/+/Mbp         0.000000e+00 0.070087082
+chr18:60593973-60596488/-/Synpo       2.461764e-66 0.029801265
+chr18:60593982-60596488/-/Synpo       1.092368e-67 0.030113278
+chr18:60593990-60596488/-/Synpo       4.754978e-57 0.027543042
+chr18:60593991-60596488/-/Synpo       8.182680e-58 0.027733612
+chr19:6057888-6058001/+/Fau          1.928804e-100 0.037060127
+chr19:6058243-6058325/+/Fau          2.589082e-191 0.051469733
+chr19:6058246-6058325/+/Fau           5.924438e-61 0.028645137
+chr19:7217399-7217616/-/Cox8a         0.000000e+00 0.103117014
+chr2:121457646-121457701/+/Serf2      1.959750e-17 0.014633633
+chr2:121457992-121458043/+/Serf2      6.494377e-27 0.018589903
+chr2:121458149-121458311/+/Serf2      1.020315e-42 0.023787374
+chr2:121458149-121458313/+/Serf2      1.633194e-42 0.023727316
+chr3:55466573-55471318/+/Dclk1        0.000000e+00 0.117965267
+chr3:55466573-55471316/+/Dclk1        0.000000e+00 0.113630287
+chr3:88617249-88617501/+/Arhgef2     1.580960e-184 0.050170509
+chr4:43531519-43532085/-/Tln1         0.000000e+00 0.075398549
+chr4:117154638-117154813/-/Rps8       0.000000e+00 0.279634892
+chr4:117154638-117155181/-/Rps8       0.000000e+00 0.213403881
+chr4:117154391-117154813/-/Rps8       0.000000e+00 0.292750233
+chr4:117154510-117154813/-/Rps8       0.000000e+00 0.295208657
+chr4:117154686-117155107/-/Rps8       0.000000e+00 0.085173370
+chr4:117155008-117155107/-/Rps8       0.000000e+00 0.213477664
+chr4:117155008-117155677/-/Rps8       0.000000e+00 0.208573954
+chr4:117155571-117155677/-/Rps8       0.000000e+00 0.080463848
+chr4:117869260-117869828/-/B4galt2   3.578036e-148 0.044860789
+chr4:129607456-129608117/+/Tmem234   1.202799e-116 0.040003822
+chr4:129607456-129607877/+/Tmem234    9.617364e-83 0.033541490
+chr4:137319696-137321192/-/Cdc42      0.000000e+00 0.090277254
+chr4:137321762-137322619/-/Cdc42      0.000000e+00 0.335769838
+chr4:139288861-139288973/+/Capzb      1.031005e-18 0.015187576
+chr4:151790574-151792502/-/Camta1     2.971547e-07 0.008646202
+chr4:151792230-151792502/-/Camta1     6.937600e-06 0.007513336
+chr5:88649832-88651392/+/Rufy3        0.000000e+00 0.075282784
+chr5:118077052-118077704/-/Fbxw8      3.701256e-24 0.017418574
+chr5:121204481-121204552/+/Rpl6      7.105482e-147 0.044984435
+chr5:121205406-121205663/+/Rpl6      1.476043e-309 0.065642432
+chr5:121204521-121204552/+/Rpl6      3.420765e-148 0.045188977
+chr5:121205406-121206202/+/Rpl6      1.483145e-315 0.066279688
+chr5:121205409-121205663/+/Rpl6       2.903594e-38 0.022426212
+chr5:142903501-142903941/-/Actb       0.000000e+00 0.290495218
+chr5:142904067-142904248/-/Actb       0.000000e+00 0.225446414
+chr5:146834448-146834509/+/Rpl21      8.051340e-67 0.030043813
+chr7:3645268-3649600/+/Cnot3          1.853846e-18 0.015079156
+chr7:27180169-27180279/-/Gm21983      0.000000e+00 0.113852027
+chr7:27180700-27180833/-/Gm21983      0.000000e+00 0.134381341
+chr7:27180922-27181086/-/Gm21983      2.836830e-47 0.024536386
+chr7:30306806-30307304/+/Clip3       3.879681e-143 0.044396455
+chr7:78587376-78587841/-/Ntrk3        0.000000e+00 0.097888886
+chr7:45131188-45131566/-/Flt3l       1.183112e-115 0.039789196
+chr7:45131188-45131431/-/Flt3l        9.910321e-99 0.036678597
+chr7:45131189-45131431/-/Flt3l       1.479959e-101 0.037217032
+chr7:45131402-45131757/-/Flt3l        5.947176e-08 0.009045288
+chr8:70145811-70145890/+/Borcs8       2.795836e-12 0.011943568
+chr8:70147090-70147256/+/Borcs8       1.258054e-14 0.013222682
+chr8:70147090-70147261/+/Borcs8       1.285817e-19 0.015605439
+chr8:70147090-70147319/+/Borcs8       4.281331e-19 0.015373010
+chr8:70513396-70514168/-/Kxd1         2.888241e-28 0.019088086
+chr8:70510338-70510379/-/Uba52        0.000000e+00 0.078302942
+chr8:70510338-70510581/-/Uba52        0.000000e+00 0.075338665
+chr8:105894667-105894908/+/Edc4       0.000000e+00 0.078012132
+chr8:123102845-123102986/+/Rpl13     1.365064e-139 0.043848059
+chr8:123103183-123103641/+/Rpl13      0.000000e+00 0.069425132
+chr9:49502136-49505563/-/Ncam1        0.000000e+00 0.261513286
+chr9:49517278-49517582/-/Ncam1        0.000000e+00 0.208116181
+chr9:67029664-67029742/-/Tpm1         3.092038e-20 0.015880266
+chr9:75573816-75574123/-/Tmod2        0.000000e+00 0.120300836
+chr9:110002746-110005739/+/Map4       0.000000e+00 0.162317761
+chr9:112065091-112066022/-/Arpp21     0.000000e+00 0.371956514
+chr9:112065234-112066022/-/Arpp21     0.000000e+00 0.368096729
+chr9:112065236-112066022/-/Arpp21     0.000000e+00 0.363084822
+chr9:112065258-112066022/-/Arpp21     0.000000e+00 0.344533447
+chr9:112065260-112066022/-/Arpp21     0.000000e+00 0.336274331
+chr9:120572096-120572197/+/Rpl14      2.050820e-53 0.026726652
+chr9:120572768-120572862/+/Rpl14     1.813873e-115 0.039794381
+chrX:20859979-20860519/+/Araf        4.884614e-164 0.047555483
+chrX:20859979-20860497/+/Araf        5.262778e-113 0.039330526
+chrX:36913446-36916545/-/Sept6        2.695194e-51 0.026118610
+chrX:38401357-38402281/-/Lamp2        1.366588e-23 0.017291990
+chrX:152193866-152194601/+/Iqsec2     0.000000e+00 0.079743769
+chrX:163926903-163929546/+/Ap1s2      0.000000e+00 0.144742659
+                                     autocorr.variable gene_name.D gene_name.t
+chr1:52185280-52187794/-/Gls                      TRUE  0.21394068   -9.297726
+chr1:52185280-52187853/-/Gls                      TRUE  0.21394068   -9.297726
+chr1:52184104-52187794/-/Gls                      TRUE  0.21298623   -9.211255
+chr1:81297962-81298934/+/Nyap2                    TRUE  0.20769337   -7.887166
+chr1:81297962-81300096/+/Nyap2                    TRUE  0.20266957   -7.073864
+chr1:161037124-161037164/+/Gas5                   TRUE  0.17363234   -9.739845
+chr1:162006122-162006445/-/Dnm3                   TRUE  0.28698950  -16.831805
+chr10:5336949-5339385/-/Syne1                     TRUE  0.28789670  -14.890952
+chr10:81390789-81391560/+/Dohh                    TRUE  0.17676183   -7.159024
+chr10:128913593-128913936/-/Rdh5                  TRUE  0.19681235   -8.571894
+chr11:29706410-29708770/+/Rtn4                    TRUE  0.18562733   -6.967742
+chr11:30106785-30109152/-/Sptbn1                  TRUE  0.44744820  -45.986988
+chr11:53541475-53541898/+/Sept8                   TRUE  0.35922746  -30.072083
+chr11:53541475-53541847/+/Sept8                   TRUE  0.32956166  -25.450264
+chr11:53548291-53549565/+/Sept8                   TRUE  0.36417369  -33.922802
+chr11:53541210-53544095/+/Sept8                   TRUE  0.33501521  -26.609712
+chr11:53541030-53544096/+/Sept8                   TRUE  0.33514380  -26.528165
+chr11:67683338-67684974/+/Gas7                    TRUE  0.18839525   -6.037831
+chr11:68906586-68906989/+/Rpl26                   TRUE  0.15776548   -5.950155
+chr11:76211049-76214827/+/Fam57a                  TRUE  0.24308773  -12.050388
+chr11:118132019-118132375/-/Cyth1                 TRUE  0.23044528  -12.273958
+chr12:76596130-76597801/-/Sptb                    TRUE  0.19464650   -6.884106
+chr12:100203575-100203718/+/Calm1                 TRUE  0.14401215   -5.840136
+chr12:100205613-100205719/+/Calm1                 TRUE  0.18667669  -15.240497
+chr12:100206098-100206233/+/Calm1                 TRUE  0.20171683  -20.001377
+chr12:100205403-100205719/+/Calm1                 TRUE  0.17875464  -14.144686
+chr12:100206400-100206495/+/Calm1                 TRUE  0.16307922  -10.326603
+chr12:110694023-110694343/-/Hsp90aa1              TRUE  0.20486308  -15.059406
+chr12:110694175-110694343/-/Hsp90aa1              TRUE  0.19042170  -12.586044
+chr12:110694571-110694704/-/Hsp90aa1              TRUE  0.17543702  -10.531699
+chr12:110695052-110695672/-/Hsp90aa1              TRUE  0.15381808   -6.966032
+chr12:110695052-110695418/-/Hsp90aa1              TRUE  0.15379441   -6.919228
+chr12:111806315-111806775/+/Klc1                  TRUE  0.39143469  -34.368050
+chr12:111806315-111806727/+/Klc1                  TRUE  0.39151618  -34.395895
+chr12:111806315-111806711/+/Klc1                  TRUE  0.38600060  -32.439922
+chr12:111806315-111806726/+/Klc1                  TRUE  0.38695628  -33.741437
+chr13:43398376-43398658/+/Nol7                    TRUE  0.17837530   -6.202652
+chr13:59128168-59133970/+/Ntrk2                   TRUE  0.31528602  -25.183660
+chr13:86046601-86046774/-/Cox7c                   TRUE  0.09653334   -7.561950
+chr14:20507671-20508721/-/Ppp3cb                  TRUE  0.32840565  -22.833449
+chr15:80113166-80113441/+/Syngr1                  TRUE  0.22630418   -9.413358
+chr16:26722356-26725264/+/Il1rap                  TRUE  0.24352039  -12.627658
+chr16:26723221-26724353/+/Il1rap                  TRUE  0.23578961  -11.776386
+chr16:26727516-26730117/+/Il1rap                  TRUE  0.21575519   -9.517708
+chr16:55966275-55966438/+/Rpl24                   TRUE  0.13740761   -7.359593
+chr16:55966547-55966622/+/Rpl24                   TRUE  0.13643788   -8.560329
+chr16:91651630-91651796/+/Son                     TRUE  0.20712924  -10.620051
+chr16:91654611-91660580/+/Son                     TRUE  0.20522036  -10.947026
+chr17:23808354-23808518/+/Srrm2                   TRUE  0.18312897   -6.578104
+chr17:25717528-25717581/+/Gng13                   TRUE  0.38401546  -27.975158
+chr17:26279961-26280720/+/Luc7l                   TRUE  0.20952977   -9.061354
+chr17:26279961-26280723/+/Luc7l                   TRUE  0.20982744   -9.099957
+chr17:26279961-26280719/+/Luc7l                   TRUE  0.21139812   -9.395892
+chr17:33685267-33685401/-/Hnrnpm                  TRUE  0.19948905   -6.604547
+chr17:33685267-33685392/-/Hnrnpm                  TRUE  0.21510579   -6.652223
+chr17:45570258-45570566/-/Hsp90ab1                TRUE  0.16355739  -11.914264
+chr17:45570666-45570799/-/Hsp90ab1                TRUE  0.16340429  -12.449940
+chr17:45570445-45570799/-/Hsp90ab1                TRUE  0.14407025   -6.093385
+chr17:45571018-45571177/-/Hsp90ab1                TRUE  0.14933320   -6.642919
+chr18:34349635-34349803/-/Reep5                   TRUE  0.19207014  -18.125712
+chr18:82554320-82558703/+/Mbp                     TRUE  0.31199810  -19.786907
+chr18:60593973-60596488/-/Synpo                   TRUE  0.20426259   -6.837794
+chr18:60593982-60596488/-/Synpo                   TRUE  0.20560095   -6.969016
+chr18:60593990-60596488/-/Synpo                   TRUE  0.19937911   -6.164070
+chr18:60593991-60596488/-/Synpo                   TRUE  0.20067970   -6.347328
+chr19:6057888-6058001/+/Fau                       TRUE  0.13296348  -10.242553
+chr19:6058243-6058325/+/Fau                       TRUE  0.12419290  -12.388847
+chr19:6058246-6058325/+/Fau                       TRUE  0.10537263   -6.174215
+chr19:7217399-7217616/-/Cox8a                     TRUE  0.09365243   -7.136313
+chr2:121457646-121457701/+/Serf2                  TRUE  0.10200623   -6.184404
+chr2:121457992-121458043/+/Serf2                  TRUE  0.09873411   -6.328483
+chr2:121458149-121458311/+/Serf2                  TRUE  0.09481266   -6.393136
+chr2:121458149-121458313/+/Serf2                  TRUE  0.09486628   -6.325434
+chr3:55466573-55471318/+/Dclk1                    TRUE  0.19381647   -6.703125
+chr3:55466573-55471316/+/Dclk1                    TRUE  0.18821937   -6.092190
+chr3:88617249-88617501/+/Arhgef2                  TRUE  0.21310197   -9.306097
+chr4:43531519-43532085/-/Tln1                     TRUE  0.24399870  -15.970917
+chr4:117154638-117154813/-/Rps8                   TRUE  0.13539230  -14.252639
+chr4:117154638-117155181/-/Rps8                   TRUE  0.17017761  -19.715198
+chr4:117154391-117154813/-/Rps8                   TRUE  0.22859203  -35.675097
+chr4:117154510-117154813/-/Rps8                   TRUE  0.22911569  -36.275685
+chr4:117154686-117155107/-/Rps8                   TRUE  0.15709880  -14.446216
+chr4:117155008-117155107/-/Rps8                   TRUE  0.21435424  -33.054624
+chr4:117155008-117155677/-/Rps8                   TRUE  0.20974561  -28.943600
+chr4:117155571-117155677/-/Rps8                   TRUE  0.15508912  -12.741732
+chr4:117869260-117869828/-/B4galt2                TRUE  0.24935620  -12.219546
+chr4:129607456-129608117/+/Tmem234                TRUE  0.16231123   -6.720711
+chr4:129607456-129607877/+/Tmem234                TRUE  0.16113565   -6.011722
+chr4:137319696-137321192/-/Cdc42                  TRUE  0.21270136  -16.947566
+chr4:137321762-137322619/-/Cdc42                  TRUE  0.15081371   -7.812740
+chr4:139288861-139288973/+/Capzb                  TRUE  0.20069423   -9.061990
+chr4:151790574-151792502/-/Camta1                 TRUE  0.17588550   -5.859311
+chr4:151792230-151792502/-/Camta1                 TRUE  0.18750296   -7.786121
+chr5:88649832-88651392/+/Rufy3                    TRUE  0.17954007   -6.311643
+chr5:118077052-118077704/-/Fbxw8                  TRUE  0.19947174   -8.218248
+chr5:121204481-121204552/+/Rpl6                   TRUE  0.19302510  -15.418908
+chr5:121205406-121205663/+/Rpl6                   TRUE  0.21258293  -20.338370
+chr5:121204521-121204552/+/Rpl6                   TRUE  0.19352318  -15.441547
+chr5:121205406-121206202/+/Rpl6                   TRUE  0.21420331  -19.961054
+chr5:121205409-121205663/+/Rpl6                   TRUE  0.15032708   -7.075018
+chr5:142903501-142903941/-/Actb                   TRUE  0.13555747  -11.010810
+chr5:142904067-142904248/-/Actb                   TRUE  0.14128761  -12.358427
+chr5:146834448-146834509/+/Rpl21                  TRUE  0.10682957   -6.001358
+chr7:3645268-3649600/+/Cnot3                      TRUE  0.19426149   -8.432583
+chr7:27180169-27180279/-/Gm21983                  TRUE  0.31715907  -22.894872
+chr7:27180700-27180833/-/Gm21983                  TRUE  0.33650140  -25.558335
+chr7:27180922-27181086/-/Gm21983                  TRUE  0.19249335   -6.716888
+chr7:30306806-30307304/+/Clip3                    TRUE  0.17963478   -8.777366
+chr7:78587376-78587841/-/Ntrk3                    TRUE  0.29278401  -15.311847
+chr7:45131188-45131566/-/Flt3l                    TRUE  0.25825425  -22.264937
+chr7:45131188-45131431/-/Flt3l                    TRUE  0.24647333  -19.304347
+chr7:45131189-45131431/-/Flt3l                    TRUE  0.24384629  -19.318858
+chr7:45131402-45131757/-/Flt3l                    TRUE  0.19552018   -8.499729
+chr8:70145811-70145890/+/Borcs8                   TRUE  0.20602974   -9.261583
+chr8:70147090-70147256/+/Borcs8                   TRUE  0.19810345   -7.868592
+chr8:70147090-70147261/+/Borcs8                   TRUE  0.20614517   -8.242870
+chr8:70147090-70147319/+/Borcs8                   TRUE  0.20591690   -8.238677
+chr8:70513396-70514168/-/Kxd1                     TRUE  0.14302533  -12.699109
+chr8:70510338-70510379/-/Uba52                    TRUE  0.10042995   -7.606071
+chr8:70510338-70510581/-/Uba52                    TRUE  0.09668980   -6.735114
+chr8:105894667-105894908/+/Edc4                   TRUE  0.20364443   -9.524497
+chr8:123102845-123102986/+/Rpl13                  TRUE  0.11892038   -6.560937
+chr8:123103183-123103641/+/Rpl13                  TRUE  0.10783704   -6.864060
+chr9:49502136-49505563/-/Ncam1                    TRUE  0.17646418   -5.956392
+chr9:49517278-49517582/-/Ncam1                    TRUE  0.24779844  -16.731168
+chr9:67029664-67029742/-/Tpm1                     TRUE  0.20253685   -8.548088
+chr9:75573816-75574123/-/Tmod2                    TRUE  0.18993129   -9.451613
+chr9:110002746-110005739/+/Map4                   TRUE  0.26803520  -17.758886
+chr9:112065091-112066022/-/Arpp21                 TRUE  0.26368743   -9.809201
+chr9:112065234-112066022/-/Arpp21                 TRUE  0.26214865   -9.478619
+chr9:112065236-112066022/-/Arpp21                 TRUE  0.26031402   -9.502349
+chr9:112065258-112066022/-/Arpp21                 TRUE  0.25092987   -8.523721
+chr9:112065260-112066022/-/Arpp21                 TRUE  0.24742448   -8.297177
+chr9:120572096-120572197/+/Rpl14                  TRUE  0.13292948   -5.882059
+chr9:120572768-120572862/+/Rpl14                  TRUE  0.14049043   -7.787954
+chrX:20859979-20860519/+/Araf                     TRUE  0.25916378  -14.984553
+chrX:20859979-20860497/+/Araf                     TRUE  0.25110216  -14.391467
+chrX:36913446-36916545/-/Sept6                    TRUE  0.20482688   -6.736329
+chrX:38401357-38402281/-/Lamp2                    TRUE  0.21789005  -10.488043
+chrX:152193866-152194601/+/Iqsec2                 TRUE  0.26270185  -16.656789
+chrX:163926903-163929546/+/Ap1s2                  TRUE  0.36264775  -24.711288
+                                     gene_name.pval gene_name.padj
+chr1:52185280-52187794/-/Gls           1.861719e-15   9.224697e-13
+chr1:52185280-52187853/-/Gls           1.861719e-15   9.224697e-13
+chr1:52184104-52187794/-/Gls           2.873024e-15   1.387525e-12
+chr1:81297962-81298934/+/Nyap2         2.091975e-12   8.490969e-10
+chr1:81297962-81300096/+/Nyap2         1.087356e-10   3.951039e-08
+chr1:161037124-161037164/+/Gas5        2.021070e-16   1.150894e-13
+chr1:162006122-162006445/-/Dnm3        4.168395e-31   4.969899e-28
+chr10:5336949-5339385/-/Syne1          2.567931e-27   2.332721e-24
+chr10:81390789-81391560/+/Dohh         7.227613e-11   2.703482e-08
+chr10:128913593-128913936/-/Rdh5       7.036748e-14   3.196108e-11
+chr11:29706410-29708770/+/Rtn4         1.805241e-10   6.429526e-08
+chr11:30106785-30109152/-/Sptbn1       6.475767e-69   2.470699e-64
+chr11:53541475-53541898/+/Sept8        6.863650e-52   2.618688e-48
+chr11:53541475-53541847/+/Sept8        1.566659e-45   3.735797e-42
+chr11:53548291-53549565/+/Sept8        1.290126e-56   8.203699e-53
+chr11:53541210-53544095/+/Sept8        3.322548e-47   9.751167e-44
+chr11:53541030-53544096/+/Sept8        4.338735e-47   1.182398e-43
+chr11:67683338-67684974/+/Gas7         1.367863e-08   3.894632e-06
+chr11:68906586-68906989/+/Rpl26        2.031683e-08   5.617015e-06
+chr11:76211049-76214827/+/Fam57a       2.002079e-21   1.364023e-18
+chr11:118132019-118132375/-/Cyth1      6.682227e-22   4.721241e-19
+chr12:76596130-76597801/-/Sptb         2.687383e-10   9.321064e-08
+chr12:100203575-100203718/+/Calm1      3.326104e-08   9.000060e-06
+chr12:100205613-100205719/+/Calm1      5.152578e-28   5.040675e-25
+chr12:100206098-100206233/+/Calm1      7.491091e-37   1.242642e-33
+chr12:100205403-100205719/+/Calm1      8.321827e-26   6.902232e-23
+chr12:100206400-100206495/+/Calm1      1.061535e-17   6.328243e-15
+chr12:110694023-110694343/-/Hsp90aa1   1.181959e-27   1.127382e-24
+chr12:110694175-110694343/-/Hsp90aa1   1.455055e-22   1.110294e-19
+chr12:110694571-110694704/-/Hsp90aa1   3.796481e-18   2.336244e-15
+chr12:110695052-110695672/-/Hsp90aa1   1.820011e-10   6.429526e-08
+chr12:110695052-110695418/-/Hsp90aa1   2.274288e-10   7.960635e-08
+chr12:111806315-111806775/+/Klc1       3.921272e-57   2.992165e-53
+chr12:111806315-111806727/+/Klc1       3.641425e-57   2.992165e-53
+chr12:111806315-111806711/+/Klc1       7.504483e-55   3.181317e-51
+chr12:111806315-111806726/+/Klc1       2.103541e-56   1.146520e-52
+chr13:43398376-43398658/+/Nol7         6.460649e-09   1.925728e-06
+chr13:59128168-59133970/+/Ntrk2        3.870475e-45   8.686484e-42
+chr13:86046601-86046774/-/Cox7c        1.028211e-11   3.922932e-09
+chr14:20507671-20508721/-/Ppp3cb       1.537407e-41   2.932835e-38
+chr15:80113166-80113441/+/Syngr1       1.041889e-15   5.445370e-13
+chr16:26722356-26725264/+/Il1rap       1.188219e-22   9.251859e-20
+chr16:26723221-26724353/+/Il1rap       7.726382e-21   5.082494e-18
+chr16:26727516-26730117/+/Il1rap       6.169235e-16   3.411229e-13
+chr16:55966275-55966438/+/Rpl24        2.747393e-11   1.037835e-08
+chr16:55966547-55966622/+/Rpl24        7.454240e-14   3.345902e-11
+chr16:91651630-91651796/+/Son          2.438940e-18   1.525457e-15
+chr16:91654611-91660580/+/Son          4.755595e-19   3.024003e-16
+chr17:23808354-23808518/+/Srrm2        1.136899e-09   3.584803e-07
+chr17:25717528-25717581/+/Gng13        4.169531e-49   1.325668e-45
+chr17:26279961-26280720/+/Luc7l        6.091779e-15   2.834386e-12
+chr17:26279961-26280723/+/Luc7l        5.020182e-15   2.394188e-12
+chr17:26279961-26280719/+/Luc7l        1.137381e-15   5.864124e-13
+chr17:33685267-33685401/-/Hnrnpm       1.004557e-09   3.193905e-07
+chr17:33685267-33685392/-/Hnrnpm       8.033038e-10   2.597326e-07
+chr17:45570258-45570566/-/Hsp90ab1     3.913171e-21   2.619284e-18
+chr17:45570666-45570799/-/Hsp90ab1     2.825714e-22   2.113911e-19
+chr17:45570445-45570799/-/Hsp90ab1     1.063259e-08   3.066717e-06
+chr17:45571018-45571177/-/Hsp90ab1     8.391648e-10   2.690475e-07
+chr18:34349635-34349803/-/Reep5        1.615936e-33   2.125958e-30
+chr18:82554320-82558703/+/Mbp          1.762895e-36   2.690389e-33
+chr18:60593973-60596488/-/Synpo        3.347581e-10   1.140359e-07
+chr18:60593982-60596488/-/Synpo        1.794310e-10   6.429526e-08
+chr18:60593990-60596488/-/Synpo        7.706383e-09   2.244440e-06
+chr18:60593991-60596488/-/Synpo        3.322666e-09   1.022336e-06
+chr19:6057888-6058001/+/Fau            1.618396e-17   9.499487e-15
+chr19:6058243-6058325/+/Fau            3.808516e-22   2.794352e-19
+chr19:6058246-6058325/+/Fau            7.357550e-09   2.159328e-06
+chr19:7217399-7217616/-/Cox8a          8.060438e-11   2.985727e-08
+chr2:121457646-121457701/+/Serf2       7.022905e-09   2.077092e-06
+chr2:121457992-121458043/+/Serf2       3.624505e-09   1.106286e-06
+chr2:121458149-121458311/+/Serf2       2.688566e-09   8.339583e-07
+chr2:121458149-121458313/+/Serf2       3.675821e-09   1.113044e-06
+chr3:55466573-55471318/+/Dclk1         6.323409e-10   2.062026e-07
+chr3:55466573-55471316/+/Dclk1         1.069047e-08   3.066717e-06
+chr3:88617249-88617501/+/Arhgef2       1.785129e-15   9.081070e-13
+chr4:43531519-43532085/-/Tln1          1.886146e-29   2.056060e-26
+chr4:117154638-117154813/-/Rps8        5.011047e-26   4.248588e-23
+chr4:117154638-117155181/-/Rps8        2.349862e-36   3.448242e-33
+chr4:117154391-117154813/-/Rps8        1.280404e-58   1.628375e-54
+chr4:117154510-117154813/-/Rps8        2.754591e-59   5.254796e-55
+chr4:117154686-117155107/-/Rps8        2.024847e-26   1.796604e-23
+chr4:117155008-117155107/-/Rps8        1.367026e-55   6.519520e-52
+chr4:117155008-117155677/-/Rps8        2.064082e-50   7.159175e-47
+chr4:117155571-117155677/-/Rps8        6.824667e-23   5.540033e-20
+chr4:117869260-117869828/-/B4galt2     8.724374e-22   6.052019e-19
+chr4:129607456-129608117/+/Tmem234     5.820819e-10   1.931145e-07
+chr4:129607456-129607877/+/Tmem234     1.539277e-08   4.350225e-06
+chr4:137319696-137321192/-/Cdc42       2.514539e-31   3.094749e-28
+chr4:137321762-137322619/-/Cdc42       3.015525e-12   1.198451e-09
+chr4:139288861-139288973/+/Capzb       6.072380e-15   2.834386e-12
+chr4:151790574-151792502/-/Camta1      3.053144e-08   8.320472e-06
+chr4:151792230-151792502/-/Camta1      3.436238e-12   1.337784e-09
+chr5:88649832-88651392/+/Rufy3         3.917022e-09   1.176741e-06
+chr5:118077052-118077704/-/Fbxw8       4.080432e-13   1.673986e-10
+chr5:121204481-121204552/+/Rpl6        2.282964e-28   2.354106e-25
+chr5:121205406-121205663/+/Rpl6        1.974240e-37   3.423781e-34
+chr5:121204521-121204552/+/Rpl6        2.059500e-28   2.182669e-25
+chr5:121205406-121206202/+/Rpl6        8.795107e-37   1.398166e-33
+chr5:121205409-121205663/+/Rpl6        1.081365e-10   3.951039e-08
+chr5:142903501-142903941/-/Actb        3.459082e-19   2.236853e-16
+chr5:142904067-142904248/-/Actb        4.419317e-22   3.181324e-19
+chr5:146834448-146834509/+/Rpl21       1.613039e-08   4.525166e-06
+chr7:3645268-3649600/+/Cnot3           1.408026e-13   6.036002e-11
+chr7:27180169-27180279/-/Gm21983       1.228838e-41   2.467572e-38
+chr7:27180700-27180833/-/Gm21983       1.087970e-45   2.767287e-42
+chr7:27180922-27181086/-/Gm21983       5.926592e-10   1.949287e-07
+chr7:30306806-30307304/+/Clip3         2.523443e-14   1.159963e-11
+chr7:78587376-78587841/-/Ntrk3         3.719101e-28   3.734075e-25
+chr7:45131188-45131566/-/Flt3l         1.247044e-40   2.265641e-37
+chr7:45131188-45131431/-/Flt3l         1.234305e-35   1.681873e-32
+chr7:45131189-45131431/-/Flt3l         1.163662e-35   1.644340e-32
+chr7:45131402-45131757/-/Flt3l         1.008087e-13   4.370628e-11
+chr8:70145811-70145890/+/Borcs8        2.231939e-15   1.091733e-12
+chr8:70147090-70147256/+/Borcs8        2.292017e-12   9.204982e-10
+chr8:70147090-70147261/+/Borcs8        3.611729e-13   1.514267e-10
+chr8:70147090-70147319/+/Borcs8        3.687584e-13   1.529265e-10
+chr8:70513396-70514168/-/Kxd1          8.394536e-23   6.672432e-20
+chr8:70510338-70510379/-/Uba52         8.291751e-12   3.195507e-09
+chr8:70510338-70510581/-/Uba52         5.438807e-10   1.820235e-07
+chr8:105894667-105894908/+/Edc4        5.962422e-16   3.345357e-13
+chr8:123102845-123102986/+/Rpl13       1.231902e-09   3.852522e-07
+chr8:123103183-123103641/+/Rpl13       2.955627e-10   1.015910e-07
+chr9:49502136-49505563/-/Ncam1         1.975459e-08   5.501438e-06
+chr9:49517278-49517582/-/Ncam1         6.477416e-31   7.488874e-28
+chr9:67029664-67029742/-/Tpm1          7.923062e-14   3.514984e-11
+chr9:75573816-75574123/-/Tmod2         8.597956e-16   4.556081e-13
+chr9:110002746-110005739/+/Map4        7.633825e-33   9.708444e-30
+chr9:112065091-112066022/-/Arpp21      1.426418e-16   8.245778e-14
+chr9:112065234-112066022/-/Arpp21      7.507490e-16   4.034272e-13
+chr9:112065236-112066022/-/Arpp21      6.663987e-16   3.632158e-13
+chr9:112065258-112066022/-/Arpp21      8.945611e-14   3.923010e-11
+chr9:112065260-112066022/-/Arpp21      2.758979e-13   1.169592e-10
+chr9:120572096-120572197/+/Rpl14       2.757808e-08   7.569686e-06
+chr9:120572768-120572862/+/Rpl14       3.405495e-12   1.337784e-09
+chrX:20859979-20860519/+/Araf          1.667846e-27   1.552032e-24
+chrX:20859979-20860497/+/Araf          2.615187e-26   2.267664e-23
+chrX:36913446-36916545/-/Sept6         5.407731e-10   1.820235e-07
+chrX:38401357-38402281/-/Lamp2         4.724803e-18   2.861356e-15
+chrX:152193866-152194601/+/Iqsec2      8.979366e-31   1.007617e-27
+chrX:163926903-163929546/+/Ap1s2       1.955460e-44   4.144815e-41</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SpatialPlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr11:53548291-53549565/+/Sept8"</span>,<span class="st">"Sept8"</span>), <span class="at">pt.size.factor =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SpatialPlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr11:53548291-53549565/+/Sept8"</span>,<span class="st">"Sept8"</span>), <span class="at">pt.size.factor =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -853,21 +1328,21 @@ chrX:163926903-163929546/+/Ap1s2   1.011396e-40</code></pre>
 <h2 class="anchored" data-anchor-id="visualize-genome-tracks-of-multiple-samples">2. Visualize genome tracks of multiple samples</h2>
 <p>Since the spot/cell names have already been renamed in the Seurat object, we need to define a binding list that maps the new cell names to their original names, which will be used for reading sequences from the BAM files. In this vignette, we use four BAM files, requiring us to define four corresponding cell vectors. Each vector contains group factor values, where the names of the values correspond to the original cell names in the BAM file.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./visium/gencode.vM10.annotation.gtf.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./visium/gencode.vM10.annotation.gtf.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2026-01-13 15:10:22] GTF loading..
-[2026-01-13 15:10:46] Load 48440 genes.
-[2026-01-13 15:10:46] Load time : 24.201 sec</code></pre>
+<pre><code>[2026-06-11 12:47:15] GTF loading..
+[2026-06-11 12:47:31] Load 48440 genes.
+[2026-06-11 12:47:31] Load time : 15.218 sec</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>bamfiles <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec1_ant =</span> <span class="st">"./visium/section1/Anterior/V1_Mouse_Brain_Sagittal_Anterior_possorted_genome_bam.bam"</span>,</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec1_pos =</span> <span class="st">"./visium/section1/Posterior/V1_Mouse_Brain_Sagittal_Posterior_possorted_genome_bam.bam"</span>,</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec2_ant =</span> <span class="st">"./visium/section2/Anterior/V1_Mouse_Brain_Sagittal_Anterior_Section_2_possorted_genome_bam.bam"</span>,</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec2_pos =</span> <span class="st">"./visium/section2/Posterior/V1_Mouse_Brain_Sagittal_Posterior_Section_2_possorted_genome_bam.bam"</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>cell.list <span class="ot">&lt;-</span> <span class="fu">split</span>(obj<span class="sc">$</span>seurat_clusters, obj<span class="sc">$</span>orig.ident)</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cell.list)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>bamfiles <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec1_ant =</span> <span class="st">"./visium/section1/Anterior/V1_Mouse_Brain_Sagittal_Anterior_possorted_genome_bam.bam"</span>,</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec1_pos =</span> <span class="st">"./visium/section1/Posterior/V1_Mouse_Brain_Sagittal_Posterior_possorted_genome_bam.bam"</span>,</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec2_ant =</span> <span class="st">"./visium/section2/Anterior/V1_Mouse_Brain_Sagittal_Anterior_Section_2_possorted_genome_bam.bam"</span>,</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec2_pos =</span> <span class="st">"./visium/section2/Posterior/V1_Mouse_Brain_Sagittal_Posterior_Section_2_possorted_genome_bam.bam"</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>cell.list <span class="ot">&lt;-</span> <span class="fu">split</span>(obj<span class="sc">$</span>seurat_clusters, obj<span class="sc">$</span>orig.ident)</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cell.list)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 4
  $ sec1_ant: Factor w/ 16 levels "0","1","2","3",..: 10 10 10 5 5 5 5 10 5 10 ...
@@ -879,12 +1354,12 @@ chrX:163926903-163929546/+/Ap1s2   1.011396e-40</code></pre>
  $ sec2_pos: Factor w/ 16 levels "0","1","2","3",..: 10 10 10 10 10 10 10 10 10 10 ...
   ..- attr(*, "names")= chr [1:3288] "sec2_pos_TCCGCAGCCACCTAGC-1" "sec2_pos_GGTCCTTCATACGACT-1" "sec2_pos_GTGCCTAGCTATGCTT-1" "sec2_pos_GCGAGAAACGGGAGTT-1" ...</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cell.list1 <span class="ot">&lt;-</span> <span class="fu">lapply</span>(cell.list, <span class="cf">function</span>(x) {</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  nm <span class="ot">&lt;-</span> <span class="fu">names</span>(x)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(x) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">".*_(.*)"</span>,<span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>,nm)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  x</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cell.list1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>cell.list1 <span class="ot">&lt;-</span> <span class="fu">lapply</span>(cell.list, <span class="cf">function</span>(x) {</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  nm <span class="ot">&lt;-</span> <span class="fu">names</span>(x)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(x) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">".*_(.*)"</span>,<span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>,nm)</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  x</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cell.list1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 4
  $ sec1_ant: Factor w/ 16 levels "0","1","2","3",..: 10 10 10 5 5 5 5 10 5 10 ...
@@ -896,7 +1371,7 @@ chrX:163926903-163929546/+/Ap1s2   1.011396e-40</code></pre>
  $ sec2_pos: Factor w/ 16 levels "0","1","2","3",..: 10 10 10 10 10 10 10 10 10 10 ...
   ..- attr(*, "names")= chr [1:3288] "TCCGCAGCCACCTAGC-1" "GGTCCTTCATACGACT-1" "GTGCCTAGCTATGCTT-1" "GCGAGAAACGGGAGTT-1" ...</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> bamfiles, <span class="at">cell.group =</span> cell.list1, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"Sept8"</span>, <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">53548291</span>,<span class="dv">53549565</span>), <span class="at">junc=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> bamfiles, <span class="at">cell.group =</span> cell.list1, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"Sept8"</span>, <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">53548291</span>,<span class="dv">53549565</span>), <span class="at">junc=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ℹ Please use `linewidth` instead.
@@ -914,27 +1389,28 @@ chrX:163926903-163929546/+/Ap1s2   1.011396e-40</code></pre>
 </section>
 <section id="optional-build-cell-cell-weight-matrix-by-spatial-coordinates" class="level2">
 <h2 class="anchored" data-anchor-id="optional-build-cell-cell-weight-matrix-by-spatial-coordinates">Optional: Build cell-cell weight matrix by spatial coordinates</h2>
-<p>We previously used PCA to construct the cell weight matrix, but for spatial transcriptomics data, it is also possible to use the spatial coordinates, the real spot-to-spot distances, to build the weight matrix. Here, we demonstrate how to do this. Note that if we use spatial coordinates, the analysis can only be performed within a single slice.</p>
+<p>We previously used PCA to construct the cell weight matrix, but for spatial transcriptomics data, it is also possible to use the spatial coordinates, the real spot-to-spot distances, to build the weight matrix. Here, we demonstrate how to do this.</p>
+<p>Starting from the latest version, Yano supports building the weight matrix from <strong>multiple slices simultaneously</strong>. When multiple image names are passed to <code>RunAutoCorr()</code>, <code>GetWeightsFromSpatial()</code> computes the spatial weight matrix for each image individually and then merges them into a single combined weight matrix via <code>mergeMatrix()</code>. This allows the spatial correlation analysis to leverage all slices together without needing to subset or analyze each slice separately.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">subset</span>(obj, orig.ident <span class="sc">==</span> <span class="st">"sec1_ant"</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj, <span class="at">image =</span> <span class="st">"slice1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use spatial coordinates from all four slices</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj, <span class="at">image =</span> <span class="fu">c</span>(<span class="st">"slice1"</span>, <span class="st">"slice2"</span>, <span class="st">"slice3"</span>, <span class="st">"slice4"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay : exon</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Run autocorrelation test for 61463 features.</code></pre>
+<pre><code>Run autocorrelation test for 80178 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 7.186196 secs</code></pre>
+<pre><code>Runtime : 36.66877 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>24719 autocorrelated features.</code></pre>
+<pre><code>36013 autocorrelated features.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"_wm"</span>, <span class="fu">names</span>(obj), <span class="at">value=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"_wm"</span>, <span class="fu">names</span>(obj), <span class="at">value=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "pca_wm"     "spatial_wm"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">wm.name =</span> <span class="st">"spatial_wm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">wm.name =</span> <span class="st">"spatial_wm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay exon.</code></pre>
 </div>
@@ -945,10 +1421,10 @@ chrX:163926903-163929546/+/Ap1s2   1.011396e-40</code></pre>
 <pre><code>Use predefined weight matrix "spatial_wm".</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 24719 features.</code></pre>
+<pre><code>Processing 36013 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Processing 11939 binding features.</code></pre>
+<pre><code>Processing 14739 binding features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieve binding data from assay RNA.</code></pre>
@@ -957,12 +1433,12 @@ chrX:163926903-163929546/+/Ap1s2   1.011396e-40</code></pre>
 <pre><code>Use "data" layer for test features and binding features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Using 63 threads.</code></pre>
+<pre><code>Using 95 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 57.71489 secs.</code></pre>
+<pre><code>Runtime : 1.956872 mins.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -970,17 +1446,35 @@ chrX:163926903-163929546/+/Ap1s2   1.011396e-40</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Meta</span>(obj) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">1e-7</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Meta</span>(obj) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">1e-7</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                       chr     start       end gene_name strand
+chr1:36691484-36691689/+/Cox5b        chr1  36691484  36691689     Cox5b      +
 chr1:52185280-52187794/-/Gls          chr1  52185280  52187794       Gls      -
 chr1:52185280-52187853/-/Gls          chr1  52185280  52187853       Gls      -
 chr1:52184104-52187794/-/Gls          chr1  52184104  52187794       Gls      -
+chr10:5336949-5339385/-/Syne1        chr10   5336949   5339385     Syne1      -
+chr10:80054968-80055119/+/Gpx4       chr10  80054968  80055119      Gpx4      +
+chr10:80292453-80292483/+/Rps15      chr10  80292453  80292483     Rps15      +
+chr10:80292775-80292860/+/Rps15      chr10  80292775  80292860     Rps15      +
+chr10:128626476-128626506/-/Rps26    chr10 128626476 128626506     Rps26      -
+chr11:4704157-4704334/-/Uqcr10       chr11   4704157   4704334    Uqcr10      -
+chr11:6419113-6419285/+/Ppia         chr11   6419113   6419285      Ppia      +
 chr11:30106785-30109152/-/Sptbn1     chr11  30106785  30109152    Sptbn1      -
+chr11:53430655-53430831/-/Uqcrq      chr11  53430655  53430831     Uqcrq      -
 chr11:53541475-53541898/+/Sept8      chr11  53541475  53541898     Sept8      +
 chr11:53541475-53541847/+/Sept8      chr11  53541475  53541847     Sept8      +
+chr11:53548291-53549565/+/Sept8      chr11  53548291  53549565     Sept8      +
 chr11:53541210-53544095/+/Sept8      chr11  53541210  53544095     Sept8      +
 chr11:53541030-53544096/+/Sept8      chr11  53541030  53544096     Sept8      +
+chr11:62552140-62552853/+/Ubb        chr11  62552140  62552853       Ubb      +
+chr11:101442298-101442456/+/Rpl27    chr11 101442298 101442456     Rpl27      +
+chr11:101442723-101442805/+/Rpl27    chr11 101442723 101442805     Rpl27      +
+chr11:115418386-115418516/-/Atp5h    chr11 115418386 115418516     Atp5h      -
+chr11:118132019-118132375/-/Cyth1    chr11 118132019 118132375     Cyth1      -
+chr12:69183983-69184083/-/Rpl36al    chr12  69183983  69184083   Rpl36al      -
+chr12:110694023-110694343/-/Hsp90aa1 chr12 110694023 110694343  Hsp90aa1      -
+chr12:110694175-110694343/-/Hsp90aa1 chr12 110694175 110694343  Hsp90aa1      -
 chr12:110694571-110694704/-/Hsp90aa1 chr12 110694571 110694704  Hsp90aa1      -
 chr12:110695052-110695672/-/Hsp90aa1 chr12 110695052 110695672  Hsp90aa1      -
 chr12:110695052-110695418/-/Hsp90aa1 chr12 110695052 110695418  Hsp90aa1      -
@@ -989,131 +1483,514 @@ chr12:111806315-111806727/+/Klc1     chr12 111806315 111806727      Klc1      +
 chr12:111806315-111806711/+/Klc1     chr12 111806315 111806711      Klc1      +
 chr12:111806315-111806726/+/Klc1     chr12 111806315 111806726      Klc1      +
 chr13:59128168-59133970/+/Ntrk2      chr13  59128168  59133970     Ntrk2      +
-chr17:25717171-25717277/+/Gng13      chr17  25717171  25717277     Gng13      +
+chr13:86046601-86046774/-/Cox7c      chr13  86046601  86046774     Cox7c      -
+chr14:20507671-20508721/-/Ppp3cb     chr14  20507671  20508721    Ppp3cb      -
+chr15:34443025-34443077/-/Rpl30      chr15  34443025  34443077     Rpl30      -
+chr15:34443185-34443640/-/Rpl30      chr15  34443185  34443640     Rpl30      -
+chr15:34443185-34443259/-/Rpl30      chr15  34443185  34443259     Rpl30      -
+chr15:35938125-35938246/-/Cox6c      chr15  35938125  35938246     Cox6c      -
+chr15:80113166-80113441/+/Syngr1     chr15  80113166  80113441    Syngr1      +
+chr16:26722356-26725264/+/Il1rap     chr16  26722356  26725264    Il1rap      +
+chr16:26723221-26724353/+/Il1rap     chr16  26723221  26724353    Il1rap      +
+chr16:55966275-55966438/+/Rpl24      chr16  55966275  55966438     Rpl24      +
+chr16:55966547-55966622/+/Rpl24      chr16  55966547  55966622     Rpl24      +
+chr16:84831071-84831507/-/Atp5j      chr16  84831071  84831507     Atp5j      -
+chr16:84834809-84835298/-/Atp5j      chr16  84834809  84835298     Atp5j      -
+chr16:84834809-84834983/-/Atp5j      chr16  84834809  84834983     Atp5j      -
+chr16:91651630-91651796/+/Son        chr16  91651630  91651796       Son      +
+chr16:91654611-91660580/+/Son        chr16  91654611  91660580       Son      +
+chr17:23829083-23829109/-/Tceb2      chr17  23829083  23829109     Tceb2      -
+chr17:25717528-25717581/+/Gng13      chr17  25717528  25717581     Gng13      +
+chr17:45570258-45570566/-/Hsp90ab1   chr17  45570258  45570566  Hsp90ab1      -
+chr17:45570666-45570799/-/Hsp90ab1   chr17  45570666  45570799  Hsp90ab1      -
 chr18:82554320-82558703/+/Mbp        chr18  82554320  82558703       Mbp      +
-chr4:117154638-117155181/-/Rps8       chr4 117154638 117155181      Rps8      -
+chr19:6057888-6058001/+/Fau          chr19   6057888   6058001       Fau      +
+chr19:6058243-6058325/+/Fau          chr19   6058243   6058325       Fau      +
+chr19:6058246-6058325/+/Fau          chr19   6058246   6058325       Fau      +
+chr19:7217399-7217616/-/Cox8a        chr19   7217399   7217616     Cox8a      -
+chr2:121456039-121457291/+/Serf2      chr2 121456039 121457291     Serf2      +
+chr2:121457009-121457291/+/Serf2      chr2 121457009 121457291     Serf2      +
+chr2:121457646-121457701/+/Serf2      chr2 121457646 121457701     Serf2      +
+chr2:174463802-174464089/-/Atp5e      chr2 174463802 174464089     Atp5e      -
+chr3:51408864-51408988/-/Ndufc1       chr3  51408864  51408988    Ndufc1      -
+chr3:51408864-51408964/-/Ndufc1       chr3  51408864  51408964    Ndufc1      -
+chr3:55778722-55781933/-/Nbea         chr3  55778722  55781933      Nbea      -
+chr3:88617249-88617501/+/Arhgef2      chr3  88617249  88617501   Arhgef2      +
+chr3:130728567-130729302/-/Rpl34      chr3 130728567 130729302     Rpl34      -
+chr3:130729229-130729302/-/Rpl34      chr3 130729229 130729302     Rpl34      -
+chr3:130730318-130730347/-/Rpl34      chr3 130730318 130730347     Rpl34      -
+chr3:130730318-130730398/-/Rpl34      chr3 130730318 130730398     Rpl34      -
+chr4:3835484-3835665/-/Rps20          chr4   3835484   3835665     Rps20      -
+chr4:116074916-116075071/-/Uqcrh      chr4 116074916 116075071     Uqcrh      -
 chr4:117154391-117154813/-/Rps8       chr4 117154391 117154813      Rps8      -
 chr4:117154510-117154813/-/Rps8       chr4 117154510 117154813      Rps8      -
 chr4:117155008-117155107/-/Rps8       chr4 117155008 117155107      Rps8      -
 chr4:117155008-117155677/-/Rps8       chr4 117155008 117155677      Rps8      -
+chr5:115348839-115348981/-/Cox6a1     chr5 115348839 115348981    Cox6a1      -
+chr5:121204481-121204552/+/Rpl6       chr5 121204481 121204552      Rpl6      +
 chr5:121205406-121205663/+/Rpl6       chr5 121205406 121205663      Rpl6      +
+chr5:121204521-121204552/+/Rpl6       chr5 121204521 121204552      Rpl6      +
 chr5:121205406-121206202/+/Rpl6       chr5 121205406 121206202      Rpl6      +
+chr5:145191503-145192062/-/Atp5j2     chr5 145191503 145192062    Atp5j2      -
+chr5:146834184-146834262/+/Rpl21      chr5 146834184 146834262     Rpl21      +
+chr5:146834448-146834509/+/Rpl21      chr5 146834448 146834509     Rpl21      +
+chr6:11907324-11907483/-/Ndufa4       chr6  11907324  11907483    Ndufa4      -
+chr6:24527526-24528013/-/Ndufa5       chr6  24527526  24528013    Ndufa5      -
+chr6:115807802-115807902/-/Rpl32      chr6 115807802 115807902     Rpl32      -
+chr6:115808698-115808747/-/Rpl32      chr6 115808698 115808747     Rpl32      -
+chr6:125162478-125162708/-/Gapdh      chr6 125162478 125162708     Gapdh      -
+chr7:4793321-4793409/+/Rpl28          chr7   4793321   4793409     Rpl28      +
 chr7:27180169-27180279/-/Gm21983      chr7  27180169  27180279   Gm21983      -
 chr7:27180700-27180833/-/Gm21983      chr7  27180700  27180833   Gm21983      -
+chr7:78587376-78587841/-/Ntrk3        chr7  78587376  78587841     Ntrk3      -
+chr7:81344704-81345008/-/Rps17        chr7  81344704  81345008     Rps17      -
+chr7:81345202-81345254/-/Rps17        chr7  81345202  81345254     Rps17      -
+chr7:81345202-81345232/-/Rps17        chr7  81345202  81345232     Rps17      -
+chr7:30626051-30626114/-/Cox6b1       chr7  30626051  30626114    Cox6b1      -
+chr7:30626051-30626151/-/Cox6b1       chr7  30626051  30626151    Cox6b1      -
+chr7:45131188-45131566/-/Flt3l        chr7  45131188  45131566     Flt3l      -
+chr7:45131188-45131431/-/Flt3l        chr7  45131188  45131431     Flt3l      -
+chr7:45131189-45131431/-/Flt3l        chr7  45131189  45131431     Flt3l      -
+chr7:45131402-45131757/-/Flt3l        chr7  45131402  45131757     Flt3l      -
+chr7:116333900-116333948/-/Rps13      chr7 116333900 116333948     Rps13      -
+chr7:116334085-116334195/-/Rps13      chr7 116334085 116334195     Rps13      -
+chr7:116334085-116334135/-/Rps13      chr7 116334085 116334135     Rps13      -
+chr7:116334085-116334166/-/Rps13      chr7 116334085 116334166     Rps13      -
+chr7:118116136-118116188/-/Rps15a     chr7 118116136 118116188    Rps15a      -
+chr7:141447370-141447707/+/Rplp2      chr7 141447370 141447707     Rplp2      +
+chr7:141447631-141447707/+/Rplp2      chr7 141447631 141447707     Rplp2      +
+chr7:141447908-141448616/+/Rplp2      chr7 141447908 141448616     Rplp2      +
+chr8:69901542-69901732/-/Ndufa13      chr8  69901542  69901732   Ndufa13      -
+chr8:70513396-70514168/-/Kxd1         chr8  70513396  70514168      Kxd1      -
+chr8:70510338-70510379/-/Uba52        chr8  70510338  70510379     Uba52      -
+chr8:70510338-70510581/-/Uba52        chr8  70510338  70510581     Uba52      -
+chr8:120672725-120672892/+/Cox4i1     chr8 120672725 120672892    Cox4i1      +
+chr8:120672590-120672892/+/Cox4i1     chr8 120672590 120672892    Cox4i1      +
+chr8:120672729-120672892/+/Cox4i1     chr8 120672729 120672892    Cox4i1      +
+chr9:20642878-20644893/+/Ubl5         chr9  20642878  20644893      Ubl5      +
+chr9:44920610-44920742/-/Atp5l        chr9  44920610  44920742     Atp5l      -
+chr9:49517278-49517582/-/Ncam1        chr9  49517278  49517582     Ncam1      -
+chr9:79759640-79759853/-/Cox7a2       chr9  79759640  79759853    Cox7a2      -
 chr9:110002746-110005739/+/Map4       chr9 110002746 110005739      Map4      +
 chr9:112065091-112066022/-/Arpp21     chr9 112065091 112066022    Arpp21      -
 chr9:112065234-112066022/-/Arpp21     chr9 112065234 112066022    Arpp21      -
 chr9:112065236-112066022/-/Arpp21     chr9 112065236 112066022    Arpp21      -
 chr9:112065258-112066022/-/Arpp21     chr9 112065258 112066022    Arpp21      -
 chr9:112065260-112066022/-/Arpp21     chr9 112065260 112066022    Arpp21      -
+chrX:20859979-20860519/+/Araf         chrX  20859979  20860519      Araf      +
+chrX:20859979-20860497/+/Araf         chrX  20859979  20860497      Araf      +
+chrX:106015700-106015870/+/Cox7b      chrX 106015700 106015870     Cox7b      +
+chrX:106015716-106015870/+/Cox7b      chrX 106015716 106015870     Cox7b      +
+chrX:152193866-152194601/+/Iqsec2     chrX 152193866 152194601    Iqsec2      +
 chrX:163926903-163929546/+/Ap1s2      chrX 163926903 163929546     Ap1s2      +
-                                      moransi.pval    moransi autocorr.variable
-chr1:52185280-52187794/-/Gls          1.759373e-73 0.08241938              TRUE
-chr1:52185280-52187853/-/Gls          1.759373e-73 0.08241938              TRUE
-chr1:52184104-52187794/-/Gls          5.677815e-72 0.08153967              TRUE
-chr11:30106785-30109152/-/Sptbn1     1.293841e-144 0.11606393              TRUE
-chr11:53541475-53541898/+/Sept8       0.000000e+00 0.25578027              TRUE
-chr11:53541475-53541847/+/Sept8       0.000000e+00 0.20574744              TRUE
-chr11:53541210-53544095/+/Sept8       0.000000e+00 0.23378647              TRUE
-chr11:53541030-53544096/+/Sept8       0.000000e+00 0.23302513              TRUE
-chr12:110694571-110694704/-/Hsp90aa1  1.684319e-64 0.07702785              TRUE
-chr12:110695052-110695672/-/Hsp90aa1  1.026764e-27 0.04921850              TRUE
-chr12:110695052-110695418/-/Hsp90aa1  1.064431e-27 0.04920388              TRUE
-chr12:111806315-111806775/+/Klc1     5.543179e-147 0.11743184              TRUE
-chr12:111806315-111806727/+/Klc1     5.543179e-147 0.11743184              TRUE
-chr12:111806315-111806711/+/Klc1     8.111418e-124 0.10755171              TRUE
-chr12:111806315-111806726/+/Klc1     8.174470e-139 0.11405064              TRUE
-chr13:59128168-59133970/+/Ntrk2       0.000000e+00 0.19944747              TRUE
-chr17:25717171-25717277/+/Gng13       0.000000e+00 0.60886221              TRUE
-chr18:82554320-82558703/+/Mbp         9.819595e-61 0.07467050              TRUE
-chr4:117154638-117155181/-/Rps8      1.775230e-126 0.10901219              TRUE
-chr4:117154391-117154813/-/Rps8       0.000000e+00 0.19312419              TRUE
-chr4:117154510-117154813/-/Rps8       0.000000e+00 0.19613218              TRUE
-chr4:117155008-117155107/-/Rps8      7.775499e-217 0.14340253              TRUE
-chr4:117155008-117155677/-/Rps8      9.007297e-189 0.13366355              TRUE
-chr5:121205406-121205663/+/Rpl6       3.032098e-26 0.04778297              TRUE
-chr5:121205406-121206202/+/Rpl6       3.216519e-20 0.04139101              TRUE
-chr7:27180169-27180279/-/Gm21983     3.607826e-103 0.09645775              TRUE
-chr7:27180700-27180833/-/Gm21983      1.557775e-93 0.09175777              TRUE
-chr9:110002746-110005739/+/Map4      6.176938e-170 0.12673618              TRUE
-chr9:112065091-112066022/-/Arpp21     0.000000e+00 0.32750418              TRUE
-chr9:112065234-112066022/-/Arpp21     0.000000e+00 0.32297350              TRUE
-chr9:112065236-112066022/-/Arpp21     0.000000e+00 0.31877689              TRUE
-chr9:112065258-112066022/-/Arpp21     0.000000e+00 0.29303887              TRUE
-chr9:112065260-112066022/-/Arpp21     0.000000e+00 0.28285319              TRUE
-chrX:163926903-163929546/+/Ap1s2     7.149270e-184 0.13075323              TRUE
-                                     gene_name.D gene_name.t gene_name.pval
-chr1:52185280-52187794/-/Gls           0.4415595  -11.571196   2.132104e-20
-chr1:52185280-52187853/-/Gls           0.4415595  -11.571196   2.132104e-20
-chr1:52184104-52187794/-/Gls           0.4389918  -11.317335   7.515704e-20
-chr11:30106785-30109152/-/Sptbn1       0.5170538  -15.465186   1.849599e-28
-chr11:53541475-53541898/+/Sept8        0.5552903  -16.768546   5.498385e-31
-chr11:53541475-53541847/+/Sept8        0.4895025  -13.696448   6.935828e-25
-chr11:53541210-53544095/+/Sept8        0.5664315  -15.338576   3.292058e-28
-chr11:53541030-53544096/+/Sept8        0.5655160  -15.307810   3.788281e-28
-chr12:110694571-110694704/-/Hsp90aa1   0.3559919   -7.960209   1.460203e-12
-chr12:110695052-110695672/-/Hsp90aa1   0.3317801   -7.297043   3.717589e-11
-chr12:110695052-110695418/-/Hsp90aa1   0.3314020   -7.256058   4.530629e-11
-chr12:111806315-111806775/+/Klc1       0.3873376   -8.104568   7.161860e-13
-chr12:111806315-111806727/+/Klc1       0.3873376   -8.104568   7.161860e-13
-chr12:111806315-111806711/+/Klc1       0.3778733   -7.870674   2.268674e-12
-chr12:111806315-111806726/+/Klc1       0.3845407   -8.088734   7.744781e-13
-chr13:59128168-59133970/+/Ntrk2        0.5708956  -14.080468   1.126009e-25
-chr17:25717171-25717277/+/Gng13        0.4011771  -10.140008   2.707892e-17
-chr18:82554320-82558703/+/Mbp          0.4639377  -11.527162   2.652058e-20
-chr4:117154638-117155181/-/Rps8        0.3240657   -7.999458   1.203363e-12
-chr4:117154391-117154813/-/Rps8        0.4531328  -15.308221   3.781168e-28
-chr4:117154510-117154813/-/Rps8        0.4578271  -15.145173   7.972794e-28
-chr4:117155008-117155107/-/Rps8        0.4243686  -11.013851   3.406994e-19
-chr4:117155008-117155677/-/Rps8        0.4250164  -11.663271   1.351536e-20
-chr5:121205406-121205663/+/Rpl6        0.3615475   -9.350328   1.429720e-15
-chr5:121205406-121206202/+/Rpl6        0.3455003   -9.048994   6.480993e-15
-chr7:27180169-27180279/-/Gm21983       0.3671992  -11.847585   5.436635e-21
-chr7:27180700-27180833/-/Gm21983       0.3659280  -11.991137   2.679701e-21
-chr9:110002746-110005739/+/Map4        0.3873008   -7.945269   1.571713e-12
-chr9:112065091-112066022/-/Arpp21      0.6792671  -19.263507   1.457216e-35
-chr9:112065234-112066022/-/Arpp21      0.6754240  -19.562920   4.335075e-36
-chr9:112065236-112066022/-/Arpp21      0.6712918  -18.906531   6.274137e-35
-chr9:112065258-112066022/-/Arpp21      0.6466405  -17.904344   4.115950e-33
-chr9:112065260-112066022/-/Arpp21      0.6396993  -17.605042   1.471454e-32
-chrX:163926903-163929546/+/Ap1s2       0.3519107   -8.200468   4.456125e-13
-                                     gene_name.padj
-chr1:52185280-52187794/-/Gls           2.899543e-17
-chr1:52185280-52187853/-/Gls           2.899543e-17
-chr1:52184104-52187794/-/Gls           9.198846e-17
-chr11:30106785-30109152/-/Sptbn1       6.468047e-25
-chr11:53541475-53541898/+/Sept8        2.243250e-27
-chr11:53541475-53541847/+/Sept8        1.306016e-21
-chr11:53541210-53544095/+/Sept8        9.273334e-25
-chr11:53541030-53544096/+/Sept8        9.273334e-25
-chr12:110694571-110694704/-/Hsp90aa1   1.191477e-09
-chr12:110695052-110695672/-/Hsp90aa1   2.757662e-08
-chr12:110695052-110695418/-/Hsp90aa1   3.261920e-08
-chr12:111806315-111806775/+/Klc1       6.493155e-10
-chr12:111806315-111806727/+/Klc1       6.493155e-10
-chr12:111806315-111806711/+/Klc1       1.735465e-09
-chr12:111806315-111806726/+/Klc1       6.770875e-10
-chr13:59128168-59133970/+/Ntrk2        2.296965e-22
-chr17:25717171-25717277/+/Gng13        3.013023e-14
-chr18:82554320-82558703/+/Mbp          3.416828e-17
-chr4:117154638-117155181/-/Rps8        1.015763e-09
-chr4:117154391-117154813/-/Rps8        9.273334e-25
-chr4:117154510-117154813/-/Rps8        1.774237e-24
-chr4:117155008-117155107/-/Rps8        3.971420e-16
-chr4:117155008-117155677/-/Rps8        2.067766e-17
-chr5:121205406-121205663/+/Rpl6        1.521657e-12
-chr5:121205406-121206202/+/Rpl6        6.610342e-12
-chr7:27180169-27180279/-/Gm21983       8.872226e-18
-chr7:27180700-27180833/-/Gm21983       4.685458e-18
-chr9:110002746-110005739/+/Map4        1.241096e-09
-chr9:112065091-112066022/-/Arpp21      1.783559e-31
-chr9:112065234-112066022/-/Arpp21      1.061183e-31
-chr9:112065236-112066022/-/Arpp21      5.119486e-31
-chr9:112065258-112066022/-/Arpp21      2.518859e-29
-chr9:112065260-112066022/-/Arpp21      7.203946e-29
-chrX:163926903-163929546/+/Ap1s2       4.363259e-10</code></pre>
+                                      moransi.pval     moransi
+chr1:36691484-36691689/+/Cox5b        0.000000e+00 0.094649026
+chr1:52185280-52187794/-/Gls         2.610854e-208 0.066587946
+chr1:52185280-52187853/-/Gls         2.610854e-208 0.066587946
+chr1:52184104-52187794/-/Gls         2.636703e-206 0.066262984
+chr10:5336949-5339385/-/Syne1         0.000000e+00 0.295841240
+chr10:80054968-80055119/+/Gpx4       3.114114e-131 0.052669673
+chr10:80292453-80292483/+/Rps15      1.151555e-316 0.082276242
+chr10:80292775-80292860/+/Rps15       0.000000e+00 0.112335899
+chr10:128626476-128626506/-/Rps26     0.000000e+00 0.157017272
+chr11:4704157-4704334/-/Uqcr10       5.100503e-299 0.079952205
+chr11:6419113-6419285/+/Ppia          0.000000e+00 0.149526525
+chr11:30106785-30109152/-/Sptbn1      0.000000e+00 0.113465298
+chr11:53430655-53430831/-/Uqcrq      9.991883e-135 0.053374038
+chr11:53541475-53541898/+/Sept8       0.000000e+00 0.312506930
+chr11:53541475-53541847/+/Sept8       0.000000e+00 0.266181686
+chr11:53548291-53549565/+/Sept8       0.000000e+00 0.344006364
+chr11:53541210-53544095/+/Sept8       0.000000e+00 0.303864781
+chr11:53541030-53544096/+/Sept8       0.000000e+00 0.303819201
+chr11:62552140-62552853/+/Ubb         0.000000e+00 0.102737570
+chr11:101442298-101442456/+/Rpl27     1.425628e-95 0.044762600
+chr11:101442723-101442805/+/Rpl27    2.736691e-139 0.054282405
+chr11:115418386-115418516/-/Atp5h     8.952046e-51 0.032267284
+chr11:118132019-118132375/-/Cyth1    1.183344e-143 0.054983450
+chr12:69183983-69184083/-/Rpl36al     5.031351e-56 0.033971536
+chr12:110694023-110694343/-/Hsp90aa1  0.000000e+00 0.090091678
+chr12:110694175-110694343/-/Hsp90aa1 3.149778e-267 0.075530503
+chr12:110694571-110694704/-/Hsp90aa1 1.978161e-299 0.080001817
+chr12:110695052-110695672/-/Hsp90aa1  6.534794e-89 0.043140501
+chr12:110695052-110695418/-/Hsp90aa1  5.974543e-91 0.043646021
+chr12:111806315-111806775/+/Klc1     3.293436e-236 0.070957026
+chr12:111806315-111806727/+/Klc1     6.641134e-235 0.070758499
+chr12:111806315-111806711/+/Klc1     1.286961e-197 0.064827204
+chr12:111806315-111806726/+/Klc1     2.118887e-218 0.068197091
+chr13:59128168-59133970/+/Ntrk2       0.000000e+00 0.283327928
+chr13:86046601-86046774/-/Cox7c       0.000000e+00 0.138279380
+chr14:20507671-20508721/-/Ppp3cb     2.107027e-159 0.058113080
+chr15:34443025-34443077/-/Rpl30       0.000000e+00 0.115869512
+chr15:34443185-34443640/-/Rpl30       0.000000e+00 0.101888571
+chr15:34443185-34443259/-/Rpl30       0.000000e+00 0.101746879
+chr15:35938125-35938246/-/Cox6c       0.000000e+00 0.232260460
+chr15:80113166-80113441/+/Syngr1      3.727157e-08 0.011567563
+chr16:26722356-26725264/+/Il1rap      9.301979e-98 0.045211595
+chr16:26723221-26724353/+/Il1rap      1.306967e-82 0.041452767
+chr16:55966275-55966438/+/Rpl24       4.181497e-42 0.029254654
+chr16:55966547-55966622/+/Rpl24       1.484359e-67 0.037448747
+chr16:84831071-84831507/-/Atp5j      1.061633e-163 0.058933618
+chr16:84834809-84835298/-/Atp5j       8.815639e-84 0.041839069
+chr16:84834809-84834983/-/Atp5j       6.687196e-90 0.043383826
+chr16:91651630-91651796/+/Son         6.392050e-14 0.015961800
+chr16:91654611-91660580/+/Son         4.581521e-06 0.009522771
+chr17:23829083-23829109/-/Tceb2       3.755556e-66 0.037034130
+chr17:25717528-25717581/+/Gng13       0.000000e+00 0.166471471
+chr17:45570258-45570566/-/Hsp90ab1    1.022592e-49 0.031923033
+chr17:45570666-45570799/-/Hsp90ab1    1.390183e-52 0.032870335
+chr18:82554320-82558703/+/Mbp        3.127907e-215 0.067703394
+chr19:6057888-6058001/+/Fau           0.000000e+00 0.089327988
+chr19:6058243-6058325/+/Fau           0.000000e+00 0.107820540
+chr19:6058246-6058325/+/Fau          2.990708e-120 0.050369938
+chr19:7217399-7217616/-/Cox8a         0.000000e+00 0.201045556
+chr2:121456039-121457291/+/Serf2      3.816125e-72 0.038751823
+chr2:121457009-121457291/+/Serf2      1.884852e-72 0.038836732
+chr2:121457646-121457701/+/Serf2      1.174424e-26 0.022932883
+chr2:174463802-174464089/-/Atp5e      0.000000e+00 0.113114849
+chr3:51408864-51408988/-/Ndufc1       0.000000e+00 0.087674425
+chr3:51408864-51408964/-/Ndufc1       0.000000e+00 0.084033916
+chr3:55778722-55781933/-/Nbea         2.168746e-26 0.022665191
+chr3:88617249-88617501/+/Arhgef2      2.874904e-71 0.038231426
+chr3:130728567-130729302/-/Rpl34      0.000000e+00 0.096606349
+chr3:130729229-130729302/-/Rpl34      0.000000e+00 0.124018022
+chr3:130730318-130730347/-/Rpl34      0.000000e+00 0.104170583
+chr3:130730318-130730398/-/Rpl34      0.000000e+00 0.119183083
+chr4:3835484-3835665/-/Rps20          0.000000e+00 0.087099219
+chr4:116074916-116075071/-/Uqcrh      8.733329e-94 0.044347145
+chr4:117154391-117154813/-/Rps8       0.000000e+00 0.243352560
+chr4:117154510-117154813/-/Rps8       0.000000e+00 0.245123224
+chr4:117155008-117155107/-/Rps8       0.000000e+00 0.184805429
+chr4:117155008-117155677/-/Rps8       0.000000e+00 0.181363517
+chr5:115348839-115348981/-/Cox6a1     0.000000e+00 0.091206864
+chr5:121204481-121204552/+/Rpl6       5.008883e-76 0.039800665
+chr5:121205406-121205663/+/Rpl6      2.846758e-171 0.060298545
+chr5:121204521-121204552/+/Rpl6       7.415057e-75 0.039483062
+chr5:121205406-121206202/+/Rpl6      3.877779e-171 0.060273158
+chr5:145191503-145192062/-/Atp5j2     0.000000e+00 0.117080186
+chr5:146834184-146834262/+/Rpl21     9.466901e-137 0.053772406
+chr5:146834448-146834509/+/Rpl21     5.064256e-160 0.058259433
+chr6:11907324-11907483/-/Ndufa4       0.000000e+00 0.133951660
+chr6:24527526-24528013/-/Ndufa5      2.095601e-175 0.061030588
+chr6:115807802-115807902/-/Rpl32     2.534557e-321 0.082908981
+chr6:115808698-115808747/-/Rpl32     7.947584e-146 0.055554936
+chr6:125162478-125162708/-/Gapdh      0.000000e+00 0.088240041
+chr7:4793321-4793409/+/Rpl28         3.416174e-224 0.069119483
+chr7:27180169-27180279/-/Gm21983     1.775836e-219 0.068106962
+chr7:27180700-27180833/-/Gm21983     6.997596e-272 0.075926093
+chr7:78587376-78587841/-/Ntrk3       3.520703e-123 0.050444406
+chr7:81344704-81345008/-/Rps17        5.195676e-44 0.029938904
+chr7:81345202-81345254/-/Rps17        1.711399e-84 0.042024147
+chr7:81345202-81345232/-/Rps17        4.021585e-78 0.040358568
+chr7:30626051-30626114/-/Cox6b1      1.343322e-301 0.080287137
+chr7:30626051-30626151/-/Cox6b1       0.000000e+00 0.102867704
+chr7:45131188-45131566/-/Flt3l        1.597643e-45 0.030456381
+chr7:45131188-45131431/-/Flt3l        1.222084e-25 0.022416717
+chr7:45131189-45131431/-/Flt3l        1.262589e-27 0.023342986
+chr7:45131402-45131757/-/Flt3l        8.924118e-04 0.006589671
+chr7:116333900-116333948/-/Rps13     6.576235e-125 0.051337239
+chr7:116334085-116334195/-/Rps13      1.425153e-95 0.044759574
+chr7:116334085-116334135/-/Rps13      1.077214e-88 0.043072212
+chr7:116334085-116334166/-/Rps13      6.075204e-93 0.044122894
+chr7:118116136-118116188/-/Rps15a    1.485267e-254 0.073685704
+chr7:141447370-141447707/+/Rplp2      0.000000e+00 0.104639787
+chr7:141447631-141447707/+/Rplp2      0.000000e+00 0.102179469
+chr7:141447908-141448616/+/Rplp2      0.000000e+00 0.106025573
+chr8:69901542-69901732/-/Ndufa13     1.209805e-207 0.066487583
+chr8:70513396-70514168/-/Kxd1         2.672435e-16 0.017475103
+chr8:70510338-70510379/-/Uba52        0.000000e+00 0.374163492
+chr8:70510338-70510581/-/Uba52        0.000000e+00 0.379438115
+chr8:120672725-120672892/+/Cox4i1     0.000000e+00 0.099378009
+chr8:120672590-120672892/+/Cox4i1     0.000000e+00 0.094069421
+chr8:120672729-120672892/+/Cox4i1     0.000000e+00 0.093339256
+chr9:20642878-20644893/+/Ubl5        1.550842e-183 0.062437688
+chr9:44920610-44920742/-/Atp5l        0.000000e+00 0.093351636
+chr9:49517278-49517582/-/Ncam1        0.000000e+00 0.147977716
+chr9:79759640-79759853/-/Cox7a2       0.000000e+00 0.115326092
+chr9:110002746-110005739/+/Map4       0.000000e+00 0.100814521
+chr9:112065091-112066022/-/Arpp21     0.000000e+00 0.296376468
+chr9:112065234-112066022/-/Arpp21     0.000000e+00 0.293977171
+chr9:112065236-112066022/-/Arpp21     0.000000e+00 0.289533431
+chr9:112065258-112066022/-/Arpp21     0.000000e+00 0.274752574
+chr9:112065260-112066022/-/Arpp21     0.000000e+00 0.269411413
+chrX:20859979-20860519/+/Araf         3.185724e-46 0.030708396
+chrX:20859979-20860497/+/Araf         2.732959e-33 0.025814725
+chrX:106015700-106015870/+/Cox7b      0.000000e+00 0.088943767
+chrX:106015716-106015870/+/Cox7b     3.277272e-247 0.072610732
+chrX:152193866-152194601/+/Iqsec2    4.310401e-163 0.058795619
+chrX:163926903-163929546/+/Ap1s2     7.439928e-273 0.076179382
+                                     autocorr.variable gene_name.D gene_name.t
+chr1:36691484-36691689/+/Cox5b                    TRUE   0.2887081  -17.112505
+chr1:52185280-52187794/-/Gls                      TRUE   0.2219764   -7.392442
+chr1:52185280-52187853/-/Gls                      TRUE   0.2219764   -7.392442
+chr1:52184104-52187794/-/Gls                      TRUE   0.2212955   -7.315698
+chr10:5336949-5339385/-/Syne1                     TRUE   0.2963732  -13.208070
+chr10:80054968-80055119/+/Gpx4                    TRUE   0.2304586   -7.630569
+chr10:80292453-80292483/+/Rps15                   TRUE   0.2286924   -7.074823
+chr10:80292775-80292860/+/Rps15                   TRUE   0.2397466   -8.099280
+chr10:128626476-128626506/-/Rps26                 TRUE   0.2458386   -8.363863
+chr11:4704157-4704334/-/Uqcr10                    TRUE   0.2667046  -12.363743
+chr11:6419113-6419285/+/Ppia                      TRUE   0.2986351  -17.404345
+chr11:30106785-30109152/-/Sptbn1                  TRUE   0.4162070  -28.003723
+chr11:53430655-53430831/-/Uqcrq                   TRUE   0.2347758   -6.976235
+chr11:53541475-53541898/+/Sept8                   TRUE   0.3335357  -17.774594
+chr11:53541475-53541847/+/Sept8                   TRUE   0.3069235  -14.304041
+chr11:53548291-53549565/+/Sept8                   TRUE   0.3204590  -16.219794
+chr11:53541210-53544095/+/Sept8                   TRUE   0.3025799  -14.898778
+chr11:53541030-53544096/+/Sept8                   TRUE   0.3027447  -14.932900
+chr11:62552140-62552853/+/Ubb                     TRUE   0.2603493  -11.678910
+chr11:101442298-101442456/+/Rpl27                 TRUE   0.2394868   -9.913158
+chr11:101442723-101442805/+/Rpl27                 TRUE   0.2382091   -8.106737
+chr11:115418386-115418516/-/Atp5h                 TRUE   0.2310096   -7.672064
+chr11:118132019-118132375/-/Cyth1                 TRUE   0.2388618   -7.754914
+chr12:69183983-69184083/-/Rpl36al                 TRUE   0.2369097   -7.779559
+chr12:110694023-110694343/-/Hsp90aa1              TRUE   0.2938875  -14.605383
+chr12:110694175-110694343/-/Hsp90aa1              TRUE   0.2693759  -11.415499
+chr12:110694571-110694704/-/Hsp90aa1              TRUE   0.2760167  -12.923753
+chr12:110695052-110695672/-/Hsp90aa1              TRUE   0.2533361   -9.108757
+chr12:110695052-110695418/-/Hsp90aa1              TRUE   0.2546783   -9.263266
+chr12:111806315-111806775/+/Klc1                  TRUE   0.3313899  -19.626035
+chr12:111806315-111806727/+/Klc1                  TRUE   0.3312778  -19.578278
+chr12:111806315-111806711/+/Klc1                  TRUE   0.3277900  -18.130922
+chr12:111806315-111806726/+/Klc1                  TRUE   0.3278780  -19.016051
+chr13:59128168-59133970/+/Ntrk2                   TRUE   0.2758758  -11.385778
+chr13:86046601-86046774/-/Cox7c                   TRUE   0.2347920   -8.771712
+chr14:20507671-20508721/-/Ppp3cb                  TRUE   0.3615776  -21.240007
+chr15:34443025-34443077/-/Rpl30                   TRUE   0.2484484   -8.618125
+chr15:34443185-34443640/-/Rpl30                   TRUE   0.2478586   -9.190549
+chr15:34443185-34443259/-/Rpl30                   TRUE   0.2474626   -9.092465
+chr15:35938125-35938246/-/Cox6c                   TRUE   0.3681990  -23.008640
+chr15:80113166-80113441/+/Syngr1                  TRUE   0.2331050   -6.818540
+chr16:26722356-26725264/+/Il1rap                  TRUE   0.2332393   -7.722641
+chr16:26723221-26724353/+/Il1rap                  TRUE   0.2295987   -7.447684
+chr16:55966275-55966438/+/Rpl24                   TRUE   0.2368838   -7.690239
+chr16:55966547-55966622/+/Rpl24                   TRUE   0.2479459   -9.003495
+chr16:84831071-84831507/-/Atp5j                   TRUE   0.2527982  -10.543658
+chr16:84834809-84835298/-/Atp5j                   TRUE   0.2278192   -7.334497
+chr16:84834809-84834983/-/Atp5j                   TRUE   0.2281924   -7.348130
+chr16:91651630-91651796/+/Son                     TRUE   0.2477551   -8.901452
+chr16:91654611-91660580/+/Son                     TRUE   0.2360703   -8.415078
+chr17:23829083-23829109/-/Tceb2                   TRUE   0.2478574   -8.886370
+chr17:25717528-25717581/+/Gng13                   TRUE   0.4373547  -27.982847
+chr17:45570258-45570566/-/Hsp90ab1                TRUE   0.2596825  -10.778543
+chr17:45570666-45570799/-/Hsp90ab1                TRUE   0.2580624  -10.975216
+chr18:82554320-82558703/+/Mbp                     TRUE   0.3480146  -18.442753
+chr19:6057888-6058001/+/Fau                       TRUE   0.3023795  -15.973935
+chr19:6058243-6058325/+/Fau                       TRUE   0.2950041  -15.614035
+chr19:6058246-6058325/+/Fau                       TRUE   0.2234662   -8.120269
+chr19:7217399-7217616/-/Cox8a                     TRUE   0.2423951   -9.881862
+chr2:121456039-121457291/+/Serf2                  TRUE   0.2651071  -12.529092
+chr2:121457009-121457291/+/Serf2                  TRUE   0.2651665  -12.537094
+chr2:121457646-121457701/+/Serf2                  TRUE   0.2344239   -8.573984
+chr2:174463802-174464089/-/Atp5e                  TRUE   0.2709029  -10.828182
+chr3:51408864-51408988/-/Ndufc1                   TRUE   0.2450479   -7.663465
+chr3:51408864-51408964/-/Ndufc1                   TRUE   0.2436982   -7.721077
+chr3:55778722-55781933/-/Nbea                     TRUE   0.2333297   -7.528229
+chr3:88617249-88617501/+/Arhgef2                  TRUE   0.2297026   -6.978021
+chr3:130728567-130729302/-/Rpl34                  TRUE   0.2333237   -8.099889
+chr3:130729229-130729302/-/Rpl34                  TRUE   0.2358735   -7.695960
+chr3:130730318-130730347/-/Rpl34                  TRUE   0.2586446  -11.275393
+chr3:130730318-130730398/-/Rpl34                  TRUE   0.2689530  -12.629109
+chr4:3835484-3835665/-/Rps20                      TRUE   0.2507061   -9.491362
+chr4:116074916-116075071/-/Uqcrh                  TRUE   0.2219250   -6.914520
+chr4:117154391-117154813/-/Rps8                   TRUE   0.2304803   -9.084789
+chr4:117154510-117154813/-/Rps8                   TRUE   0.2313346   -9.266113
+chr4:117155008-117155107/-/Rps8                   TRUE   0.2228286   -8.264104
+chr4:117155008-117155677/-/Rps8                   TRUE   0.2221810   -7.352021
+chr5:115348839-115348981/-/Cox6a1                 TRUE   0.2672887  -11.323936
+chr5:121204481-121204552/+/Rpl6                   TRUE   0.2399006   -9.263487
+chr5:121205406-121205663/+/Rpl6                   TRUE   0.2608481  -10.848324
+chr5:121204521-121204552/+/Rpl6                   TRUE   0.2390201   -9.107492
+chr5:121205406-121206202/+/Rpl6                   TRUE   0.2595803  -10.702996
+chr5:145191503-145192062/-/Atp5j2                 TRUE   0.3069800  -17.148474
+chr5:146834184-146834262/+/Rpl21                  TRUE   0.2258255   -6.899373
+chr5:146834448-146834509/+/Rpl21                  TRUE   0.2281718   -7.368256
+chr6:11907324-11907483/-/Ndufa4                   TRUE   0.2611378   -9.812237
+chr6:24527526-24528013/-/Ndufa5                   TRUE   0.2243880   -6.934626
+chr6:115807802-115807902/-/Rpl32                  TRUE   0.2580917   -9.864134
+chr6:115808698-115808747/-/Rpl32                  TRUE   0.2393853   -7.540846
+chr6:125162478-125162708/-/Gapdh                  TRUE   0.3069008  -17.677191
+chr7:4793321-4793409/+/Rpl28                      TRUE   0.2385058   -7.865776
+chr7:27180169-27180279/-/Gm21983                  TRUE   0.2557816   -9.915468
+chr7:27180700-27180833/-/Gm21983                  TRUE   0.2627446  -10.647637
+chr7:78587376-78587841/-/Ntrk3                    TRUE   0.2387507   -7.019220
+chr7:81344704-81345008/-/Rps17                    TRUE   0.2320253   -7.937774
+chr7:81345202-81345254/-/Rps17                    TRUE   0.2501776   -9.980593
+chr7:81345202-81345232/-/Rps17                    TRUE   0.2491218   -9.572353
+chr7:30626051-30626114/-/Cox6b1                   TRUE   0.2703444  -11.958223
+chr7:30626051-30626151/-/Cox6b1                   TRUE   0.3010699  -15.537513
+chr7:45131188-45131566/-/Flt3l                    TRUE   0.3103775  -15.183334
+chr7:45131188-45131431/-/Flt3l                    TRUE   0.2852204  -12.119307
+chr7:45131189-45131431/-/Flt3l                    TRUE   0.2836310  -11.593234
+chr7:45131402-45131757/-/Flt3l                    TRUE   0.2294497   -7.531423
+chr7:116333900-116333948/-/Rps13                  TRUE   0.2464831  -10.212601
+chr7:116334085-116334195/-/Rps13                  TRUE   0.2384493   -8.505351
+chr7:116334085-116334135/-/Rps13                  TRUE   0.2364634   -8.622710
+chr7:116334085-116334166/-/Rps13                  TRUE   0.2382325   -8.618553
+chr7:118116136-118116188/-/Rps15a                 TRUE   0.2570134   -9.519368
+chr7:141447370-141447707/+/Rplp2                  TRUE   0.2704215  -12.610553
+chr7:141447631-141447707/+/Rplp2                  TRUE   0.2685871  -12.044415
+chr7:141447908-141448616/+/Rplp2                  TRUE   0.2663422  -12.314613
+chr8:69901542-69901732/-/Ndufa13                  TRUE   0.2740951  -11.615464
+chr8:70513396-70514168/-/Kxd1                     TRUE   0.2443077   -8.178434
+chr8:70510338-70510379/-/Uba52                    TRUE   0.2436052   -9.375461
+chr8:70510338-70510581/-/Uba52                    TRUE   0.2496029  -10.466318
+chr8:120672725-120672892/+/Cox4i1                 TRUE   0.3025589  -16.620674
+chr8:120672590-120672892/+/Cox4i1                 TRUE   0.2972418  -16.232270
+chr8:120672729-120672892/+/Cox4i1                 TRUE   0.2952563  -15.975819
+chr9:20642878-20644893/+/Ubl5                     TRUE   0.2311900   -6.872679
+chr9:44920610-44920742/-/Atp5l                    TRUE   0.2785065  -15.811983
+chr9:49517278-49517582/-/Ncam1                    TRUE   0.2451176   -8.605794
+chr9:79759640-79759853/-/Cox7a2                   TRUE   0.2954830  -14.558343
+chr9:110002746-110005739/+/Map4                   TRUE   0.2472328   -7.689415
+chr9:112065091-112066022/-/Arpp21                 TRUE   0.2538377   -8.457595
+chr9:112065234-112066022/-/Arpp21                 TRUE   0.2527961   -8.166497
+chr9:112065236-112066022/-/Arpp21                 TRUE   0.2511365   -8.331911
+chr9:112065258-112066022/-/Arpp21                 TRUE   0.2433322   -7.343364
+chr9:112065260-112066022/-/Arpp21                 TRUE   0.2409620   -7.076519
+chrX:20859979-20860519/+/Araf                     TRUE   0.2345361   -7.223960
+chrX:20859979-20860497/+/Araf                     TRUE   0.2301372   -7.052293
+chrX:106015700-106015870/+/Cox7b                  TRUE   0.2338449   -8.024906
+chrX:106015716-106015870/+/Cox7b                  TRUE   0.2569399   -9.530981
+chrX:152193866-152194601/+/Iqsec2                 TRUE   0.2761279  -11.667381
+chrX:163926903-163929546/+/Ap1s2                  TRUE   0.2730711  -10.859044
+                                     gene_name.pval gene_name.padj
+chr1:36691484-36691689/+/Cox5b         1.227357e-31   3.113455e-28
+chr1:52185280-52187794/-/Gls           2.343309e-11   7.174163e-09
+chr1:52185280-52187853/-/Gls           2.343309e-11   7.174163e-09
+chr1:52184104-52187794/-/Gls           3.397203e-11   9.889202e-09
+chr10:5336949-5339385/-/Syne1          7.168528e-24   8.778728e-21
+chr10:80054968-80055119/+/Gpx4         7.357182e-12   2.375300e-09
+chr10:80292453-80292483/+/Rps15        1.082376e-10   3.075161e-08
+chr10:80292775-80292860/+/Rps15        7.351517e-13   2.691565e-10
+chr10:128626476-128626506/-/Rps26      1.981341e-13   7.906217e-11
+chr11:4704157-4704334/-/Uqcr10         4.305901e-22   4.369136e-19
+chr11:6419113-6419285/+/Ppia           3.479431e-32   1.029738e-28
+chr11:30106785-30109152/-/Sptbn1       3.811377e-49   7.226938e-45
+chr11:53430655-53430831/-/Uqcrq        1.733611e-10   4.772671e-08
+chr11:53541475-53541898/+/Sept8        7.140310e-33   2.535810e-29
+chr11:53541475-53541847/+/Sept8        3.937708e-26   4.994420e-23
+chr11:53548291-53549565/+/Sept8        6.205332e-30   1.296330e-26
+chr11:53541210-53544095/+/Sept8        2.476815e-27   3.518465e-24
+chr11:53541030-53544096/+/Sept8        2.116059e-27   3.131239e-24
+chr11:62552140-62552853/+/Ubb          1.250918e-20   1.110628e-17
+chr11:101442298-101442456/+/Rpl27      8.461122e-17   5.008138e-14
+chr11:101442723-101442805/+/Rpl27      7.085506e-13   2.648786e-10
+chr11:115418386-115418516/-/Atp5h      6.007010e-12   1.975305e-09
+chr11:118132019-118132375/-/Cyth1      4.004336e-12   1.394216e-09
+chr12:69183983-69184083/-/Rpl36al      3.548625e-12   1.247781e-09
+chr12:110694023-110694343/-/Hsp90aa1   9.643878e-27   1.317280e-23
+chr12:110694175-110694343/-/Hsp90aa1   4.614990e-20   3.724926e-17
+chr12:110694571-110694704/-/Hsp90aa1   2.824652e-23   3.343823e-20
+chr12:110695052-110695672/-/Hsp90aa1   4.803545e-15   2.319978e-12
+chr12:110695052-110695418/-/Hsp90aa1   2.213175e-15   1.107024e-12
+chr12:111806315-111806775/+/Klc1       3.362143e-36   2.388063e-32
+chr12:111806315-111806727/+/Klc1       4.074918e-36   2.411944e-32
+chr12:111806315-111806711/+/Klc1       1.580885e-33   6.238172e-30
+chr12:111806315-111806726/+/Klc1       4.002251e-35   2.030513e-31
+chr13:59128168-59133970/+/Ntrk2        5.348968e-20   4.221405e-17
+chr13:86046601-86046774/-/Cox7c        2.595759e-14   1.152322e-11
+chr14:20507671-20508721/-/Ppp3cb       5.953027e-39   5.285395e-35
+chr15:34443025-34443077/-/Rpl30        5.588140e-14   2.391051e-11
+chr15:34443185-34443640/-/Rpl30        3.187466e-15   1.572218e-12
+chr15:34443185-34443259/-/Rpl30        5.212283e-15   2.468120e-12
+chr15:35938125-35938246/-/Cox6c        8.123771e-42   9.616920e-38
+chr15:80113166-80113441/+/Syngr1       3.667184e-10   9.719133e-08
+chr16:26722356-26725264/+/Il1rap       4.690150e-12   1.613910e-09
+chr16:26723221-26724353/+/Il1rap       1.792509e-11   5.584136e-09
+chr16:55966275-55966438/+/Rpl24        5.496119e-12   1.831563e-09
+chr16:55966547-55966622/+/Rpl24        8.140143e-15   3.754403e-12
+chr16:84831071-84831507/-/Atp5j        3.575701e-18   2.308862e-15
+chr16:84834809-84835298/-/Atp5j        3.102073e-11   9.104711e-09
+chr16:84834809-84834983/-/Atp5j        2.904104e-11   8.666919e-09
+chr16:91651630-91651796/+/Son          1.356752e-14   6.177395e-12
+chr16:91654611-91660580/+/Son          1.536087e-13   6.199158e-11
+chr17:23829083-23829109/-/Tceb2        1.463104e-14   6.577300e-12
+chr17:25717528-25717581/+/Gng13        4.069909e-49   7.226938e-45
+chr17:45570258-45570566/-/Hsp90ab1     1.103546e-18   7.536796e-16
+chr17:45570666-45570799/-/Hsp90ab1     4.131372e-19   3.056699e-16
+chr18:82554320-82558703/+/Mbp          4.281119e-34   1.900496e-30
+chr19:6057888-6058001/+/Fau            1.860803e-29   3.478134e-26
+chr19:6058243-6058325/+/Fau            9.414816e-29   1.592180e-25
+chr19:6058246-6058325/+/Fau            6.627003e-13   2.503738e-10
+chr19:7217399-7217616/-/Cox8a          9.901692e-17   5.764733e-14
+chr2:121456039-121457291/+/Serf2       1.920462e-22   2.005979e-19
+chr2:121457009-121457291/+/Serf2       1.846985e-22   1.987692e-19
+chr2:121457646-121457701/+/Serf2       6.963816e-14   2.909564e-11
+chr2:174463802-174464089/-/Atp5e       8.610327e-19   5.995827e-16
+chr3:51408864-51408988/-/Ndufc1        6.264889e-12   2.041204e-09
+chr3:51408864-51408964/-/Ndufc1        4.726212e-12   1.613910e-09
+chr3:55778722-55781933/-/Nbea          1.211738e-11   3.808288e-09
+chr3:88617249-88617501/+/Arhgef2       1.718911e-10   4.769173e-08
+chr3:130728567-130729302/-/Rpl34       7.329423e-13   2.691565e-10
+chr3:130729229-130729302/-/Rpl34       5.344436e-12   1.807641e-09
+chr3:130730318-130730347/-/Rpl34       9.258594e-20   6.995952e-17
+chr3:130730318-130730398/-/Rpl34       1.179858e-22   1.351661e-19
+chr4:3835484-3835665/-/Rps20           7.042059e-16   3.732712e-13
+chr4:116074916-116075071/-/Uqcrh       2.325774e-10   6.305155e-08
+chr4:117154391-117154813/-/Rps8        5.416728e-15   2.531180e-12
+chr4:117154510-117154813/-/Rps8        2.181778e-15   1.107024e-12
+chr4:117155008-117155107/-/Rps8        3.250841e-13   1.268685e-10
+chr4:117155008-117155677/-/Rps8        2.849940e-11   8.577354e-09
+chr5:115348839-115348981/-/Cox6a1      7.273102e-20   5.615151e-17
+chr5:121204481-121204552/+/Rpl6        2.210715e-15   1.107024e-12
+chr5:121205406-121205663/+/Rpl6        7.785809e-19   5.530105e-16
+chr5:121204521-121204552/+/Rpl6        4.834104e-15   2.319978e-12
+chr5:121205406-121206202/+/Rpl6        1.610282e-18   1.079010e-15
+chr5:145191503-145192062/-/Atp5j2      1.050131e-31   2.868797e-28
+chr5:146834184-146834262/+/Rpl21       2.499405e-10   6.724537e-08
+chr5:146834448-146834509/+/Rpl21       2.634559e-11   7.996899e-09
+chr6:11907324-11907483/-/Ndufa4        1.404828e-16   7.919214e-14
+chr6:24527526-24528013/-/Ndufa5        2.113637e-10   5.774132e-08
+chr6:115807802-115807902/-/Rpl32       1.082402e-16   6.200066e-14
+chr6:115808698-115808747/-/Rpl32       1.139540e-11   3.645913e-09
+chr6:125162478-125162708/-/Gapdh       1.081249e-32   3.490860e-29
+chr7:4793321-4793409/+/Rpl28           2.323960e-12   8.253311e-10
+chr7:27180169-27180279/-/Gm21983       8.363490e-17   5.008138e-14
+chr7:27180700-27180833/-/Gm21983       2.124334e-18   1.397103e-15
+chr7:78587376-78587841/-/Ntrk3         1.412087e-10   3.948728e-08
+chr7:81344704-81345008/-/Rps17         1.630807e-12   5.850150e-10
+chr7:81345202-81345254/-/Rps17         6.029937e-17   3.692193e-14
+chr7:81345202-81345232/-/Rps17         4.688390e-16   2.601617e-13
+chr7:30626051-30626114/-/Cox6b1        3.151156e-21   2.869491e-18
+chr7:30626051-30626151/-/Cox6b1        1.331766e-28   2.149833e-25
+chr7:45131188-45131566/-/Flt3l         6.693535e-28   1.033540e-24
+chr7:45131188-45131431/-/Flt3l         1.426846e-21   1.369541e-18
+chr7:45131189-45131431/-/Flt3l         1.911609e-20   1.578811e-17
+chr7:45131402-45131757/-/Flt3l         1.193043e-11   3.783011e-09
+chr7:116333900-116333948/-/Rps13       1.880915e-17   1.171909e-14
+chr7:116334085-116334195/-/Rps13       9.802614e-14   4.048024e-11
+chr7:116334085-116334135/-/Rps13       5.461797e-14   2.391051e-11
+chr7:116334085-116334166/-/Rps13       5.576218e-14   2.391051e-11
+chr7:118116136-118116188/-/Rps15a      6.118016e-16   3.292049e-13
+chr7:141447370-141447707/+/Rplp2       1.291375e-22   1.433184e-19
+chr7:141447631-141447707/+/Rplp2       2.061762e-21   1.926879e-18
+chr7:141447908-141448616/+/Rplp2       5.475984e-22   5.402058e-19
+chr8:69901542-69901732/-/Ndufa13       1.712345e-20   1.447910e-17
+chr8:70513396-70514168/-/Kxd1          4.969812e-13   1.918455e-10
+chr8:70510338-70510379/-/Uba52         1.260246e-15   6.581820e-13
+chr8:70510338-70510581/-/Uba52         5.268317e-18   3.341054e-15
+chr8:120672725-120672892/+/Cox4i1      1.052516e-30   2.491937e-27
+chr8:120672590-120672892/+/Cox4i1      5.870192e-30   1.296330e-26
+chr8:120672729-120672892/+/Cox4i1      1.845155e-29   3.478134e-26
+chr9:20642878-20644893/+/Ubl5          2.837192e-10   7.575943e-08
+chr9:44920610-44920742/-/Atp5l         3.851875e-29   6.839775e-26
+chr9:49517278-49517582/-/Ncam1         5.942569e-14   2.512433e-11
+chr9:79759640-79759853/-/Cox7a2        1.200387e-26   1.578909e-23
+chr9:110002746-110005739/+/Map4        5.518309e-12   1.831563e-09
+chr9:112065091-112066022/-/Arpp21      1.243297e-13   5.075224e-11
+chr9:112065234-112066022/-/Arpp21      5.272313e-13   2.013343e-10
+chr9:112065236-112066022/-/Arpp21      2.322081e-13   9.162931e-11
+chr9:112065258-112066022/-/Arpp21      2.971857e-11   8.795210e-09
+chr9:112065260-112066022/-/Arpp21      1.073621e-10   3.074885e-08
+chrX:20859979-20860519/+/Araf          5.288585e-11   1.526982e-08
+chrX:20859979-20860497/+/Araf          1.205603e-10   3.398079e-08
+chrX:106015700-106015870/+/Cox7b       1.061406e-12   3.846404e-10
+chrX:106015716-106015870/+/Cox7b       5.771373e-16   3.153301e-13
+chrX:152193866-152194601/+/Iqsec2      1.324334e-20   1.147131e-17
+chrX:163926903-163929546/+/Ap1s2       7.379749e-19   5.348661e-16</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SpatialFeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr11:30106785-30109152/-/Sptbn1"</span>,<span class="st">"Sptbn1"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SpatialFeaturePlot can display the results on any individual slice</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">SpatialFeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr11:30106785-30109152/-/Sptbn1"</span>,<span class="st">"Sptbn1"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1122,12 +1999,15 @@ chrX:163926903-163929546/+/Ap1s2       4.363259e-10</code></pre>
 </div>
 </div>
 </div>
+<div id="page-nav-container">
+
+</div>
+<script src="navigation.js"></script>
+
 
 </section>
 
-<div id="page-nav-container"></div>
-<script src="navigation.js"></script>
-</main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1541,18 +2421,9 @@ chrX:163926903-163929546/+/Ap1s2       4.363259e-10</code></pre>
     }
   });
   </script>
-<nav class="page-navigation column-body">
-  <div class="nav-page nav-page-previous">
-      <a href="./Yano_anno.html" class="pagination-link" aria-label="Annotating genetic variants">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Annotating genetic variants</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="./Yano_trajectory.html" class="pagination-link" aria-label="Cell trajectory analysis">
-        <span class="nav-page-text">Cell trajectory analysis</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
+
+
+
 
 </body></html>

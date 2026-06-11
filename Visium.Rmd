@@ -124,6 +124,8 @@ cd ../../..
 This section will perform Seurat pipeline for all the sections. A Seurat workflow for one section can be found here https://satijalab.org/seurat/articles/spatial_vignette. The difference between this workflow with Seurat's is we use counts generated from PISA, while Seurat use counts generated with CellRanger's pipeline. For the details of different between PISA and CellRanger, please see our [manual](https://shiquan.github.io/PISA.html#difference-in-alignment-annotation-between-pisa-and-cellranger).
 
 ```{r warning=FALSE, fig.width=12, fig.height=5}
+require(Seurat)
+require(dplyr)
 require(Yano)
 
 exp.1 <- ReadPISA("./visium/section1/Anterior/exp/", prefix = "sec1_ant_")
@@ -187,7 +189,7 @@ obj <- RunSDT(obj, bind.name = "gene_name", bind.assay = "RNA")
 
 FbtPlot(obj, val = "gene_name.padj")
 
-obj[['exon']][[]] %>% filter(gene_name.pval<1e-40)
+obj[['exon']][[]] %>% filter(gene_name.padj<1e-5)
 ```
 ```{r warning=FALSE, fig.width=15, fig.height=8}
 SpatialPlot(obj, features = c("chr11:53548291-53549565/+/Sept8","Sept8"), pt.size.factor = 2)
@@ -221,16 +223,20 @@ TrackPlot(bamfile = bamfiles, cell.group = cell.list1, gtf = gtf, gene = "Sept8"
 ```
 
 ## Optional: Build cell-cell weight matrix by spatial coordinates
-We previously used PCA to construct the cell weight matrix, but for spatial transcriptomics data, it is also possible to use the spatial coordinates, the real spot-to-spot distances, to build the weight matrix. Here, we demonstrate how to do this. Note that if we use spatial coordinates, the analysis can only be performed within a single slice.
+We previously used PCA to construct the cell weight matrix, but for spatial transcriptomics data, it is also possible to use the spatial coordinates, the real spot-to-spot distances, to build the weight matrix. Here, we demonstrate how to do this.
+
+Starting from the latest version, Yano supports building the weight matrix from **multiple slices simultaneously**. When multiple image names are passed to `RunAutoCorr()`, `GetWeightsFromSpatial()` computes the spatial weight matrix for each image individually and then merges them into a single combined weight matrix via `mergeMatrix()`. This allows the spatial correlation analysis to leverage all slices together without needing to subset or analyze each slice separately.
 
 ```{r warning=FALSE, fig.width=12, fig.height=5}
-obj <- subset(obj, orig.ident == "sec1_ant")
-obj <- RunAutoCorr(obj, image = "slice1")
+# Use spatial coordinates from all four slices
+obj <- RunAutoCorr(obj, image = c("slice1", "slice2", "slice3", "slice4"))
 grep("_wm", names(obj), value=TRUE)
 
 obj <- RunSDT(obj, bind.name = "gene_name", bind.assay = "RNA", wm.name = "spatial_wm")
 FbtPlot(obj, val = "gene_name.padj")
 Meta(obj) %>% filter(gene_name.padj<1e-7)
+
+# SpatialFeaturePlot can display the results on any individual slice
 SpatialFeaturePlot(obj, features = c("chr11:30106785-30109152/-/Sptbn1","Sptbn1"))
 ```
 
