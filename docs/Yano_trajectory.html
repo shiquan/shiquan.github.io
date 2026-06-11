@@ -121,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -286,8 +286,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+          <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./fastq.html"> 
+<span class="menu-text">FASTQ+</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./PISA.html"> 
+<span class="menu-text">PISA</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Yano.html"> 
+<span class="menu-text">Yano</span></a>
+  </li>  
+</ul>
+          <div class="quarto-navbar-tools">
+    <div class="dropdown">
+      <a href="" title="GitHub" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="GitHub"><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/shiquan">
+            My GitHub Page
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/shiquan/Yano/discussions">
+            Discussions
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
@@ -480,7 +523,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Run autocorrelation test for 72346 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 6.733797 secs</code></pre>
+<pre><code>Runtime : 6.79003 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>69085 autocorrelated features.</code></pre>
@@ -511,7 +554,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Using 95 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 22.82589 secs.</code></pre>
+<pre><code>Runtime : 22.63287 secs.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj.sel) <span class="ot">&lt;-</span> <span class="st">"junction"</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj.sel)</span>
@@ -527,7 +570,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Run autocorrelation test for 7583 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 0.7261317 secs</code></pre>
+<pre><code>Runtime : 0.802388 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>7350 autocorrelated features.</code></pre>
@@ -558,7 +601,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Using 95 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 3.234451 secs.</code></pre>
+<pre><code>Runtime : 3.190289 secs.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj.sel, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exon"</span>, <span class="st">"junction"</span>), <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">color.by =</span> <span class="st">"assay"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -664,7 +707,7 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Run autocorrelation test for 72346 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 6.476831 secs</code></pre>
+<pre><code>Runtime : 6.730985 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>60820 autocorrelated features.</code></pre>
@@ -695,7 +738,7 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Using 95 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 24.26315 secs.</code></pre>
+<pre><code>Runtime : 24.24363 secs.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj.sel) <span class="ot">&lt;-</span> <span class="st">"junction"</span></span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>obj.sel <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj.sel, <span class="at">reduction =</span> <span class="st">"ccc"</span>, <span class="at">wm.name =</span> <span class="st">"ccc_wm"</span>, <span class="at">dims=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -706,7 +749,7 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Run autocorrelation test for 7583 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 0.7895007 secs</code></pre>
+<pre><code>Runtime : 0.7960961 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>6884 autocorrelated features.</code></pre>
@@ -737,7 +780,7 @@ d1-rep1-AGGGTGAAGATATGCA-1 0.24597679 -0.02650419</code></pre>
 <pre><code>Using 95 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 3.687138 secs.</code></pre>
+<pre><code>Runtime : 3.720469 secs.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj.sel, <span class="at">val =</span> <span class="st">"ccc.padj"</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exon"</span>, <span class="st">"junction"</span>), <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">color.by =</span> <span class="st">"assay"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -772,9 +815,9 @@ assay instead</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./Homo_sapiens.GRCh38.114.chr.gtf.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2026-06-11 13:26:00] GTF loading..
-[2026-06-11 13:26:36] Load 78686 genes.
-[2026-06-11 13:26:36] Load time : 35.506 sec</code></pre>
+<pre><code>[2026-06-11 14:17:16] GTF loading..
+[2026-06-11 14:17:52] Load 78686 genes.
+[2026-06-11 14:17:52] Load time : 35.605 sec</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>bamfiles <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">rep1 =</span> <span class="st">"./donor1_rep1.bam"</span>, <span class="at">rep2 =</span> <span class="st">"./donor1_rep2.bam"</span>)</span>
 <span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>cell.list <span class="ot">&lt;-</span> <span class="fu">split</span>(obj.sel<span class="sc">$</span>Phase, obj.sel<span class="sc">$</span>replicate)</span>
