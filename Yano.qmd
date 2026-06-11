@@ -66,12 +66,36 @@ See short cases for more details.
 - [Perform alternative splicing analysis for cell trajectory and user-defined embeddings](Yano_trajectory.Rmd)
 
 ## Changelog
+
+<details>
+<summary>1.4 2026/06/11</summary>
+
+* New functions: `GetWeightsFromCoords()`, `GetWeightsFromSNN()` for flexible weight matrix construction.
+* Improve `TrackPlot()` highlight continuity and y-axis label readability.
+* Harden `weights.R` with input validation and boundary checking.
+* Update LICENSE to Yano authors (2023–2026).
+
+</details>
+
+<details>
+<summary>1.3 2026/06/05</summary>
+
+* Update citation from *bioRxiv* to *Cell Reports Methods*.
+* Rewrite `D_test_v2` with dense arrays: remove cholmod critical section, improved performance.
+* New functions: `GetWeightsFromSpatial()`, `QuickRecipe()`, `QuickRecipe0()`.
+* Remove deprecated functions: `FindDEP()`, `RunDLScore()`.
+* Fix Fisher–Yates shuffle implementation in correlation tests.
+* Add `match.arg` validation for `mode` parameter in `RatioPlot0()` and `RatioPlot()`.
+* Comprehensive C and R bug fixes and code hardening.
+* Build system: downgrade htslib to 1.10.2 for compatibility, add `-fPIC` support.
+
+</details>
+
 <details>
 <summary>1.2 2025/06/18</summary>
 
 * Rename RunBlockCorr to RunSDT.
 * Reimplement core algorithm with sparse matrix structure. Highly improved speed (>3x).
-
 
 </details>
 

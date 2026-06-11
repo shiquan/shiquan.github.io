@@ -404,6 +404,7 @@ window.Quarto = {
   <li><a href="#bam2frag" id="toc-bam2frag">bam2frag</a></li>
   <li><a href="#depth" id="toc-depth">depth</a></li>
   <li><a href="#callept" id="toc-callept">callept</a></li>
+  <li><a href="#bin" id="toc-bin">bin</a></li>
   <li><a href="#count2" id="toc-count2">count2</a></li>
   <li><a href="#mergebed" id="toc-mergebed">mergebed</a></li>
   <li><a href="#annobed" id="toc-annobed">annobed</a></li>
@@ -731,38 +732,42 @@ window.Quarto = {
 <td style="text-align: left;">Call expressed peak tags (EPTs) for RNA library.</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">bin</td>
+<td style="text-align: left;">Count reads per genome window.</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"><strong><em>The following tool used to process fragment file.</em></strong></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">count2</td>
 <td style="text-align: left;">Count peak X cell matrix from fragment file.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"><strong><em>The following tools used to process BED files.</em></strong></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">mergebed</td>
 <td style="text-align: left;">Merge BED files.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">annobed</td>
 <td style="text-align: left;">Annotate BED files with genes and functional elements.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">flatten</td>
 <td style="text-align: left;">Flatten overlapped regions to nonoverlaps.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"><strong><em>The following tools used to process GTF files.</em></strong></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">gtffmt</td>
 <td style="text-align: left;">Format and reorder GTF file.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">gtf2bed</td>
 <td style="text-align: left;">Convert GTF to BED.</td>
 </tr>
@@ -829,7 +834,7 @@ Summary report in csv format.
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a> -report  <span class="co">[</span><span class="ot">csv</span><span class="co">]</span>     Summary report.</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a> -t       <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Threads. <span class="co">[</span><span class="ot">4</span><span class="co">]</span></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a> -order             Keep input order.</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a> -x                 Predefined code for specific library.</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a> -x                 Predefined preset for a specific library kit.</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="ss">          * </span>C4      Library structure for DNBelab C4 RNA kit v1.</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>Notice :</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>-rule accept tag rule STRING to parse input fastq following format "TAG,location,whitelist,corrected TAG,allow mismatch".</span>
@@ -912,7 +917,7 @@ Summary report in csv format.
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a> -script  <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     User defined bash script, process $FQ and generate results to stdout.</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a> -min     <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Mininal reads per block to process.  <span class="co">[</span><span class="ot">2</span><span class="co">]</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a> -keep               Output unprocessed FASTQ+ records.</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a> -fa                 Stream FASTQ output instead of FASTQ.</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a> -fa                 Stream FASTA instead of FASTQ.</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a> -tmpdir</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a> -t                  Threads.</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a> -o       <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     Path to output file.</span>
@@ -1091,7 +1096,7 @@ Summary report in csv format.
 <p>The full options and descriptions list below.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Annotate SAM/BAM records with overlapped function regions. Such as gene, transcript etc.</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>$ PISA anno -bed peak.bed -tag PK -vcf in.vcf.gz -vtag VF -vcf-ss -ref-alt -o anno.bam in.bam</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>$ PISA anno -bed peak.bed -tag PK -vcf in.vcf.gz -vtag VF -ref-alt -o anno.bam in.bam</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>$ PISA anno -gtf genes.gtf -o anno.bam in.bam</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>$ PISA anno -gtf genes.gtf -o anno.bam -sam in.sam</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -1124,30 +1129,34 @@ Summary report in csv format.
 <span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>                       Also generate junction name (chr:exon1_end-exon2_start/<span class="co">[</span><span class="ot">+-</span><span class="co">]</span>/Gene) in JC tag.</span>
 <span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a> -flatten              Split overlapped exons into nonoverlapped bins.</span>
 <span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a> -psi                  Annotate exclude reads tag (ER) for each exon.</span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a> -tss                  Annotate reads start from TSS, designed for capped library. **experiment**</span>
-<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a> -ctag     <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>       Tag name for TSS annotation. Need set with -tss.</span>
-<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>Options for VCF file :</span>
-<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a> -vcf      <span class="co">[</span><span class="ot">VCF/BCF</span><span class="co">]</span>   Varaints file in vcf or bcf format. In default, only annotate alternative alleles.</span>
-<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a> -vtag     <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>       Tag name for variants. Set with -vcf. Default is VR.</span>
-<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a> -ref-alt              Annotate ref allele.</span>
-<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>Notice :</span>
-<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>If input is SAM format, will try to parse the tags in the read name.</span>
-<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>For GTF mode, this program will set tags in default, you could also reset them by -tags.</span>
-<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>   TX : Transcript id.</span>
-<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>   GN : Gene name.</span>
-<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>   GX : Gene ID.</span>
-<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>   RE : Region type, E (exon), N (intron), C (exon and intron), S (junction reads cover isoforms properly), V (ambiguous reads),</span>
-<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>        I (intergenic), A (antisense or antisense exon), B (antisense intron), X (one or more exons are excluded in transcrpit)</span>
-<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>The following tags set with -exon.</span>
-<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a>   EX : Exon name tag.</span>
-<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>   JC : Isoform junction name.</span>
-<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>   FL : Flatten exon name. Only generate it with -flatten.</span>
-<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>The following tags set with -psi.</span>
-<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>   ER : Excluded exons.</span>
-<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>PSI = EX/(EX+ER); EX is the exon tag, which indicate include reads in exon.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a> -vague-edge <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Allow junction reads not precisely aligned to splice sites or gene boundaries.</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>                       Intended for long-read (third-generation) data.</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a> -as                   Annotate antisense reads; gene name saved in AT tag.</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a> -tss                  Annotate reads start from TSS, designed for capped library. **experimental**</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a> -ctag     <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>       Tag name for TSS annotation. Need set with -tss.</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>Options for VCF file :</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a> -vcf      <span class="co">[</span><span class="ot">VCF/BCF</span><span class="co">]</span>   Variants file in vcf or bcf format. In default, only annotate alternative alleles.</span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a> -vtag     <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>       Tag name for variants. Set with -vcf. Default is VR.</span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a> -ref-alt              Annotate ref allele.</span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>Notice :</span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>If input is SAM format, will try to parse the tags in the read name.</span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>For GTF mode, this program will set tags in default, you could also reset them by -tags.</span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>   TX : Transcript id.</span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>   GN : Gene name.</span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>   GX : Gene ID.</span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a>   RE : Region type, E (exon), N (intron), C (exon and intron), S (junction reads cover isoforms properly), V (ambiguous reads),</span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>        I (intergenic), A (antisense or antisense exon), B (antisense intron), X (one or more exons are excluded in transcrpit)</span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>The following tags set with -exon.</span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a>   EX : Exon name tag.</span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>   JC : Isoform junction name.</span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a>   FL : Flatten exon name. Only generate it with -flatten.</span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>The following tags set with -psi.</span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a>   ER : Excluded exons.</span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a>   AT : Gene name on antisense strand (only with -as).</span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>PSI = EX/(EX+ER); EX is the exon tag, which indicate include reads in exon.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="corr" class="level3">
 <h3 class="anchored" data-anchor-id="corr">corr</h3>
@@ -1279,32 +1288,33 @@ Summary report in csv format.
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>Options :</span>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a> -tags/-cb <span class="co">[</span><span class="ot">TAGs</span><span class="co">]</span>     A cell barcode tag or two tags of spatial coordinates for spatial data.</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a> -anno-tag <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>      Annotation tag, gene or peak.</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a> -genome-bin <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>    If genome bin size set, genome bin count matrix will be generated, conflict with -anno-tag and -chr.</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a> -is                  Ignore strand for bin counting.</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a> -chr                 Count chromosome expression level, conflict with -anno-tag and -genome-bin.</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a> -list     <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     Barcode white list, used as column names at matrix. If not set, all barcodes will be count.</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a> -outdir   <span class="co">[</span><span class="ot">DIR</span><span class="co">]</span>      Output matrix in MEX format into this folder.</span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a> -umi      <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>      UMI tag. Count once if more than one record has same UMI in one gene or peak.</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a> -one-hit             Skip if a read hits more than 1 gene or peak.</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a> -q        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Minimal map quality to filter. Default is 20.</span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a> -t        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Threads.</span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a> -ttag     <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>      Region type tag. <span class="co">[</span><span class="ot">RE</span><span class="co">]</span></span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a> -velo                Generate spliced and unspliced matrix files for RNA velocity analysis.</span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a> -ttype    <span class="co">[</span><span class="ot">TYPE</span><span class="co">]</span>     Region type used to count. Set <span class="in">`E,S`</span> to count exon enclosed reads. Set <span class="in">`N,C`</span> to count intron overlapped reads.</span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a> -sample-list <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>  A list of bam files. Each path per line.</span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>Options for Stereoseq:</span>
-<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a> -stereoseq           Stereoseq pipeline pack UMI to hex string. Need set this option to decode UMIs.</span>
-<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a> -spatial-bin <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>   Bin size for spatial coordiate. Can be set if -tags specify spatial coordinates.<span class="co">[</span><span class="ot">1</span><span class="co">]</span></span>
-<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a> -dup                 Do NOT skip duplicate reads.</span>
-<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>Notice :</span>
-<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Region type (RE), which label functional region reads mapped, is annotated by <span class="in">`PISA anno`</span>. Optional -ttype can be set</span>
-<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>   to one of region types(E/S/C/N) or combination to count reads mapped to these functional regions only.</span>
-<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>If you want count from more than one bam file, there are two ways to set the parameter. By seperating bam files with ',' or by</span>
-<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>   setting -sample-list option.</span>
-<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>If -velo set, spliced and unspliced folders will be created at outdir.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a> -anno-tag <span class="co">[</span><span class="ot">TAGs</span><span class="co">]</span>     Annotation tag (gene or peak). With multiple tags, the first</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>                      is counted only when all other tags are present.</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a> -genome-bin <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>    If genome bin size set, genome bin count matrix will be generated, conflict with -anno-tag and -chr.</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a> -is                  Ignore strand for bin counting.</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a> -chr                 Count chromosome expression level, conflict with -anno-tag and -genome-bin.</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a> -list     <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     Barcode white list, used as column names at matrix. If not set, all barcodes will be count.</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a> -outdir   <span class="co">[</span><span class="ot">DIR</span><span class="co">]</span>      Output matrix in MEX format into this folder.</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a> -umi      <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>      UMI tag. Count once if more than one record has same UMI in one gene or peak.</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a> -one-hit             Skip if a read hits more than 1 gene or peak.</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a> -q        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Minimal map quality to filter. Default is 20.</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a> -t        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Threads.</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a> -ttag     <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>      Region type tag. <span class="co">[</span><span class="ot">RE</span><span class="co">]</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a> -velo                Generate spliced and unspliced matrix files for RNA velocity analysis.</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a> -ttype    <span class="co">[</span><span class="ot">TYPE</span><span class="co">]</span>     Region type used to count. Set <span class="in">`E,S`</span> to count exon enclosed reads. Set <span class="in">`N,C`</span> to count intron overlapped reads.</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a> -sample-list <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>  A list of bam files. Each path per line.</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>Options for Stereoseq:</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a> -stereoseq           Stereoseq pipeline pack UMI to hex string. Need set this option to decode UMIs.</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a> -spatial-bin <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>   Bin size for spatial coordiate. Can be set if -tags specify spatial coordinates.<span class="co">[</span><span class="ot">1</span><span class="co">]</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a> -dup                 Do NOT skip duplicate reads.</span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>Notice :</span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Region type (RE), which label functional region reads mapped, is annotated by <span class="in">`PISA anno`</span>. Optional -ttype can be set</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>   to one of region types(E/S/C/N) or combination to count reads mapped to these functional regions only.</span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>If you want count from more than one bam file, there are two ways to set the parameter. By seperating bam files with ',' or by</span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>   setting -sample-list option.</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>If -velo set, spliced and unspliced folders will be created at outdir.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="for-smartseq-user" class="level4">
 <h4 class="anchored" data-anchor-id="for-smartseq-user">For Smartseq user</h4>
 <p>PISA count also support counting gene expression from multiple bam files. Please make sure there is a tag to represent cell id in each bam file. If not set, try to run <code>PISA addtags -str CB:Z:CELLID ...</code> first.</p>
@@ -1395,25 +1405,28 @@ Summary report in csv format.
 <section id="depth" class="level3">
 <h3 class="anchored" data-anchor-id="depth">depth</h3>
 <p>PISA depth generates coverage information for each position of the predefined region(s). The significant difference between PISA depth and samtools depth (<a href="http://www.htslib.org/doc/samtools-depth.html" class="uri">http://www.htslib.org/doc/samtools-depth.html</a>) is that PISA depth use UMI rather than reads. Besides, PISA depth is strand sensitive, and can produce results for target cells.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count coverage depth or unique UMIs for genome locations.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Compute coverage depth or unique UMI count per genomic position.</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>Usage : PISA depth <span class="co">[</span><span class="ot">options</span><span class="co">]</span> sorted.bam <span class="co">[</span><span class="ot">region</span><span class="co">]</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>$ PISA depth -cb CB -umi UB -tags GN -region in.bed -o depth.tsv sorted.bam</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>$ PISA depth -cb CB -umi UB sorted.bam chr1:1-2:+</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>$ PISA depth sorted.bam chr1:1-2</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>$ PISA depth sorted.bam chr1:1-2:+</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>$ PISA depth -tag CB -list cells.txt -umi UB -bed in.bed -o depth.tsv sorted.bam</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>$ PISA depth -tag CB -list cells.txt -umi UB sorted.bam chr1:1-2:+</span>
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>Options : </span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a> -tag      <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>      Tag used for grouping reads.</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a> -list     <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     Candidate list for -tag.</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a> -umi      <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>      UMI tag. If set, only count unique UMIs for each location.</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a> -bed      <span class="co">[</span><span class="ot">BED</span><span class="co">]</span>      Target BED region file. If the strand in column six set, only count reads with the same strand.</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a> -o        <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     Output depth file. <span class="co">[</span><span class="ot">stdout</span><span class="co">]</span>.</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a> -q        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Minimal map quality to filter. <span class="co">[</span><span class="ot">20</span><span class="co">]</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a> -@        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Threads to unpack bam. <span class="co">[</span><span class="ot">4</span><span class="co">]</span></span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>Notice :</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Require sorted and indexed BAM as input.</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Compare with `samtools depth', PISA depth considers UMIs and strand of reads.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>Options :</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a> -tag      <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>      Tag for grouping reads.</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a> -list     <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     Whitelist for -tag.</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a> -umi      <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>      UMI tag. When set, only unique UMIs are counted per position.</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a> -split               Group reads by tag value.</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a> -is                  Ignore strand.</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a> -bed      <span class="co">[</span><span class="ot">BED</span><span class="co">]</span>      Target BED regions.</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a> -o        <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     Output file. <span class="co">[</span><span class="ot">stdout</span><span class="co">]</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a> -q        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Minimum mapping quality threshold. <span class="co">[</span><span class="ot">20</span><span class="co">]</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a> -@        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Threads for BAM decompression. <span class="co">[</span><span class="ot">4</span><span class="co">]</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a> -0                   Also output positions with zero coverage.</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>Notice :</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Requires a coordinate-sorted and indexed BAM as input.</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Unlike samtools depth, PISA depth accounts for UMIs and strand.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="callept" class="level3">
 <h3 class="anchored" data-anchor-id="callept">callept</h3>
@@ -1439,95 +1452,122 @@ Summary report in csv format.
 <span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Compares with <span class="in">`MACS2`</span> and other peak callers, PISA callept considers UMIs and strand of reads.</span>
 <span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>For paired reads, strand of read 2 will be reversed to revert fragment strand.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
+<section id="bin" class="level3">
+<h3 class="anchored" data-anchor-id="bin">bin</h3>
+<p>PISA bin counts reads or fragments per genomic bin, generating binned count matrices across multiple resolutions simultaneously.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count reads or fragments per genomic bin.</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>$ PISA bin -outdir bins sorted.bam</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>$ PISA bin -cb CB -outdir bins sorted.bam</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>$ PISA bin -cb CB -umi UB -outdir bins sorted.bam</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>Options :</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a> -cb       <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>      Cell barcode tag, or two coordinate tags for spatial data.</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a> -umi      <span class="co">[</span><span class="ot">TAG</span><span class="co">]</span>      UMI tag. Each UMI is counted once per bin.</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a> -bins     <span class="co">[</span><span class="ot">SIZES</span><span class="co">]</span>    Comma-separated bin sizes. <span class="co">[</span><span class="ot">"50K,100K,500K,1M"</span><span class="co">]</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a> -list     <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     Barcode whitelist. If not set, all barcodes are counted.</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a> -outdir   <span class="co">[</span><span class="ot">DIR</span><span class="co">]</span>      Output directory for MEX-format count files.</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a> -q        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Minimum mapping quality threshold. <span class="co">[</span><span class="ot">20</span><span class="co">]</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a> -strand              Enable strand-specific counting.</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a> -t        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Threads.</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a> -sample-list <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>  File listing BAM paths with sample names, one per line.</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>Notice :</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Requires coordinate-sorted and indexed BAM as input.</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>Default bin sizes are 50K, 100K, 500K, and 1M. Use -bins to customize.</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>For spatial data, set -cb with two coordinate tags (e.g. Cx,Cy).</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>For multiple samples, use -sample-list to specify BAM paths and sample names.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
 <section id="count2" class="level3">
 <h3 class="anchored" data-anchor-id="count2">count2</h3>
 <p>PISA count generates the MEX format matrix for fragments per peak.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count fragments per peak per cell matrix.</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>$ PISA count2 -bed peaks.bed -t 10 -list barcodes.txt -outdir exp fragments.tsv.gz</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>Options :</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a> -list     <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     Barcode white list, used as column names at matrix. If not set, all barcodes will be count.</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a> -outdir   <span class="co">[</span><span class="ot">DIR</span><span class="co">]</span>      Output matrix in MEX format into this fold.</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a> -prefix   <span class="co">[</span><span class="ot">STR</span><span class="co">]</span>      Prefix of output files.</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a> -t        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Threads.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Count fragments per peak per cell matrix.</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>$ PISA count2 -bed peaks.bed -t 10 -list barcodes.txt -outdir exp fragments.tsv.gz</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>Options :</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a> -list     <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>     Barcode white list, used as column names at matrix. If not set, all barcodes will be count.</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a> -bed      <span class="co">[</span><span class="ot">BED</span><span class="co">]</span>      Peak regions.</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a> -outdir   <span class="co">[</span><span class="ot">DIR</span><span class="co">]</span>      Output matrix in MEX format into this fold.</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a> -prefix   <span class="co">[</span><span class="ot">STR</span><span class="co">]</span>      Prefix of output files.</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a> -t        <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>      Threads.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="mergebed" class="level3">
 <h3 class="anchored" data-anchor-id="mergebed">mergebed</h3>
 <p>Merge overlapped regions by strand and name.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>$ PISA mergebed -o merged.bed sample1.bed sample2.bed</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>$ PISA mergebed -up 500 -down 500 -o flank.bed peaks.bed</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>Options:</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>-o    <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Output bed file.</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>-s              Ignore strand.</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>-up   <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Enlarge regions upstream.</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>-down <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Enlarge regions downstream.</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>-name           Merge regions by bed name.</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>Notice :</span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>This tool accepts 3 columns or 6 columns bed file(s), strand (+/-) is set in column 6.</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>By default, merging is done with respect to strandness unless -s is set.</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>-up/-down is set respect to strandness, so upstream of plus strand is downstream of minus strand.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>$ PISA mergebed -o merged.bed sample1.bed sample2.bed</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>$ PISA mergebed -up 500 -down 500 -o flank.bed peaks.bed</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>Options:</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>-o    <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Output bed file.</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>-s              Ignore strand.</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>-up   <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Enlarge regions upstream.</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>-down <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Enlarge regions downstream.</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>-name           Merge regions by bed name.</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>Notice :</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>This tool accepts 3 columns or 6 columns bed file(s), strand (+/-) is set in column 6.</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>By default, merging is done with respect to strandness unless -s is set.</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>-up/-down is set respect to strandness, so upstream of plus strand is downstream of minus strand.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="annobed" class="level3">
 <h3 class="anchored" data-anchor-id="annobed">annobed</h3>
 <p>Annotate the type of region and output in a BED like file. The region type can be defined into.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>$ PISA annobed -gtf genes.gtf -o anno.bed in.bed</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>Options:</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>-gtf    <span class="co">[</span><span class="ot">GTF</span><span class="co">]</span>     GTF database.</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>-o      <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Output bed file.</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>-report <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Summary report. Export in STDERR by default.</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>-is               Ignore strand.</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>-gene-name        Set annatated gene as bed name (column 4).</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>-skip-chrs        Skip chromosomes if not exist in GTF. Defa</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>-up  <span class="co">[</span><span class="ot">1000</span><span class="co">]</span>         Annotate intergenic regions at upstream of gene.</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>-down  <span class="co">[</span><span class="ot">1000</span><span class="co">]</span>       Annotate intergenic regions at downstream of gene.</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>Output format :</span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>chromosome,start(0based),end(1based),name,score,strand,number of covered genes, cover gene name(s),type,nearest gene name,distance to nearby gene</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>Notice :</span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>This tool accepts 3 columns or 6 columns bed file(s), strand (+/-) is set in column 6.</span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>By default, annotation is done with respect to strandness unless -s is set.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>$ PISA annobed -gtf genes.gtf -o anno.bed in.bed</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>Options:</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>-gtf    <span class="co">[</span><span class="ot">GTF</span><span class="co">]</span>     GTF database.</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>-o      <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Output bed file.</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>-report <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Summary report. Export in STDERR by default.</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>-is               Ignore strand.</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>-gene-name        Set annatated gene as bed name (column 4).</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>-skip-chrs        Skip chromosomes if not exist in GTF. Defa</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>-up  <span class="co">[</span><span class="ot">1000</span><span class="co">]</span>         Annotate intergenic regions at upstream of gene.</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>-down  <span class="co">[</span><span class="ot">1000</span><span class="co">]</span>       Annotate intergenic regions at downstream of gene.</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>Output format :</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>chromosome,start(0based),end(1based),name,score,strand,number of covered genes, cover gene name(s),type,nearest gene name,distance to nearby gene</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>Notice :</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>This tool accepts 3 columns or 6 columns bed file(s), strand (+/-) is set in column 6.</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="ss"> * </span>By default, annotation is done with respect to strandness unless -s is set.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="flatten" class="level3">
 <h3 class="anchored" data-anchor-id="flatten">flatten</h3>
 <p>Convert overlapped into flatten records. If strand exist, the flatten records will be strand sensitive.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>$ PISA flatten -o flatten.bed overlapped.bed</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>Options:</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>-o    <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Output bed file.</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>For example:</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>reg1 ===========</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>reg2       ===========</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>flattening of regions:</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>reg1 ======</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>reg2       =====</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>reg3            ======</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>$ PISA flatten -o flatten.bed overlapped.bed</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>Options:</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>-o    <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Output bed file.</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>For example:</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>reg1 ===========</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>reg2       ===========</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>flattening of regions:</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>reg1 ======</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>reg2       =====</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>reg3            ======</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="gtffmt" class="level3">
 <h3 class="anchored" data-anchor-id="gtffmt">gtffmt</h3>
 <p>Format and reorder GTF records.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>$ PISA gtffmt in.gtf</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>Options:</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a> -o      <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Output GTF file</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a> -f                Only export gene, transcript, exon and CDS records.</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a> -key    <span class="co">[</span><span class="ot">all</span><span class="co">]</span>     Export selected keys in optional fields.</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a> -report <span class="co">[</span><span class="ot">stderr</span><span class="co">]</span>  Summary report file.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>$ PISA gtffmt in.gtf</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>Options:</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a> -o      <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Output GTF file</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a> -f                Only export gene, transcript, exon and CDS records.</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a> -key    <span class="co">[</span><span class="ot">all</span><span class="co">]</span>     Export selected keys in optional fields.</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a> -report <span class="co">[</span><span class="ot">stderr</span><span class="co">]</span>  Summary report file.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="gtf2bed" class="level3">
 <h3 class="anchored" data-anchor-id="gtf2bed">gtf2bed</h3>
 <p>Convert GTF file to BED format.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>$ PISA gtf2bed -o merged.bed in.gtf.gz</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>Options:</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  -o    <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>                          Output bed file.</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  -type <span class="co">[</span><span class="ot">gene|transcript|exon</span><span class="co">]</span>          Covert to bed.</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  -name <span class="co">[</span><span class="ot">none|gene|transcript|exon</span><span class="co">]</span>     Set name for bed.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>$ PISA gtf2bed -o merged.bed in.gtf.gz</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>Options:</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  -o    <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>                          Output bed file.</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  -type <span class="co">[</span><span class="ot">gene|transcript|exon</span><span class="co">]</span>          Covert to bed.</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  -name <span class="co">[</span><span class="ot">none|gene|transcript|exon</span><span class="co">]</span>     Set name for bed.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="deprecated-commands" class="level2">
@@ -1535,37 +1575,39 @@ Summary report in csv format.
 <section id="parse0" class="level3">
 <h3 class="anchored" data-anchor-id="parse0">parse0</h3>
 <p>Since v1.0, the old parse tool has been replaced by parse2, and renamed to parse0 for backup purposes. Due to its lower performance compared to parse, parse0 will be deleted from v2 onwards. The parse0 tool requires a configuration file to describe the library structure, including cell barcode locations, UMI locations, and tag names. Additionally, it generates various quality control reports and outputs cell barcode distributions to stdout. Below is the complete options list and a general workflow for filtering and counting reads.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>$ PISA parse -config read_struct.json -report fastq.csv -cbdis cell_dist.tsv \</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>          -1 out.fq lane1_1.fq.gz,lane02_1.fq.gz  lane1_2.fq.gz,lane2_2.fq.gz</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>Options :</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a> -1       <span class="co">[</span><span class="ot">fastq</span><span class="co">]</span>   Read 1 output. Default is stdout.</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a> -2       <span class="co">[</span><span class="ot">fastq</span><span class="co">]</span>   Read 2 output.</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a> -config  <span class="co">[</span><span class="ot">json</span><span class="co">]</span>    Read structure configure file in JSON format. Required.</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a> -run     <span class="co">[</span><span class="ot">string</span><span class="co">]</span>  Run code, used for different library.</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a> -cbdis   <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Read count per cell barcode.</span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a> -p                 Read 1 and read 2 interleaved in the input file.</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a> -q       <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Drop reads if average sequencing quality below this value.</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a> -dropN             Drop reads if N base in sequence or barcode.</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a> -report  <span class="co">[</span><span class="ot">csv</span><span class="co">]</span>     Summary report.</span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a> -t       <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Threads. <span class="co">[</span><span class="ot">4</span><span class="co">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>$ PISA parse -config read_struct.json -report fastq.csv -cbdis cell_dist.tsv \</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>          -1 out.fq lane1_1.fq.gz,lane02_1.fq.gz  lane1_2.fq.gz,lane2_2.fq.gz</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>Options :</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a> -1       <span class="co">[</span><span class="ot">fastq</span><span class="co">]</span>   Read 1 output. Default is stdout.</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a> -2       <span class="co">[</span><span class="ot">fastq</span><span class="co">]</span>   Read 2 output.</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a> -config  <span class="co">[</span><span class="ot">json</span><span class="co">]</span>    Read structure configure file in JSON format. Required.</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a> -run     <span class="co">[</span><span class="ot">string</span><span class="co">]</span>  Platform preset code for specific library kit.</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a> -cbdis   <span class="co">[</span><span class="ot">FILE</span><span class="co">]</span>    Read count per cell barcode.</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a> -p                 Read 1 and read 2 interleaved in the input file.</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a> -q       <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Drop reads if average sequencing quality below this value.</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a> -dropN             Drop reads if N base in sequence or barcode.</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a> -report  <span class="co">[</span><span class="ot">csv</span><span class="co">]</span>     Summary report.</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a> -t       <span class="co">[</span><span class="ot">INT</span><span class="co">]</span>     Threads. <span class="co">[</span><span class="ot">4</span><span class="co">]</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a> -dist    1|2|3     Distance scoring method: 1=Hamming, 2=Levenshtein, 3=both.</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>                    With 3, Hamming is tried first; on no match, Levenshtein is used.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>-config requires a JSON file to tell software the locations of cell barcodes and/or UMIs. An example configured file can be found at demo/demo.json.</p>
 <div class="framed">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    "cell barcode tag":"CB",  </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    "cell barcode":[</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>            "location":"R1:1-16" # the location is 1 based</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    "UMI tag":"UR",</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    "UMI":{</span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>        "location":"R1:17-28",</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    "read 1":{</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>        "location":"R2:1-91",</span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    "cell barcode tag":"CB",  </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    "cell barcode":[</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>            "location":"R1:1-16" # the location is 1 based</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    "UMI tag":"UR",</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    "UMI":{</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>        "location":"R1:17-28",</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    "read 1":{</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>        "location":"R2:1-91",</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Option -report can specify a quality control report in CSV format. Here is the explanation of each term in this file.</p>
 <div class="center">
@@ -1625,7 +1667,7 @@ Summary report in csv format.
 </table>
 </div>
 <p>Here is an example to parse barcodes and reads with a predefined configure JSON file, the test files can be found at demo directory.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>$ PISA parse0 -config demo/demo.json -report demo/parse.csv demo/demo_1.fq.gz demo/demo_2.fq.gz &gt; demo/demo.fq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>$ PISA parse0 -config demo/demo.json -report demo/parse.csv demo/demo_1.fq.gz demo/demo_2.fq.gz &gt; demo/demo.fq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="difference-in-alignment-annotation-between-pisa-and-cellranger" class="level2">
@@ -1640,7 +1682,7 @@ Summary report in csv format.
 <summary>
 v1.8 2026/06/03
 </summary>
-<p>Bug fixes, code hardening, and build system improvements assisted by Claude Code+DeepSeek-v4-pro</p>
+<p>Bug fixes, code hardening, and build system improvements. New <code>bin</code> tool for genome-window read counting.</p>
 </details>
 <details>
 <summary>

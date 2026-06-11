@@ -47,7 +47,7 @@ Options :
  -report  [csv]     Summary report.
  -t       [INT]     Threads. [4]
  -order             Keep input order.
- -x                 Predefined code for specific library.
+ -x                 Predefined preset for a specific library kit.
           * C4      Library structure for DNBelab C4 RNA kit v1.
 Notice :
  * -rule accept tag rule STRING to parse input fastq following format "TAG,location,whitelist,corrected TAG,allow mismatch".
@@ -114,7 +114,7 @@ Options :
  -script  [FILE]     User defined bash script, process $FQ and generate results to stdout.
  -min     [INT]      Mininal reads per block to process.  [2]
  -keep               Output unprocessed FASTQ+ records.
- -fa                 Stream FASTQ output instead of FASTQ.
+ -fa                 Stream FASTA instead of FASTQ.
  -tmpdir
  -t                  Threads.
  -o       [FILE]     Path to output file.
@@ -303,7 +303,7 @@ The full options and descriptions list below.
 ```markdown
 # Annotate SAM/BAM records with overlapped function regions. Such as gene, transcript etc.
 
-$ PISA anno -bed peak.bed -tag PK -vcf in.vcf.gz -vtag VF -vcf-ss -ref-alt -o anno.bam in.bam
+$ PISA anno -bed peak.bed -tag PK -vcf in.vcf.gz -vtag VF -ref-alt -o anno.bam in.bam
 $ PISA anno -gtf genes.gtf -o anno.bam in.bam
 $ PISA anno -gtf genes.gtf -o anno.bam -sam in.sam
 
@@ -336,12 +336,15 @@ Options for GTF file :
                        Also generate junction name (chr:exon1_end-exon2_start/[+-]/Gene) in JC tag.
  -flatten              Split overlapped exons into nonoverlapped bins.
  -psi                  Annotate exclude reads tag (ER) for each exon.
+ -vague-edge [INT]     Allow junction reads not precisely aligned to splice sites or gene boundaries.
+                       Intended for long-read (third-generation) data.
 
- -tss                  Annotate reads start from TSS, designed for capped library. **experiment**
+ -as                   Annotate antisense reads; gene name saved in AT tag.
+ -tss                  Annotate reads start from TSS, designed for capped library. **experimental**
  -ctag     [TAG]       Tag name for TSS annotation. Need set with -tss.
 
 Options for VCF file :
- -vcf      [VCF/BCF]   Varaints file in vcf or bcf format. In default, only annotate alternative alleles.
+ -vcf      [VCF/BCF]   Variants file in vcf or bcf format. In default, only annotate alternative alleles.
  -vtag     [TAG]       Tag name for variants. Set with -vcf. Default is VR.
  -ref-alt              Annotate ref allele.
 
@@ -359,6 +362,7 @@ Notice :
    FL : Flatten exon name. Only generate it with -flatten.
  * The following tags set with -psi.
    ER : Excluded exons.
+   AT : Gene name on antisense strand (only with -as).
  * PSI = EX/(EX+ER); EX is the exon tag, which indicate include reads in exon.
 
 ```
@@ -514,7 +518,8 @@ $ PISA count -tags Cx,Cy -anno-tag GN -umi UB -outdir exp -velo aln.bam
 
 Options :
  -tags/-cb [TAGs]     A cell barcode tag or two tags of spatial coordinates for spatial data.
- -anno-tag [TAG]      Annotation tag, gene or peak.
+ -anno-tag [TAGs]     Annotation tag (gene or peak). With multiple tags, the first
+                      is counted only when all other tags are present.
  -genome-bin [INT]    If genome bin size set, genome bin count matrix will be generated, conflict with -anno-tag and -chr.
  -is                  Ignore strand for bin counting.
  -chr                 Count chromosome expression level, conflict with -anno-tag and -genome-bin.
@@ -647,25 +652,28 @@ Options:
 PISA depth generates coverage information for each position of the predefined region(s). The significant difference between PISA depth and samtools depth (<http://www.htslib.org/doc/samtools-depth.html>) is that PISA depth use UMI rather than reads. Besides, PISA depth is strand sensitive, and can produce results for target cells.
 
 ```markdown
-# Count coverage depth or unique UMIs for genome locations.
+# Compute coverage depth or unique UMI count per genomic position.
 
-Usage : PISA depth [options] sorted.bam [region]
+$ PISA depth sorted.bam chr1:1-2
+$ PISA depth sorted.bam chr1:1-2:+
+$ PISA depth -tag CB -list cells.txt -umi UB -bed in.bed -o depth.tsv sorted.bam
+$ PISA depth -tag CB -list cells.txt -umi UB sorted.bam chr1:1-2:+
 
-$ PISA depth -cb CB -umi UB -tags GN -region in.bed -o depth.tsv sorted.bam
-$ PISA depth -cb CB -umi UB sorted.bam chr1:1-2:+
-
-Options : 
- -tag      [TAG]      Tag used for grouping reads.
- -list     [FILE]     Candidate list for -tag.
- -umi      [TAG]      UMI tag. If set, only count unique UMIs for each location.
- -bed      [BED]      Target BED region file. If the strand in column six set, only count reads with the same strand.
- -o        [FILE]     Output depth file. [stdout].
- -q        [INT]      Minimal map quality to filter. [20]
- -@        [INT]      Threads to unpack bam. [4]
+Options :
+ -tag      [TAG]      Tag for grouping reads.
+ -list     [FILE]     Whitelist for -tag.
+ -umi      [TAG]      UMI tag. When set, only unique UMIs are counted per position.
+ -split               Group reads by tag value.
+ -is                  Ignore strand.
+ -bed      [BED]      Target BED regions.
+ -o        [FILE]     Output file. [stdout]
+ -q        [INT]      Minimum mapping quality threshold. [20]
+ -@        [INT]      Threads for BAM decompression. [4]
+ -0                   Also output positions with zero coverage.
 
 Notice :
- * Require sorted and indexed BAM as input.
- * Compare with `samtools depth', PISA depth considers UMIs and strand of reads.
+ * Requires a coordinate-sorted and indexed BAM as input.
+ * Unlike samtools depth, PISA depth accounts for UMIs and strand.
 ```
 
 ### callept
@@ -696,6 +704,35 @@ Notice :
  * For paired reads, strand of read 2 will be reversed to revert fragment strand.
 ```
 
+### bin
+
+PISA bin counts reads or fragments per genomic bin, generating binned count matrices across multiple resolutions simultaneously.
+
+```markdown
+# Count reads or fragments per genomic bin.
+
+$ PISA bin -outdir bins sorted.bam
+$ PISA bin -cb CB -outdir bins sorted.bam
+$ PISA bin -cb CB -umi UB -outdir bins sorted.bam
+
+Options :
+ -cb       [TAG]      Cell barcode tag, or two coordinate tags for spatial data.
+ -umi      [TAG]      UMI tag. Each UMI is counted once per bin.
+ -bins     [SIZES]    Comma-separated bin sizes. ["50K,100K,500K,1M"]
+ -list     [FILE]     Barcode whitelist. If not set, all barcodes are counted.
+ -outdir   [DIR]      Output directory for MEX-format count files.
+ -q        [INT]      Minimum mapping quality threshold. [20]
+ -strand              Enable strand-specific counting.
+ -t        [INT]      Threads.
+ -sample-list [FILE]  File listing BAM paths with sample names, one per line.
+
+Notice :
+ * Requires coordinate-sorted and indexed BAM as input.
+ * Default bin sizes are 50K, 100K, 500K, and 1M. Use -bins to customize.
+ * For spatial data, set -cb with two coordinate tags (e.g. Cx,Cy).
+ * For multiple samples, use -sample-list to specify BAM paths and sample names.
+```
+
 ### count2
 
 PISA count generates the MEX format matrix for fragments per peak.
@@ -707,6 +744,7 @@ $ PISA count2 -bed peaks.bed -t 10 -list barcodes.txt -outdir exp fragments.tsv.
 
 Options :
  -list     [FILE]     Barcode white list, used as column names at matrix. If not set, all barcodes will be count.
+ -bed      [BED]      Peak regions.
  -outdir   [DIR]      Output matrix in MEX format into this fold.
  -prefix   [STR]      Prefix of output files.
  -t        [INT]      Threads.
@@ -818,13 +856,15 @@ Options :
  -1       [fastq]   Read 1 output. Default is stdout.
  -2       [fastq]   Read 2 output.
  -config  [json]    Read structure configure file in JSON format. Required.
- -run     [string]  Run code, used for different library.
+ -run     [string]  Platform preset code for specific library kit.
  -cbdis   [FILE]    Read count per cell barcode.
  -p                 Read 1 and read 2 interleaved in the input file.
  -q       [INT]     Drop reads if average sequencing quality below this value.
  -dropN             Drop reads if N base in sequence or barcode.
  -report  [csv]     Summary report.
  -t       [INT]     Threads. [4]
+ -dist    1|2|3     Distance scoring method: 1=Hamming, 2=Levenshtein, 3=both.
+                    With 3, Hamming is tried first; on no match, Levenshtein is used.
 ```
 
 -config requires a JSON file to tell software the locations of cell barcodes and/or UMIs. An example configured file can be found at demo/demo.json.

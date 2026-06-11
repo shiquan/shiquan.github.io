@@ -254,6 +254,7 @@ GTCCTTTGATCAGTATAATTTTTTAAAGTTACTTTGTCA *   NM:i:1  ms:i:436    AS:i:436    nn:i
 | depth    | Coverage depth/UMI for target regions.                            |
 | addtags  | Add tag string to BAM alignments.                                 |
 | callept  | Call expressed peak tags (EPTs) for RNA library.                  |
+| bin      | Count reads per genome window.                                    |
 |          | ***The following tool used to process fragment file.***           |
 | count2   | Count peak X cell matrix from fragment file.                      |
 |          | ***The following tools used to process BED files.***              |
@@ -282,7 +283,7 @@ For more information on CellRanger's counting strategy, you can refer to the off
 
 <summary>v1.8 2026/06/03</summary>
 
-Bug fixes, code hardening, and build system improvements assisted by Claude Code+DeepSeek-v4-pro
+Bug fixes, code hardening, and build system improvements. New `bin` tool for genome-window read counting.
 
 </details>
 
