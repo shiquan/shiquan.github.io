@@ -87,18 +87,18 @@ FbtPlot(obj, val = "gene_name.padj", remove.chr = TRUE, sel.chrs = sel.chrs)
 obj[['exon']][[]] %>% filter(gene_name.padj < 1e-5) %>% DT::datatable() 
 
 # Random select a gene and its exons and visulize with FeaturePlot.
-FeaturePlot(obj, features = c("chr15:43801711-43804427/+/SERF2", "SERF2"), ncol=2)
+FeaturePlot(obj, features = c("chr11:65499689-65499982/+/MALAT1", "MALAT1"), ncol=2)
 
 # The default color and parameters perhaps not easily to tell the difference between exon and its binding gene expression. Let's change the scaled colors and enlarge point size and order by expression.
 require(RColorBrewer)
-FeaturePlot(obj, features = c("chr15:43801711-43804427/+/SERF2", "SERF2"), ncol=2, order = TRUE, pt.size=1) & scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
+FeaturePlot(obj, features = c("chr11:65499689-65499982/+/MALAT1", "MALAT1"), ncol=2, order = TRUE, pt.size=1) & scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
 ```
-The `RatioPlot` function maps the ratio of exon expression to gene expression on the UMAP. SERF2 is lowly expressed in some cell groups, while the exon chr15:43801711-43804427/+/SERF2 shows a higher ratio in those same groups.
+The `RatioPlot` function maps the ratio of exon expression to gene expression on the UMAP. MALAT1 is lowly expressed in some cell groups, while the exon chr11:65499689-65499982/+/MALAT1 shows a higher ratio in those same groups.
 ```{r}
-RatioPlot(obj, features = c("chr15:43801711-43804427/+/SERF2"), assay = 'exon', bind.assay = 'RNA', bind.name = "gene_name", order = TRUE, pt.size=1) 
+RatioPlot(obj, features = c("chr11:65499689-65499982/+/MALAT1"), assay = 'exon', bind.assay = 'RNA', bind.name = "gene_name", order = TRUE, pt.size=1)
 ```
 
-In the plots above, the exon lacks a strong expression pattern across cell groups, while the gene SERF2 is highly expressed in most groups except a few. This inconsistency between exon and gene expression may indicate differential exon usage. Next we generate a track plot to inspect read coverage for the exon and gene body.
+In the plots above, the exon lacks a strong expression pattern across cell groups, while the gene MALAT1 is highly expressed in most groups except a few. This inconsistency between exon and gene expression may indicate differential exon usage. Next we generate a track plot to inspect read coverage for the exon and gene body.
 
 Yano loads gene locations from a GTF file rather than Bioconductor databases (e.g., `org.Hs.eg.db`). This avoids inconsistencies from differing annotation versions across sources. We recommend using the same GTF file throughout your project. The `gtf2db` function loads a GTF file into memory.
 ```{r}
@@ -108,12 +108,12 @@ gtf <- gtf2db("./gencode.v44.annotation.gtf.gz")
 The track plot shows read coverage per cell group, specified by `cell.group`. Unlike IGV which uses read depth, this plot shows UMI depth. The cell barcode and UMI tags default to "CB" and "UB" (`cell.tag` and `umi.tag`). For each cell group, UMI depth is normalized by the number of cells, so the tracks are directly comparable across groups. If `cell.group` is not set, raw UMI depth per location is shown.
 
 ```{r message=FALSE, fig.width=12, fig.height=8}
-TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "SERF2", cell.group = Idents(obj), highlights = c(43801711,43804427) )
+TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "MALAT1", cell.group = Idents(obj), highlights = c(65499689,65499982) )
 ```
-In the track plot, an exon around position 43,794,000 dominates SERF2 expression and is highly expressed across many cell groups. The highlighted exon chr15:43801711-43804427/+/SERF2 is barely visible at the default scale. Setting `max.depth = 2` caps the depth and setting `display.genes = "SERF2"` filters to the gene of interest, making low-expressed exons visible. The highlighted exon now shows a distinct expression pattern from the gene SERF2.
+In the track plot, an exon around position 65,500,000 dominates MALAT1 expression and is highly expressed across many cell groups. The highlighted exon chr11:65499689-65499982/+/MALAT1 is barely visible at the default scale. Setting `max.depth = 2` caps the depth and setting `display.genes = "MALAT1"` filters to the gene of interest, making low-expressed exons visible. The highlighted exon now shows a distinct expression pattern from the gene MALAT1.
 
 ```{r message=FALSE, fig.width=12, fig.height=8}
-TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "SERF2", cell.group = Idents(obj), highlights = c(43801711,43804427), max.depth = 2, display.genes = "SERF2")
+TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "MALAT1", cell.group = Idents(obj), highlights = c(65499689,65499982), max.depth = 2, display.genes = "MALAT1")
 ```
 
 ## 3. Load junction assay
