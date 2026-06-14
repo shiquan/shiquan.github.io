@@ -505,7 +505,7 @@ Attaching package: 'dplyr'</code></pre>
 <pre><code>Run autocorrelation test for 117195 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 12.34947 secs</code></pre>
+<pre><code>Runtime : 12.50874 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>71358 autocorrelated features.</code></pre>
@@ -539,7 +539,7 @@ Attaching package: 'dplyr'</code></pre>
 <pre><code>Using 95 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 16.48414 secs.</code></pre>
+<pre><code>Runtime : 16.80966 secs.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now p values and adjusted p values have been generated</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(obj[[<span class="st">'exon'</span>]][[]]) <span class="sc">%&gt;%</span> DT<span class="sc">::</span><span class="fu">datatable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -616,14 +616,14 @@ Adding another scale for colour, which will replace the existing scale.</code></
 </div>
 </div>
 </div>
-<p>In the plots above, the exon lacks a strong expression pattern across cell groups, while the gene TPM4 is highly expressed in most groups except a few. This inconsistency between exon and gene expression may indicate differential exon usage. Next we generate a track plot to inspect read coverage for the exon and gene body.</p>
+<p>In the plots above, the inconsistency between exon and gene expression may indicate differential exon usage. Next we generate a track plot to inspect read coverage for the exon and gene body.</p>
 <p>Yano loads gene locations from a GTF file rather than Bioconductor databases (e.g., <code>org.Hs.eg.db</code>). This avoids inconsistencies from differing annotation versions across sources. We recommend using the same GTF file throughout your project. The <code>gtf2db</code> function loads a GTF file into memory.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2026-06-14 18:57:52] GTF loading..
-[2026-06-14 18:58:21] Load 62700 genes.
-[2026-06-14 18:58:21] Load time : 28.878 sec</code></pre>
+<pre><code>[2026-06-14 20:09:07] GTF loading..
+[2026-06-14 20:09:37] Load 62700 genes.
+[2026-06-14 20:09:37] Load time : 29.586 sec</code></pre>
 </div>
 </div>
 <p>The track plot shows read coverage per cell group, specified by <code>cell.group</code>. Unlike IGV which uses read depth, this plot shows UMI depth. The cell barcode and UMI tags default to “CB” and “UB” (<code>cell.tag</code> and <code>umi.tag</code>). For each cell group, UMI depth is normalized by the number of cells, so the tracks are directly comparable across groups. If <code>cell.group</code> is not set, raw UMI depth per location is shown.</p>
@@ -668,7 +668,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Run autocorrelation test for 14754 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.101733 secs</code></pre>
+<pre><code>Runtime : 1.13823 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>7505 autocorrelated features.</code></pre>
@@ -705,7 +705,7 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Using 95 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 2.171216 secs.</code></pre>
+<pre><code>Runtime : 2.258712 secs.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">remove.chr=</span><span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
