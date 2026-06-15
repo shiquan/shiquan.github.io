@@ -422,16 +422,36 @@ Attaching package: 'dplyr'</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: Yano</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"glioblastoma5k.rds"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"hg38.110.ncbiRefSeq.gtf.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[2026-06-11 14:51:21] GTF loading..
-[2026-06-11 14:51:37] Load 66991 genes.
-[2026-06-11 14:51:37] Load time : 15.635 sec</code></pre>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: failed to assign RegisteredNativeSymbol for anno_conseq to anno_conseq
+since anno_conseq is already defined in the 'Yano' namespace</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"var"</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">annoVAR</span>(obj, <span class="at">gtf =</span> gtf, <span class="at">fasta =</span> <span class="st">"./GRCh38.p13.genome.fa"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: failed to assign RegisteredNativeSymbol for anno_gene to anno_gene
+since anno_gene is already defined in the 'Yano' namespace</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: failed to assign RegisteredNativeSymbol for anno_vcf to anno_vcf since
+anno_vcf is already defined in the 'Yano' namespace</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: failed to assign RegisteredNativeSymbol for gtf2db to gtf2db since
+gtf2db is already defined in the 'Yano' namespace</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: failed to assign RegisteredNativeSymbol for lognorm to lognorm since
+lognorm is already defined in the 'Yano' namespace</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"glioblastoma5k.rds"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"hg38.110.ncbiRefSeq.gtf.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[2026-06-15 14:43:12] GTF loading..
+[2026-06-15 14:43:28] Load 66991 genes.
+[2026-06-15 14:43:28] Load time : 16.000 sec</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"var"</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">annoVAR</span>(obj, <span class="at">gtf =</span> gtf, <span class="at">fasta =</span> <span class="st">"./GRCh38.p13.genome.fa"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>CDS region of transcript NM_001261418.2 cannot translate to codons properly.
 CDS region of transcript XM_047433500.1 cannot translate to codons properly.
@@ -496,8 +516,8 @@ CDS region of transcript rna-ND4 cannot translate to codons properly.
 [warnings] Chromosome GL000218.1 not found in GTF, use wrong database? 
 [warnings] Chromosome KI270713.1 not found in GTF, use wrong database? </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="ot">-&gt;</span> df</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="ot">-&gt;</span> df</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  chr  start ref alt strand         locus gene_name type
 chr1:633192G=/+  chr1 633192   G   G      + chr1:633192/+  MTCO2P12 utr5
@@ -521,7 +541,7 @@ chr1:944296G&gt;A/-         NA         NA           utr3
 chr1:944296G&gt;A/+         NA         NA           utr3
 chr1:944307T&gt;C/+         NA         NA           utr3</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>consequence)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>consequence)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 antisense_downstream_1K          antisense_exon        antisense_intron 
@@ -541,7 +561,7 @@ antisense_downstream_1K          antisense_exon        antisense_intron
             upstream_1K                    utr3                    utr5 
                     174                    4991                     620 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(df, consequence <span class="sc">%in%</span> <span class="st">"stop_gained"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(df, consequence <span class="sc">%in%</span> <span class="st">"stop_gained"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      chr     start ref alt strand            locus gene_name
 chr11:62602409G&gt;A/- chr11  62602409   G   A      - chr11:62602409/-      EML3
@@ -567,20 +587,8 @@ chr7:74732529C&gt;T/+  0.1840882 -2.215475 0.01450941  0.4377365 stop_gained</co
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs, <span class="at">col.by =</span> <span class="st">"consequence"</span>, <span class="at">pt.size =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
-ℹ Please use the `linewidth` argument instead.
-ℹ The deprecated feature was likely used in the Yano package.
-  Please report the issue to the authors.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The `size` argument of `element_rect()` is deprecated as of ggplot2 3.4.0.
-ℹ Please use the `linewidth` argument instead.
-ℹ The deprecated feature was likely used in the Yano package.
-  Please report the issue to the authors.</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sel.chrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="st">"X"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"locus.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs, <span class="at">col.by =</span> <span class="st">"consequence"</span>, <span class="at">pt.size =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -594,14 +602,14 @@ chr7:74732529C&gt;T/+  0.1840882 -2.215475 0.01450941  0.4377365 stop_gained</co
 <section id="annotate-genetic-variants-with-publish-databases" class="level2">
 <h2 class="anchored" data-anchor-id="annotate-genetic-variants-with-publish-databases">2. Annotate genetic variants with publish databases</h2>
 <p>Another key advancement in genetic variant studies is the ability to perform annotation using genotype-phenotype and allele frequency databases. For demonstration purposes, we use the <a href="https://www.ncbi.nlm.nih.gov/clinvar/">ClinVar</a> database for annotation in this vignette.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the database in VCF format</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-c</span>  https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># remember to index this database, otherwise annoVAR will report an error.</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> index clinvar.vcf.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the database in VCF format</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-c</span>  https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># remember to index this database, otherwise annoVAR will report an error.</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> index clinvar.vcf.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Let’s take a look at the format of the ClinVar database. As noted, the chromosome names are in the NCBI style, meaning they do not include the “chr” prefix. Therefore, we need to generate a new column with chromosome names formatted for annotation.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view clinvar.vcf.gz<span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span><span class="kw">|</span> <span class="fu">head</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view clinvar.vcf.gz<span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span><span class="kw">|</span> <span class="fu">head</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1   66926   3385321 AG  A   .   .   ALLELEID=3544463;CLNDISDB=Human_Phenotype_Ontology:HP:0000547,MONDO:MONDO:0019200,MeSH:D012174,MedGen:C0035334,OMIM:268000,OMIM:PS268000,Orphanet:791;CLNDN=Retinitis_pigmentosa;CLNHGVS=NC_000001.11:g.66927del;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Uncertain_significance;CLNSIGSCV=SCV005419006;CLNVC=Deletion;CLNVCSO=SO:0000159;GENEINFO=OR4F5:79501;MC=SO:0001627|intron_variant;ORIGIN=0
 1   69134   2205837 A   G   .   .   ALLELEID=2193183;CLNDISDB=MedGen:CN169374;CLNDN=not_specified;CLNHGVS=NC_000001.11:g.69134A&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Likely_benign;CLNSIGSCV=SCV003526545;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA502008;GENEINFO=OR4F5:79501;MC=SO:0001583|missense_variant;ORIGIN=1
@@ -617,8 +625,8 @@ chr7:74732529C&gt;T/+  0.1840882 -2.215475 0.01450941  0.4377365 stop_gained</co
 </div>
 <p>We need to create new chromosome names that are compatible with the NCBI database format, because chromosome names in the ClinVar database look like ‘1’, ‘2’.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[<span class="st">'chr0'</span>]] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"chr(.*)"</span>,<span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, obj[[<span class="st">'var'</span>]][[]]<span class="sc">$</span>chr)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[<span class="st">'chr0'</span>]] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"chr(.*)"</span>,<span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, obj[[<span class="st">'var'</span>]][[]]<span class="sc">$</span>chr)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="sc">%&gt;%</span> head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  chr  start ref alt strand         locus gene_name type
 chr1:633192G=/+  chr1 633192   G   G      + chr1:633192/+  MTCO2P12 utr5
@@ -642,12 +650,12 @@ chr1:944296G&gt;A/-         NA         NA           utr3    1
 chr1:944296G&gt;A/+         NA         NA           utr3    1
 chr1:944307T&gt;C/+         NA         NA           utr3    1</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># here we annotate RS id and clinical signification for variants, to check the VCF header for all possible tags</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">annoVAR</span>(obj, <span class="at">vcf =</span> <span class="st">"clinvar.vcf.gz"</span>, <span class="at">chr =</span> <span class="st">"chr0"</span>, <span class="at">tags =</span> <span class="fu">c</span>(<span class="st">"RS"</span>, <span class="st">"CLNSIG"</span>))</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The RS id and CLNSIG tag now created</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="ot">-&gt;</span> df</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># here we annotate RS id and clinical signification for variants, to check the VCF header for all possible tags</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">annoVAR</span>(obj, <span class="at">vcf =</span> <span class="st">"clinvar.vcf.gz"</span>, <span class="at">chr =</span> <span class="st">"chr0"</span>, <span class="at">tags =</span> <span class="fu">c</span>(<span class="st">"RS"</span>, <span class="st">"CLNSIG"</span>))</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The RS id and CLNSIG tag now created</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'var'</span>]][[]] <span class="ot">-&gt;</span> df</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  chr  start ref alt strand         locus gene_name type
 chr1:633192G=/+  chr1 633192   G   G      + chr1:633192/+  MTCO2P12 utr5
@@ -671,8 +679,8 @@ chr1:944296G&gt;A/-         NA         NA           utr3    1 &lt;NA&gt;   &lt;N
 chr1:944296G&gt;A/+         NA         NA           utr3    1 &lt;NA&gt;   &lt;NA&gt;
 chr1:944307T&gt;C/+         NA         NA           utr3    1 &lt;NA&gt;   &lt;NA&gt;</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We note that there are several pathogenic variants detected</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df[[<span class="st">'CLNSIG'</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We note that there are several pathogenic variants detected</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df[[<span class="st">'CLNSIG'</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
                                              association 
@@ -710,15 +718,15 @@ Conflicting_classifications_of_pathogenicity|risk_factor
                                   Uncertain_significance 
                                                       31 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(CLNSIG <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'Pathogenic'</span>, <span class="st">'Pathogenic/Likely_pathogenic'</span>, <span class="st">'Pathogenic|risk_factor'</span>)) <span class="sc">%&gt;%</span> DT<span class="sc">::</span><span class="fu">datatable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(CLNSIG <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'Pathogenic'</span>, <span class="st">'Pathogenic/Likely_pathogenic'</span>, <span class="st">'Pathogenic|risk_factor'</span>)) <span class="sc">%&gt;%</span> DT<span class="sc">::</span><span class="fu">datatable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-2fc132cedbb01cf4ff7b" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-2fc132cedbb01cf4ff7b">{"x":{"filter":"none","vertical":false,"data":[["chr1:97450058C=/-","chr1:196690107C=/+","chr13:50945445G=/+","chr13:50945445G&gt;A/+","chr15:92992967C=/+"],["chr1","chr1","chr13","chr13","chr15"],[97450058,196690107,50945445,50945445,92992967],["C","C","G","G","C"],["C","C","G","A","C"],["-","+","+","+","+"],["chr1:97450058/-","chr1:196690107/+","chr13:50945445/+","chr13:50945445/+","chr15:92992967/+"],["DPYD","CFH","RNASEH2B","RNASEH2B","CHD2"],["intron","multigenes","exon","exon","exon"],[0.6067765228972022,7.391636570241987e-156,0.04246920137108477,3.784209121669629e-10,0.6935522661255626],[-0.001651814858185134,0.1122749390965649,0.007144310874728283,0.02683197228621358,-0.002685458014575199],[false,true,false,true,false],[null,0.1100850275791398,null,0.140359340495721,null],[null,1.438835245397657,null,0.2441516572892709,null],[null,0.9233243360834681,null,0.596190680288496,null],[null,0.9999999999999998,null,0.9999999999999998,null],["ref","ref","ref","missense","ref"],["1","1","13","13","15"],["3918290","1061170","75184679","75184679","2272457"],["Pathogenic/Likely_pathogenic","Pathogenic|risk_factor","Pathogenic/Likely_pathogenic","Pathogenic/Likely_pathogenic","Pathogenic"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>chr<\/th>\n      <th>start<\/th>\n      <th>ref<\/th>\n      <th>alt<\/th>\n      <th>strand<\/th>\n      <th>locus<\/th>\n      <th>gene_name<\/th>\n      <th>type<\/th>\n      <th>moransi.pval<\/th>\n      <th>moransi<\/th>\n      <th>autocorr.variable<\/th>\n      <th>locus.D<\/th>\n      <th>locus.t<\/th>\n      <th>locus.pval<\/th>\n      <th>locus.padj<\/th>\n      <th>consequence<\/th>\n      <th>chr0<\/th>\n      <th>RS<\/th>\n      <th>CLNSIG<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,9,10,12,13,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"chr","targets":1},{"name":"start","targets":2},{"name":"ref","targets":3},{"name":"alt","targets":4},{"name":"strand","targets":5},{"name":"locus","targets":6},{"name":"gene_name","targets":7},{"name":"type","targets":8},{"name":"moransi.pval","targets":9},{"name":"moransi","targets":10},{"name":"autocorr.variable","targets":11},{"name":"locus.D","targets":12},{"name":"locus.t","targets":13},{"name":"locus.pval","targets":14},{"name":"locus.padj","targets":15},{"name":"consequence","targets":16},{"name":"chr0","targets":17},{"name":"RS","targets":18},{"name":"CLNSIG","targets":19}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-8055e7b5eeeca54f3f02" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-8055e7b5eeeca54f3f02">{"x":{"filter":"none","vertical":false,"data":[["chr1:97450058C=/-","chr1:196690107C=/+","chr13:50945445G=/+","chr13:50945445G&gt;A/+","chr15:92992967C=/+"],["chr1","chr1","chr13","chr13","chr15"],[97450058,196690107,50945445,50945445,92992967],["C","C","G","G","C"],["C","C","G","A","C"],["-","+","+","+","+"],["chr1:97450058/-","chr1:196690107/+","chr13:50945445/+","chr13:50945445/+","chr15:92992967/+"],["DPYD","CFH","RNASEH2B","RNASEH2B","CHD2"],["intron","multigenes","exon","exon","exon"],[0.6067765228972022,7.391636570241987e-156,0.04246920137108477,3.784209121669629e-10,0.6935522661255626],[-0.001651814858185134,0.1122749390965649,0.007144310874728283,0.02683197228621358,-0.002685458014575199],[false,true,false,true,false],[null,0.1100850275791398,null,0.140359340495721,null],[null,1.438835245397657,null,0.2441516572892709,null],[null,0.9233243360834681,null,0.596190680288496,null],[null,0.9999999999999998,null,0.9999999999999998,null],["ref","ref","ref","missense","ref"],["1","1","13","13","15"],["3918290","1061170","75184679","75184679","2272457"],["Pathogenic/Likely_pathogenic","Pathogenic|risk_factor","Pathogenic/Likely_pathogenic","Pathogenic/Likely_pathogenic","Pathogenic"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>chr<\/th>\n      <th>start<\/th>\n      <th>ref<\/th>\n      <th>alt<\/th>\n      <th>strand<\/th>\n      <th>locus<\/th>\n      <th>gene_name<\/th>\n      <th>type<\/th>\n      <th>moransi.pval<\/th>\n      <th>moransi<\/th>\n      <th>autocorr.variable<\/th>\n      <th>locus.D<\/th>\n      <th>locus.t<\/th>\n      <th>locus.pval<\/th>\n      <th>locus.padj<\/th>\n      <th>consequence<\/th>\n      <th>chr0<\/th>\n      <th>RS<\/th>\n      <th>CLNSIG<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,9,10,12,13,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"chr","targets":1},{"name":"start","targets":2},{"name":"ref","targets":3},{"name":"alt","targets":4},{"name":"strand","targets":5},{"name":"locus","targets":6},{"name":"gene_name","targets":7},{"name":"type","targets":8},{"name":"moransi.pval","targets":9},{"name":"moransi","targets":10},{"name":"autocorr.variable","targets":11},{"name":"locus.D","targets":12},{"name":"locus.t","targets":13},{"name":"locus.pval","targets":14},{"name":"locus.padj","targets":15},{"name":"consequence","targets":16},{"name":"chr0","targets":17},{"name":"RS","targets":18},{"name":"CLNSIG","targets":19}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>In the selected SNVs, we found some reference alleles are highlighted, such as chr15:92992967C=/+. These reference alleles are more likely to be benign alleles. Let’s query the original record in the ClinVar database to check what the exact situation is.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view clinvar.vcf.gz 15:92992967-92992967</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view clinvar.vcf.gz 15:92992967-92992967</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>##fileformat=VCFv4.1
 ##FILTER=&lt;ID=PASS,Description="All filters passed"&gt;
@@ -796,7 +804,7 @@ Conflicting_classifications_of_pathogenicity|risk_factor
 ##contig=&lt;ID=NT_187693.1&gt;
 ##contig=&lt;ID=NW_009646201.1&gt;
 ##bcftools_viewVersion=1.19+htslib-1.19
-##bcftools_viewCommand=view clinvar.vcf.gz 15:92992967-92992967; Date=Thu Jun 11 14:51:44 2026
+##bcftools_viewCommand=view clinvar.vcf.gz 15:92992967-92992967; Date=Mon Jun 15 14:43:34 2026
 #CHROM  POS ID  REF ALT QUAL    FILTER  INFO
 15  92992967    633515  C   G   .   .   ALLELEID=621980;CLNDISDB=MedGen:CN517202;CLNDN=not_provided;CLNHGVS=NC_000015.10:g.92992967C&gt;G;CLNREVSTAT=criteria_provided,_single_submitter;CLNSIG=Pathogenic;CLNSIGSCV=SCV000920484;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA393896759;GENEINFO=CHD2:1106;MC=SO:0001587|nonsense;ORIGIN=1;RS=2272457
 15  92992967    257709  C   T   .   .   AF_ESP=0.2485;AF_EXAC=0.22658;AF_TGP=0.19349;ALLELEID=255446;CLNDISDB=MeSH:D030342,MedGen:C0950123|MONDO:MONDO:0014150,MedGen:C3809278,OMIM:615369,Orphanet:1942,Orphanet:2382|MedGen:C3661900|MedGen:CN169374;CLNDN=Inborn_genetic_diseases|Developmental_and_epileptic_encephalopathy_94|not_provided|not_specified;CLNHGVS=NC_000015.10:g.92992967C&gt;T;CLNREVSTAT=criteria_provided,_multiple_submitters,_no_conflicts;CLNSIG=Benign;CLNSIGSCV=SCV000307175|SCV000519223|SCV000841518|SCV000846021|SCV001730597|SCV001806395|SCV005087698|SCV005297510;CLNVC=single_nucleotide_variant;CLNVCSO=SO:0001483;CLNVI=ClinGen:CA7748248;GENEINFO=CHD2:1106;MC=SO:0001819|synonymous_variant;ORIGIN=1;RS=2272457</code></pre>
@@ -807,7 +815,7 @@ Conflicting_classifications_of_pathogenicity|risk_factor
 <p>Unfortunately, many databases distributed in VCF format may contain inconsistently formatted tags. Apart from manually updating these databases or filtering reference alleles afterward, there is no straightforward solution to this issue.</p>
 <p>In addition, the RS tag is annotated, and we can refer to the NCBI SNP database for more information. For example, the mutation chr13:50945445G&gt;A/+ at RS 75184679 can be found at the following link: <a href="https://www.ncbi.nlm.nih.gov/snp/rs75184679">https://www.ncbi.nlm.nih.gov/snp/rs75184679</a>. This mutation is associated with conditions such as “Abnormality of the nervous system” and other diseases.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr13:50945445G&gt;A/+"</span>, <span class="st">"chr13:50945445G=/+"</span>, <span class="st">"RNASEH2B"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr13:50945445G&gt;A/+"</span>, <span class="st">"chr13:50945445G=/+"</span>, <span class="st">"RNASEH2B"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Could not find RNASEH2B in the default search locations, found in
 'RNA' assay instead</code></pre>
@@ -822,7 +830,7 @@ Conflicting_classifications_of_pathogenicity|risk_factor
 </div>
 <p>Note that not all reads from this gene cover the SNV, which results in the SNV expression being sparser compared to the overall gene expression. So it is recommended to visualize both alleles for the same location together.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "NormalizeData.RNA"        "FindVariableFeatures.RNA"
  [3] "ScaleData.RNA"            "RunPCA.RNA"              
@@ -832,7 +840,7 @@ Conflicting_classifications_of_pathogenicity|risk_factor
 [11] "SetAutoCorrFeatures.var"  "RunSDT.var"              
 [13] "annoVAR.var"             </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.5.3 (2026-03-11)
 Platform: x86_64-pc-linux-gnu
@@ -855,49 +863,49 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] Yano_1.2           dplyr_1.2.0        ggplot2_4.0.2      Seurat_5.4.0      
+[1] Yano_1.5           dplyr_1.2.0        ggplot2_4.0.2      Seurat_5.4.0      
 [5] SeuratObject_5.3.0 sp_2.2-1          
 
 loaded via a namespace (and not attached):
   [1] deldir_2.0-4           pbapply_1.7-4          gridExtra_2.3         
   [4] rlang_1.1.7            magrittr_2.0.4         RcppAnnoy_0.0.23      
   [7] otel_0.2.0             spatstat.geom_3.7-3    matrixStats_1.5.0     
- [10] ggridges_0.5.7         compiler_4.5.3         png_0.1-9             
- [13] vctrs_0.7.2            reshape2_1.4.5         stringr_1.6.0         
- [16] pkgconfig_2.0.3        fastmap_1.2.0          labeling_0.4.3        
- [19] promises_1.5.0         rmarkdown_2.30         purrr_1.2.1           
- [22] xfun_0.57              cachem_1.1.0           jsonlite_2.0.0        
- [25] goftest_1.2-3          later_1.4.8            spatstat.utils_3.2-2  
- [28] irlba_2.3.7            parallel_4.5.3         cluster_2.1.8.2       
- [31] R6_2.6.1               ica_1.0-3              bslib_0.10.0          
- [34] stringi_1.8.7          RColorBrewer_1.1-3     spatstat.data_3.1-9   
- [37] reticulate_1.45.0      parallelly_1.46.1      spatstat.univar_3.1-7 
- [40] jquerylib_0.1.4        lmtest_0.9-40          scattermore_1.2       
- [43] Rcpp_1.1.1             knitr_1.51             tensor_1.5.1          
- [46] future.apply_1.20.2    zoo_1.8-15             sctransform_0.4.3     
- [49] httpuv_1.6.17          Matrix_1.7-5           splines_4.5.3         
- [52] igraph_2.2.2           tidyselect_1.2.1       viridis_0.6.5         
- [55] abind_1.4-8            yaml_2.3.12            spatstat.random_3.4-5 
- [58] codetools_0.2-20       miniUI_0.1.2           spatstat.explore_3.8-0
- [61] listenv_0.10.1         lattice_0.22-9         tibble_3.3.1          
- [64] plyr_1.8.9             withr_3.0.2            shiny_1.13.0          
- [67] S7_0.2.1               ROCR_1.0-12            evaluate_1.0.5        
- [70] Rtsne_0.17             future_1.70.0          fastDummies_1.7.5     
- [73] survival_3.8-6         polyclip_1.10-7        fitdistrplus_1.2-6    
- [76] pillar_1.11.1          KernSmooth_2.23-26     DT_0.34.0             
- [79] plotly_4.12.0          generics_0.1.4         RcppHNSW_0.6.0        
- [82] scales_1.4.0           gtools_3.9.5           globals_0.19.1        
- [85] xtable_1.8-8           glue_1.8.0             lazyeval_0.2.2        
- [88] tools_4.5.3            data.table_1.18.2.1    RSpectra_0.16-2       
- [91] RANN_2.6.2             dotCall64_1.2          cowplot_1.2.0         
- [94] grid_4.5.3             tidyr_1.3.2            crosstalk_1.2.2       
- [97] nlme_3.1-168           patchwork_1.3.2        cli_3.6.5             
-[100] spatstat.sparse_3.1-0  spam_2.11-3            viridisLite_0.4.3     
-[103] uwot_0.2.4             gtable_0.3.6           sass_0.4.10           
-[106] digest_0.6.39          progressr_0.18.0       ggrepel_0.9.8         
-[109] htmlwidgets_1.6.4      farver_2.1.2           htmltools_0.5.9       
-[112] lifecycle_1.0.5        httr_1.4.8             mime_0.13             
-[115] MASS_7.3-65           </code></pre>
+ [10] ggridges_0.5.7         compiler_4.5.3         systemfonts_1.3.2     
+ [13] png_0.1-9              vctrs_0.7.2            reshape2_1.4.5        
+ [16] stringr_1.6.0          pkgconfig_2.0.3        fastmap_1.2.0         
+ [19] labeling_0.4.3         promises_1.5.0         rmarkdown_2.30        
+ [22] purrr_1.2.1            xfun_0.57              cachem_1.1.0          
+ [25] jsonlite_2.0.0         goftest_1.2-3          later_1.4.8           
+ [28] spatstat.utils_3.2-2   irlba_2.3.7            parallel_4.5.3        
+ [31] cluster_2.1.8.2        R6_2.6.1               ica_1.0-3             
+ [34] bslib_0.10.0           stringi_1.8.7          RColorBrewer_1.1-3    
+ [37] spatstat.data_3.1-9    reticulate_1.45.0      parallelly_1.46.1     
+ [40] spatstat.univar_3.1-7  jquerylib_0.1.4        lmtest_0.9-40         
+ [43] scattermore_1.2        Rcpp_1.1.1             knitr_1.51            
+ [46] tensor_1.5.1           future.apply_1.20.2    zoo_1.8-15            
+ [49] sctransform_0.4.3      httpuv_1.6.17          Matrix_1.7-5          
+ [52] splines_4.5.3          igraph_2.2.2           tidyselect_1.2.1      
+ [55] viridis_0.6.5          abind_1.4-8            yaml_2.3.12           
+ [58] spatstat.random_3.4-5  codetools_0.2-20       miniUI_0.1.2          
+ [61] spatstat.explore_3.8-0 listenv_0.10.1         lattice_0.22-9        
+ [64] tibble_3.3.1           plyr_1.8.9             withr_3.0.2           
+ [67] shiny_1.13.0           S7_0.2.1               ROCR_1.0-12           
+ [70] evaluate_1.0.5         Rtsne_0.17             future_1.70.0         
+ [73] fastDummies_1.7.5      survival_3.8-6         polyclip_1.10-7       
+ [76] fitdistrplus_1.2-6     pillar_1.11.1          KernSmooth_2.23-26    
+ [79] DT_0.34.0              plotly_4.12.0          generics_0.1.4        
+ [82] RcppHNSW_0.6.0         scales_1.4.0           gtools_3.9.5          
+ [85] globals_0.19.1         xtable_1.8-8           glue_1.8.0            
+ [88] lazyeval_0.2.2         tools_4.5.3            data.table_1.18.2.1   
+ [91] RSpectra_0.16-2        RANN_2.6.2             dotCall64_1.2         
+ [94] cowplot_1.2.0          grid_4.5.3             tidyr_1.3.2           
+ [97] crosstalk_1.2.2        nlme_3.1-168           patchwork_1.3.2       
+[100] cli_3.6.5              spatstat.sparse_3.1-0  spam_2.11-3           
+[103] viridisLite_0.4.3      uwot_0.2.4             gtable_0.3.6          
+[106] sass_0.4.10            digest_0.6.39          progressr_0.18.0      
+[109] ggrepel_0.9.8          htmlwidgets_1.6.4      farver_2.1.2          
+[112] htmltools_0.5.9        lifecycle_1.0.5        httr_1.4.8            
+[115] mime_0.13              MASS_7.3-65           </code></pre>
 </div>
 </div>
 <div id="page-nav-container">
