@@ -68,6 +68,19 @@ See short cases for more details.
 ## Changelog
 
 <details>
+<summary>1.5 2026/06/15</summary>
+
+* Rewrite `TrackPlot()` highlight rendering with grid primitives (rectGrob + segmentsGrob) for cross-track spanning. Highlights now span continuously across all facet panels and tracks (coverage, BED, gene annotation) with visual protrusion. Multiple overlapping highlights use additive alpha blending with dark orange boundary lines.
+* CRAN preparation: fix examples, NAMESPACE, DESCRIPTION metadata, and documentation issues. Register native routines (`src/init.c`) for CRAN compliance.
+* Add `gtable` to Imports, `systemfonts` to Suggests, remove unused `R.utils`.
+* New S3 methods: `print.TrackPlot` and `grid.draw.TrackPlot`.
+* Fix `combined & theme()` assignment bug and data.frame highlights parsing.
+* Update README with package overview and key capabilities.
+* Updated vignette for grid-based highlights; rendered all documentation with Quarto.
+
+</details>
+
+<details>
 <summary>1.4 2026/06/11</summary>
 
 * New functions: `GetWeightsFromCoords()`, `GetWeightsFromSNN()` for flexible weight matrix construction.
