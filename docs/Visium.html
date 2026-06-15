@@ -661,16 +661,16 @@ Elapsed time: 0 seconds</code></pre>
 <pre><code>object &lt;- RunUMAP(object, dims = 1:20)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>20:22:19 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre><code>14:46:37 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>20:22:19 Read 12148 rows and found 20 numeric columns</code></pre>
+<pre><code>14:46:37 Read 12148 rows and found 20 numeric columns</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>20:22:19 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>14:46:37 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>20:22:19 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre><code>14:46:37 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
@@ -680,14 +680,14 @@ Elapsed time: 0 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>**************************************************|
-20:22:23 Writing NN index file to temp file /local/tmp/RtmpNk55Qu/file1cf3702a59c05a
-20:22:23 Searching Annoy index using 1 thread, search_k = 3000
-20:22:43 Annoy recall = 100%
-20:22:43 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-20:22:44 Initializing from normalized Laplacian + noise (using RSpectra)
-20:22:57 Commencing optimization for 200 epochs, with 500526 positive edges
-20:22:57 Using rng type: pcg
-20:23:12 Optimization finished</code></pre>
+14:46:42 Writing NN index file to temp file /local/tmp/RtmpWPaWRY/file21c4cb60805922
+14:46:42 Searching Annoy index using 1 thread, search_k = 3000
+14:47:01 Annoy recall = 100%
+14:47:01 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+14:47:02 Initializing from normalized Laplacian + noise (using RSpectra)
+14:47:16 Commencing optimization for 200 epochs, with 500526 positive edges
+14:47:16 Using rng type: pcg
+14:47:31 Optimization finished</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj, <span class="at">group.by =</span> <span class="st">"orig.ident"</span>)</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj)</span>
@@ -728,7 +728,7 @@ See help("Deprecated") and help("Matrix-deprecated").</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay : exon
 Run autocorrelation test for 80178 features.
-Runtime : 23.67297 secs
+Runtime : 20.818 secs
 38784 autocorrelated features.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -741,7 +741,7 @@ Processing 15696 binding features.
 Retrieve binding data from assay RNA.
 Use "data" layer for test features and binding features.
 Using 95 threads.
-Runtime : 3.28409 mins.</code></pre>
+Runtime : 2.730924 mins.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -774,9 +774,9 @@ Runtime : 3.28409 mins.</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./visium/gencode.vM10.annotation.gtf.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2026-06-11 20:28:55] GTF loading..
-[2026-06-11 20:29:10] Load 48440 genes.
-[2026-06-11 20:29:10] Load time : 14.933 sec</code></pre>
+<pre><code>[2026-06-15 14:52:36] GTF loading..
+[2026-06-15 14:52:51] Load 48440 genes.
+[2026-06-15 14:52:51] Load time : 14.983 sec</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>bamfiles <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sec1_ant =</span> <span class="st">"./visium/section1/Anterior/V1_Mouse_Brain_Sagittal_Anterior_possorted_genome_bam.bam"</span>,</span>
@@ -839,7 +839,7 @@ Runtime : 3.28409 mins.</code></pre>
 <pre><code>Run autocorrelation test for 80178 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 38.75357 secs</code></pre>
+<pre><code>Runtime : 37.547 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>36013 autocorrelated features.</code></pre>
@@ -874,7 +874,7 @@ Runtime : 3.28409 mins.</code></pre>
 <pre><code>Using 95 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 2.361842 mins.</code></pre>
+<pre><code>Runtime : 1.973901 mins.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"gene_name.padj"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
