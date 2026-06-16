@@ -506,7 +506,7 @@ Attaching package: 'dplyr'</code></pre>
 <pre><code>Run autocorrelation test for 117195 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 12.63099 secs</code></pre>
+<pre><code>Runtime : 11.63357 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>71358 autocorrelated features.</code></pre>
@@ -540,7 +540,7 @@ Attaching package: 'dplyr'</code></pre>
 <pre><code>Using 95 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 16.65685 secs.</code></pre>
+<pre><code>Runtime : 16.17027 secs.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now p values and adjusted p values have been generated</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(obj[[<span class="st">'exon'</span>]][[]]) <span class="sc">%&gt;%</span> DT<span class="sc">::</span><span class="fu">datatable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -622,9 +622,9 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>gtf <span class="ot">&lt;-</span> <span class="fu">gtf2db</span>(<span class="st">"./gencode.v44.annotation.gtf.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2026-06-15 19:11:27] GTF loading..
-[2026-06-15 19:11:56] Load 62700 genes.
-[2026-06-15 19:11:56] Load time : 29.916 sec</code></pre>
+<pre><code>[2026-06-16 09:09:29] GTF loading..
+[2026-06-16 09:09:59] Load 62700 genes.
+[2026-06-16 09:09:59] Load time : 30.130 sec</code></pre>
 </div>
 </div>
 <p>The track plot shows read coverage per cell group, specified by <code>cell.group</code>. Unlike IGV which uses read depth, this plot shows UMI depth. The cell barcode and UMI tags default to “CB” and “UB” (<code>cell.tag</code> and <code>umi.tag</code>). For each cell group, UMI depth is normalized by the number of cells, so the tracks are directly comparable across groups. If <code>cell.group</code> is not set, raw UMI depth per location is shown.</p>
@@ -639,30 +639,19 @@ Adding another scale for colour, which will replace the existing scale.</code></
 </div>
 </div>
 </div>
-<p>Setting <code>max.depth = 2</code> caps the depth and setting <code>display.genes = "TPM4"</code> filters to the gene of interest, making the highlighted exon visible.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"TPM4"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">16095264</span>,<span class="dv">16095357</span>), <span class="at">max.depth =</span> <span class="dv">2</span>, <span class="at">display.genes =</span> <span class="st">"TPM4"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Yano_AS_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="1152"></p>
-</figure>
-</div>
-</div>
-</div>
 </section>
 <section id="load-junction-assay" class="level2">
 <h2 class="anchored" data-anchor-id="load-junction-assay">3. Load junction assay</h2>
 <p>Junction expression provides a complementary view of alternative splicing. Junctions capture reads spanning adjacent exons. They are named similarly to exons but with different coordinates: the junction start is the end of the upstream exon, and the junction end is the start of the downstream exon.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>junction <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./junction/"</span>)</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'junction'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(junction[, <span class="fu">colnames</span>(obj)], <span class="at">min.cells=</span><span class="dv">20</span>)</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"junction"</span></span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj)</span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="co"># select spatial autocorrelated junctions</span></span>
-<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>junction <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"./junction/"</span>)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'junction'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(junction[, <span class="fu">colnames</span>(obj)], <span class="at">min.cells=</span><span class="dv">20</span>)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"junction"</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj)</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="co"># select spatial autocorrelated junctions</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay : junction</code></pre>
 </div>
@@ -670,18 +659,18 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Run autocorrelation test for 14754 features.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 1.115088 secs</code></pre>
+<pre><code>Runtime : 1.157047 secs</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>7505 autocorrelated features.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse the gene name and coordinates from junction names</span></span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse the gene name and coordinates from junction names</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay junction</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform dissimilarity test between junctions and their binding genes</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">perm=</span><span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform dissimilarity test between junctions and their binding genes</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">perm=</span><span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Working on assay junction.</code></pre>
 </div>
@@ -707,42 +696,42 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <pre><code>Using 95 threads.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Runtime : 2.19894 secs.</code></pre>
+<pre><code>Runtime : 1.98038 secs.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">remove.chr=</span><span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">remove.chr=</span><span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Yano_AS_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="1344"></p>
+<p><img src="Yano_AS_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="1344"></p>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'junction'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> DT<span class="sc">::</span><span class="fu">datatable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'junction'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> DT<span class="sc">::</span><span class="fu">datatable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="datatables html-widget html-fill-item" id="htmlwidget-e8ff1f454943fb095fce" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-e8ff1f454943fb095fce">{"x":{"filter":"none","vertical":false,"data":[["chr12:56160320-56161387/+/MYL6","chr19:16093753-16095264/+/TPM4"],[0,0],[0.1953176095002337,0.1823959575891734],[true,true],["chr12","chr19"],[56160320,16093753],[56161387,16095264],["MYL6","TPM4"],["+","+"],[0.4187239877363864,0.4969970364607378],[-18.68724505843973,-17.61884416081691],[5.45033593772348e-14,1.573810546117522e-13],[4.090477121261471e-10,5.905724074306e-10]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>moransi.pval<\/th>\n      <th>moransi<\/th>\n      <th>autocorr.variable<\/th>\n      <th>chr<\/th>\n      <th>start<\/th>\n      <th>end<\/th>\n      <th>gene_name<\/th>\n      <th>strand<\/th>\n      <th>gene_name.D<\/th>\n      <th>gene_name.t<\/th>\n      <th>gene_name.pval<\/th>\n      <th>gene_name.padj<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,5,6,9,10,11,12]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"moransi.pval","targets":1},{"name":"moransi","targets":2},{"name":"autocorr.variable","targets":3},{"name":"chr","targets":4},{"name":"start","targets":5},{"name":"end","targets":6},{"name":"gene_name","targets":7},{"name":"strand","targets":8},{"name":"gene_name.D","targets":9},{"name":"gene_name.t","targets":10},{"name":"gene_name.pval","targets":11},{"name":"gene_name.padj","targets":12}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Because both exon and junction are compared with gene, so it's reasonable to combine these two assays in one plot</span></span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exon"</span>, <span class="st">"junction"</span>), <span class="at">col.by =</span> <span class="st">"assay"</span>, <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">pt.size =</span> <span class="dv">2</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs, <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Because both exon and junction are compared with gene, so it's reasonable to combine these two assays in one plot</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val=</span><span class="st">"gene_name.padj"</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exon"</span>, <span class="st">"junction"</span>), <span class="at">col.by =</span> <span class="st">"assay"</span>, <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">pt.size =</span> <span class="dv">2</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">sel.chrs =</span> sel.chrs, <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Yano_AS_files/figure-html/unnamed-chunk-11-3.png" class="img-fluid figure-img" width="1344"></p>
+<p><img src="Yano_AS_files/figure-html/unnamed-chunk-10-3.png" class="img-fluid figure-img" width="1344"></p>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can find there is an exon and a junction at chromosome 12 with very low p value (&lt;1e-5), let's see which gene they are located</span></span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(chr <span class="sc">==</span> <span class="st">"chr12"</span> <span class="sc">&amp;</span> gene_name.padj <span class="sc">&lt;</span> <span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> DT<span class="sc">::</span><span class="fu">datatable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can find there is an exon and a junction at chromosome 12 with very low p value (&lt;1e-5), let's see which gene they are located</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(chr <span class="sc">==</span> <span class="st">"chr12"</span> <span class="sc">&amp;</span> gene_name.padj <span class="sc">&lt;</span> <span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> DT<span class="sc">::</span><span class="fu">datatable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="datatables html-widget html-fill-item" id="htmlwidget-b6b414cb9a27d48a0946" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-b6b414cb9a27d48a0946">{"x":{"filter":"none","vertical":false,"data":[["chr12:56161387-56161465/+/MYL6"],["chr12"],[56161387],[56161465],["MYL6"],["+"],[0],[0.2502209166296291],[true],[0.5595136597220832],[-31.44293479948195],[3.769137719709367e-18],[2.68958129403021e-13]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>chr<\/th>\n      <th>start<\/th>\n      <th>end<\/th>\n      <th>gene_name<\/th>\n      <th>strand<\/th>\n      <th>moransi.pval<\/th>\n      <th>moransi<\/th>\n      <th>autocorr.variable<\/th>\n      <th>gene_name.D<\/th>\n      <th>gene_name.t<\/th>\n      <th>gene_name.pval<\/th>\n      <th>gene_name.padj<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,6,7,9,10,11,12]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"chr","targets":1},{"name":"start","targets":2},{"name":"end","targets":3},{"name":"gene_name","targets":4},{"name":"strand","targets":5},{"name":"moransi.pval","targets":6},{"name":"moransi","targets":7},{"name":"autocorr.variable","targets":8},{"name":"gene_name.D","targets":9},{"name":"gene_name.t","targets":10},{"name":"gene_name.pval","targets":11},{"name":"gene_name.padj","targets":12}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'junction'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(chr <span class="sc">==</span> <span class="st">"chr12"</span> <span class="sc">&amp;</span> gene_name.padj <span class="sc">&lt;</span> <span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> DT<span class="sc">::</span><span class="fu">datatable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'junction'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(chr <span class="sc">==</span> <span class="st">"chr12"</span> <span class="sc">&amp;</span> gene_name.padj <span class="sc">&lt;</span> <span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> DT<span class="sc">::</span><span class="fu">datatable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="datatables html-widget html-fill-item" id="htmlwidget-69cd60954cdf5e43bbec" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-69cd60954cdf5e43bbec">{"x":{"filter":"none","vertical":false,"data":[["chr12:56160320-56161387/+/MYL6"],[0],[0.1953176095002337],[true],["chr12"],[56160320],[56161387],["MYL6"],["+"],[0.4187239877363864],[-18.68724505843973],[5.45033593772348e-14],[4.090477121261471e-10]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>moransi.pval<\/th>\n      <th>moransi<\/th>\n      <th>autocorr.variable<\/th>\n      <th>chr<\/th>\n      <th>start<\/th>\n      <th>end<\/th>\n      <th>gene_name<\/th>\n      <th>strand<\/th>\n      <th>gene_name.D<\/th>\n      <th>gene_name.t<\/th>\n      <th>gene_name.pval<\/th>\n      <th>gene_name.padj<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,5,6,9,10,11,12]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"moransi.pval","targets":1},{"name":"moransi","targets":2},{"name":"autocorr.variable","targets":3},{"name":"chr","targets":4},{"name":"start","targets":5},{"name":"end","targets":6},{"name":"gene_name","targets":7},{"name":"strand","targets":8},{"name":"gene_name.D","targets":9},{"name":"gene_name.t","targets":10},{"name":"gene_name.pval","targets":11},{"name":"gene_name.padj","targets":12}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr12:56161387-56161465/+/MYL6"</span>,<span class="st">"chr12:56160320-56161387/+/MYL6"</span>, <span class="st">"MYL6"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">pt.size =</span> <span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">3</span>) <span class="sc">&amp;</span> <span class="fu">scale_colour_gradientn</span>(<span class="at">colours =</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">11</span>, <span class="at">name =</span> <span class="st">"RdBu"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr12:56161387-56161465/+/MYL6"</span>,<span class="st">"chr12:56160320-56161387/+/MYL6"</span>, <span class="st">"MYL6"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">pt.size =</span> <span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">3</span>) <span class="sc">&amp;</span> <span class="fu">scale_colour_gradientn</span>(<span class="at">colours =</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">11</span>, <span class="at">name =</span> <span class="st">"RdBu"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Scale for colour is already present.
 Adding another scale for colour, which will replace the existing scale.</code></pre>
@@ -756,30 +745,30 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Yano_AS_files/figure-html/unnamed-chunk-11-6.png" class="img-fluid figure-img" width="1344"></p>
+<p><img src="Yano_AS_files/figure-html/unnamed-chunk-10-6.png" class="img-fluid figure-img" width="1344"></p>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We could also plot the expression ratio of these exons or junctions on umap</span></span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">RatioPlot</span>(obj, <span class="at">assay =</span> <span class="st">"exon"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">features =</span> <span class="st">"chr12:56161387-56161465/+/MYL6"</span>)</span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">RatioPlot</span>(obj, <span class="at">assay =</span> <span class="st">"exon"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">features =</span> <span class="st">"chr12:56160626-56160670/+/MYL6"</span>)</span>
-<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">RatioPlot</span>(obj, <span class="at">assay =</span> <span class="st">"junction"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">features =</span> <span class="st">"chr12:56160320-56161387/+/MYL6"</span>)</span>
-<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>cowplot<span class="sc">::</span><span class="fu">plot_grid</span>(p1,p2,p3, <span class="at">ncol=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We could also plot the expression ratio of these exons or junctions on umap</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">RatioPlot</span>(obj, <span class="at">assay =</span> <span class="st">"exon"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">features =</span> <span class="st">"chr12:56161387-56161465/+/MYL6"</span>)</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">RatioPlot</span>(obj, <span class="at">assay =</span> <span class="st">"exon"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">features =</span> <span class="st">"chr12:56160626-56160670/+/MYL6"</span>)</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">RatioPlot</span>(obj, <span class="at">assay =</span> <span class="st">"junction"</span>, <span class="at">bind.assay =</span> <span class="st">"RNA"</span>, <span class="at">bind.name =</span> <span class="st">"gene_name"</span>, <span class="at">features =</span> <span class="st">"chr12:56160320-56161387/+/MYL6"</span>)</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>cowplot<span class="sc">::</span><span class="fu">plot_grid</span>(p1,p2,p3, <span class="at">ncol=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Yano_AS_files/figure-html/unnamed-chunk-11-7.png" class="img-fluid figure-img" width="1344"></p>
+<p><img src="Yano_AS_files/figure-html/unnamed-chunk-10-7.png" class="img-fluid figure-img" width="1344"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>We then visualize the track plot for this gene, including junction reads by setting <code>junc=TRUE</code>. Two adjacent highlight regions are specified as a list, producing <strong>overlapping highlights</strong> — the overlapping portion appears darker due to additive alpha blending, and each highlight is marked with a dark orange boundary line at its start position.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"MYL6"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">highlights =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">56160320</span>,<span class="dv">56161387</span>),<span class="fu">c</span>(<span class="dv">56161387</span>,<span class="dv">56161465</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"MYL6"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">highlights =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">56160320</span>,<span class="dv">56161387</span>),<span class="fu">c</span>(<span class="dv">56161387</span>,<span class="dv">56161465</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Yano_AS_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="1152"></p>
+<p><img src="Yano_AS_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -787,8 +776,8 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <p>The exon chr12:56161387-56161465/+/MYL6 appears highly expressed in group 3 in the track plot, yet its expression in the feature plot is lower than expected. This is because the exon overlaps with other exons from different transcripts. Only reads fully contained within the exon are counted toward its expression; partially overlapping reads are excluded.</p>
 <p>The overlapping exon chr12:56161387-56161575/+/MYL6, by contrast, shows strong expression in group 3. Note that when a read is fully contained within multiple overlapping exons, PISA counts it for all of them. See PISA’s manual for details.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj, <span class="at">label=</span><span class="cn">TRUE</span>, <span class="at">label.size =</span> <span class="dv">5</span>, <span class="at">label.box =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr12:56161387-56161575/+/MYL6"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">pt.size =</span> <span class="dv">1</span>) <span class="sc">&amp;</span> <span class="fu">scale_colour_gradientn</span>(<span class="at">colours =</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">11</span>, <span class="at">name =</span> <span class="st">"RdBu"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(obj, <span class="at">label=</span><span class="cn">TRUE</span>, <span class="at">label.size =</span> <span class="dv">5</span>, <span class="at">label.box =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr12:56161387-56161575/+/MYL6"</span>), <span class="at">order =</span> <span class="cn">TRUE</span>, <span class="at">pt.size =</span> <span class="dv">1</span>) <span class="sc">&amp;</span> <span class="fu">scale_colour_gradientn</span>(<span class="at">colours =</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">11</span>, <span class="at">name =</span> <span class="st">"RdBu"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Could not find chr12:56161387-56161575/+/MYL6 in the default search
 locations, found in 'exon' assay instead</code></pre>
@@ -797,11 +786,11 @@ locations, found in 'exon' assay instead</code></pre>
 <pre><code>Scale for colour is already present.
 Adding another scale for colour, which will replace the existing scale.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Yano_AS_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="Yano_AS_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -811,38 +800,38 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <h2 class="anchored" data-anchor-id="heatmap-analysis-for-highlight-group-specific-alternative-splicing">4. Heatmap analysis for highlight group specific alternative splicing</h2>
 <p>The spatial dissimilarity test identifies alternatively spliced exons and junctions across all cells, but does not pinpoint which cell groups drive the signal. To address this, we extract scaled expression for the selected exons and their host genes, then perform co-clustering. The heatmap below uses <a href="https://jokergoo.github.io/ComplexHeatmap-reference/book/index.html">ComplexHeatmap</a> to visualize the distribution across cell groups.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> rownames <span class="ot">-&gt;</span> exons</span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(gene_name) <span class="ot">-&gt;</span> bind.genes</span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"RNA"</span></span>
-<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ScaleData</span>(obj, <span class="at">features =</span> <span class="fu">unique</span>(bind.genes))</span>
-<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
-<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ScaleData</span>(obj, <span class="at">features =</span> exons)</span>
-<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-8"><a href="#cb90-8" aria-hidden="true" tabindex="-1"></a>dat1 <span class="ot">&lt;-</span> <span class="fu">GetAssayData</span>(obj, <span class="at">assay =</span> <span class="st">'exon'</span>, <span class="at">layer =</span> <span class="st">'scale.data'</span>)</span>
-<span id="cb90-9"><a href="#cb90-9" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> <span class="fu">GetAssayData</span>(obj, <span class="at">assay =</span> <span class="st">'RNA'</span>, <span class="at">layer =</span> <span class="st">'scale.data'</span>)</span>
-<span id="cb90-10"><a href="#cb90-10" aria-hidden="true" tabindex="-1"></a>idents <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">Idents</span>(obj))</span>
-<span id="cb90-11"><a href="#cb90-11" aria-hidden="true" tabindex="-1"></a>order.cells <span class="ot">&lt;-</span> <span class="fu">names</span>(idents)</span>
-<span id="cb90-12"><a href="#cb90-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-13"><a href="#cb90-13" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> dat2[bind.genes,]</span>
-<span id="cb90-14"><a href="#cb90-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(dat2) <span class="ot">&lt;-</span> exons</span>
-<span id="cb90-15"><a href="#cb90-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-16"><a href="#cb90-16" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">cbind</span>(dat1, dat2)</span>
-<span id="cb90-17"><a href="#cb90-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-18"><a href="#cb90-18" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ComplexHeatmap)</span>
-<span id="cb90-19"><a href="#cb90-19" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(dat)</span>
-<span id="cb90-20"><a href="#cb90-20" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(d)</span>
-<span id="cb90-21"><a href="#cb90-21" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> hc<span class="sc">$</span>labels[hc<span class="sc">$</span>order]</span>
-<span id="cb90-22"><a href="#cb90-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-23"><a href="#cb90-23" aria-hidden="true" tabindex="-1"></a>ha <span class="ot">&lt;-</span> <span class="fu">HeatmapAnnotation</span>(<span class="at">group=</span>idents, <span class="at">border =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb90-24"><a href="#cb90-24" aria-hidden="true" tabindex="-1"></a>ht1 <span class="ot">&lt;-</span> <span class="fu">Heatmap</span>(dat1[idx, order.cells], <span class="at">cluster_rows =</span> <span class="cn">FALSE</span>, <span class="at">cluster_columns =</span> <span class="cn">FALSE</span>, <span class="at">show_column_names =</span> <span class="cn">FALSE</span>, <span class="at">border =</span> <span class="cn">TRUE</span>,  <span class="at">top_annotation =</span> ha, <span class="at">name =</span> <span class="st">"exon"</span>, <span class="at">column_title =</span> <span class="st">"exon"</span>)</span>
-<span id="cb90-25"><a href="#cb90-25" aria-hidden="true" tabindex="-1"></a>ht2 <span class="ot">&lt;-</span> <span class="fu">Heatmap</span>(dat2[idx, order.cells], <span class="at">cluster_rows =</span> <span class="cn">FALSE</span>, <span class="at">cluster_columns =</span> <span class="cn">FALSE</span>, <span class="at">show_column_names =</span> <span class="cn">FALSE</span>, <span class="at">border =</span> <span class="cn">TRUE</span>,  <span class="at">top_annotation =</span> ha, <span class="at">name =</span> <span class="st">"gene"</span>, <span class="at">column_title =</span> <span class="st">"gene"</span>, <span class="at">row_names_max_width =</span> <span class="fu">max_text_width</span>(<span class="fu">rownames</span>(dat2), <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">fontsize =</span> <span class="dv">12</span>)))</span>
-<span id="cb90-26"><a href="#cb90-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-27"><a href="#cb90-27" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> ht1 <span class="sc">+</span> ht2</span>
-<span id="cb90-28"><a href="#cb90-28" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(ht, <span class="at">heatmap_legend_side =</span> <span class="st">"left"</span>,  <span class="at">annotation_legend_side =</span> <span class="st">"left"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> rownames <span class="ot">-&gt;</span> exons</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_name.padj<span class="sc">&lt;</span><span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(gene_name) <span class="ot">-&gt;</span> bind.genes</span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"RNA"</span></span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ScaleData</span>(obj, <span class="at">features =</span> <span class="fu">unique</span>(bind.genes))</span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
+<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ScaleData</span>(obj, <span class="at">features =</span> exons)</span>
+<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a>dat1 <span class="ot">&lt;-</span> <span class="fu">GetAssayData</span>(obj, <span class="at">assay =</span> <span class="st">'exon'</span>, <span class="at">layer =</span> <span class="st">'scale.data'</span>)</span>
+<span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> <span class="fu">GetAssayData</span>(obj, <span class="at">assay =</span> <span class="st">'RNA'</span>, <span class="at">layer =</span> <span class="st">'scale.data'</span>)</span>
+<span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a>idents <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">Idents</span>(obj))</span>
+<span id="cb89-11"><a href="#cb89-11" aria-hidden="true" tabindex="-1"></a>order.cells <span class="ot">&lt;-</span> <span class="fu">names</span>(idents)</span>
+<span id="cb89-12"><a href="#cb89-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-13"><a href="#cb89-13" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> dat2[bind.genes,]</span>
+<span id="cb89-14"><a href="#cb89-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(dat2) <span class="ot">&lt;-</span> exons</span>
+<span id="cb89-15"><a href="#cb89-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-16"><a href="#cb89-16" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">cbind</span>(dat1, dat2)</span>
+<span id="cb89-17"><a href="#cb89-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-18"><a href="#cb89-18" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ComplexHeatmap)</span>
+<span id="cb89-19"><a href="#cb89-19" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(dat)</span>
+<span id="cb89-20"><a href="#cb89-20" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(d)</span>
+<span id="cb89-21"><a href="#cb89-21" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> hc<span class="sc">$</span>labels[hc<span class="sc">$</span>order]</span>
+<span id="cb89-22"><a href="#cb89-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-23"><a href="#cb89-23" aria-hidden="true" tabindex="-1"></a>ha <span class="ot">&lt;-</span> <span class="fu">HeatmapAnnotation</span>(<span class="at">group=</span>idents, <span class="at">border =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb89-24"><a href="#cb89-24" aria-hidden="true" tabindex="-1"></a>ht1 <span class="ot">&lt;-</span> <span class="fu">Heatmap</span>(dat1[idx, order.cells], <span class="at">cluster_rows =</span> <span class="cn">FALSE</span>, <span class="at">cluster_columns =</span> <span class="cn">FALSE</span>, <span class="at">show_column_names =</span> <span class="cn">FALSE</span>, <span class="at">border =</span> <span class="cn">TRUE</span>,  <span class="at">top_annotation =</span> ha, <span class="at">name =</span> <span class="st">"exon"</span>, <span class="at">column_title =</span> <span class="st">"exon"</span>)</span>
+<span id="cb89-25"><a href="#cb89-25" aria-hidden="true" tabindex="-1"></a>ht2 <span class="ot">&lt;-</span> <span class="fu">Heatmap</span>(dat2[idx, order.cells], <span class="at">cluster_rows =</span> <span class="cn">FALSE</span>, <span class="at">cluster_columns =</span> <span class="cn">FALSE</span>, <span class="at">show_column_names =</span> <span class="cn">FALSE</span>, <span class="at">border =</span> <span class="cn">TRUE</span>,  <span class="at">top_annotation =</span> ha, <span class="at">name =</span> <span class="st">"gene"</span>, <span class="at">column_title =</span> <span class="st">"gene"</span>, <span class="at">row_names_max_width =</span> <span class="fu">max_text_width</span>(<span class="fu">rownames</span>(dat2), <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">fontsize =</span> <span class="dv">12</span>)))</span>
+<span id="cb89-26"><a href="#cb89-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-27"><a href="#cb89-27" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> ht1 <span class="sc">+</span> ht2</span>
+<span id="cb89-28"><a href="#cb89-28" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(ht, <span class="at">heatmap_legend_side =</span> <span class="st">"left"</span>,  <span class="at">annotation_legend_side =</span> <span class="st">"left"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Yano_AS_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="1152"></p>
+<p><img src="Yano_AS_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -852,18 +841,18 @@ Adding another scale for colour, which will replace the existing scale.</code></
 <h2 class="anchored" data-anchor-id="test-between-exon-and-exon-skipped-reads">5. Test between exon and exon skipped reads</h2>
 <p>The spatial dissimilarity test is not limited to gene-level binding features. Here we test exon expression against reads that skip the exon (exclude assay). This is analogous to the Percent Spliced In (PSI) method widely used in bulk and single-cell RNA-seq: <code>PSI = exon reads / (exon reads + reads skipping this exon)</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The reads that skip exons are annotated using the `-psi` option in PISA anno, and these counts are stored in the `exclude` directory. We then load these excluded counts into a new assay.</span></span>
-<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>exclude <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"exclude/"</span>)</span>
-<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exclude'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(exclude[,<span class="fu">colnames</span>(obj)], <span class="at">min.cells =</span> <span class="dv">10</span>)</span>
-<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exclude"</span></span>
-<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize counts for exon-excluded reads</span></span>
-<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj)</span>
-<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Then we switch to exon assay</span></span>
-<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
-<span id="cb91-9"><a href="#cb91-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb91-10"><a href="#cb91-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Because the feature names in the exclude assay are exactly the same as those in the exon assay, they represent the reads that skip each corresponding exon. Therefore, we set up the binding feature using the exon name itself.</span></span>
-<span id="cb91-11"><a href="#cb91-11" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[<span class="st">'exon_name'</span>]] <span class="ot">&lt;-</span> <span class="fu">rownames</span>(obj)</span>
-<span id="cb91-12"><a href="#cb91-12" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[<span class="st">'exon_name'</span>]] <span class="sc">%&gt;%</span> head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The reads that skip exons are annotated using the `-psi` option in PISA anno, and these counts are stored in the `exclude` directory. We then load these excluded counts into a new assay.</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>exclude <span class="ot">&lt;-</span> <span class="fu">ReadPISA</span>(<span class="st">"exclude/"</span>)</span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exclude'</span>]] <span class="ot">&lt;-</span> <span class="fu">CreateAssayObject</span>(exclude[,<span class="fu">colnames</span>(obj)], <span class="at">min.cells =</span> <span class="dv">10</span>)</span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exclude"</span></span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize counts for exon-excluded reads</span></span>
+<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj)</span>
+<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Then we switch to exon assay</span></span>
+<span id="cb90-8"><a href="#cb90-8" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
+<span id="cb90-9"><a href="#cb90-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-10"><a href="#cb90-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Because the feature names in the exclude assay are exactly the same as those in the exon assay, they represent the reads that skip each corresponding exon. Therefore, we set up the binding feature using the exon name itself.</span></span>
+<span id="cb90-11"><a href="#cb90-11" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[<span class="st">'exon_name'</span>]] <span class="ot">&lt;-</span> <span class="fu">rownames</span>(obj)</span>
+<span id="cb90-12"><a href="#cb90-12" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[<span class="st">'exon_name'</span>]] <span class="sc">%&gt;%</span> head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                                                exon_name
 chr1:135141-135895/-/ENSG00000268903 chr1:135141-135895/-/ENSG00000268903
@@ -873,31 +862,31 @@ chr1:632757-633438/+/MTCO2P12               chr1:632757-633438/+/MTCO2P12
 chr1:633696-634376/+/MTATP6P1               chr1:633696-634376/+/MTATP6P1
 chr1:634376-634922/+/MTCO3P12               chr1:634376-634922/+/MTCO3P12</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Then we perform spatial dissimilarity test between exon and exclude, mode 1</span></span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"exon_name"</span>, <span class="at">bind.assay =</span> <span class="st">"exclude"</span>)</span>
-<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Swith to exon exluded assay</span></span>
-<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exclude"</span></span>
-<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj)</span>
-<span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(obj)</span>
-<span id="cb93-8"><a href="#cb93-8" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exclude'</span>]][[<span class="st">'exon_name'</span>]] <span class="ot">&lt;-</span> <span class="fu">rownames</span>(obj)</span>
-<span id="cb93-9"><a href="#cb93-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb93-10"><a href="#cb93-10" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"exon_name"</span>, <span class="at">bind.assay =</span> <span class="st">"exon"</span>)</span>
-<span id="cb93-11"><a href="#cb93-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb93-12"><a href="#cb93-12" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"exon_name.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exclude"</span>, <span class="st">"exon"</span>), <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">col.by =</span> <span class="st">"assay"</span>, <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"yellow"</span>, <span class="st">"green"</span>), <span class="at">pt.size =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Then we perform spatial dissimilarity test between exon and exclude, mode 1</span></span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"exon_name"</span>, <span class="at">bind.assay =</span> <span class="st">"exclude"</span>)</span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Swith to exon exluded assay</span></span>
+<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exclude"</span></span>
+<span id="cb92-6"><a href="#cb92-6" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunAutoCorr</span>(obj)</span>
+<span id="cb92-7"><a href="#cb92-7" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">ParseExonName</span>(obj)</span>
+<span id="cb92-8"><a href="#cb92-8" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exclude'</span>]][[<span class="st">'exon_name'</span>]] <span class="ot">&lt;-</span> <span class="fu">rownames</span>(obj)</span>
+<span id="cb92-9"><a href="#cb92-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-10"><a href="#cb92-10" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"exon_name"</span>, <span class="at">bind.assay =</span> <span class="st">"exon"</span>)</span>
+<span id="cb92-11"><a href="#cb92-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-12"><a href="#cb92-12" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"exon_name.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exclude"</span>, <span class="st">"exon"</span>), <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">col.by =</span> <span class="st">"assay"</span>, <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"yellow"</span>, <span class="st">"green"</span>), <span class="at">pt.size =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Yano_AS_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="1152"></p>
+<p><img src="Yano_AS_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's how many exons can be prioritized by both exon assay and exclude assay</span></span>
-<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exclude'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(exon_name.padj<span class="sc">&lt;</span><span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> rownames <span class="ot">-&gt;</span> sel1</span>
-<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(exon_name.padj<span class="sc">&lt;</span><span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> rownames <span class="ot">-&gt;</span> sel2</span>
-<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(sel1,sel2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's how many exons can be prioritized by both exon assay and exclude assay</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exclude'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(exon_name.padj<span class="sc">&lt;</span><span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> rownames <span class="ot">-&gt;</span> sel1</span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>obj[[<span class="st">'exon'</span>]][[]] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(exon_name.padj<span class="sc">&lt;</span><span class="fl">1e-5</span>) <span class="sc">%&gt;%</span> rownames <span class="ot">-&gt;</span> sel2</span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(sel1,sel2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "chr1:19342752-19342864/-/CAPZB"    "chr1:153990914-153991034/+/RPS27" 
  [3] "chr10:128047570-128047683/+/PTPRE" "chr12:56160626-56160670/+/MYL6"   
@@ -916,12 +905,23 @@ chr1:634376-634922/+/MTCO3P12               chr1:634376-634922/+/MTCO3P12</code>
 [29] "chr9:35684732-35684807/-/TPM2"     "chr9:35684732-35684802/-/TPM2"    
 [31] "chrX:154400464-154400626/+/RPL10" </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exclude"</span></span>
-<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr19:16095264-16095357/+/TPM4"</span>),<span class="at">order =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
-<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr19:16095264-16095357/+/TPM4"</span>),<span class="at">order =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">PSIPlot</span>(obj, <span class="at">exon.assay =</span> <span class="st">"exon"</span>, <span class="at">exclude.assay =</span> <span class="st">"exclude"</span>, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr19:16095264-16095357/+/TPM4"</span>),<span class="at">order =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb96-6"><a href="#cb96-6" aria-hidden="true" tabindex="-1"></a>cowplot<span class="sc">::</span><span class="fu">plot_grid</span>(p1,p2,p3, <span class="at">ncol=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exclude"</span></span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr19:16095264-16095357/+/TPM4"</span>),<span class="at">order =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr19:16095264-16095357/+/TPM4"</span>),<span class="at">order =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">PSIPlot</span>(obj, <span class="at">exon.assay =</span> <span class="st">"exon"</span>, <span class="at">exclude.assay =</span> <span class="st">"exclude"</span>, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"chr19:16095264-16095357/+/TPM4"</span>),<span class="at">order =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a>cowplot<span class="sc">::</span><span class="fu">plot_grid</span>(p1,p2,p3, <span class="at">ncol=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Yano_AS_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here, we set <code>max.depth = 1</code> caps the depth and setting <code>display.genes = "TPM4"</code> filters to the gene of interest, making the highlighted exon more visible.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"TPM4"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">16095264</span>,<span class="dv">16095357</span>), <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">max.depth =</span> <span class="dv">1</span>, <span class="at">display.genes =</span> <span class="st">"TPM4"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -930,29 +930,19 @@ chr1:634376-634922/+/MTCO3P12               chr1:634376-634922/+/MTCO3P12</code>
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TrackPlot</span>(<span class="at">bamfile =</span> <span class="st">"Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam"</span>, <span class="at">gtf =</span> gtf, <span class="at">gene =</span> <span class="st">"TPM4"</span>, <span class="at">cell.group =</span> <span class="fu">Idents</span>(obj), <span class="at">highlights =</span> <span class="fu">c</span>(<span class="dv">16095264</span>,<span class="dv">16095357</span>), <span class="at">junc =</span> <span class="cn">TRUE</span>, <span class="at">max.depth =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Yano_AS_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="1152"></p>
-</figure>
-</div>
-</div>
-</div>
 <p>Exon or junction expression is part of gene expression, so inverse expression patterns can indicate alternative splicing. By contrast, exon-skipped reads are largely independent of exon expression, offering higher sensitivity for detecting splicing events.</p>
 <p>The spatial dissimilarity test does not model the spatial dependency of the binding feature, so many events may be prioritized when the binding feature is sparse. Intersecting results from both directions (exon vs.&nbsp;exclude and exclude vs.&nbsp;exon) helps reduce false positives from low coverage.</p>
 <p>Mode 3 specifically detects strong inverse expression patterns by summing exon reads and exon-excluded reads as the binding assay. Events found by mode 3 are a subset of those found by mode 1, making it a stricter filter.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exclude"</span></span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"exon_name"</span>, <span class="at">bind.assay =</span> <span class="st">"exon"</span>, <span class="at">mode =</span> <span class="dv">3</span>, <span class="at">prefix =</span> <span class="st">"mode3"</span>)</span>
-<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
-<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"exon_name"</span>, <span class="at">bind.assay =</span> <span class="st">"exclude"</span>, <span class="at">mode =</span> <span class="dv">3</span>, <span class="at">prefix =</span> <span class="st">"mode3"</span>)</span>
-<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"mode3.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exclude"</span>, <span class="st">"exon"</span>), <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">col.by =</span> <span class="st">"assay"</span>, <span class="at">pt.size =</span> <span class="dv">2</span>, <span class="at">cols=</span><span class="fu">c</span>(<span class="st">"yellow"</span>, <span class="st">"green"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exclude"</span></span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"exon_name"</span>, <span class="at">bind.assay =</span> <span class="st">"exon"</span>, <span class="at">mode =</span> <span class="dv">3</span>, <span class="at">prefix =</span> <span class="st">"mode3"</span>)</span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DefaultAssay</span>(obj) <span class="ot">&lt;-</span> <span class="st">"exon"</span></span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">RunSDT</span>(obj, <span class="at">bind.name =</span> <span class="st">"exon_name"</span>, <span class="at">bind.assay =</span> <span class="st">"exclude"</span>, <span class="at">mode =</span> <span class="dv">3</span>, <span class="at">prefix =</span> <span class="st">"mode3"</span>)</span>
+<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="fu">FbtPlot</span>(obj, <span class="at">val =</span> <span class="st">"mode3.padj"</span>, <span class="at">remove.chr =</span> <span class="cn">TRUE</span>, <span class="at">assay =</span> <span class="fu">c</span>(<span class="st">"exclude"</span>, <span class="st">"exon"</span>), <span class="at">shape.by =</span> <span class="st">"assay"</span>, <span class="at">col.by =</span> <span class="st">"assay"</span>, <span class="at">pt.size =</span> <span class="dv">2</span>, <span class="at">cols=</span><span class="fu">c</span>(<span class="st">"yellow"</span>, <span class="st">"green"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Yano_AS_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="1152"></p>
+<p><img src="Yano_AS_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -963,7 +953,7 @@ chr1:634376-634922/+/MTCO3P12               chr1:634376-634922/+/MTCO3P12</code>
 <h2 class="anchored" data-anchor-id="questions">Questions?</h2>
 <p>If you have any questions regarding this vignette and the usage of Yano, please feel free to report them through the <a href="https://github.com/shiquan/Yano/discussions">discussion forum</a>. When submitting your query, please ensure you attach the commands you used for better clarity and support.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Command</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "NormalizeData.RNA"            "FindVariableFeatures.RNA"    
  [3] "RunPCA.RNA"                   "FindNeighbors.RNA.pca"       
@@ -978,9 +968,9 @@ chr1:634376-634922/+/MTCO3P12               chr1:634376-634922/+/MTCO3P12</code>
 [21] "ParseExonName.exclude"        "RunSDT.exclude"              
 [23] "RunSDT.exon"                 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>R version 4.5.3 (2026-03-11)
+<pre><code>R version 4.6.0 (2026-04-24)
 Platform: x86_64-pc-linux-gnu
 Running under: Ubuntu 24.04.4 LTS
 
@@ -1002,55 +992,55 @@ attached base packages:
 [8] base     
 
 other attached packages:
- [1] ComplexHeatmap_2.24.1 RColorBrewer_1.1-3    future_1.70.0        
- [4] Matrix_1.7-5          ggplot2_4.0.2         dplyr_1.2.0          
- [7] Seurat_5.4.0          SeuratObject_5.3.0    sp_2.2-1             
+ [1] ComplexHeatmap_2.28.0 RColorBrewer_1.1-3    future_1.70.0        
+ [4] Matrix_1.7-5          ggplot2_4.0.3         dplyr_1.2.1          
+ [7] Seurat_5.5.0          SeuratObject_5.4.0    sp_2.2-1             
 [10] Yano_1.5             
 
 loaded via a namespace (and not attached):
-  [1] shape_1.4.6.1          jsonlite_2.0.0         magrittr_2.0.4        
-  [4] magick_2.9.1           spatstat.utils_3.2-2   farver_2.1.2          
-  [7] rmarkdown_2.30         GlobalOptions_0.1.3    vctrs_0.7.2           
- [10] ROCR_1.0-12            Cairo_1.7-0            spatstat.explore_3.8-0
+  [1] shape_1.4.6.1          jsonlite_2.0.0         magrittr_2.0.5        
+  [4] magick_2.9.1           spatstat.utils_3.2-3   farver_2.1.2          
+  [7] rmarkdown_2.31         GlobalOptions_0.1.4    vctrs_0.7.3           
+ [10] ROCR_1.0-12            Cairo_1.7-0            spatstat.explore_3.8-1
  [13] htmltools_0.5.9        sass_0.4.10            sctransform_0.4.3     
- [16] parallelly_1.46.1      KernSmooth_2.23-26     bslib_0.10.0          
+ [16] parallelly_1.47.0      KernSmooth_2.23-26     bslib_0.11.0          
  [19] htmlwidgets_1.6.4      ica_1.0-3              plyr_1.8.9            
  [22] plotly_4.12.0          zoo_1.8-15             cachem_1.1.0          
- [25] igraph_2.2.2           mime_0.13              lifecycle_1.0.5       
+ [25] igraph_2.3.2           mime_0.13              lifecycle_1.0.5       
  [28] iterators_1.0.14       pkgconfig_2.0.3        R6_2.6.1              
- [31] fastmap_1.2.0          clue_0.3-67            fitdistrplus_1.2-6    
+ [31] fastmap_1.2.0          clue_0.3-68            fitdistrplus_1.2-6    
  [34] shiny_1.13.0           digest_0.6.39          colorspace_2.1-2      
- [37] S4Vectors_0.48.1       patchwork_1.3.2        tensor_1.5.1          
+ [37] S4Vectors_0.50.1       patchwork_1.3.2        tensor_1.5.1          
  [40] RSpectra_0.16-2        irlba_2.3.7            crosstalk_1.2.2       
- [43] labeling_0.4.3         progressr_0.18.0       spatstat.sparse_3.1-0 
+ [43] labeling_0.4.3         progressr_0.19.0       spatstat.sparse_3.2-0 
  [46] httr_1.4.8             polyclip_1.10-7        abind_1.4-8           
- [49] compiler_4.5.3         withr_3.0.2            doParallel_1.0.17     
- [52] S7_0.2.1               viridis_0.6.5          fastDummies_1.7.5     
+ [49] compiler_4.6.0         withr_3.0.2            doParallel_1.0.17     
+ [52] S7_0.2.2               viridis_0.6.5          fastDummies_1.7.6     
  [55] MASS_7.3-65            rjson_0.2.23           gtools_3.9.5          
- [58] tools_4.5.3            lmtest_0.9-40          otel_0.2.0            
+ [58] tools_4.6.0            lmtest_0.9-40          otel_0.2.0            
  [61] httpuv_1.6.17          future.apply_1.20.2    goftest_1.2-3         
- [64] glue_1.8.0             nlme_3.1-168           promises_1.5.0        
+ [64] glue_1.8.1             nlme_3.1-169           promises_1.5.0        
  [67] Rtsne_0.17             cluster_2.1.8.2        reshape2_1.4.5        
  [70] generics_0.1.4         gtable_0.3.6           spatstat.data_3.1-9   
- [73] tidyr_1.3.2            data.table_1.18.2.1    BiocGenerics_0.54.1   
- [76] spatstat.geom_3.7-3    RcppAnnoy_0.0.23       ggrepel_0.9.8         
+ [73] tidyr_1.3.2            data.table_1.18.4      BiocGenerics_0.58.1   
+ [76] spatstat.geom_3.8-1    RcppAnnoy_0.0.23       ggrepel_0.9.8         
  [79] RANN_2.6.2             foreach_1.5.2          pillar_1.11.1         
- [82] stringr_1.6.0          spam_2.11-3            RcppHNSW_0.6.0        
- [85] later_1.4.8            circlize_0.4.17        splines_4.5.3         
+ [82] stringr_1.6.0          spam_2.11-4            RcppHNSW_0.7.0        
+ [85] later_1.4.8            circlize_0.4.18        splines_4.6.0         
  [88] lattice_0.22-9         survival_3.8-6         deldir_2.0-4          
  [91] tidyselect_1.2.1       miniUI_0.1.2           pbapply_1.7-4         
- [94] knitr_1.51             gridExtra_2.3          IRanges_2.42.0        
- [97] scattermore_1.2        stats4_4.5.3           xfun_0.57             
+ [94] knitr_1.51             gridExtra_2.3          IRanges_2.46.0        
+ [97] scattermore_1.2        stats4_4.6.0           xfun_0.58             
 [100] matrixStats_1.5.0      DT_0.34.0              stringi_1.8.7         
-[103] lazyeval_0.2.2         yaml_2.3.12            evaluate_1.0.5        
-[106] codetools_0.2-20       tibble_3.3.1           cli_3.6.5             
-[109] uwot_0.2.4             xtable_1.8-8           reticulate_1.45.0     
-[112] systemfonts_1.3.2      jquerylib_0.1.4        Rcpp_1.1.1            
-[115] globals_0.19.1         spatstat.random_3.4-5  png_0.1-9             
-[118] spatstat.univar_3.1-7  parallel_4.5.3         dotCall64_1.2         
+[103] lazyeval_0.2.3         yaml_2.3.12            evaluate_1.0.5        
+[106] codetools_0.2-20       tibble_3.3.1           cli_3.6.6             
+[109] uwot_0.2.4             xtable_1.8-8           reticulate_1.46.0     
+[112] systemfonts_1.3.2      jquerylib_0.1.4        Rcpp_1.1.1-1.1        
+[115] globals_0.19.1         spatstat.random_3.5-0  png_0.1-9             
+[118] spatstat.univar_3.2-0  parallel_4.6.0         dotCall64_1.2         
 [121] listenv_0.10.1         viridisLite_0.4.3      scales_1.4.0          
-[124] ggridges_0.5.7         crayon_1.5.3           purrr_1.2.1           
-[127] GetoptLong_1.1.0       rlang_1.1.7            cowplot_1.2.0         </code></pre>
+[124] ggridges_0.5.7         crayon_1.5.3           purrr_1.2.2           
+[127] GetoptLong_1.1.1       rlang_1.2.0            cowplot_1.2.0         </code></pre>
 </div>
 </div>
 <div id="page-nav-container">

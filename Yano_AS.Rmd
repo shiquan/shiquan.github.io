@@ -113,11 +113,6 @@ Highlighted regions are rendered with **dark orange boundary lines** and a semi-
 ```{r message=FALSE, fig.width=12, fig.height=8}
 TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "TPM4", cell.group = Idents(obj), highlights = c(16095264,16095357) )
 ```
-Setting `max.depth = 2` caps the depth and setting `display.genes = "TPM4"` filters to the gene of interest, making the highlighted exon visible.
-
-```{r message=FALSE, fig.width=12, fig.height=8}
-TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "TPM4", cell.group = Idents(obj), highlights = c(16095264,16095357), max.depth = 2, display.genes = "TPM4")
-```
 
 ## 3. Load junction assay
 Junction expression provides a complementary view of alternative splicing. Junctions capture reads spanning adjacent exons. They are named similarly to exons but with different coordinates: the junction start is the end of the upstream exon, and the junction end is the start of the downstream exon.
@@ -251,8 +246,10 @@ p2 <- FeaturePlot(obj, features = c("chr19:16095264-16095357/+/TPM4"),order = TR
 p3 <- PSIPlot(obj, exon.assay = "exon", exclude.assay = "exclude", features = c("chr19:16095264-16095357/+/TPM4"),order = TRUE)
 cowplot::plot_grid(p1,p2,p3, ncol=3)
 ```
+
+Here, we set `max.depth = 1` caps the depth and setting `display.genes = "TPM4"` filters to the gene of interest, making the highlighted exon more visible.
 ```{r message=FALSE, warning=FALSE, fig.width=12, fig.height=8}
-TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "TPM4", cell.group = Idents(obj), highlights = c(16095264,16095357), junc = TRUE, max.depth = 1)
+TrackPlot(bamfile = "Parent_SC3v3_Human_Glioblastoma_possorted_genome_bam.bam", gtf = gtf, gene = "TPM4", cell.group = Idents(obj), highlights = c(16095264,16095357), junc = TRUE, max.depth = 1, display.genes = "TPM4")
 ```
 
 
